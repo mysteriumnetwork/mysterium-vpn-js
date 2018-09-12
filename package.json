@@ -1,0 +1,26 @@
+{
+  "name": "mysterium-tequilapi",
+  "version": "0.1.0",
+  "description": "Api library to control mysterium client and node",
+  "main": "lib/tequilapi-client-factory.js",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta-44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.0.0",
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "flow-bin": "^0.80.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mysterium",
+    "network"
+  ],
+  "author": "",
+  "license": "MIT"
+}
