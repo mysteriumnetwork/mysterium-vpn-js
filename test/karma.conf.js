@@ -1,4 +1,4 @@
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     basePath: '../',
@@ -9,7 +9,7 @@ module.exports = function(config) {
     files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
       'src/**/*.js',
-      'test/**/*.spec.js',
+      'test/**/*.spec.js'
     ],
 
     exclude: [],
@@ -22,7 +22,12 @@ module.exports = function(config) {
     browserify: {
       debug: true,
       bundleDelay: 1000,
-      transform: [ ['babelify',  {presets: ["@babel/preset-env"]} ] ],
+      transform: [
+        [
+          'babelify',
+          { presets: ['@babel/preset-env'] }
+        ]
+      ],
       extensions: ['.js']
     },
 
@@ -32,5 +37,5 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     singleRun: true
     // define reporters, port, logLevel, browsers etc.
-  });
-};
+  })
+}
