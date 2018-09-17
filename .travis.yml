@@ -1,0 +1,12 @@
+# .travis.yml
+before_install:
+- dpkg --compare-versions `npm -v` ge 5.8 || npm i -g npm@^5.8
+install:
+- npm ci
+# keep the npm cache around to speed up installs
+cache:
+  directories:
+  - "$HOME/.npm"
+script:
+- npm ci
+- npm run test
