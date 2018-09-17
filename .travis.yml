@@ -1,0 +1,10 @@
+# .travis.yml
+install:
+- npm ci
+# keep the npm cache around to speed up installs
+cache:
+  directories:
+  - "$HOME/.npm"
+script:
+- npm ci
+- npm run test
