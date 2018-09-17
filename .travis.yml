@@ -8,5 +8,4 @@ cache:
   directories:
   - "$HOME/.npm"
 script:
-- npm ci
 - npm run test
