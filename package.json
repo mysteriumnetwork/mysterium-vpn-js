@@ -2,6 +2,7 @@
   "name": "mysterium-tequilapi",
   "version": "0.1.0",
   "description": "Api library to control mysterium client and node",
+  "repository": "github:mysteriumnetwork/mysterium-tequilapi",
   "main": "lib/tequilapi-client-factory.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start ./test/karma.conf.js",
@@ -49,7 +50,9 @@
   },
   "keywords": [
     "mysterium",
-    "network"
+    "network",
+    "tequilapi",
+    "vpn"
   ],
   "author": {
     "name": "Andrej Novikov",
