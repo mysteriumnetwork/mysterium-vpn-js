@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "description": "Api library to control mysterium client and node",
   "repository": "github:mysteriumnetwork/mysterium-tequilapi",
-  "main": "lib/tequilapi-client-factory.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/karma start ./test/karma.conf.js",
     "eslint": "eslint --format 'node_modules/eslint-formatter-friendly' ./src ./test",
-    "prepack": "npm run prepack:babel && npm run prepack:flow",
+    "prepack": "npm run prepack:babel && npm run prepack:flow && npm run prepack:ts",
     "prepack:babel": "babel src/ -d lib",
-    "prepack:flow": "flow-copy-source src lib"
+    "prepack:flow": "flow-copy-source src lib",
+    "prepack:ts": "cp src/index.d.ts lib/"
   },
   "dependencies": {
     "axios": "^0.18.0"
