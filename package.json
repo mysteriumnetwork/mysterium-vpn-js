@@ -11,7 +11,8 @@
     "prepack": "npm run prepack:babel && npm run prepack:flow && npm run prepack:ts",
     "prepack:babel": "babel src/ -d lib",
     "prepack:flow": "flow-copy-source src lib",
-    "prepack:ts": "cp src/index.d.ts lib/"
+    "prepack:ts": "cp src/index.d.ts lib/",
+    "flow": "node_modules/.bin/flow"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
