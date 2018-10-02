@@ -18,7 +18,7 @@
 // @flow
 
 class ConnectionIPDTO {
-  ip: string
+  ip: ?string
 
   constructor (data: Object) {
     this.ip = data.ip

@@ -37,16 +37,16 @@ describe('TequilapiClient DTO', () => {
       expect(response.identities[1].id).to.equal('0x2000FACE')
     })
 
-    it('sets empty properties', async () => {
+    it('returns empty array when properties are empty', async () => {
       const response = new IdentitiesResponseDTO({})
 
-      expect(response.identities).to.be.undefined
+      expect(response.identities).to.eql([])
     })
 
-    it('sets wrong properties', async () => {
+    it('returns empty array when properties are wrong', async () => {
       const response = new IdentitiesResponseDTO('I am wrong')
 
-      expect(response.identities).to.be.undefined
+      expect(response.identities).to.eql([])
     })
   })
 })

@@ -19,7 +19,7 @@
 import type { HttpQueryParams } from '../adapters/interface'
 
 class ProposalsFilter {
-  providerId: string
+  providerId: ?string
 
   toQueryParams (): HttpQueryParams {
     throw new Error('Proposal filtering not implemented yet')

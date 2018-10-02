@@ -18,7 +18,7 @@
 // @flow
 
 class IdentityDTO {
-  id: string
+  id: ?string
 
   constructor (data: Object) {
     this.id = data.id

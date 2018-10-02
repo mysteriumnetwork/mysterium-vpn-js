@@ -25,8 +25,8 @@ const getPaymentLink = (paymentBaseUrl: string, registration: IdentityRegistrati
 }
 
 class PublicKeyDTO {
-  part1: string
-  part2: string
+  part1: ?string
+  part2: ?string
 
   constructor (data: Object) {
     this.part1 = data.part1
@@ -35,9 +35,9 @@ class PublicKeyDTO {
 }
 
 class SignatureDTO {
-  r: string
-  s: string
-  v: string
+  r: ?string
+  s: ?string
+  v: ?string
 
   constructor (data: Object) {
     this.r = data.r
@@ -47,7 +47,7 @@ class SignatureDTO {
 }
 
 class IdentityRegistrationDTO {
-  registered: boolean
+  registered: ?boolean
   publicKey: PublicKeyDTO
   signature: SignatureDTO
 

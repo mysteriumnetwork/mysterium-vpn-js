@@ -26,6 +26,8 @@ class IdentitiesResponseDTO {
   constructor (responseData: IdentityListResponse) {
     if (responseData && Array.isArray(responseData.identities)) {
       this.identities = responseData.identities.map((identity) => new IdentityDTO(identity))
+    } else {
+      this.identities = []
     }
   }
 }

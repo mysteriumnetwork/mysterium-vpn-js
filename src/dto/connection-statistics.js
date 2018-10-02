@@ -18,9 +18,9 @@
 // @flow
 
 class ConnectionStatisticsDTO {
-  duration: number
-  bytesReceived: number
-  bytesSent: number
+  duration: ?number
+  bytesReceived: ?number
+  bytesSent: ?number
 
   constructor (data: Object) {
     this.duration = data.duration
