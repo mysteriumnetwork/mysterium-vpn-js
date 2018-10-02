@@ -12,6 +12,7 @@
     "prepack:babel": "babel src/ -d lib",
     "prepack:flow": "flow-copy-source src lib",
     "prepack:ts": "cp src/index.d.ts lib/",
+    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios",
     "flow": "node_modules/.bin/flow"
   },
   "dependencies": {

@@ -17,4 +17,4 @@
 
 // @flow
 
-export {default, TEQUILAPI_URL} from './tequilapi-client-factory'
+export { default, TEQUILAPI_URL } from './tequilapi-client-factory'

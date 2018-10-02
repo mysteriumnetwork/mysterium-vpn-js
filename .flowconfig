@@ -1,11 +1,10 @@
 [ignore]
 .*/node_modules
-
 [include]
 ./src
 
 [libs]
-
+test/karma-flow-defs.js
 [lints]
 
 [options]

@@ -21,11 +21,8 @@ describe('TequilapiClient DTO', () => {
   describe('IdentityRegistrationDTO', () => {
     const checkUndefinedFields = identity => {
       expect(identity.registered).to.be.undefined
-      expect(identity.publicKey.part1).to.be.undefined
-      expect(identity.publicKey.part2).to.be.undefined
-      expect(identity.signature.r).to.be.undefined
-      expect(identity.signature.s).to.be.undefined
-      expect(identity.signature.v).to.be.undefined
+      expect(identity.publicKey).to.be.null
+      expect(identity.signature).to.be.null
     }
 
     it('sets properties', () => {
