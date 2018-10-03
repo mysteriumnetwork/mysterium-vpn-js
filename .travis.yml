@@ -8,5 +8,5 @@ cache:
   directories:
   - "$HOME/.npm"
 script:
-- npm run test
 - npm run flow
+- npm run test
