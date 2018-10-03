@@ -27,6 +27,7 @@ class ConsumerLocationDTO {
     const original = data.original || {}
     this.originalCountry = original.country
     this.originalIP = original.ip
+
     const current = data.current || {}
     this.currentCountry = current.country
     this.currentIP = current.ip
