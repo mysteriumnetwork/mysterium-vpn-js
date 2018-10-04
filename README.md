@@ -7,11 +7,41 @@ npm i mysterium-tequilapi
 ```
 
 ## Usage
+#### ES6 module
 ```javascript
 import TequilapiClientFactory, { TEQUILAPI_URL } from 'mysterium-tequilapi'
 const factory = new TequilapiClientFactory(TEQUILAPI_URL)
 const client = factory.build()
-const identities = await client.identitiesList()
+client.identitiesList().then((identities) => {
+  console.log(identities)
+})
+
+```
+Output:
+```js
+{"identities":[{"id":"0xf2732f2100d19d74b1b5484037ebf6c13736d1bc"}]}
+```
+#### node.js require syntax
+```javascript
+const Tequilapi = require("mysterium-tequilapi")
+const factory = new Tequilapi.default(Tequilapi.TEQUILAPI_URL)
+const client = factory.build()
+
+client.healthCheck().then((res) => {
+  console.log(res)
+})
+```
+Output:
+```js
+{ "uptime":"75h23m14.658120675s",
+  "process":19857,
+  "version":"0.2.3",
+  "buildInfo": {
+    "commit":"91840225277923a61de2bf5683a24532ee638559",
+    "branch":"0.2.3",
+    "buildNumber":"1389"
+  }
+}
 ```
 
 Client object fulfills the following interface:
