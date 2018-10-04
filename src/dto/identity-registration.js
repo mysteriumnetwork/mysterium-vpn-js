@@ -17,18 +17,23 @@
 
 // @flow
 
-const getPaymentLink = (paymentBaseUrl: string, registration: IdentityRegistrationDTO): string => {
+const getPaymentLink = (paymentBaseUrl: string, registration: IdentytyProof): string => {
   const { publicKey, signature } = registration
   return paymentBaseUrl +
     `?part1=${publicKey.part1}&part2=${publicKey.part2}` +
     `&r=${signature.r}&s=${signature.s}&v=${signature.v}`
 }
 
+type IdentytyProof = {
+  publicKey: PublicKeyDTO,
+  signature: SignatureDTO
+}
+
 class PublicKeyDTO {
   part1: string
   part2: string
 
-  constructor (data: Object) {
+  constructor (data: {part1: string, part2: string}) {
     this.part1 = data.part1
     this.part2 = data.part2
   }
@@ -39,7 +44,7 @@ class SignatureDTO {
   s: string
   v: string
 
-  constructor (data: Object) {
+  constructor (data: {r: string, s: string, v: string}) {
     this.r = data.r
     this.s = data.s
     this.v = data.v
@@ -48,13 +53,13 @@ class SignatureDTO {
 
 class IdentityRegistrationDTO {
   registered: boolean
-  publicKey: PublicKeyDTO
-  signature: SignatureDTO
+  publicKey: ?PublicKeyDTO
+  signature: ?SignatureDTO
 
-  constructor (data: Object) {
+  constructor (data: {registered: boolean, publicKey: ?PublicKeyDTO, signature: ?SignatureDTO}) {
     this.registered = data.registered
-    this.publicKey = new PublicKeyDTO(data.publicKey || {})
-    this.signature = new SignatureDTO(data.signature || {})
+    this.publicKey = data.publicKey ? new PublicKeyDTO(data.publicKey) : null
+    this.signature = data.signature ? new SignatureDTO(data.signature) : null
   }
 }
 

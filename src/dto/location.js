@@ -18,7 +18,7 @@
 // @flow
 
 class LocationDTO {
-  country: string
+  country: ?string
 
   constructor (data: Object) {
     this.country = data.country

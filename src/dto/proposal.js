@@ -19,9 +19,9 @@
 import ServiceDefinitionDTO from './service-definition'
 
 class ProposalDTO {
-  id: number
-  providerId: string
-  serviceType: string
+  id: ?number
+  providerId: ?string
+  serviceType: ?string
   serviceDefinition: ?ServiceDefinitionDTO
 
   constructor (data: Object) {
