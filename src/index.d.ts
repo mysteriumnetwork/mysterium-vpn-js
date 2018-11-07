@@ -18,6 +18,14 @@
 declare module 'mysterium-tequilapi' {
   type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
 
+  export class TequilapiError extends Error {
+    constructor (originalError: Error, path: string)
+    get code (): string | undefined
+    get isTimeoutError (): boolean
+    get isRequestClosedError (): boolean
+    get isServiceUnavailableError (): boolean
+  }
+
   export type ConnectionStatusDTO = {
     status: ConnectionStatus
     sessionId: string
