@@ -16,7 +16,14 @@
  */
 
 declare module 'mysterium-tequilapi' {
-  type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
+  export type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
+
+  export const enum ConnectionStatusEnum {
+    CONNECTED = 'Connected',
+    NOT_CONNECTED = 'NotConnected',
+    DISCONNECTING = 'Disconnecting',
+    CONNECTING = 'Connecting'
+  }
 
   export class TequilapiError extends Error {
     constructor (originalError: Error, path: string)
@@ -28,7 +35,7 @@ declare module 'mysterium-tequilapi' {
 
   export type ConnectionStatusDTO = {
     status: ConnectionStatus
-    sessionId: string
+    sessionId?: string
   }
 
   export type ConnectionStatisticsDTO = {
