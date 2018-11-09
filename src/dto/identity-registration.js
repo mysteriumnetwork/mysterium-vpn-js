@@ -24,11 +24,6 @@ const getPaymentLink = (paymentBaseUrl: string, registration: IdentytyProof): st
     `&r=${signature.r}&s=${signature.s}&v=${signature.v}`
 }
 
-type IdentytyProof = {
-  publicKey: PublicKeyDTO,
-  signature: SignatureDTO
-}
-
 class PublicKeyDTO {
   part1: string
   part2: string
@@ -49,6 +44,11 @@ class SignatureDTO {
     this.s = data.s
     this.v = data.v
   }
+}
+
+type IdentytyProof = {
+  publicKey: PublicKeyDTO,
+  signature: SignatureDTO
 }
 
 class IdentityRegistrationDTO {
