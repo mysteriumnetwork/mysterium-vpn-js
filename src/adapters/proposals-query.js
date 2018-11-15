@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/mysterium-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,35 @@
  */
 
 // @flow
-import type { HttpQueryParams } from '../adapters/interface'
+import type { HttpQueryParams } from './interface'
+
+type ProposalQueryOptions = {
+  fetchConnectCounts: ?boolean,
+  providerId: ?string,
+}
 
 class ProposalsQuery {
-  fetchConnectCounts: boolean = true
+  fetchConnectCounts: ?boolean
+  providerId: ?string
 
-  constructor (fetchConnectCounts: boolean) {
-    this.fetchConnectCounts = fetchConnectCounts
+  constructor (options: ProposalQueryOptions) {
+    if (!options) {
+      return
+    }
+
+    this.fetchConnectCounts = options.fetchConnectCounts
+    this.providerId = options.providerId
   }
 
   toQueryParams (): ?HttpQueryParams {
-    if(this.fetchConnectCounts) return {fetchConnectCounts: true}
+    const queryObj = {}
+    if (this.fetchConnectCounts) {
+      queryObj.fetchConnectCounts = this.fetchConnectCounts
+    }
+    if (this.providerId) {
+      queryObj.providerId = this.providerId
+    }
+    return queryObj
   }
 }
 

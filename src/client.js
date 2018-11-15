@@ -19,7 +19,7 @@
 import type { HttpInterface } from './adapters/interface'
 import ProposalDTO from './dto/proposal'
 import ProposalsResponseDTO from './dto/proposals-response'
-import ProposalsQuery from './dto/proposals-query'
+import ProposalsQuery from './adapters/proposals-query'
 import IdentityDTO from './dto/identity'
 import IdentitiesResponseDTO from './dto/identities-response'
 import { parseHealthcheckResponse } from './dto/node-healthcheck'
