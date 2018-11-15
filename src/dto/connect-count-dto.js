@@ -17,16 +17,16 @@
 
 // @flow
 
-import ConnectCountDTO from './connect-count-dto'
-
-class MetricsDTO {
-  connectCount: ?ConnectCountDTO
+class ConnectCountDTO {
+  success: number
+  fail: number
+  timeout: number
 
   constructor (data: Object) {
-    if (data.connectCount) {
-      this.connectCount = new ConnectCountDTO(data.connectCount)
-    }
+    this.success = data.success
+    this.fail = data.fail
+    this.timeout = data.timeout
   }
 }
 
-export default MetricsDTO
+export default ConnectCountDTO
