@@ -116,6 +116,13 @@ describe('HttpTequilapiClient', () => {
               asn: '',
               country: 'NL'
             }
+          },
+          metrics: {
+            connectCount: {
+              success: 1,
+              fail: 1,
+              ping: 1
+            }
           }
         }, {
           id: 1,
@@ -125,6 +132,13 @@ describe('HttpTequilapiClient', () => {
             locationOriginate: {
               asn: '',
               country: 'LT'
+            }
+          },
+          metrics: {
+            connectCount: {
+              success: 1,
+              fail: 1,
+              ping: 1
             }
           }
         }]

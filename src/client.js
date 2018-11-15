@@ -19,7 +19,7 @@
 import type { HttpInterface } from './adapters/interface'
 import ProposalDTO from './dto/proposal'
 import ProposalsResponseDTO from './dto/proposals-response'
-import ProposalsFilter from './dto/proposals-filter'
+import ProposalsQuery from './dto/proposals-query'
 import IdentityDTO from './dto/identity'
 import IdentitiesResponseDTO from './dto/identities-response'
 import { parseHealthcheckResponse } from './dto/node-healthcheck'
@@ -43,7 +43,7 @@ interface TequilapiClient {
   identityUnlock (id: string, passphrase: string): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-  findProposals (filter: ?ProposalsFilter): Promise<Array<ProposalDTO>>,
+  findProposals (filter: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
 
   connectionCreate (request: ConnectionRequestDTO, timeout: ?number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,
@@ -102,7 +102,7 @@ class HttpTequilapiClient implements TequilapiClient {
     return new IdentityRegistrationDTO(response)
   }
 
-  async findProposals (filter: ?ProposalsFilter): Promise<Array<ProposalDTO>> {
+  async findProposals (filter: ?ProposalsQuery): Promise<Array<ProposalDTO>> {
     const query = filter ? filter.toQueryParams() : null
     const response = await this.http.get('proposals', query)
     if (!response) {

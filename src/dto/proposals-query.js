@@ -18,12 +18,16 @@
 // @flow
 import type { HttpQueryParams } from '../adapters/interface'
 
-class ProposalsFilter {
-  providerId: ?string
+class ProposalsQuery {
+  fetchConnectCounts: boolean = true
 
-  toQueryParams (): HttpQueryParams {
-    throw new Error('Proposal filtering not implemented yet')
+  constructor (fetchConnectCounts: boolean) {
+    this.fetchConnectCounts = fetchConnectCounts
+  }
+
+  toQueryParams (): ?HttpQueryParams {
+    if(this.fetchConnectCounts) return {fetchConnectCounts: true}
   }
 }
 
-export default ProposalsFilter
+export default ProposalsQuery
