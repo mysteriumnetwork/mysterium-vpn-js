@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
+ * Copyright (C) 2018 The "mysteriumnetwork/mysterium-vpn" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,27 +16,17 @@
  */
 
 // @flow
-import ServiceDefinitionDTO from './service-definition'
-import MetricsDTO from './metrics-dto'
 
-class ProposalDTO {
-  id: ?number
-  providerId: ?string
-  serviceType: ?string
-  serviceDefinition: ?ServiceDefinitionDTO
-  metrics: ?MetricsDTO
+import ConnectCountDTO from './connect-count-dto'
+
+class MetricsDTO {
+  connectCount: ?ConnectCountDTO
 
   constructor (data: Object) {
-    this.id = data.id
-    this.providerId = data.providerId
-    this.serviceType = data.serviceType
-    if (data.serviceDefinition) {
-      this.serviceDefinition = new ServiceDefinitionDTO(data.serviceDefinition)
-    }
-    if (data.metrics) {
-      this.metrics = new MetricsDTO(data.metrics)
+    if (data.connectCount) {
+      this.connectCount = new ConnectCountDTO(data.connectCount)
     }
   }
 }
 
-export default ProposalDTO
+export default MetricsDTO

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
+ * Copyright (C) 2018 The "mysteriumnetwork/mysterium-vpn" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,17 @@
  */
 
 // @flow
-import type { HttpQueryParams } from '../adapters/interface'
 
-class ProposalsFilter {
-  providerId: ?string
+class ConnectCountDTO {
+  success: number
+  fail: number
+  timeout: number
 
-  toQueryParams (): HttpQueryParams {
-    throw new Error('Proposal filtering not implemented yet')
+  constructor (data: Object) {
+    this.success = data.success
+    this.fail = data.fail
+    this.timeout = data.timeout
   }
 }
 
-export default ProposalsFilter
+export default ConnectCountDTO

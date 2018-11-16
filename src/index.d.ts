@@ -27,10 +27,22 @@ declare module 'mysterium-tequilapi' {
 
   export class TequilapiError extends Error {
     constructor (originalError: Error, path: string)
+
     get code (): string | undefined
+
     get isTimeoutError (): boolean
+
     get isRequestClosedError (): boolean
+
     get isServiceUnavailableError (): boolean
+  }
+
+  type HttpQueryParams = {
+    [string]: mixed
+  }
+
+  export class ProposalQuery {
+    toQueryParams (): HttpQueryParams
   }
 
   export type ConnectionStatusDTO = {
@@ -52,11 +64,20 @@ declare module 'mysterium-tequilapi' {
     locationOriginate?: LocationDTO
   }
 
+  export type MetricsDTO = {
+    connectCount?: {
+      success: number,
+      fail: number,
+      timeout: number
+    }
+  }
+
   export type ProposalDTO = {
     id: string
     providerId: string
     serviceType: string
     serviceDefinition?: ServiceDefinitionDTO
+    metrics?: MetricsDTO
   }
 
 
@@ -113,31 +134,37 @@ declare module 'mysterium-tequilapi' {
     currentIP: string
   }
 
-  export class ProposalsFilter {
-    providerId: string
-  }
-
   export interface TequilapiClient {
     healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
+
     stop (): Promise<void>,
 
     identitiesList (): Promise<Array<IdentityDTO>>,
+
     identityCreate (passphrase: string): Promise<IdentityDTO>,
+
     identityUnlock (id: string, passphrase: string): Promise<void>,
+
     identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-    findProposals (filter?: ProposalsFilter): Promise<Array<ProposalDTO>>,
+    findProposals (query: ProposalQuery): Promise<Array<ProposalDTO>>,
 
     connectionCreate (request: ConnectionRequestDTO, timeout?: number): Promise<ConnectionStatusDTO>,
+
     connectionStatus (): Promise<ConnectionStatusDTO>,
+
     connectionCancel (): Promise<void>,
+
     connectionIP (timeout?: number): Promise<ConnectionIPDTO>,
+
     connectionStatistics (): Promise<ConnectionStatisticsDTO>,
+
     location (timeout?: number): Promise<ConsumerLocationDTO>
   }
 
   export default class TequilapiClientFactory {
-    constructor(baseUrl: string, defaultTimeout: number)
+    constructor (baseUrl: string, defaultTimeout: number)
+
     build (): TequilapiClient
   }
 }
