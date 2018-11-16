@@ -19,15 +19,15 @@
 import type { HttpQueryParams } from './interface'
 
 type ProposalQueryOptions = {
-  fetchConnectCounts: ?boolean,
-  providerId: ?string,
+  fetchConnectCounts?: boolean,
+  providerId?: string,
 }
 
 class ProposalsQuery {
   fetchConnectCounts: ?boolean
   providerId: ?string
 
-  constructor (options: ProposalQueryOptions) {
+  constructor (options: ?ProposalQueryOptions) {
     if (!options) {
       return
     }

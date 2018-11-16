@@ -34,5 +34,4 @@ describe('ProposalsQuery', () => {
       expect(q.toQueryParams()).to.eql({fetchConnectCounts: true, providerId: 'pID'})
     })
   })
-
 })
