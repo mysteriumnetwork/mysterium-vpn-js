@@ -17,7 +17,7 @@
 
 // @flow
 
-const getPaymentLink = (paymentBaseUrl: string, registration: IdentytyProof): string => {
+const getPaymentLink = (paymentBaseUrl: string, registration: IdentityProof): string => {
   const { publicKey, signature } = registration
   return paymentBaseUrl +
     `?part1=${publicKey.part1}&part2=${publicKey.part2}` +
@@ -46,7 +46,7 @@ class SignatureDTO {
   }
 }
 
-type IdentytyProof = {
+type IdentityProof = {
   publicKey: PublicKeyDTO,
   signature: SignatureDTO
 }
