@@ -55,7 +55,7 @@ interface TequilapiClient {
   identityUnlock (id: string, passphrase: string): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-  findProposals (filter: ?ProposalsFilter): Promise<Array<ProposalDTO>>,
+  findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
 
   connectionCreate (request: ConnectionRequestDTO, timeout: ?number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,

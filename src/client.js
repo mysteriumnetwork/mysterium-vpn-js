@@ -43,7 +43,7 @@ interface TequilapiClient {
   identityUnlock (id: string, passphrase: string): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-  findProposals (filter: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
+  findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
 
   connectionCreate (request: ConnectionRequestDTO, timeout: ?number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,
@@ -102,9 +102,9 @@ class HttpTequilapiClient implements TequilapiClient {
     return new IdentityRegistrationDTO(response)
   }
 
-  async findProposals (filter: ?ProposalsQuery): Promise<Array<ProposalDTO>> {
-    const query = filter ? filter.toQueryParams() : null
-    const response = await this.http.get('proposals', query)
+  async findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>> {
+    const params = query ? query.toQueryParams() : null
+    const response = await this.http.get('proposals', params)
     if (!response) {
       throw new Error('Proposals response body is missing')
     }
