@@ -17,6 +17,7 @@
 
 import ProposalDTO from '../../../src/dto/proposal'
 import ServiceDefinitionDTO from '../../../src/dto/service-definition'
+import { captureError } from '../../helpers/utils'
 
 describe('TequilapiClient DTO', () => {
   describe('ProposalDTO', () => {
@@ -34,16 +35,55 @@ describe('TequilapiClient DTO', () => {
       expect(proposal.serviceDefinition).to.deep.equal(new ServiceDefinitionDTO({}))
     })
 
-    it('sets empty properties structure', async () => {
-      const proposal = new ProposalDTO({})
-
-      expect(proposal.id).to.be.undefined
-      expect(proposal.providerId).to.be.undefined
-      expect(proposal.serviceType).to.be.undefined
-      expect(proposal.serviceDefinition).to.be.undefined
+    it('throws error with null data', () => {
+      const err = captureError(() => new ProposalDTO(null))
+      expect(err).to.be.instanceOf(Error)
     })
 
-    it('sets wrong properties structure', async () => {
+    it('throws error with missing id', () => {
+      const err = captureError(() => new ProposalDTO({}))
+      expect(err).to.be.instanceOf(Error)
+    })
+
+    it('throws error with wrong id type', async () => {
+      const err = captureError(() => new ProposalDTO({
+        id: 'string id', providerId: 'provider id'
+      }))
+      expect(err).to.be.instanceOf(Error)
+    })
+
+    it('throws error with missing providerId', () => {
+      const err = captureError(() => new ProposalDTO({
+        id: 1
+      }))
+      if (!(err instanceof Error)) {
+        throw Error('Error expected')
+      }
+      expect(err.message).to.eql('ProposalDTO providerId is not provided')
+    })
+
+    it('throws error with wrong providerId type', () => {
+      const err = captureError(() => new ProposalDTO({
+        id: 1, providerId: 2
+      }))
+      expect(err).to.be.instanceOf(Error)
+    })
+
+    it('throws error with no serviceType', () => {
+      const err = captureError(() => new ProposalDTO({
+        id: 1, providerId: 'provider id'
+      }))
+      expect(err).to.be.instanceOf(Error)
+    })
+
+    it('throws error with invalid serviceDefinition', () => {
+      const err = captureError(() => new ProposalDTO({
+        id: 1, providerId: 'provider id', serviceType: '', serviceDefinition: null
+      }))
+      expect(err).to.be.instanceOf(Error)
+    })
+
+    xit('sets wrong properties structure', async () => {
       const proposal = new ProposalDTO('I am wrong')
 
       expect(proposal.id).to.be.undefined
