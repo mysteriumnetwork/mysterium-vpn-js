@@ -21,7 +21,7 @@ describe('TequilapiClient DTO', () => {
   describe('ProposalsResponseDTO', () => {
     it('sets properties with full structure', async () => {
       const response = new ProposalsResponseDTO({
-        proposals: [{ id: 100, providerId: 'id' }]
+        proposals: [{ id: 100, providerId: 'id', serviceType: 'type', serviceDefinition: {} }]
       })
 
       expect(response.proposals).to.have.lengthOf(1)

@@ -25,12 +25,15 @@ type Property = {
 }
 
 function validate (typeName: string, obj: Object, property: Property) {
-  if (!obj.hasOwnProperty(property.name)) {
+  const value = obj[property.name]
+  if (value == null) {
     throw new Error(`${typeName} ${property.name} is not provided`)
   }
+
+  const actualType = typeof value
   // eslint-disable-next-line
-  if ((typeof obj[property.name]) !== property.type) {
-    throw new Error()
+  if (actualType !== property.type) {
+    throw new Error(`${typeName} ${property.name} should be "${property.type}" instead of "${actualType}"`)
   }
 }
 
@@ -41,8 +44,8 @@ function validateMultiple (typeName: string, obj: Object, properties: Property[]
 class ProposalDTO {
   id: number
   providerId: string
-  serviceType: ?string
-  serviceDefinition: ?ServiceDefinitionDTO
+  serviceType: string
+  serviceDefinition: ServiceDefinitionDTO
   metrics: ?MetricsDTO
 
   constructor (data: Object) {
@@ -50,7 +53,7 @@ class ProposalDTO {
       { name: 'id', type: 'number' },
       { name: 'providerId', type: 'string' },
       { name: 'serviceType', type: 'string' },
-      { name: 'serviceDefinition', type: 'Object' }
+      { name: 'serviceDefinition', type: 'object' }
     ])
 
     this.id = data.id
@@ -59,9 +62,7 @@ class ProposalDTO {
     if (data.serviceDefinition) {
       this.serviceDefinition = new ServiceDefinitionDTO(data.serviceDefinition)
     }
-    if (data.metrics) {
-      this.metrics = new MetricsDTO(data.metrics)
-    }
+    this.metrics = data.metrics ? new MetricsDTO(data.metrics) : null
   }
 }
 
