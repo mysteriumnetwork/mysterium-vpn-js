@@ -7,6 +7,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/karma start ./test/karma.conf.js",
+    "ci": "npm run flow && npm run test && npm run lint",
     "lint": "eslint --format 'node_modules/eslint-formatter-friendly' ./src ./test",
     "prepack": "npm run prepack:babel && npm run prepack:flow && npm run prepack:ts",
     "prepack:babel": "babel src/ -d lib",
