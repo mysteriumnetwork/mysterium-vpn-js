@@ -10,3 +10,4 @@ cache:
 script:
 - npm run flow
 - npm run test
+- npm run lint
