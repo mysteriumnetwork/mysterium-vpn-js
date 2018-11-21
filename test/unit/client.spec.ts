@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// TODO: rename file
+
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
@@ -377,6 +379,75 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('location').reply(500)
 
       expect(api.location()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="location")')
+    })
+  })
+
+  describe('sessionsList()', () => {
+    it('returns response', async () => {
+      const response = {
+        sessions: [
+          {
+            sessionId: '30f610a0-c096-11e8-b371-ebde26989839',
+            providerId: '0x3b03a513fba4bd4868edd340f77da0c920150f3e',
+            providerCountry: 'lt',
+            dateStarted: '2019-02-14T11:04:15Z',
+            duration: 35 * 60,
+            bytesSent: 1024,
+            bytesReceived: 6000
+          },
+          {
+            sessionId: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
+            providerId: '0x1b03b513fba4bd4868edd340f77da0c920150f0a',
+            providerCountry: 'us',
+            dateStarted: '2019-02-14T11:04:15Z',
+            duration: 35 * 60,
+            bytesSent: 1024,
+            bytesReceived: 6000
+          }
+        ]
+      }
+      mock.onGet('sessions').reply(200, response)
+
+      const sessions = await api.sessionsList()
+      expect(sessions).toHaveLength(2)
+      expect(sessions[0].sessionId).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
+    })
+
+    it('returns response even with zero values', async () => {
+      const response = {
+        sessions: [
+          {
+            sessionId: '',
+            providerId: '',
+            providerCountry: '',
+            dateStarted: '',
+            duration: 0,
+            bytesSent: 0,
+            bytesReceived: 0
+          }
+        ]
+      }
+      mock.onGet('sessions').reply(200, response)
+
+      const sessions = await api.sessionsList()
+      expect(sessions).toHaveLength(1)
+    })
+
+    it('throws error when sessions key is missing', async () => {
+      const response = {}
+      mock.onGet('sessions').reply(200, response)
+      // TODO: improve error message
+      expect(api.sessionsList()).rejects.toBeInstanceOf(Error)
+    })
+
+    it('throws error when empty session is returned', async () => {
+      const response = {
+        sessions: [
+          {}
+        ]
+      }
+      mock.onGet('sessions').reply(200, response)
+      expect(api.sessionsList()).rejects.toBeInstanceOf(Error)
     })
   })
 })
