@@ -26,12 +26,12 @@ describe('ProposalsQuery', () => {
       expect(q.toQueryParams()).to.eql({})
     })
     it('returns empty quert Obj if fetchConnectCounts was given false in constructor', () => {
-      const q = new ProposalsQuery({fetchConnectCounts: true})
-      expect(q.toQueryParams()).to.eql({fetchConnectCounts: true})
+      const q = new ProposalsQuery({ fetchConnectCounts: true })
+      expect(q.toQueryParams()).to.eql({ fetchConnectCounts: true })
     })
     it('makes a query object with providerId if given so in constructor', () => {
-      const q = new ProposalsQuery({fetchConnectCounts: true, providerId: 'pID'})
-      expect(q.toQueryParams()).to.eql({fetchConnectCounts: true, providerId: 'pID'})
+      const q = new ProposalsQuery({ fetchConnectCounts: true, providerId: 'pID' })
+      expect(q.toQueryParams()).to.eql({ fetchConnectCounts: true, providerId: 'pID' })
     })
   })
 })
