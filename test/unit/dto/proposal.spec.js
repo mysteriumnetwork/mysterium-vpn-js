@@ -15,77 +15,75 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ProposalDTO from '../../../src/dto/proposal'
+import { parseProposalDTO } from '../../../src/dto/proposal'
 import ServiceDefinitionDTO from '../../../src/dto/service-definition'
 import { captureError } from '../../helpers/utils'
 
-describe('TequilapiClient DTO', () => {
-  describe('ProposalDTO', () => {
-    const proposalObject = {
-      id: 1,
-      providerId: '0x1',
-      serviceType: 'openvpn',
-      serviceDefinition: {}
+describe('parseProposalDTO', () => {
+  const proposalObject = {
+    id: 1,
+    providerId: '0x1',
+    serviceType: 'openvpn',
+    serviceDefinition: {}
+  }
+
+  it('sets properties with full structure', () => {
+    const proposal = parseProposalDTO(proposalObject)
+
+    expect(proposal.id).to.equal(1)
+    expect(proposal.providerId).to.equal('0x1')
+    expect(proposal.serviceType).to.equal('openvpn')
+    expect(proposal.serviceDefinition).to.deep.equal(new ServiceDefinitionDTO({}))
+    expect(proposal.metrics).to.be.undefined
+  })
+
+  it('throws error with null data', () => {
+    const err = captureError(() => parseProposalDTO(null))
+    expect(err).to.be.instanceOf(Error)
+  })
+
+  it('throws error with missing id', () => {
+    const object = { ...proposalObject, id: undefined }
+    const err = captureError(() => parseProposalDTO(object))
+    if (!(err instanceof Error)) {
+      throw Error('Error expected')
     }
+    expect(err.message).to.eql('ProposalDTO: id is not provided')
+  })
 
-    it('sets properties with full structure', () => {
-      const proposal = new ProposalDTO(proposalObject)
+  it('throws error with wrong id type', async () => {
+    const object = { ...proposalObject, id: 'string id' }
+    const err = captureError(() => parseProposalDTO(object))
+    if (!(err instanceof Error)) {
+      throw Error('Error expected')
+    }
+    expect(err.message).to.eql('ProposalDTO: id should be "number"')
+  })
 
-      expect(proposal.id).to.equal(1)
-      expect(proposal.providerId).to.equal('0x1')
-      expect(proposal.serviceType).to.equal('openvpn')
-      expect(proposal.serviceDefinition).to.deep.equal(new ServiceDefinitionDTO({}))
-      expect(proposal.metrics).to.be.null
-    })
+  it('throws error with missing providerId', () => {
+    const object = { ...proposalObject, providerId: undefined }
+    const err = captureError(() => parseProposalDTO(object))
+    if (!(err instanceof Error)) {
+      throw Error('Error expected')
+    }
+    expect(err.message).to.eql('ProposalDTO: providerId is not provided')
+  })
 
-    it('throws error with null data', () => {
-      const err = captureError(() => new ProposalDTO(null))
-      expect(err).to.be.instanceOf(Error)
-    })
+  it('throws error with wrong providerId type', () => {
+    const object = { ...proposalObject, providerId: 2 }
+    const err = captureError(() => parseProposalDTO(object))
+    expect(err).to.be.instanceOf(Error)
+  })
 
-    it('throws error with missing id', () => {
-      const object = { ...proposalObject, id: undefined }
-      const err = captureError(() => new ProposalDTO(object))
-      if (!(err instanceof Error)) {
-        throw Error('Error expected')
-      }
-      expect(err.message).to.eql('ProposalDTO id is not provided')
-    })
+  it('throws error with no serviceType', () => {
+    const object = { ...proposalObject, serviceType: undefined }
+    const err = captureError(() => parseProposalDTO(object))
+    expect(err).to.be.instanceOf(Error)
+  })
 
-    it('throws error with wrong id type', async () => {
-      const object = { ...proposalObject, id: 'string id' }
-      const err = captureError(() => new ProposalDTO(object))
-      if (!(err instanceof Error)) {
-        throw Error('Error expected')
-      }
-      expect(err.message).to.eql('ProposalDTO id should be "number" instead of "string"')
-    })
-
-    it('throws error with missing providerId', () => {
-      const object = { ...proposalObject, providerId: undefined }
-      const err = captureError(() => new ProposalDTO(object))
-      if (!(err instanceof Error)) {
-        throw Error('Error expected')
-      }
-      expect(err.message).to.eql('ProposalDTO providerId is not provided')
-    })
-
-    it('throws error with wrong providerId type', () => {
-      const object = { ...proposalObject, providerId: 2 }
-      const err = captureError(() => new ProposalDTO(object))
-      expect(err).to.be.instanceOf(Error)
-    })
-
-    it('throws error with no serviceType', () => {
-      const object = { ...proposalObject, serviceType: undefined }
-      const err = captureError(() => new ProposalDTO(object))
-      expect(err).to.be.instanceOf(Error)
-    })
-
-    it('throws error with invalid serviceDefinition', () => {
-      const object = { ...proposalObject, serviceDefinition: '2' }
-      const err = captureError(() => new ProposalDTO(object))
-      expect(err).to.be.instanceOf(Error)
-    })
+  it('throws error with invalid serviceDefinition', () => {
+    const object = { ...proposalObject, serviceDefinition: '2' }
+    const err = captureError(() => parseProposalDTO(object))
+    expect(err).to.be.instanceOf(Error)
   })
 })
