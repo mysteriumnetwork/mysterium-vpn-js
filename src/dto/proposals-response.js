@@ -16,20 +16,22 @@
  */
 
 // @flow
-import ProposalDTO from './proposal'
+import { parseProposalDTO } from './proposal'
+import type { ProposalDTO } from './proposal'
+import { validate } from '../validation'
 
 type ResponseMapped = {
   proposals: Array<Object>
 }
 
-class ProposalsResponseDTO {
-  proposals: ?Array<ProposalDTO>
-
-  constructor (responseData: ResponseMapped) {
-    if (typeof responseData.proposals !== 'undefined') {
-      this.proposals = responseData.proposals.map((proposal) => new ProposalDTO(proposal))
-    }
-  }
+type ProposalsResponseDTO = {
+  proposals: Array<ProposalDTO>
 }
 
-export default ProposalsResponseDTO
+function parseProposalsResponseDTO (responseData: ResponseMapped): ProposalsResponseDTO {
+  validate('ProposalResponseDTO', responseData, { name: 'proposals', type: 'array' })
+  return { proposals: responseData.proposals.map(parseProposalDTO) }
+}
+
+export { parseProposalsResponseDTO }
+export type { ProposalsResponseDTO }

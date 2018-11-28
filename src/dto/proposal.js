@@ -18,52 +18,32 @@
 // @flow
 import ServiceDefinitionDTO from './service-definition'
 import MetricsDTO from './metrics-dto'
+import {validateMultiple} from '../validation'
 
-type Property = {
-  name: string,
-  type: 'number' | 'string'
-}
-
-function validate (typeName: string, obj: Object, property: Property) {
-  const value = obj[property.name]
-  if (value == null) {
-    throw new Error(`${typeName} ${property.name} is not provided`)
-  }
-
-  const actualType = typeof value
-  // eslint-disable-next-line
-  if (actualType !== property.type) {
-    throw new Error(`${typeName} ${property.name} should be "${property.type}" instead of "${actualType}"`)
-  }
-}
-
-function validateMultiple (typeName: string, obj: Object, properties: Property[]) {
-  properties.forEach(property => validate(typeName, obj, property))
-}
-
-class ProposalDTO {
-  id: number
-  providerId: string
-  serviceType: string
-  serviceDefinition: ServiceDefinitionDTO
+type ProposalDTO = {
+  id: number,
+  providerId: string,
+  serviceType: string,
+  serviceDefinition: ServiceDefinitionDTO,
   metrics: ?MetricsDTO
+}
 
-  constructor (data: Object) {
-    validateMultiple(ProposalDTO.name, data, [
-      { name: 'id', type: 'number' },
-      { name: 'providerId', type: 'string' },
-      { name: 'serviceType', type: 'string' },
-      { name: 'serviceDefinition', type: 'object' }
-    ])
+function parseProposalDTO (data: Object): ProposalDTO {
+  validateMultiple('ProposalDTO', data, [
+    { name: 'id', type: 'number' },
+    { name: 'providerId', type: 'string' },
+    { name: 'serviceType', type: 'string' },
+    { name: 'serviceDefinition', type: 'object' }
+  ])
 
-    this.id = data.id
-    this.providerId = data.providerId
-    this.serviceType = data.serviceType
-    if (data.serviceDefinition) {
-      this.serviceDefinition = new ServiceDefinitionDTO(data.serviceDefinition)
-    }
-    this.metrics = data.metrics ? new MetricsDTO(data.metrics) : null
+  return {
+    id: data.id,
+    providerId: data.providerId,
+    serviceType: data.serviceType,
+    serviceDefinition: data.serviceDefinition,
+    metrics: data.metrics
   }
 }
 
-export default ProposalDTO
+export { parseProposalDTO }
+export type { ProposalDTO }

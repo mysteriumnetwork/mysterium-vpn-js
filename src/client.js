@@ -17,8 +17,8 @@
 
 // @flow
 import type { HttpInterface } from './adapters/interface'
-import ProposalDTO from './dto/proposal'
-import ProposalsResponseDTO from './dto/proposals-response'
+import type { ProposalDTO } from './dto/proposal'
+import { parseProposalsResponseDTO } from './dto/proposals-response'
 import ProposalsQuery from './adapters/proposals-query'
 import IdentityDTO from './dto/identity'
 import IdentitiesResponseDTO from './dto/identities-response'
@@ -108,7 +108,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Proposals response body is missing')
     }
-    const responseDto = new ProposalsResponseDTO(response)
+    const responseDto = parseProposalsResponseDTO(response)
     const proposals = responseDto.proposals
 
     if (!proposals) {
