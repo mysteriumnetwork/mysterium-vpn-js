@@ -38,7 +38,7 @@ declare module 'mysterium-tequilapi' {
   }
 
   type HttpQueryParams = {
-    [string]: mixed
+    [name: string]: any
   }
 
   export class ProposalQuery {
