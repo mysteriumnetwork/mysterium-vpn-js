@@ -17,7 +17,7 @@
 
 import HttpTequilapiClient from '../../src/client'
 import IdentityDTO from '../../src/dto/identity'
-import ProposalDTO, { parseProposalDTO } from '../../src/dto/proposal'
+import { parseProposalDTO } from '../../src/dto/proposal'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import axios from 'axios/index'
 import MockAdapter from 'axios-mock-adapter'

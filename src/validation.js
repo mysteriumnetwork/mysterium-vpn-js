@@ -1,3 +1,4 @@
+// @flow
 type Property = {
   name: string,
   type: 'number' | 'string' | 'object' | 'array'
@@ -6,12 +7,12 @@ type Property = {
 function validate (typeName: string, obj: Object, property: Property) {
   const value = obj[property.name]
   if (!value) {
-    throw new Error(`${typeName} ${property.name} is not provided`)
+    throw new TypeError(`${typeName}: ${property.name} is not provided`)
   }
 
   // eslint-disable-next-line
   if (getTypeString(value) !== property.type) {
-    throw new Error(`${typeName} ${property.name} should be "${property.type}" instead of "${actualType}"`)
+    throw new TypeError(`${typeName}: ${property.name} should be "${property.type}"`)
   }
 }
 
