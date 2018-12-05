@@ -18,7 +18,7 @@
 import { parseProposalsResponseDTO } from '../../../src/dto/proposals-response'
 import { captureError } from '../../helpers/utils'
 
-describe('parseProposalsResponseDTO', () => {
+describe('.parseProposalsResponseDTO', () => {
   it('sets properties with full structure', async () => {
     const response = parseProposalsResponseDTO({
       proposals: [{ id: 100, providerId: 'id', serviceType: 'type', serviceDefinition: {} }]

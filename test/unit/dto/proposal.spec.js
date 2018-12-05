@@ -19,7 +19,7 @@ import { parseProposalDTO } from '../../../src/dto/proposal'
 import ServiceDefinitionDTO from '../../../src/dto/service-definition'
 import { captureError } from '../../helpers/utils'
 
-describe('parseProposalDTO', () => {
+describe('.parseProposalDTO', () => {
   const proposalObject = {
     id: 1,
     providerId: '0x1',
