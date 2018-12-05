@@ -20,15 +20,11 @@ import { parseProposalDTO } from './proposal'
 import type { ProposalDTO } from './proposal'
 import { validate } from '../validation'
 
-type ResponseMapped = {
-  proposals: Array<Object>
-}
-
 type ProposalsResponseDTO = {
   proposals: Array<ProposalDTO>
 }
 
-function parseProposalsResponseDTO (responseData: ResponseMapped): ProposalsResponseDTO {
+function parseProposalsResponseDTO (responseData: Object): ProposalsResponseDTO {
   validate('ProposalResponseDTO', responseData, { name: 'proposals', type: 'array' })
   return { proposals: responseData.proposals.map(parseProposalDTO) }
 }
