@@ -18,25 +18,32 @@
 // @flow
 import ServiceDefinitionDTO from './service-definition'
 import MetricsDTO from './metrics-dto'
+import { validateMultiple } from '../validation'
 
-class ProposalDTO {
-  id: ?number
-  providerId: ?string
-  serviceType: ?string
-  serviceDefinition: ?ServiceDefinitionDTO
+type ProposalDTO = {
+  id: number,
+  providerId: string,
+  serviceType: string,
+  serviceDefinition: ServiceDefinitionDTO,
   metrics: ?MetricsDTO
+}
 
-  constructor (data: Object) {
-    this.id = data.id
-    this.providerId = data.providerId
-    this.serviceType = data.serviceType
-    if (data.serviceDefinition) {
-      this.serviceDefinition = new ServiceDefinitionDTO(data.serviceDefinition)
-    }
-    if (data.metrics) {
-      this.metrics = new MetricsDTO(data.metrics)
-    }
+function parseProposalDTO (data: Object): ProposalDTO {
+  validateMultiple('ProposalDTO', data, [
+    { name: 'id', type: 'number' },
+    { name: 'providerId', type: 'string' },
+    { name: 'serviceType', type: 'string' },
+    { name: 'serviceDefinition', type: 'object' }
+  ])
+
+  return {
+    id: data.id,
+    providerId: data.providerId,
+    serviceType: data.serviceType,
+    serviceDefinition: data.serviceDefinition,
+    metrics: data.metrics
   }
 }
 
-export default ProposalDTO
+export { parseProposalDTO }
+export type { ProposalDTO }

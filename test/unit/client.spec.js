@@ -17,7 +17,7 @@
 
 import HttpTequilapiClient from '../../src/client'
 import IdentityDTO from '../../src/dto/identity'
-import ProposalDTO from '../../src/dto/proposal'
+import { parseProposalDTO } from '../../src/dto/proposal'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import axios from 'axios/index'
 import MockAdapter from 'axios-mock-adapter'
@@ -147,8 +147,8 @@ describe('HttpTequilapiClient', () => {
 
       const proposals = await api.findProposals()
       expect(proposals).to.have.lengthOf(2)
-      expect(proposals[0]).to.deep.equal(new ProposalDTO(response.proposals[0]))
-      expect(proposals[1]).to.deep.equal(new ProposalDTO(response.proposals[1]))
+      expect(proposals[0]).to.deep.equal(parseProposalDTO(response.proposals[0]))
+      expect(proposals[1]).to.deep.equal(parseProposalDTO(response.proposals[1]))
     })
 
     it('handles error', async () => {

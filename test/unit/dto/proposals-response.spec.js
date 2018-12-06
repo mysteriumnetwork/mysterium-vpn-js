@@ -15,29 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ProposalsResponseDTO from '../../../src/dto/proposals-response'
+import { parseProposalsResponseDTO } from '../../../src/dto/proposals-response'
+import { captureError } from '../../helpers/utils'
 
-describe('TequilapiClient DTO', () => {
-  describe('ProposalsResponseDTO', () => {
-    it('sets properties with full structure', async () => {
-      const response = new ProposalsResponseDTO({
-        proposals: [{ id: 100 }]
-      })
-
-      expect(response.proposals).to.have.lengthOf(1)
-      expect(response.proposals[0].id).to.equal(100)
+describe('.parseProposalsResponseDTO', () => {
+  it('sets properties with full structure', async () => {
+    const response = parseProposalsResponseDTO({
+      proposals: [{ id: 100, providerId: 'id', serviceType: 'type', serviceDefinition: {} }]
     })
 
-    it('sets empty properties structure', async () => {
-      const response = new ProposalsResponseDTO({})
+    expect(response.proposals).to.have.lengthOf(1)
+    expect(response.proposals[0].id).to.equal(100)
+  })
 
-      expect(response.proposals).to.be.undefined
-    })
+  it('throws error when invoked with an empty object', async () => {
+    const error = captureError(() => parseProposalsResponseDTO({}))
 
-    it('sets wrong properties structure', async () => {
-      const response = new ProposalsResponseDTO('I am wrong')
+    expect(error.message).to.eql('ProposalResponseDTO: proposals is not provided')
+  })
 
-      expect(response.proposals).to.be.undefined
-    })
+  it('throws an error if proposal in array does not validate', async () => {
+    const error = captureError(() => parseProposalsResponseDTO({ proposals: [{}] }))
+
+    expect(error.message).to.eql('ProposalDTO: id is not provided')
   })
 })
