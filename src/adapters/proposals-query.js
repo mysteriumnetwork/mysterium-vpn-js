@@ -48,4 +48,5 @@ class ProposalsQuery {
   }
 }
 
+export type { ProposalQueryOptions }
 export default ProposalsQuery

@@ -41,8 +41,9 @@ declare module 'mysterium-tequilapi' {
     [name: string]: any
   }
 
-  export class ProposalQuery {
-    toQueryParams (): HttpQueryParams
+  export type ProposalQueryOptions = {
+    fetchConnectCounts?: boolean,
+    providerId?: string,
   }
 
   export type ConnectionStatusDTO = {
@@ -147,7 +148,7 @@ declare module 'mysterium-tequilapi' {
 
     identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-    findProposals (query: ProposalQuery): Promise<Array<ProposalDTO>>,
+    findProposals (queryOptions: ProposalQueryOptions): Promise<Array<ProposalDTO>>,
 
     connectionCreate (request: ConnectionRequestDTO, timeout?: number): Promise<ConnectionStatusDTO>,
 
