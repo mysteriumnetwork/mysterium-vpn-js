@@ -116,13 +116,6 @@ describe('HttpTequilapiClient', () => {
               asn: '',
               country: 'NL'
             }
-          },
-          metrics: {
-            connectCount: {
-              success: 1,
-              fail: 1,
-              ping: 1
-            }
           }
         }, {
           id: 1,
@@ -132,6 +125,28 @@ describe('HttpTequilapiClient', () => {
             locationOriginate: {
               asn: '',
               country: 'LT'
+            }
+          }
+        }]
+      }
+      mock.onGet('proposals').reply(200, response)
+
+      const proposals = await api.findProposals()
+      expect(proposals).to.have.lengthOf(2)
+      expect(proposals[0]).to.deep.equal(parseProposalDTO(response.proposals[0]))
+      expect(proposals[1]).to.deep.equal(parseProposalDTO(response.proposals[1]))
+    })
+
+    it('fetches connect counts when option is given', async () => {
+      const response = {
+        proposals: [{
+          id: 1,
+          providerId: '0x0',
+          serviceType: 'openvpn',
+          serviceDefinition: {
+            locationOriginate: {
+              asn: '',
+              country: 'NL'
             }
           },
           metrics: {
@@ -143,12 +158,9 @@ describe('HttpTequilapiClient', () => {
           }
         }]
       }
-      mock.onGet('proposals').reply(200, response)
-
-      const proposals = await api.findProposals()
-      expect(proposals).to.have.lengthOf(2)
-      expect(proposals[0]).to.deep.equal(parseProposalDTO(response.proposals[0]))
-      expect(proposals[1]).to.deep.equal(parseProposalDTO(response.proposals[1]))
+      mock.onGet('proposals', { params: { fetchConnectCounts: true } }).reply(200, response)
+      const proposals = await api.findProposals({ fetchConnectCounts: true })
+      expect(proposals).to.have.lengthOf(1)
     })
 
     it('handles error', async () => {

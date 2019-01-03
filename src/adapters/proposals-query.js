@@ -17,11 +17,7 @@
 
 // @flow
 import type { HttpQueryParams } from './interface'
-
-type ProposalQueryOptions = {
-  fetchConnectCounts?: boolean,
-  providerId?: string,
-}
+import type { ProposalQueryOptions } from '../dto/query/proposals-query-options'
 
 class ProposalsQuery {
   fetchConnectCounts: ?boolean

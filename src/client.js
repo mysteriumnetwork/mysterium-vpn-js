@@ -17,9 +17,10 @@
 
 // @flow
 import type { HttpInterface } from './adapters/interface'
-import type { ProposalDTO } from './dto/proposal'
 import { parseProposalsResponseDTO } from './dto/proposals-response'
+import type { ProposalDTO } from './dto/proposal'
 import ProposalsQuery from './adapters/proposals-query'
+import type { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import IdentityDTO from './dto/identity'
 import IdentitiesResponseDTO from './dto/identities-response'
 import { parseHealthcheckResponse } from './dto/node-healthcheck'
@@ -43,7 +44,7 @@ interface TequilapiClient {
   identityUnlock (id: string, passphrase: string): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-  findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
+  findProposals (options: ?ProposalQueryOptions): Promise<Array<ProposalDTO>>,
 
   connectionCreate (request: ConnectionRequestDTO, timeout: ?number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,
@@ -102,8 +103,8 @@ class HttpTequilapiClient implements TequilapiClient {
     return new IdentityRegistrationDTO(response)
   }
 
-  async findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>> {
-    const params = query ? query.toQueryParams() : null
+  async findProposals (options: ?ProposalQueryOptions): Promise<Array<ProposalDTO>> {
+    const params = options ? new ProposalsQuery(options).toQueryParams() : null
     const response = await this.http.get('proposals', params)
     if (!response) {
       throw new Error('Proposals response body is missing')
