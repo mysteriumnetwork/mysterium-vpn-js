@@ -148,7 +148,7 @@ declare module 'mysterium-tequilapi' {
 
     identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-    findProposals (queryOptions: ProposalQueryOptions): Promise<Array<ProposalDTO>>,
+    findProposals (queryOptions?: ProposalQueryOptions): Promise<Array<ProposalDTO>>,
 
     connectionCreate (request: ConnectionRequestDTO, timeout?: number): Promise<ConnectionStatusDTO>,
 
