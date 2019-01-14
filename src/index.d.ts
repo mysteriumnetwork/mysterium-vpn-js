@@ -28,13 +28,10 @@ declare module 'mysterium-tequilapi' {
   export class TequilapiError extends Error {
     constructor (originalError: Error, path: string)
 
-    get code (): string | undefined
-
-    get isTimeoutError (): boolean
-
-    get isRequestClosedError (): boolean
-
-    get isServiceUnavailableError (): boolean
+    code: string | undefined
+    isTimeoutError: boolean
+    isRequestClosedError: boolean
+    isServiceUnavailableError: boolean
   }
 
   type HttpQueryParams = {
