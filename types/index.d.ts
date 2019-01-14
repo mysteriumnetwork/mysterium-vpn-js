@@ -15,17 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-declare module 'mysterium-tequilapi' {
-  export type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
+// TypeScript Version: 2.8
 
-  export const enum ConnectionStatusEnum {
+declare module 'mysterium-tequilapi' {
+  type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
+
+  const enum ConnectionStatusEnum {
     CONNECTED = 'Connected',
     NOT_CONNECTED = 'NotConnected',
     DISCONNECTING = 'Disconnecting',
     CONNECTING = 'Connecting'
   }
 
-  export class TequilapiError extends Error {
+  class TequilapiError extends Error {
     constructor (originalError: Error, path: string)
 
     code: string | undefined
@@ -38,31 +40,31 @@ declare module 'mysterium-tequilapi' {
     [name: string]: any
   }
 
-  export type ProposalQueryOptions = {
+  type ProposalQueryOptions = {
     fetchConnectCounts?: boolean,
     providerId?: string,
   }
 
-  export type ConnectionStatusDTO = {
+  type ConnectionStatusDTO = {
     status: ConnectionStatus
     sessionId?: string
   }
 
-  export type ConnectionStatisticsDTO = {
+  type ConnectionStatisticsDTO = {
     duration: number
     bytesReceived: number
     bytesSent: number
   }
 
-  export type LocationDTO = {
+  type LocationDTO = {
     country: string
   }
 
-  export type ServiceDefinitionDTO = {
+  type ServiceDefinitionDTO = {
     locationOriginate?: LocationDTO
   }
 
-  export type MetricsDTO = {
+  type MetricsDTO = {
     connectCount?: {
       success: number,
       fail: number,
@@ -70,7 +72,7 @@ declare module 'mysterium-tequilapi' {
     }
   }
 
-  export type ProposalDTO = {
+  type ProposalDTO = {
     id: string
     providerId: string
     serviceType: string
@@ -78,66 +80,63 @@ declare module 'mysterium-tequilapi' {
     metrics?: MetricsDTO
   }
 
-
-  export type IdentityDTO = {
+  type IdentityDTO = {
     id: string
   }
 
-  export type ConnectionIPDTO = {
+  type ConnectionIPDTO = {
     ip: string
   }
 
-  export type ConnectionRequestDTO = {
+  type ConnectionRequestDTO = {
     consumerId: string
     providerId: string
     providerCountry: string
   }
 
-  export type NodeBuildInfoDTO = {
+  type NodeBuildInfoDTO = {
     commit: string
     branch: string
     buildNumber: string
   }
 
-  export type NodeHealthcheckDTO = {
+  type NodeHealthcheckDTO = {
     uptime: string,
     process: number,
     version: string,
     buildInfo: NodeBuildInfoDTO
   }
 
-
-  export type PublicKeyDTO = {
+  type PublicKeyDTO = {
     part1: string
     part2: string
   }
 
-  export type SignatureDTO = {
+  type SignatureDTO = {
     r: string
     s: string
     v: number
   }
 
-  export type IdentityRegistrationDTO = {
+  type IdentityRegistrationDTO = {
     registered: boolean
     publicKey: PublicKeyDTO
     signature: SignatureDTO
   }
 
-
-  export type ConsumerLocationDTO = {
+  type ConsumerLocationDTO = {
     originalCountry: string
     originalIP: string
     currentCountry: string
     currentIP: string
   }
 
-  export interface TequilapiClient {
+  interface TequilapiClient {
     healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
 
     stop (): Promise<void>,
 
-    identitiesList (): Promise<Array<IdentityDTO>>,
+    identitiesList (): Promise<IdentityDTO[]>,
 
     identityCreate (passphrase: string): Promise<IdentityDTO>,
 
@@ -145,7 +144,7 @@ declare module 'mysterium-tequilapi' {
 
     identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-    findProposals (queryOptions?: ProposalQueryOptions): Promise<Array<ProposalDTO>>,
+    findProposals (queryOptions?: ProposalQueryOptions): Promise<ProposalDTO[]>,
 
     connectionCreate (request: ConnectionRequestDTO, timeout?: number): Promise<ConnectionStatusDTO>,
 
