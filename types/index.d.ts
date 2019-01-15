@@ -41,8 +41,9 @@ declare module 'mysterium-tequilapi' {
   }
 
   type ProposalQueryOptions = {
-    fetchConnectCounts?: boolean,
     providerId?: string,
+    serviceType?: string,
+    fetchConnectCounts?: boolean,
   }
 
   type ConnectionStatusDTO = {
