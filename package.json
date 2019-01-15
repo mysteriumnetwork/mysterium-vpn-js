@@ -7,12 +7,13 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/karma start ./test/karma.conf.js",
-    "ci": "npm run flow && npm run test && npm run lint",
+    "ci": "npm run dtslint && npm run flow && npm run test && npm run lint",
     "lint": "eslint --format 'node_modules/eslint-formatter-friendly' ./src ./test",
+    "dtslint": "dtslint types",
     "prepack": "npm run prepack:babel && npm run prepack:flow && npm run prepack:ts",
     "prepack:babel": "babel src/ -d lib",
     "prepack:flow": "flow-copy-source src lib",
-    "prepack:ts": "cp src/index.d.ts lib/",
+    "prepack:ts": "cp types/index.d.ts lib/",
     "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios",
     "flow": "node_modules/.bin/flow"
   },
@@ -33,6 +34,7 @@
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
+    "dtslint": "^0.4.2",
     "eslint": "^5.8.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-formatter-friendly": "^6.0.0",
