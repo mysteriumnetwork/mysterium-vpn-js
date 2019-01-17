@@ -57,7 +57,7 @@ interface TequilapiClient {
 
   findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
 
-  connectionCreate (request: ConnectionRequestDTO, timeout: ?number): Promise<ConnectionStatusDTO>,
+  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,
   connectionCancel (): Promise<void>,
   connectionIP (timeout: ?number): Promise<ConnectionIPDTO>,

@@ -28,7 +28,7 @@ import type { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import ConnectionStatisticsDTO from './dto/connection-statistics'
 import ConnectionIPDTO from './dto/connection-ip'
 import ConnectionStatusDTO from './dto/connection-status'
-import ConnectionRequestDTO from './dto/connection-request'
+import type { ConnectionRequest } from './dto/connection-request'
 import ConsumerLocationDTO from './dto/consumer-location'
 import IdentityRegistrationDTO from './dto/identity-registration'
 import { TIMEOUT_DISABLED } from './timeouts'
@@ -46,7 +46,7 @@ interface TequilapiClient {
 
   findProposals (options: ?ProposalQueryOptions): Promise<Array<ProposalDTO>>,
 
-  connectionCreate (request: ConnectionRequestDTO, timeout: ?number): Promise<ConnectionStatusDTO>,
+  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,
   connectionCancel (): Promise<void>,
   connectionIP (timeout: ?number): Promise<ConnectionIPDTO>,
@@ -119,13 +119,14 @@ class HttpTequilapiClient implements TequilapiClient {
   }
 
   async connectionCreate (
-    request: ConnectionRequestDTO,
+    request: ConnectionRequest,
     timeout: ?number = TIMEOUT_DISABLED): Promise<ConnectionStatusDTO> {
     const response = await this.http.put(
       'connection',
       {
         consumerId: request.consumerId,
-        providerId: request.providerId
+        providerId: request.providerId,
+        serviceType: request.serviceType
       },
       timeout
     )
