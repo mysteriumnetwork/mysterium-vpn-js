@@ -20,25 +20,28 @@ import type { HttpQueryParams } from './interface'
 import type { ProposalQueryOptions } from '../dto/query/proposals-query-options'
 
 class ProposalsQuery {
-  fetchConnectCounts: ?boolean
-  providerId: ?string
+  options: ?ProposalQueryOptions
 
   constructor (options: ?ProposalQueryOptions) {
-    if (!options) {
-      return
-    }
-
-    this.fetchConnectCounts = options.fetchConnectCounts
-    this.providerId = options.providerId
+    this.options = options
   }
 
   toQueryParams (): ?HttpQueryParams {
     const queryObj = {}
-    if (this.fetchConnectCounts) {
-      queryObj.fetchConnectCounts = this.fetchConnectCounts
+
+    const options = this.options
+    if (!options) {
+      return queryObj
     }
-    if (this.providerId) {
-      queryObj.providerId = this.providerId
+
+    if (options.providerId) {
+      queryObj.providerId = options.providerId
+    }
+    if (options.serviceType) {
+      queryObj.serviceType = options.serviceType
+    }
+    if (options.fetchConnectCounts) {
+      queryObj.fetchConnectCounts = options.fetchConnectCounts
     }
     return queryObj
   }

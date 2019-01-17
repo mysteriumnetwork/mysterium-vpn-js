@@ -18,8 +18,9 @@
 // @flow
 
 type ProposalQueryOptions = {
-  fetchConnectCounts?: boolean,
   providerId?: string,
+  serviceType?: string,
+  fetchConnectCounts?: boolean,
 }
 
 export type { ProposalQueryOptions }
