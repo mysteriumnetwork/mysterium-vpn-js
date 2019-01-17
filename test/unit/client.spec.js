@@ -26,7 +26,6 @@ import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import ConnectionStatisticsDTO from '../../src/dto/connection-statistics'
 import ConnectionIPDTO from '../../src/dto/connection-ip'
 import ConnectionStatusDTO from '../../src/dto/connection-status'
-import ConnectionRequestDTO from '../../src/dto/connection-request'
 import ConsumerLocationDTO from '../../src/dto/consumer-location'
 
 describe('HttpTequilapiClient', () => {
@@ -269,14 +268,15 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onPut('connection', expectedRequest).reply(200, response)
 
-      const stats = await api.connectionCreate(new ConnectionRequestDTO('0x1000FACE', '0x2000FACE', 'openvpn'))
+      const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
+      const stats = await api.connectionCreate(request)
       expect(stats).to.deep.equal(new ConnectionStatusDTO(response))
     })
 
     it('handles error', async () => {
       mock.onPut('connection').reply(500)
-      const connectionRequestDTO = new ConnectionRequestDTO('0x1000FACE', '0x2000FACE', 'openvpn')
-      const e = await capturePromiseError(api.connectionCreate(connectionRequestDTO))
+      const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
+      const e = await capturePromiseError(api.connectionCreate(request))
       expect(e.message).to.equal('Request failed with status code 500 (path="connection")')
     })
   })

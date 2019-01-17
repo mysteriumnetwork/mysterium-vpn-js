@@ -92,7 +92,6 @@ declare module 'mysterium-tequilapi' {
   type ConnectionRequestDTO = {
     consumerId: string
     providerId: string
-    providerCountry: string
     serviceType: string
   }
 

@@ -17,16 +17,10 @@
 
 // @flow
 
-class ConnectionRequestDTO {
-  consumerId: string
-  providerId: string
+type ConnectionRequest = {
+  consumerId: string,
+  providerId: string,
   serviceType: string
-
-  constructor (consumerId: string, providerId: string, serviceType: string) {
-    this.consumerId = consumerId
-    this.providerId = providerId
-    this.serviceType = serviceType
-  }
 }
 
-export default ConnectionRequestDTO
+export type { ConnectionRequest }
