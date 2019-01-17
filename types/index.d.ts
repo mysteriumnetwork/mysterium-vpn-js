@@ -93,6 +93,7 @@ declare module 'mysterium-tequilapi' {
     consumerId: string
     providerId: string
     providerCountry: string
+    serviceType: string
   }
 
   type NodeBuildInfoDTO = {

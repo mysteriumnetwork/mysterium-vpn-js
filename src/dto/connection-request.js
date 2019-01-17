@@ -20,10 +20,12 @@
 class ConnectionRequestDTO {
   consumerId: string
   providerId: string
+  serviceType: string
 
-  constructor (consumerId: string, providerId: string) {
+  constructor (consumerId: string, providerId: string, serviceType: string) {
     this.consumerId = consumerId
     this.providerId = providerId
+    this.serviceType = serviceType
   }
 }
 

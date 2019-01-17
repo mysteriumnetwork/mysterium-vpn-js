@@ -260,7 +260,8 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const expectedRequest = {
         consumerId: '0x1000FACE',
-        providerId: '0x2000FACE'
+        providerId: '0x2000FACE',
+        serviceType: 'openvpn'
       }
       const response = {
         status: 'Connected',
@@ -268,14 +269,14 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onPut('connection', expectedRequest).reply(200, response)
 
-      const stats = await api.connectionCreate(new ConnectionRequestDTO('0x1000FACE', '0x2000FACE'))
+      const stats = await api.connectionCreate(new ConnectionRequestDTO('0x1000FACE', '0x2000FACE', 'openvpn'))
       expect(stats).to.deep.equal(new ConnectionStatusDTO(response))
     })
 
     it('handles error', async () => {
       mock.onPut('connection').reply(500)
-
-      const e = await capturePromiseError(api.connectionCreate(new ConnectionRequestDTO()))
+      const connectionRequestDTO = new ConnectionRequestDTO('0x1000FACE', '0x2000FACE', 'openvpn')
+      const e = await capturePromiseError(api.connectionCreate(connectionRequestDTO))
       expect(e.message).to.equal('Request failed with status code 500 (path="connection")')
     })
   })

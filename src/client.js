@@ -125,7 +125,8 @@ class HttpTequilapiClient implements TequilapiClient {
       'connection',
       {
         consumerId: request.consumerId,
-        providerId: request.providerId
+        providerId: request.providerId,
+        serviceType: request.serviceType
       },
       timeout
     )
