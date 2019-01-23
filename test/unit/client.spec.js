@@ -212,11 +212,16 @@ describe('HttpTequilapiClient', () => {
   })
 
   describe('identityUnlock()', () => {
-    it('create identity', async () => {
+    it('creates identity', async () => {
       mock.onPut('identities/0x0000bEEF/unlock', { passphrase: 'test' }).reply(200)
 
-      const identity = await api.identityUnlock('0x0000bEEF', 'test')
-      expect(identity).to.be.undefined
+      await api.identityUnlock('0x0000bEEF', 'test')
+    })
+
+    it('allows specifying custom timeout', async () => {
+      mock.onPut('identities/0x0000bEEF/unlock', { passphrase: 'test' }).reply(200)
+
+      await api.identityUnlock('0x0000bEEF', 'test', 10000)
     })
 
     it('handles error', async () => {
