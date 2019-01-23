@@ -91,8 +91,8 @@ class HttpTequilapiClient implements TequilapiClient {
     return new IdentityDTO(response)
   }
 
-  async identityUnlock (id: string, passphrase: string): Promise<void> {
-    await this.http.put('identities/' + id + '/unlock', { passphrase })
+  async identityUnlock (id: string, passphrase: string, timeout: ?number): Promise<void> {
+    await this.http.put('identities/' + id + '/unlock', { passphrase }, timeout)
   }
 
   async identityRegistration (id: string): Promise<IdentityRegistrationDTO> {
