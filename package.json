@@ -2,8 +2,14 @@
   "name": "mysterium-vpn-js",
   "version": "0.0.1",
   "description": "Library for domain logic used in MysteriumVPN applications",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "author": "Mysterium Network <team@netsys.technology>",
   "license": "GPL-3.0",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "typescript": "^3.3.1"
+  }
 }
