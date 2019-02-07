@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "yarn tsc && ./utils/generate_flow_definitions.sh",
-    "ci": "yarn tsc-check && yarn lint && yarn test",
+    "ci": "yarn tsc-check && yarn lint && ./utils/check-headers.sh && yarn test",
     "tsc-check": "yarn tsc --noEmit",
     "lint": "tslint -p .",
     "test": "jest"
