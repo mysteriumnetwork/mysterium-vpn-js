@@ -8,12 +8,16 @@
     "build": "tsc",
     "tsc-check": "tsc --noEmit",
     "lint": "tslint -p .",
-    "ci": "yarn tsc-check && yarn lint"
+    "test": "jest",
+    "ci": "yarn tsc-check && yarn lint && yarn test"
   },
   "author": "Mysterium Network <team@netsys.technology>",
   "license": "GPL-3.0",
   "private": false,
   "devDependencies": {
+    "@types/jest": "<24.0.0",
+    "jest": "<24.0.0",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.3.1"
