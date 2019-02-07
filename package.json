@@ -6,12 +6,15 @@
   "scripts": {
     "build": "tsc",
     "tsc-check": "tsc --noEmit",
-    "ci": "yarn tsc-check"
+    "lint": "tslint -p .",
+    "ci": "yarn tsc-check && yarn lint"
   },
   "author": "Mysterium Network <team@netsys.technology>",
   "license": "GPL-3.0",
   "private": false,
   "devDependencies": {
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1",
     "typescript": "^3.3.1"
   }
 }
