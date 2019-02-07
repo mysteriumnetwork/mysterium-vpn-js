@@ -6,7 +6,8 @@
     ],
     "jsRules": {},
     "rules": {
-        "semicolon": [ true, "never" ]
+        "semicolon": [ true, "never" ],
+        "interface-name": [true, "never-prefix"]
     },
     "rulesDirectory": []
 }
