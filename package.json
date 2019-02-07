@@ -1,0 +1,9 @@
+{
+  "name": "mysterium-vpn-js",
+  "version": "0.0.1",
+  "description": "Library for domain logic used in MysteriumVPN applications",
+  "main": "index.js",
+  "author": "Mysterium Network <team@netsys.technology>",
+  "license": "GPL-3.0",
+  "private": false
+}
