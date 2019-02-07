@@ -2,8 +2,8 @@
   "name": "mysterium-vpn-js",
   "version": "0.0.1",
   "description": "Library for domain logic used in MysteriumVPN applications",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "yarn tsc && ./utils/generate_flow_definitions.sh",
     "ci": "yarn tsc-check && yarn lint && ./utils/check-headers.sh && yarn test",
