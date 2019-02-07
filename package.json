@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc && ./utils/generate_flow_definitions.sh",
-    "tsc-check": "tsc --noEmit",
+    "build": "yarn tsc && ./utils/generate_flow_definitions.sh",
+    "ci": "yarn tsc-check && yarn lint && yarn test",
+    "tsc-check": "yarn tsc --noEmit",
     "lint": "tslint -p .",
-    "test": "jest",
-    "ci": "yarn tsc-check && yarn lint && yarn test"
+    "test": "jest"
   },
   "author": "Mysterium Network <team@netsys.technology>",
   "license": "GPL-3.0",
