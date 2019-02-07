@@ -4,7 +4,9 @@
   "description": "Library for domain logic used in MysteriumVPN applications",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "tsc-check": "tsc --noEmit",
+    "ci": "yarn tsc-check"
   },
   "author": "Mysterium Network <team@netsys.technology>",
   "license": "GPL-3.0",
