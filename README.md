@@ -1,4 +1,7 @@
 # Mysterium Tequilapi
+
+[![npm version](https://badge.fury.io/js/mysterium-tequilapi.svg)](https://badge.fury.io/js/mysterium-tequilapi)
+
 a library to control mysterium_client and myst from [mysteriumnetwork/node](https://github.com/mysteriumnetwork/node)
 
 ## Installation
