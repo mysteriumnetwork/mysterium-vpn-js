@@ -28,7 +28,7 @@ class PublicKeyDTO {
   part1: string
   part2: string
 
-  constructor (data: {part1: string, part2: string}) {
+  constructor (data: { part1: string, part2: string }) {
     this.part1 = data.part1
     this.part2 = data.part2
   }
@@ -39,7 +39,7 @@ class SignatureDTO {
   s: string
   v: string
 
-  constructor (data: {r: string, s: string, v: string}) {
+  constructor (data: { r: string, s: string, v: string }) {
     this.r = data.r
     this.s = data.s
     this.v = data.v
@@ -56,13 +56,12 @@ class IdentityRegistrationDTO {
   publicKey: ?PublicKeyDTO
   signature: ?SignatureDTO
 
-  constructor (data: {registered: boolean, publicKey: ?PublicKeyDTO, signature: ?SignatureDTO}) {
+  constructor (data: { registered: boolean, publicKey: ?PublicKeyDTO, signature: ?SignatureDTO }) {
     this.registered = data.registered
     this.publicKey = data.publicKey ? new PublicKeyDTO(data.publicKey) : null
     this.signature = data.signature ? new SignatureDTO(data.signature) : null
   }
 }
 
-export type { PublicKeyDTO, SignatureDTO }
-export { getPaymentLink }
+export { PublicKeyDTO, SignatureDTO, getPaymentLink }
 export default IdentityRegistrationDTO
