@@ -17,14 +17,18 @@
 
 // @flow
 
-import ConnectCountDTO from './connect-count-dto'
+import { parseConnectionCountDTO } from './connect-count-dto'
+import type { ConnectCountDTO } from './connect-count-dto'
 
 class MetricsDTO {
   connectCount: ?ConnectCountDTO
 
   constructor (data: Object) {
     if (data.connectCount) {
-      this.connectCount = new ConnectCountDTO(data.connectCount)
+      try {
+        this.connectCount = parseConnectionCountDTO(data.connectCount)
+      } catch (err) {
+      }
     }
   }
 }
