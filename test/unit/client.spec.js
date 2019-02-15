@@ -24,7 +24,6 @@ import MockAdapter from 'axios-mock-adapter'
 import { capturePromiseError } from '../helpers/utils'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import ConnectionStatisticsDTO from '../../src/dto/connection-statistics'
-import ConnectionStatusDTO from '../../src/dto/connection-status'
 import ConsumerLocationDTO from '../../src/dto/consumer-location'
 
 describe('HttpTequilapiClient', () => {
@@ -274,7 +273,7 @@ describe('HttpTequilapiClient', () => {
 
       const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
       const stats = await api.connectionCreate(request)
-      expect(stats).to.deep.equal(new ConnectionStatusDTO(response))
+      expect(stats).to.deep.equal(response)
     })
 
     it('handles error', async () => {
@@ -294,7 +293,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection').reply(200, response)
 
       const connection = await api.connectionStatus()
-      expect(connection).to.deep.equal(new ConnectionStatusDTO(response))
+      expect(connection).to.deep.equal(response)
     })
 
     it('handles error', async () => {

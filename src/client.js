@@ -27,12 +27,13 @@ import { parseHealthcheckResponse } from './dto/node-healthcheck'
 import type { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import ConnectionStatisticsDTO from './dto/connection-statistics'
 import { parseConnectionIPDTO } from './dto/connection-ip'
-import ConnectionStatusDTO from './dto/connection-status'
+import type { ConnectionStatusDTO } from './dto/connection-status'
 import type { ConnectionRequest } from './dto/connection-request'
 import ConsumerLocationDTO from './dto/consumer-location'
 import IdentityRegistrationDTO from './dto/identity-registration'
 import { TIMEOUT_DISABLED } from './timeouts'
 import type { ConnectionIPDTO } from './dto/connection-ip'
+import { parseConnectionStatusDTO } from './dto/connection-status'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
@@ -134,7 +135,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }
-    return new ConnectionStatusDTO(response)
+    return parseConnectionStatusDTO(response)
   }
 
   async connectionStatus (): Promise<ConnectionStatusDTO> {
@@ -142,7 +143,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection status response body is missing')
     }
-    return new ConnectionStatusDTO(response)
+    return parseConnectionStatusDTO(response)
   }
 
   async connectionCancel (): Promise<void> {

@@ -17,15 +17,21 @@
 
 // @flow
 import type { ConnectionStatus } from './connection-status-enum'
+import { validate } from '../validation'
 
-class ConnectionStatusDTO {
-  status: ?ConnectionStatus
+type ConnectionStatusDTO = {
+  status: ConnectionStatus,
   sessionId: ?string
+}
 
-  constructor (data: Object) {
-    this.status = data.status
-    this.sessionId = data.sessionId
+function parseConnectionStatusDTO (data: Object) {
+  // TODO: validate that status has value from ConnectionStatus enum
+  validate('ConnectionStatusDTO', data, { name: 'status', type: 'string' })
+  return {
+    status: data.status,
+    sessionId: data.sessionId
   }
 }
 
-export default ConnectionStatusDTO
+export type { ConnectionStatusDTO }
+export { parseConnectionStatusDTO }
