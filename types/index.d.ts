@@ -86,7 +86,7 @@ declare module 'mysterium-tequilapi' {
   }
 
   type ConnectionIPDTO = {
-    ip: string
+    ip?: string
   }
 
   type ConnectionRequestDTO = {

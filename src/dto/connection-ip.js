@@ -17,12 +17,13 @@
 
 // @flow
 
-class ConnectionIPDTO {
+type ConnectionIPDTO = {
   ip: ?string
-
-  constructor (data: Object) {
-    this.ip = data.ip
-  }
 }
 
-export default ConnectionIPDTO
+function parseConnectionIPDTO (data: Object): ConnectionIPDTO {
+  return { ip: data.ip }
+}
+
+export type { ConnectionIPDTO }
+export { parseConnectionIPDTO }
