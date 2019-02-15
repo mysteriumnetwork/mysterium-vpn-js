@@ -17,13 +17,20 @@
 
 // @flow
 
+import { validateMultiple } from '../validation'
+
 type NodeBuildInfoDTO = {
-  commit: ?string,
-  branch: ?string,
-  buildNumber: ?string
+  commit: string,
+  branch: string,
+  buildNumber: string
 }
 
 function parseNodeBuildInfoDTO (data: Object) {
+  validateMultiple('NodeBuildInfoDTO', data, [
+    { name: 'commit', type: 'string' },
+    { name: 'branch', type: 'string' },
+    { name: 'buildNumber', type: 'string' }
+  ])
   return {
     commit: data.commit,
     branch: data.branch,

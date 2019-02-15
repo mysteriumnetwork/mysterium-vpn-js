@@ -28,16 +28,8 @@ describe('TequilapiClient DTO', () => {
       expect(location.country).to.equal('LT')
     })
 
-    it('sets empty properties structure', async () => {
-      const location = parseLocationDTO({})
-
-      expect(location.country).to.be.undefined
-    })
-
-    it('sets wrong properties structure', async () => {
-      const location = parseLocationDTO('I am wrong')
-
-      expect(location.country).to.be.undefined
+    it('throws when country is missing', async () => {
+      expect(() => parseLocationDTO({})).to.throw()
     })
   })
 })

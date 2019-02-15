@@ -21,10 +21,12 @@ describe('TequilapiClient DTO', () => {
   describe('.parseServiceDefinitionDTO', () => {
     it('sets properties with full structure', async () => {
       const service = parseServiceDefinitionDTO({
-        locationOriginate: {}
+        locationOriginate: {
+          country: 'lt'
+        }
       })
 
-      expect(service.locationOriginate).to.deep.equal({ country: undefined })
+      expect(service.locationOriginate).to.deep.equal({ country: 'lt' })
     })
 
     it('sets empty properties structure', async () => {

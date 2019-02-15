@@ -62,10 +62,10 @@ declare module 'mysterium-tequilapi' {
   type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
 
   type ConsumerLocationDTO = {
-    originalCountry: string
-    originalIP: string
-    currentCountry: string
-    currentIP: string
+    originalCountry?: string
+    originalIP?: string
+    currentCountry?: string
+    currentIP?: string
   }
 
   type ConnectionRequestDTO = {
@@ -76,8 +76,8 @@ declare module 'mysterium-tequilapi' {
 
   type IdentityRegistrationDTO = {
     registered: boolean
-    publicKey: PublicKeyDTO
-    signature: SignatureDTO
+    publicKey?: PublicKeyDTO
+    signature?: SignatureDTO
   }
 
   type IdentityDTO = {

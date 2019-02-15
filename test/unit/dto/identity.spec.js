@@ -27,10 +27,8 @@ describe('TequilapiClient DTO', () => {
       expect(identity.id).to.equal('0xF000FACE')
     })
 
-    it('sets empty properties', async () => {
-      const identity = parseIdentityDTO({})
-
-      expect(identity.id).to.be.undefined
+    it('throws when id is missing', async () => {
+      expect(() => parseIdentityDTO({})).to.throw()
     })
   })
 })

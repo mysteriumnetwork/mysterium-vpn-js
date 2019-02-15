@@ -20,14 +20,16 @@ import { parseProposalDTO } from './proposal'
 import type { ProposalDTO } from './proposal'
 import { validate } from '../validation'
 
+/**
+ * Used only as an intermediate result - is not exposed to clients.
+ */
 type ProposalsResponseDTO = {
   proposals: Array<ProposalDTO>
 }
 
 function parseProposalsResponseDTO (responseData: Object): ProposalsResponseDTO {
-  validate('ProposalResponseDTO', responseData, { name: 'proposals', type: 'array' })
+  validate('ProposalsResponseDTO', responseData, { name: 'proposals', type: 'array' })
   return { proposals: responseData.proposals.map(parseProposalDTO) }
 }
 
 export { parseProposalsResponseDTO }
-export type { ProposalsResponseDTO }
