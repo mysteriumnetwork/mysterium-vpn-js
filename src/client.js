@@ -25,7 +25,7 @@ import type { IdentityDTO } from './dto/identity'
 import { parseIdentityDTO } from './dto/identity'
 import { parseHealthcheckResponse } from './dto/node-healthcheck'
 import type { NodeHealthcheckDTO } from './dto/node-healthcheck'
-import ConnectionStatisticsDTO from './dto/connection-statistics'
+import { parseConnectionStatisticsDTO } from './dto/connection-statistics'
 import { parseConnectionIPDTO } from './dto/connection-ip'
 import type { ConnectionStatusDTO } from './dto/connection-status'
 import type { ConnectionRequest } from './dto/query/connection-request'
@@ -37,6 +37,7 @@ import { parseConnectionStatusDTO } from './dto/connection-status'
 import { parseConsumerLocationDTO } from './dto/consumer-location'
 import { parseIdentitiesResponseDTO } from './dto/identities-response'
 import type { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
+import type { ConnectionStatisticsDTO } from './dto/connection-statistics'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
@@ -166,7 +167,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection statistics response body is missing')
     }
-    return new ConnectionStatisticsDTO(response)
+    return parseConnectionStatisticsDTO(response)
   }
 
   async location (timeout: ?number): Promise<ConsumerLocationDTO> {

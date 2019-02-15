@@ -22,7 +22,6 @@ import axios from 'axios/index'
 import MockAdapter from 'axios-mock-adapter'
 import { capturePromiseError } from '../helpers/utils'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
-import ConnectionStatisticsDTO from '../../src/dto/connection-statistics'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
 
@@ -347,7 +346,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection/statistics').reply(200, response)
 
       const stats = await api.connectionStatistics()
-      expect(stats).to.deep.equal(new ConnectionStatisticsDTO(response))
+      expect(stats).to.deep.equal(response)
     })
 
     it('handles error', async () => {

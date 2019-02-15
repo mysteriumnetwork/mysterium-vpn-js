@@ -17,16 +17,19 @@
 
 // @flow
 
-class ConnectionStatisticsDTO {
-  duration: ?number
-  bytesReceived: ?number
+type ConnectionStatisticsDTO = {
+  duration: ?number,
+  bytesReceived: ?number,
   bytesSent: ?number
+}
 
-  constructor (data: Object) {
-    this.duration = data.duration
-    this.bytesReceived = data.bytesReceived
-    this.bytesSent = data.bytesSent
+function parseConnectionStatisticsDTO (data: Object): ConnectionStatisticsDTO {
+  return {
+    duration: data.duration,
+    bytesReceived: data.bytesReceived,
+    bytesSent: data.bytesSent
   }
 }
 
-export default ConnectionStatisticsDTO
+export type { ConnectionStatisticsDTO }
+export { parseConnectionStatisticsDTO }

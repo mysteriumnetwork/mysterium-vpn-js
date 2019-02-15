@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ConnectionStatisticsDTO from '../../../src/dto/connection-statistics'
+import { parseConnectionStatisticsDTO } from '../../../src/dto/connection-statistics'
 
 describe('TequilapiClient DTO', () => {
-  describe('ConnectionStatisticsDTO', () => {
+  describe('.parseConnectionStatisticsDTO', () => {
     it('sets properties', async () => {
-      const stats = new ConnectionStatisticsDTO({
+      const stats = parseConnectionStatisticsDTO({
         duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
         bytesSent: 123321 // 0.117608 MB
@@ -32,7 +32,7 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('sets empty properties', async () => {
-      const stats = new ConnectionStatisticsDTO({})
+      const stats = parseConnectionStatisticsDTO({})
 
       expect(stats.duration).to.be.undefined
       expect(stats.bytesReceived).to.be.undefined
@@ -40,7 +40,7 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('sets wrong properties', async () => {
-      const stats = new ConnectionStatisticsDTO('I am wrong')
+      const stats = parseConnectionStatisticsDTO('I am wrong')
 
       expect(stats.duration).to.be.undefined
       expect(stats.bytesReceived).to.be.undefined
