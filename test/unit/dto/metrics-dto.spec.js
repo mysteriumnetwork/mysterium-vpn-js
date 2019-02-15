@@ -17,10 +17,13 @@
 
 // @flow
 
-describe('MetricsDTO', () => {
-  describe('constructor', () => {
-    it('returns empty metrics if they are empty', () => {
+import { parseMetricsDTO } from '../../../src/dto/metrics-dto'
 
+describe('MetricsDTO', () => {
+  describe('.parseMetricsDTO', () => {
+    it('returns empty metrics if they are empty', () => {
+      const dto = parseMetricsDTO({})
+      expect(dto).to.eql({ connectCount: null })
     })
   })
 })

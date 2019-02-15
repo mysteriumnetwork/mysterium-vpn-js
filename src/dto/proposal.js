@@ -17,8 +17,8 @@
 
 // @flow
 import ServiceDefinitionDTO from './service-definition'
-import MetricsDTO from './metrics-dto'
 import { validateMultiple } from '../validation'
+import type { MetricsDTO } from './metrics-dto'
 
 type ProposalDTO = {
   id: number,
