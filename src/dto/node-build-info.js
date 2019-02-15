@@ -17,16 +17,19 @@
 
 // @flow
 
-class NodeBuildInfoDTO {
-  commit: ?string
-  branch: ?string
+type NodeBuildInfoDTO = {
+  commit: ?string,
+  branch: ?string,
   buildNumber: ?string
+}
 
-  constructor (data: Object) {
-    this.commit = data.commit
-    this.branch = data.branch
-    this.buildNumber = data.buildNumber
+function parseNodeBuildInfoDTO (data: Object) {
+  return {
+    commit: data.commit,
+    branch: data.branch,
+    buildNumber: data.buildNumber
   }
 }
 
-export default NodeBuildInfoDTO
+export type { NodeBuildInfoDTO }
+export { parseNodeBuildInfoDTO }

@@ -16,7 +16,8 @@
  */
 
 // @flow
-import NodeBuildInfoDTO from './node-build-info'
+import type { NodeBuildInfoDTO } from './node-build-info'
+import { parseNodeBuildInfoDTO } from './node-build-info'
 
 type NodeHealthcheckDTO = {
   uptime: string,
@@ -30,7 +31,7 @@ type NodeHealthcheckDTO = {
  * @param data to be conveted
  * @returns converted type
  */
-function parseHealthcheckResponse (data: mixed): NodeHealthcheckDTO {
+function parseHealthcheckResponse (data: Object): NodeHealthcheckDTO {
   const errorMessage = `Unable to parse healthcheck response: ${JSON.stringify(data)}`
   if (data == null || typeof data !== 'object') {
     throw new Error(errorMessage)
@@ -51,7 +52,7 @@ function parseHealthcheckResponse (data: mixed): NodeHealthcheckDTO {
   if (data.buildInfo === null || typeof data.buildInfo !== 'object') {
     throw new Error(errorMessage)
   }
-  const buildInfo = new NodeBuildInfoDTO(data.buildInfo)
+  const buildInfo: NodeBuildInfoDTO = parseNodeBuildInfoDTO(data.buildInfo)
 
   return { uptime: data.uptime, process: data.process, version: data.version, buildInfo }
 }

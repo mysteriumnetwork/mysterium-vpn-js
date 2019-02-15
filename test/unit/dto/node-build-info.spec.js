@@ -15,12 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import NodeBuildInfoDTO from '../../../src/dto/node-build-info'
+// @flow
+
+import { parseNodeBuildInfoDTO } from '../../../src/dto/node-build-info'
 
 describe('TequilapiClient DTO', () => {
   describe('NodeBuildInfoDTO', () => {
     it('sets properties', async () => {
-      const version = new NodeBuildInfoDTO({
+      const version = parseNodeBuildInfoDTO({
         commit: '0bcccc',
         branch: 'master',
         buildNumber: '001'
@@ -32,15 +34,7 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('sets empty properties', async () => {
-      const version = new NodeBuildInfoDTO({})
-
-      expect(version.commit).to.be.undefined
-      expect(version.branch).to.be.undefined
-      expect(version.buildNumber).to.be.undefined
-    })
-
-    it('sets wrong properties', async () => {
-      const version = new NodeBuildInfoDTO('I am wrong')
+      const version = parseNodeBuildInfoDTO({})
 
       expect(version.commit).to.be.undefined
       expect(version.branch).to.be.undefined
