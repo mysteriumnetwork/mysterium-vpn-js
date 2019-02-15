@@ -16,7 +16,6 @@
  */
 
 import ServiceDefinitionDTO from '../../../src/dto/service-definition'
-import LocationDTO from '../../../src/dto/location'
 
 describe('TequilapiClient DTO', () => {
   describe('ServiceDefinitionDTO', () => {
@@ -25,7 +24,7 @@ describe('TequilapiClient DTO', () => {
         locationOriginate: {}
       })
 
-      expect(service.locationOriginate).to.deep.equal(new LocationDTO({}))
+      expect(service.locationOriginate).to.deep.equal({ country: undefined })
     })
 
     it('sets empty properties structure', async () => {

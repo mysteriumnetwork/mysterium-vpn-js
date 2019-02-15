@@ -17,12 +17,13 @@
 
 // @flow
 
-class LocationDTO {
+type LocationDTO = {
   country: ?string
-
-  constructor (data: Object) {
-    this.country = data.country
-  }
 }
 
-export default LocationDTO
+function parseLocationDTO (data: Object) {
+  return { country: data.country }
+}
+
+export type { LocationDTO }
+export { parseLocationDTO }

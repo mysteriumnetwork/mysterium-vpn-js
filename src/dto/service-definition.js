@@ -16,14 +16,15 @@
  */
 
 // @flow
-import LocationDTO from './location'
+import { parseLocationDTO } from './location'
+import type { LocationDTO } from './location'
 
 class ServiceDefinitionDTO {
   locationOriginate: ?LocationDTO
 
   constructor (data: Object) {
     if (data.locationOriginate) {
-      this.locationOriginate = new LocationDTO(data.locationOriginate)
+      this.locationOriginate = parseLocationDTO(data.locationOriginate)
     }
   }
 }
