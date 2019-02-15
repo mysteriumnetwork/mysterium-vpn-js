@@ -30,12 +30,13 @@ import { parseConnectionIPDTO } from './dto/connection-ip'
 import type { ConnectionStatusDTO } from './dto/connection-status'
 import type { ConnectionRequest } from './dto/connection-request'
 import type { ConsumerLocationDTO } from './dto/consumer-location'
-import IdentityRegistrationDTO from './dto/identity-registration/identity-registration'
+import { parseIdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
 import { TIMEOUT_DISABLED } from './timeouts'
 import type { ConnectionIPDTO } from './dto/connection-ip'
 import { parseConnectionStatusDTO } from './dto/connection-status'
 import { parseConsumerLocationDTO } from './dto/consumer-location'
 import { parseIdentitiesResponseDTO } from './dto/identities-response'
+import type { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
@@ -104,7 +105,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Identities registration response body is missing')
     }
-    return new IdentityRegistrationDTO(response)
+    return parseIdentityRegistrationDTO(response)
   }
 
   async findProposals (options: ?ProposalQueryOptions): Promise<Array<ProposalDTO>> {

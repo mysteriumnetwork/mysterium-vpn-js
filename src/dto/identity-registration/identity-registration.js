@@ -17,19 +17,24 @@
 
 // @flow
 
-import { PublicKeyDTO } from './public-key'
-import { SignatureDTO } from './signature'
+import { parsePublicKeyDTO } from './public-key'
+import { parseSignatureDTO } from './signature'
+import type { PublicKeyDTO } from './public-key'
+import type { SignatureDTO } from './signature'
 
-class IdentityRegistrationDTO {
-  registered: boolean
-  publicKey: ?PublicKeyDTO
+type IdentityRegistrationDTO = {
+  registered: boolean,
+  publicKey: ?PublicKeyDTO,
   signature: ?SignatureDTO
+}
 
-  constructor (data: { registered: boolean, publicKey: ?PublicKeyDTO, signature: ?SignatureDTO }) {
-    this.registered = data.registered
-    this.publicKey = data.publicKey ? new PublicKeyDTO(data.publicKey) : null
-    this.signature = data.signature ? new SignatureDTO(data.signature) : null
+function parseIdentityRegistrationDTO (data: Object): IdentityRegistrationDTO {
+  return {
+    registered: data.registered,
+    publicKey: data.publicKey ? parsePublicKeyDTO(data.publicKey) : null,
+    signature: data.signature ? parseSignatureDTO(data.signature) : null
   }
 }
 
-export default IdentityRegistrationDTO
+export type { IdentityRegistrationDTO }
+export { parseIdentityRegistrationDTO }

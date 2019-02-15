@@ -17,8 +17,8 @@
 
 // @flow
 
-import { PublicKeyDTO } from './public-key'
-import { SignatureDTO } from './signature'
+import type { PublicKeyDTO } from './public-key'
+import type { SignatureDTO } from './signature'
 
 export type IdentityProof = {
   publicKey: PublicKeyDTO,

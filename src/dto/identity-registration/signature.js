@@ -17,16 +17,19 @@
 
 // @flow
 
-class SignatureDTO {
-  r: string
-  s: string
+type SignatureDTO = {
+  r: string,
+  s: string,
   v: string
+}
 
-  constructor (data: { r: string, s: string, v: string }) {
-    this.r = data.r
-    this.s = data.s
-    this.v = data.v
+function parseSignatureDTO (data: Object): SignatureDTO {
+  return {
+    r: data.r,
+    s: data.s,
+    v: data.v
   }
 }
 
-export { SignatureDTO }
+export type { SignatureDTO }
+export { parseSignatureDTO }

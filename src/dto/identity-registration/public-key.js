@@ -17,14 +17,14 @@
 
 // @flow
 
-class PublicKeyDTO {
-  part1: string
+type PublicKeyDTO = {
+  part1: string,
   part2: string
-
-  constructor (data: { part1: string, part2: string }) {
-    this.part1 = data.part1
-    this.part2 = data.part2
-  }
 }
 
-export { PublicKeyDTO }
+function parsePublicKeyDTO (data: Object): PublicKeyDTO {
+  return { part1: data.part1, part2: data.part2 }
+}
+
+export type { PublicKeyDTO }
+export { parsePublicKeyDTO }
