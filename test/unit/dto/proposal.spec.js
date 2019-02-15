@@ -16,7 +16,6 @@
  */
 
 import { parseProposalDTO } from '../../../src/dto/proposal'
-import ServiceDefinitionDTO from '../../../src/dto/service-definition'
 import { captureError } from '../../helpers/utils'
 
 describe('.parseProposalDTO', () => {
@@ -33,7 +32,7 @@ describe('.parseProposalDTO', () => {
     expect(proposal.id).to.equal(1)
     expect(proposal.providerId).to.equal('0x1')
     expect(proposal.serviceType).to.equal('openvpn')
-    expect(proposal.serviceDefinition).to.deep.equal(new ServiceDefinitionDTO({}))
+    expect(proposal.serviceDefinition).to.deep.equal({ locationOriginate: undefined })
     expect(proposal.metrics).to.be.undefined
   })
 
