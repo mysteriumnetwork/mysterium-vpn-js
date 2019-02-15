@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,39 +17,8 @@
 
 // @flow
 
-const getPaymentLink = (paymentBaseUrl: string, registration: IdentityProof): string => {
-  const { publicKey, signature } = registration
-  return paymentBaseUrl +
-    `?part1=${publicKey.part1}&part2=${publicKey.part2}` +
-    `&r=${signature.r}&s=${signature.s}&v=${signature.v}`
-}
-
-class PublicKeyDTO {
-  part1: string
-  part2: string
-
-  constructor (data: { part1: string, part2: string }) {
-    this.part1 = data.part1
-    this.part2 = data.part2
-  }
-}
-
-class SignatureDTO {
-  r: string
-  s: string
-  v: string
-
-  constructor (data: { r: string, s: string, v: string }) {
-    this.r = data.r
-    this.s = data.s
-    this.v = data.v
-  }
-}
-
-type IdentityProof = {
-  publicKey: PublicKeyDTO,
-  signature: SignatureDTO
-}
+import { PublicKeyDTO } from './public-key'
+import { SignatureDTO } from './signature'
 
 class IdentityRegistrationDTO {
   registered: boolean
@@ -63,5 +32,4 @@ class IdentityRegistrationDTO {
   }
 }
 
-export { PublicKeyDTO, SignatureDTO, getPaymentLink }
 export default IdentityRegistrationDTO
