@@ -29,11 +29,12 @@ import ConnectionStatisticsDTO from './dto/connection-statistics'
 import { parseConnectionIPDTO } from './dto/connection-ip'
 import type { ConnectionStatusDTO } from './dto/connection-status'
 import type { ConnectionRequest } from './dto/connection-request'
-import ConsumerLocationDTO from './dto/consumer-location'
+import type { ConsumerLocationDTO } from './dto/consumer-location'
 import IdentityRegistrationDTO from './dto/identity-registration'
 import { TIMEOUT_DISABLED } from './timeouts'
 import type { ConnectionIPDTO } from './dto/connection-ip'
 import { parseConnectionStatusDTO } from './dto/connection-status'
+import { parseConsumerLocationDTO } from './dto/consumer-location'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
@@ -171,7 +172,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Location response body is missing')
     }
-    return new ConsumerLocationDTO(response)
+    return parseConsumerLocationDTO(response)
   }
 }
 

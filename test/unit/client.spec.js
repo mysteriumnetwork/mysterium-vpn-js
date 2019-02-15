@@ -24,7 +24,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { capturePromiseError } from '../helpers/utils'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import ConnectionStatisticsDTO from '../../src/dto/connection-statistics'
-import ConsumerLocationDTO from '../../src/dto/consumer-location'
+import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 
 describe('HttpTequilapiClient', () => {
   let api
@@ -368,7 +368,7 @@ describe('HttpTequilapiClient', () => {
 
       const stats = await api.location()
 
-      const dto = new ConsumerLocationDTO(response)
+      const dto = parseConsumerLocationDTO(response)
       expect(stats.originalCountry).to.equal(dto.originalCountry)
       expect(stats.originalIP).to.equal(dto.originalIP)
       expect(stats.currentCountry).to.equal(dto.currentCountry)
