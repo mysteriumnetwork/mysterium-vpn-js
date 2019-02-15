@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import IdentitiesResponseDTO from '../../../src/dto/identities-response'
+import { parseIdentitiesResponseDTO } from '../../../src/dto/identities-response'
 
 describe('TequilapiClient DTO', () => {
-  describe('IdentitiesResponseDTO', () => {
+  describe('.parseIdentitiesResponseDTO', () => {
     it('sets properties', async () => {
-      const response = new IdentitiesResponseDTO({
+      const response = parseIdentitiesResponseDTO({
         identities: [
           { id: '0x1000FACE' },
           { id: '0x2000FACE' }
@@ -33,13 +33,13 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('returns empty array when properties are empty', async () => {
-      const response = new IdentitiesResponseDTO({})
+      const response = parseIdentitiesResponseDTO({})
 
       expect(response.identities).to.eql([])
     })
 
     it('returns empty array when properties are wrong', async () => {
-      const response = new IdentitiesResponseDTO('I am wrong')
+      const response = parseIdentitiesResponseDTO('I am wrong')
 
       expect(response.identities).to.eql([])
     })

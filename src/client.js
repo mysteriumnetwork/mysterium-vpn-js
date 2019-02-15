@@ -23,7 +23,6 @@ import ProposalsQuery from './adapters/proposals-query'
 import type { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import type { IdentityDTO } from './dto/identity'
 import { parseIdentityDTO } from './dto/identity'
-import IdentitiesResponseDTO from './dto/identities-response'
 import { parseHealthcheckResponse } from './dto/node-healthcheck'
 import type { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import ConnectionStatisticsDTO from './dto/connection-statistics'
@@ -36,6 +35,7 @@ import { TIMEOUT_DISABLED } from './timeouts'
 import type { ConnectionIPDTO } from './dto/connection-ip'
 import { parseConnectionStatusDTO } from './dto/connection-status'
 import { parseConsumerLocationDTO } from './dto/consumer-location'
+import { parseIdentitiesResponseDTO } from './dto/identities-response'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
@@ -82,7 +82,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Identities response body is missing')
     }
-    const responseDto = new IdentitiesResponseDTO(response)
+    const responseDto = parseIdentitiesResponseDTO(response)
 
     return responseDto.identities
   }
