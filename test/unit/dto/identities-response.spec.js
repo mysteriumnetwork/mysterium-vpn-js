@@ -16,7 +16,6 @@
  */
 
 import IdentitiesResponseDTO from '../../../src/dto/identities-response'
-import IdentityDTO from '../../../src/dto/identity'
 
 describe('TequilapiClient DTO', () => {
   describe('IdentitiesResponseDTO', () => {
@@ -29,11 +28,7 @@ describe('TequilapiClient DTO', () => {
       })
 
       expect(response.identities).to.have.lengthOf(2)
-
-      expect(response.identities[0]).to.be.an.instanceOf(IdentityDTO)
       expect(response.identities[0].id).to.equal('0x1000FACE')
-
-      expect(response.identities[1]).to.be.an.instanceOf(IdentityDTO)
       expect(response.identities[1].id).to.equal('0x2000FACE')
     })
 

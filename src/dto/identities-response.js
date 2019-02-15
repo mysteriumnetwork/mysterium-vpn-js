@@ -16,7 +16,8 @@
  */
 
 // @flow
-import IdentityDTO from './identity'
+import type { IdentityDTO } from './identity'
+import { parseIdentityDTO } from './identity'
 
 type IdentityListResponse = { identities: Array<Object> }
 
@@ -25,7 +26,7 @@ class IdentitiesResponseDTO {
 
   constructor (responseData: IdentityListResponse) {
     if (responseData && Array.isArray(responseData.identities)) {
-      this.identities = responseData.identities.map((identity) => new IdentityDTO(identity))
+      this.identities = responseData.identities.map((identity) => parseIdentityDTO(identity))
     } else {
       this.identities = []
     }

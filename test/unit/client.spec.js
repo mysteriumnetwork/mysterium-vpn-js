@@ -16,7 +16,6 @@
  */
 
 import HttpTequilapiClient from '../../src/client'
-import IdentityDTO from '../../src/dto/identity'
 import { parseProposalDTO } from '../../src/dto/proposal'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import axios from 'axios/index'
@@ -25,6 +24,7 @@ import { capturePromiseError } from '../helpers/utils'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import ConnectionStatisticsDTO from '../../src/dto/connection-statistics'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
+import { parseIdentityDTO } from '../../src/dto/identity'
 
 describe('HttpTequilapiClient', () => {
   let api
@@ -180,8 +180,8 @@ describe('HttpTequilapiClient', () => {
 
       const identities = await api.identitiesList()
       expect(identities).to.have.lengthOf(2)
-      expect(identities[0]).to.deep.equal(new IdentityDTO(response.identities[0]))
-      expect(identities[1]).to.deep.equal(new IdentityDTO(response.identities[1]))
+      expect(identities[0]).to.deep.equal(parseIdentityDTO(response.identities[0]))
+      expect(identities[1]).to.deep.equal(parseIdentityDTO(response.identities[1]))
     })
 
     it('handles error', async () => {
@@ -198,7 +198,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('identities', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCreate('test')
-      expect(identity).to.deep.equal(new IdentityDTO(response))
+      expect(identity).to.deep.equal(parseIdentityDTO(response))
     })
 
     it('handles error', async () => {

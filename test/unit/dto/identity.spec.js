@@ -15,26 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import IdentityDTO from '../../../src/dto/identity'
+// @flow
+
+import { parseIdentityDTO } from '../../../src/dto/identity'
 
 describe('TequilapiClient DTO', () => {
-  describe('IdentityDTO', () => {
+  describe('.parseIdentityDTO', () => {
     it('sets properties', async () => {
-      const identity = new IdentityDTO({
-        id: '0xF000FACE'
-      })
+      const identity = parseIdentityDTO({ id: '0xF000FACE' })
 
       expect(identity.id).to.equal('0xF000FACE')
     })
 
     it('sets empty properties', async () => {
-      const identity = new IdentityDTO({})
-
-      expect(identity.id).to.be.undefined
-    })
-
-    it('sets wrong properties', async () => {
-      const identity = new IdentityDTO('I am wrong')
+      const identity = parseIdentityDTO({})
 
       expect(identity.id).to.be.undefined
     })
