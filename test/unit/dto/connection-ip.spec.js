@@ -15,24 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ConnectionIPDTO from '../../../src/dto/connection-ip'
+// @flow
+
+import type { ConnectionIPDTO } from '../../../src/dto/connection-ip'
+import { parseConnectionIPDTO } from '../../../src/dto/connection-ip'
 
 describe('TequilapiClient DTO', () => {
-  describe('ConnectionIPDTO', () => {
+  describe('.parseConnectionIPDTO', () => {
     it('sets properties', async () => {
-      const model = new ConnectionIPDTO({ ip: 'mock ip' })
+      const model: ConnectionIPDTO = parseConnectionIPDTO({ ip: 'mock ip' })
 
       expect(model.ip).to.equal('mock ip')
     })
 
     it('sets empty properties', async () => {
-      const model = new ConnectionIPDTO({})
-
-      expect(model.ip).to.be.undefined
-    })
-
-    it('sets wrong properties', async () => {
-      const model = new ConnectionIPDTO('I am wrong')
+      const model: ConnectionIPDTO = parseConnectionIPDTO({})
 
       expect(model.ip).to.be.undefined
     })

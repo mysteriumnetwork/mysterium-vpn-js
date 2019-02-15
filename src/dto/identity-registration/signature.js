@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The "mysteriumnetwork/mysterium-vpn" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,19 @@
 
 // @flow
 
-import { validateMultiple } from '../validation'
-
-type ConnectCountDTO = {
-  success: number,
-  fail: number,
-  timeout: number
+type SignatureDTO = {
+  r: string,
+  s: string,
+  v: string
 }
 
-function parseConnectionCountDTO (data: Object): ConnectCountDTO {
-  validateMultiple('ConnectCountDTO', data, [
-    { name: 'success', type: 'number' },
-    { name: 'fail', type: 'number' }
-  ])
-  return { success: 1, fail: 2, timeout: 3 }
+function parseSignatureDTO (data: Object): SignatureDTO {
+  return {
+    r: data.r,
+    s: data.s,
+    v: data.v
+  }
 }
 
-export { parseConnectionCountDTO }
-export type { ConnectCountDTO }
+export type { SignatureDTO }
+export { parseSignatureDTO }

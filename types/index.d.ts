@@ -66,11 +66,13 @@ declare module 'mysterium-tequilapi' {
   }
 
   type MetricsDTO = {
-    connectCount?: {
-      success: number,
-      fail: number,
-      timeout: number
-    }
+    connectCount?: ConnectCountDTO
+  }
+
+  type ConnectCountDTO = {
+    success: number,
+    fail: number,
+    timeout: number
   }
 
   type ProposalDTO = {
@@ -86,7 +88,7 @@ declare module 'mysterium-tequilapi' {
   }
 
   type ConnectionIPDTO = {
-    ip: string
+    ip?: string
   }
 
   type ConnectionRequestDTO = {

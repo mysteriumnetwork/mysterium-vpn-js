@@ -16,9 +16,10 @@
  */
 
 // @flow
-import ServiceDefinitionDTO from './service-definition'
-import MetricsDTO from './metrics-dto'
+import type { ServiceDefinitionDTO } from './service-definition'
 import { validateMultiple } from '../validation'
+import type { MetricsDTO } from './metrics-dto'
+import { parseServiceDefinitionDTO } from './service-definition'
 
 type ProposalDTO = {
   id: number,
@@ -40,7 +41,7 @@ function parseProposalDTO (data: Object): ProposalDTO {
     id: data.id,
     providerId: data.providerId,
     serviceType: data.serviceType,
-    serviceDefinition: data.serviceDefinition,
+    serviceDefinition: parseServiceDefinitionDTO(data.serviceDefinition),
     metrics: data.metrics
   }
 }

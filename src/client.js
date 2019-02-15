@@ -21,17 +21,23 @@ import { parseProposalsResponseDTO } from './dto/proposals-response'
 import type { ProposalDTO } from './dto/proposal'
 import ProposalsQuery from './adapters/proposals-query'
 import type { ProposalQueryOptions } from './dto/query/proposals-query-options'
-import IdentityDTO from './dto/identity'
-import IdentitiesResponseDTO from './dto/identities-response'
+import type { IdentityDTO } from './dto/identity'
+import { parseIdentityDTO } from './dto/identity'
 import { parseHealthcheckResponse } from './dto/node-healthcheck'
 import type { NodeHealthcheckDTO } from './dto/node-healthcheck'
-import ConnectionStatisticsDTO from './dto/connection-statistics'
-import ConnectionIPDTO from './dto/connection-ip'
-import ConnectionStatusDTO from './dto/connection-status'
-import type { ConnectionRequest } from './dto/connection-request'
-import ConsumerLocationDTO from './dto/consumer-location'
-import IdentityRegistrationDTO from './dto/identity-registration'
+import { parseConnectionStatisticsDTO } from './dto/connection-statistics'
+import { parseConnectionIPDTO } from './dto/connection-ip'
+import type { ConnectionStatusDTO } from './dto/connection-status'
+import type { ConnectionRequest } from './dto/query/connection-request'
+import type { ConsumerLocationDTO } from './dto/consumer-location'
+import { parseIdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
 import { TIMEOUT_DISABLED } from './timeouts'
+import type { ConnectionIPDTO } from './dto/connection-ip'
+import { parseConnectionStatusDTO } from './dto/connection-status'
+import { parseConsumerLocationDTO } from './dto/consumer-location'
+import { parseIdentitiesResponseDTO } from './dto/identities-response'
+import type { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
+import type { ConnectionStatisticsDTO } from './dto/connection-statistics'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
@@ -78,7 +84,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Identities response body is missing')
     }
-    const responseDto = new IdentitiesResponseDTO(response)
+    const responseDto = parseIdentitiesResponseDTO(response)
 
     return responseDto.identities
   }
@@ -88,7 +94,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Identities creation response body is missing')
     }
-    return new IdentityDTO(response)
+    return parseIdentityDTO(response)
   }
 
   async identityUnlock (id: string, passphrase: string, timeout: ?number): Promise<void> {
@@ -100,7 +106,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Identities registration response body is missing')
     }
-    return new IdentityRegistrationDTO(response)
+    return parseIdentityRegistrationDTO(response)
   }
 
   async findProposals (options: ?ProposalQueryOptions): Promise<Array<ProposalDTO>> {
@@ -133,7 +139,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }
-    return new ConnectionStatusDTO(response)
+    return parseConnectionStatusDTO(response)
   }
 
   async connectionStatus (): Promise<ConnectionStatusDTO> {
@@ -141,7 +147,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection status response body is missing')
     }
-    return new ConnectionStatusDTO(response)
+    return parseConnectionStatusDTO(response)
   }
 
   async connectionCancel (): Promise<void> {
@@ -153,7 +159,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection IP response body is missing')
     }
-    return new ConnectionIPDTO(response)
+    return parseConnectionIPDTO(response)
   }
 
   async connectionStatistics (): Promise<ConnectionStatisticsDTO> {
@@ -161,7 +167,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection statistics response body is missing')
     }
-    return new ConnectionStatisticsDTO(response)
+    return parseConnectionStatisticsDTO(response)
   }
 
   async location (timeout: ?number): Promise<ConsumerLocationDTO> {
@@ -169,7 +175,7 @@ class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Location response body is missing')
     }
-    return new ConsumerLocationDTO(response)
+    return parseConsumerLocationDTO(response)
   }
 }
 

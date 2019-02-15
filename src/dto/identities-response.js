@@ -16,20 +16,20 @@
  */
 
 // @flow
-import IdentityDTO from './identity'
+import type { IdentityDTO } from './identity'
+import { parseIdentityDTO } from './identity'
 
-type IdentityListResponse = { identities: Array<Object> }
-
-class IdentitiesResponseDTO {
+type IdentitiesResponseDTO = {
   identities: Array<IdentityDTO>
+}
 
-  constructor (responseData: IdentityListResponse) {
-    if (responseData && Array.isArray(responseData.identities)) {
-      this.identities = responseData.identities.map((identity) => new IdentityDTO(identity))
-    } else {
-      this.identities = []
-    }
+function parseIdentitiesResponseDTO (responseData: Object): IdentitiesResponseDTO {
+  if (responseData && Array.isArray(responseData.identities)) {
+    return { identities: responseData.identities.map((identity) => parseIdentityDTO(identity)) }
+  } else {
+    return { identities: [] }
   }
 }
 
-export default IdentitiesResponseDTO
+export type { IdentitiesResponseDTO }
+export { parseIdentitiesResponseDTO }

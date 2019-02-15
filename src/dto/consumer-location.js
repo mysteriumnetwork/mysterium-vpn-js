@@ -17,21 +17,24 @@
 
 // @flow
 
-class ConsumerLocationDTO {
-  originalCountry: ?string
-  originalIP: ?string
-  currentCountry: ?string
+type ConsumerLocationDTO = {
+  originalCountry: ?string,
+  originalIP: ?string,
+  currentCountry: ?string,
   currentIP: ?string
+}
 
-  constructor (data: Object) {
-    const original = data.original || {}
-    this.originalCountry = original.country
-    this.originalIP = original.ip
+function parseConsumerLocationDTO (data: Object): ConsumerLocationDTO {
+  const original = data.original || {}
+  const current = data.current || {}
 
-    const current = data.current || {}
-    this.currentCountry = current.country
-    this.currentIP = current.ip
+  return {
+    originalCountry: original.country,
+    originalIP: original.ip,
+    currentCountry: current.country,
+    currentIP: current.ip
   }
 }
 
-export default ConsumerLocationDTO
+export type { ConsumerLocationDTO }
+export { parseConsumerLocationDTO }

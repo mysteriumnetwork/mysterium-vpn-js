@@ -17,12 +17,13 @@
 
 // @flow
 
-class IdentityDTO {
+type IdentityDTO = {
   id: ?string
-
-  constructor (data: Object) {
-    this.id = data.id
-  }
 }
 
-export default IdentityDTO
+function parseIdentityDTO (data: Object): IdentityDTO {
+  return { id: data.id }
+}
+
+export type { IdentityDTO }
+export { parseIdentityDTO }

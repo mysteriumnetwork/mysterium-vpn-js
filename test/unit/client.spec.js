@@ -16,17 +16,14 @@
  */
 
 import HttpTequilapiClient from '../../src/client'
-import IdentityDTO from '../../src/dto/identity'
 import { parseProposalDTO } from '../../src/dto/proposal'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import axios from 'axios/index'
 import MockAdapter from 'axios-mock-adapter'
 import { capturePromiseError } from '../helpers/utils'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
-import ConnectionStatisticsDTO from '../../src/dto/connection-statistics'
-import ConnectionIPDTO from '../../src/dto/connection-ip'
-import ConnectionStatusDTO from '../../src/dto/connection-status'
-import ConsumerLocationDTO from '../../src/dto/consumer-location'
+import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
+import { parseIdentityDTO } from '../../src/dto/identity'
 
 describe('HttpTequilapiClient', () => {
   let api
@@ -182,8 +179,8 @@ describe('HttpTequilapiClient', () => {
 
       const identities = await api.identitiesList()
       expect(identities).to.have.lengthOf(2)
-      expect(identities[0]).to.deep.equal(new IdentityDTO(response.identities[0]))
-      expect(identities[1]).to.deep.equal(new IdentityDTO(response.identities[1]))
+      expect(identities[0]).to.deep.equal(parseIdentityDTO(response.identities[0]))
+      expect(identities[1]).to.deep.equal(parseIdentityDTO(response.identities[1]))
     })
 
     it('handles error', async () => {
@@ -200,7 +197,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('identities', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCreate('test')
-      expect(identity).to.deep.equal(new IdentityDTO(response))
+      expect(identity).to.deep.equal(parseIdentityDTO(response))
     })
 
     it('handles error', async () => {
@@ -275,7 +272,7 @@ describe('HttpTequilapiClient', () => {
 
       const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
       const stats = await api.connectionCreate(request)
-      expect(stats).to.deep.equal(new ConnectionStatusDTO(response))
+      expect(stats).to.deep.equal(response)
     })
 
     it('handles error', async () => {
@@ -295,7 +292,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection').reply(200, response)
 
       const connection = await api.connectionStatus()
-      expect(connection).to.deep.equal(new ConnectionStatusDTO(response))
+      expect(connection).to.deep.equal(response)
     })
 
     it('handles error', async () => {
@@ -328,7 +325,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection/ip').reply(200, response)
 
       const stats = await api.connectionIP()
-      expect(stats).to.deep.equal(new ConnectionIPDTO(response))
+      expect(stats).to.deep.equal(response)
     })
 
     it('handles error', async () => {
@@ -349,7 +346,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection/statistics').reply(200, response)
 
       const stats = await api.connectionStatistics()
-      expect(stats).to.deep.equal(new ConnectionStatisticsDTO(response))
+      expect(stats).to.deep.equal(response)
     })
 
     it('handles error', async () => {
@@ -370,7 +367,7 @@ describe('HttpTequilapiClient', () => {
 
       const stats = await api.location()
 
-      const dto = new ConsumerLocationDTO(response)
+      const dto = parseConsumerLocationDTO(response)
       expect(stats.originalCountry).to.equal(dto.originalCountry)
       expect(stats.originalIP).to.equal(dto.originalIP)
       expect(stats.currentCountry).to.equal(dto.currentCountry)

@@ -15,13 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import IdentitiesResponseDTO from '../../../src/dto/identities-response'
-import IdentityDTO from '../../../src/dto/identity'
+import { parseIdentitiesResponseDTO } from '../../../src/dto/identities-response'
 
 describe('TequilapiClient DTO', () => {
-  describe('IdentitiesResponseDTO', () => {
+  describe('.parseIdentitiesResponseDTO', () => {
     it('sets properties', async () => {
-      const response = new IdentitiesResponseDTO({
+      const response = parseIdentitiesResponseDTO({
         identities: [
           { id: '0x1000FACE' },
           { id: '0x2000FACE' }
@@ -29,22 +28,18 @@ describe('TequilapiClient DTO', () => {
       })
 
       expect(response.identities).to.have.lengthOf(2)
-
-      expect(response.identities[0]).to.be.an.instanceOf(IdentityDTO)
       expect(response.identities[0].id).to.equal('0x1000FACE')
-
-      expect(response.identities[1]).to.be.an.instanceOf(IdentityDTO)
       expect(response.identities[1].id).to.equal('0x2000FACE')
     })
 
     it('returns empty array when properties are empty', async () => {
-      const response = new IdentitiesResponseDTO({})
+      const response = parseIdentitiesResponseDTO({})
 
       expect(response.identities).to.eql([])
     })
 
     it('returns empty array when properties are wrong', async () => {
-      const response = new IdentitiesResponseDTO('I am wrong')
+      const response = parseIdentitiesResponseDTO('I am wrong')
 
       expect(response.identities).to.eql([])
     })

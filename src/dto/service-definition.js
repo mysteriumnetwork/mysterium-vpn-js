@@ -16,16 +16,20 @@
  */
 
 // @flow
-import LocationDTO from './location'
+import { parseLocationDTO } from './location'
+import type { LocationDTO } from './location'
 
-class ServiceDefinitionDTO {
+type ServiceDefinitionDTO = {
   locationOriginate: ?LocationDTO
-
-  constructor (data: Object) {
-    if (data.locationOriginate) {
-      this.locationOriginate = new LocationDTO(data.locationOriginate)
-    }
-  }
 }
 
-export default ServiceDefinitionDTO
+function parseServiceDefinitionDTO (data: Object): ServiceDefinitionDTO {
+  let locationOriginate: ?LocationDTO
+  if (data.locationOriginate) {
+    locationOriginate = parseLocationDTO(data.locationOriginate)
+  }
+  return { locationOriginate }
+}
+
+export type { ServiceDefinitionDTO }
+export { parseServiceDefinitionDTO }

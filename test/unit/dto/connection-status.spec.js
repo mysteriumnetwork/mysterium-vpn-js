@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ConnectionStatusDTO from '../../../src/dto/connection-status'
 import ConnectionStatusEnum from '../../../src/dto/connection-status-enum'
+import { parseConnectionStatusDTO } from '../../../src/dto/connection-status'
 
 describe('TequilapiClient DTO', () => {
-  describe('ConnectionStatusDTO', () => {
+  describe('.parseConnectionStatusDTO', () => {
     it('sets properties', async () => {
-      const connection = new ConnectionStatusDTO({
+      const connection = parseConnectionStatusDTO({
         status: 'Connected',
         sessionId: 'My-super-session'
       })
@@ -30,18 +30,8 @@ describe('TequilapiClient DTO', () => {
       expect(connection.sessionId).to.equal('My-super-session')
     })
 
-    it('sets empty properties', async () => {
-      const connection = new ConnectionStatusDTO({})
-
-      expect(connection.status).to.be.undefined
-      expect(connection.sessionId).to.be.undefined
-    })
-
-    it('sets wrong properties', async () => {
-      const connection = new ConnectionStatusDTO('I am wrong')
-
-      expect(connection.status).to.be.undefined
-      expect(connection.sessionId).to.be.undefined
+    it('fails when status is missing', () => {
+      expect(() => parseConnectionStatusDTO({ sessionId: 'My-super-session' })).to.throw()
     })
   })
 })
