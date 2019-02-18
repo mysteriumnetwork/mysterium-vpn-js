@@ -7,14 +7,14 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-declare type AxiosError = {
+export type AxiosError = {
   message: string,
   response?: {
     status: number
   },
   code?: string
 };
-declare class TequilapiError mixins Error {
+declare export default class TequilapiError mixins Error {
   name: string;
   _originalError: AxiosError;
   constructor(originalError: Error, path: string): this;
@@ -24,5 +24,3 @@ declare class TequilapiError mixins Error {
   isServiceUnavailableError: boolean;
   _hasHttpStatus(expectedStatus: number): boolean;
 }
-declare export { AxiosError };
-declare export default typeof TequilapiError;

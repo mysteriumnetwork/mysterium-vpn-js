@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type AxiosError = {
+export type AxiosError = {
   message: string,
   response?: { status: number },
   code?: string
 }
 
-class TequilapiError extends Error {
+export default class TequilapiError extends Error {
   name: string = 'TequilapiError'
 
   _originalError: AxiosError
@@ -64,6 +64,3 @@ const httpResponseCodes = {
 const errorCodes = {
   CONNECTION_ABORTED_ERROR_CODE: 'ECONNABORTED'
 }
-
-export { AxiosError }
-export default TequilapiError
