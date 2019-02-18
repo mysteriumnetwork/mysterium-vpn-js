@@ -15,21 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectionStatus } from './connection-status-enum'
-import { validate } from '../validation'
-
-type ConnectionStatusDTO = {
-  status: ConnectionStatus,
-  sessionId?: string
+export enum ConnectionStatus {
+  CONNECTED = 'Connected',
+  NOT_CONNECTED = 'NotConnected',
+  DISCONNECTING = 'Disconnecting',
+  CONNECTING = 'Connecting'
 }
-
-function parseConnectionStatusDTO (data: any) {
-  // TODO: validate that status has value from ConnectionStatus enum
-  validate('ConnectionStatusDTO', data, { name: 'status', type: 'string' })
-  return {
-    status: data.status,
-    sessionId: data.sessionId
-  }
-}
-
-export { ConnectionStatusDTO, parseConnectionStatusDTO }

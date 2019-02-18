@@ -17,14 +17,11 @@
 
 import { validate } from '../validation'
 
-type IdentityDTO = {
+export type IdentityDTO = {
   id: string
 }
 
-function parseIdentityDTO (data: any): IdentityDTO {
+export function parseIdentityDTO (data: any): IdentityDTO {
   validate('IdentityDTO', data, { name: 'id', type: 'string' })
   return { id: data.id }
 }
-
-export { IdentityDTO }
-export { parseIdentityDTO }

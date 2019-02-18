@@ -17,13 +17,13 @@
 
 import { validateMultiple } from '../validation'
 
-type NodeBuildInfoDTO = {
+export type NodeBuildInfoDTO = {
   commit: string,
   branch: string,
   buildNumber: string
 }
 
-function parseNodeBuildInfoDTO (data: any) {
+export function parseNodeBuildInfoDTO (data: any) {
   validateMultiple('NodeBuildInfoDTO', data, [
     { name: 'commit', type: 'string' },
     { name: 'branch', type: 'string' },
@@ -35,6 +35,3 @@ function parseNodeBuildInfoDTO (data: any) {
     buildNumber: data.buildNumber
   }
 }
-
-export { NodeBuildInfoDTO }
-export { parseNodeBuildInfoDTO }

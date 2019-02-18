@@ -15,14 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const ConnectionStatusEnum = {
-  CONNECTED: 'Connected',
-  NOT_CONNECTED: 'NotConnected',
-  DISCONNECTING: 'Disconnecting',
-  CONNECTING: 'Connecting'
+import { ConnectionStatus } from './connection-status'
+import { validate } from '../validation'
+
+export type ConnectionStatusDTO = {
+  status: ConnectionStatus,
+  sessionId?: string
 }
 
-type ConnectionStatus = 'Connected' | 'NotConnected' | 'Disconnecting' | 'Connecting'
-
-export default ConnectionStatusEnum
-export { ConnectionStatus }
+export function parseConnectionStatusDTO (data: any) {
+  // TODO: validate that status has value from ConnectionStatus enum
+  validate('ConnectionStatusDTO', data, { name: 'status', type: 'string' })
+  return {
+    status: data.status,
+    sessionId: data.sessionId
+  }
+}

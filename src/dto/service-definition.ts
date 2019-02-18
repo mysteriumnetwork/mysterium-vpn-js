@@ -18,17 +18,14 @@
 import { parseLocationDTO } from './location'
 import { LocationDTO } from './location'
 
-type ServiceDefinitionDTO = {
+export type ServiceDefinitionDTO = {
   locationOriginate?: LocationDTO
 }
 
-function parseServiceDefinitionDTO (data: any): ServiceDefinitionDTO {
+export function parseServiceDefinitionDTO (data: any): ServiceDefinitionDTO {
   let locationOriginate: LocationDTO | undefined = undefined
   if (data.locationOriginate) {
     locationOriginate = parseLocationDTO(data.locationOriginate)
   }
   return { locationOriginate }
 }
-
-export { ServiceDefinitionDTO }
-export { parseServiceDefinitionDTO }

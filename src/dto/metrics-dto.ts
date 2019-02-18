@@ -17,11 +17,11 @@
 
 import { parseConnectionCountDTO, ConnectCountDTO } from './connect-count-dto'
 
-type MetricsDTO = {
+export type MetricsDTO = {
   connectCount?: ConnectCountDTO
 }
 
-function parseMetricsDTO (data: any): MetricsDTO {
+export function parseMetricsDTO (data: any): MetricsDTO {
   if (data.connectCount) {
     try {
       return { connectCount: parseConnectionCountDTO(data.connectCount) }
@@ -30,6 +30,3 @@ function parseMetricsDTO (data: any): MetricsDTO {
   }
   return { connectCount: undefined }
 }
-
-export { MetricsDTO }
-export { parseMetricsDTO }

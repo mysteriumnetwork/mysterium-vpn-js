@@ -15,19 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type SignatureDTO = {
+export type SignatureDTO = {
   r: string,
   s: string,
   v: string
 }
 
-function parseSignatureDTO (data: any): SignatureDTO {
+export function parseSignatureDTO (data: any): SignatureDTO {
   return {
     r: data.r,
     s: data.s,
     v: data.v
   }
 }
-
-export { SignatureDTO }
-export { parseSignatureDTO }

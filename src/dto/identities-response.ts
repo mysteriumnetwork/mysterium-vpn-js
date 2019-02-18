@@ -17,16 +17,14 @@
 
 import { IdentityDTO, parseIdentityDTO } from './identity'
 
-type IdentitiesResponseDTO = {
+export type IdentitiesResponseDTO = {
   identities: Array<IdentityDTO>
 }
 
-function parseIdentitiesResponseDTO (responseData: any): IdentitiesResponseDTO {
+export function parseIdentitiesResponseDTO (responseData: any): IdentitiesResponseDTO {
   if (responseData && Array.isArray(responseData.identities)) {
     return { identities: responseData.identities.map((identity: any) => parseIdentityDTO(identity)) }
   } else {
     return { identities: [] }
   }
 }
-
-export { IdentitiesResponseDTO, parseIdentitiesResponseDTO }

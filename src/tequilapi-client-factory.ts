@@ -18,7 +18,7 @@
 import axios from 'axios'
 import AxiosAdapter from './adapters/axios-adapter'
 import { TIMEOUT_DEFAULT } from './timeouts'
-import HttpTequilapiClient from './client'
+import { HttpTequilapiClient } from './client'
 import { TequilapiClient } from './client'
 import { HttpInterface } from './adapters/interface'
 

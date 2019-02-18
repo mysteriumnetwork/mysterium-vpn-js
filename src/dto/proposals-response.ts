@@ -25,9 +25,7 @@ type ProposalsResponseDTO = {
   proposals: Array<ProposalDTO>
 }
 
-function parseProposalsResponseDTO (responseData: any): ProposalsResponseDTO {
+export function parseProposalsResponseDTO (responseData: any): ProposalsResponseDTO {
   validate('ProposalsResponseDTO', responseData, { name: 'proposals', type: 'array' })
   return { proposals: responseData.proposals.map(parseProposalDTO) }
 }
-
-export { parseProposalsResponseDTO }

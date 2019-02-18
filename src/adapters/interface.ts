@@ -15,15 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type HttpQueryParams = {
+export type HttpQueryParams = {
   [s: string]: any
 }
 
-interface HttpInterface {
+export interface HttpInterface {
   get (path: string, query?: HttpQueryParams, timeout?: number): Promise<any>
   post (path: string, data?: any, timeout?: number): Promise<any>
   delete (path: string, timeout?: number): Promise<any>
   put (path: string, data: any, timeout?: number): Promise<any>
 }
-
-export { HttpInterface, HttpQueryParams }

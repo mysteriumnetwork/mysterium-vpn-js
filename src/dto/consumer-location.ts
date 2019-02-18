@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type ConsumerLocationDTO = {
+export type ConsumerLocationDTO = {
   originalCountry?: string,
   originalIP?: string,
   currentCountry?: string,
   currentIP?: string
 }
 
-function parseConsumerLocationDTO (data: any): ConsumerLocationDTO {
+export function parseConsumerLocationDTO (data: any): ConsumerLocationDTO {
   const original = data.original || {}
   const current = data.current || {}
 
@@ -33,5 +33,3 @@ function parseConsumerLocationDTO (data: any): ConsumerLocationDTO {
     currentIP: current.ip
   }
 }
-
-export { ConsumerLocationDTO, parseConsumerLocationDTO  }

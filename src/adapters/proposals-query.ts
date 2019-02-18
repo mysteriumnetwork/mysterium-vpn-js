@@ -18,7 +18,7 @@
 import { HttpQueryParams } from './interface'
 import { ProposalQueryOptions } from '../dto/query/proposals-query-options'
 
-class ProposalsQuery {
+export default class ProposalsQuery {
   options?: ProposalQueryOptions
 
   constructor (options?: ProposalQueryOptions) {
@@ -45,5 +45,3 @@ class ProposalsQuery {
     return queryObj
   }
 }
-
-export default ProposalsQuery

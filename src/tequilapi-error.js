@@ -16,13 +16,13 @@
  */
 
 // @flow
-type AxiosError = {
+export type AxiosError = {
   message: string,
   response?: { status: number },
   code?: string
 }
 
-class TequilapiError extends Error {
+export default class TequilapiError extends Error {
   name: string = 'TequilapiError'
 
   _originalError: AxiosError
@@ -66,6 +66,3 @@ const httpResponseCodes = {
 const errorCodes = {
   CONNECTION_ABORTED_ERROR_CODE: 'ECONNABORTED'
 }
-
-export type { AxiosError }
-export default TequilapiError

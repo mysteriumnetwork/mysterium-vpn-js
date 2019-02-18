@@ -15,10 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type ProposalQueryOptions = {
+export type ProposalQueryOptions = {
   providerId?: string,
   serviceType?: string,
   fetchConnectCounts?: boolean,
 }
-
-export { ProposalQueryOptions }

@@ -15,10 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type ConnectionRequest = {
+export type ConnectionRequest = {
   consumerId: string,
   providerId: string,
   serviceType: string
 }
-
-export { ConnectionRequest }

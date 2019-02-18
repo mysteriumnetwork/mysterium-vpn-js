@@ -15,13 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type LocationDTO = {
+export type LocationDTO = {
   country: string
 }
 
-function parseLocationDTO (data: any) {
+export function parseLocationDTO (data: any) {
   return { country: data.country }
 }
-
-export { LocationDTO }
-export { parseLocationDTO }

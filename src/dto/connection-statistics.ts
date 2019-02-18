@@ -17,13 +17,13 @@
 
 import { validateMultiple } from '../validation'
 
-type ConnectionStatisticsDTO = {
+export type ConnectionStatisticsDTO = {
   duration: number,
   bytesReceived: number,
   bytesSent: number
 }
 
-function parseConnectionStatisticsDTO (data: any): ConnectionStatisticsDTO {
+export function parseConnectionStatisticsDTO (data: any): ConnectionStatisticsDTO {
   validateMultiple('ConnectionStatisticsDTO', data, [
     { name: 'duration', type: 'number' },
     { name: 'bytesReceived', type: 'number' },
@@ -36,5 +36,3 @@ function parseConnectionStatisticsDTO (data: any): ConnectionStatisticsDTO {
     bytesSent: data.bytesSent
   }
 }
-
-export { ConnectionStatisticsDTO, parseConnectionStatisticsDTO  }

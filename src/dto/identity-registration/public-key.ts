@@ -15,13 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type PublicKeyDTO = {
+export type PublicKeyDTO = {
   part1: string,
   part2: string
 }
 
-function parsePublicKeyDTO (data: any): PublicKeyDTO {
+export function parsePublicKeyDTO (data: any): PublicKeyDTO {
   return { part1: data.part1, part2: data.part2 }
 }
-
-export { PublicKeyDTO, parsePublicKeyDTO }

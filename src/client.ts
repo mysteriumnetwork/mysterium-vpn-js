@@ -26,13 +26,13 @@ import { parseHealthcheckResponse } from './dto/node-healthcheck'
 import { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import { parseConnectionStatisticsDTO } from './dto/connection-statistics'
 import { parseConnectionIPDTO } from './dto/connection-ip'
-import { ConnectionStatusDTO } from './dto/connection-status'
+import { ConnectionStatusDTO } from './dto/connection-status-dto'
 import { ConnectionRequest } from './dto/query/connection-request'
 import { ConsumerLocationDTO } from './dto/consumer-location'
 import { parseIdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
 import { TIMEOUT_DISABLED } from './timeouts'
 import { ConnectionIPDTO } from './dto/connection-ip'
-import { parseConnectionStatusDTO } from './dto/connection-status'
+import { parseConnectionStatusDTO } from './dto/connection-status-dto'
 import { parseConsumerLocationDTO } from './dto/consumer-location'
 import { parseIdentitiesResponseDTO } from './dto/identities-response'
 import { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
@@ -40,7 +40,7 @@ import { ConnectionStatisticsDTO } from './dto/connection-statistics'
 
 // TODO: move TequilapiClient and HttpTequilapiClient to 'tequilapi-client.js' and 'http-tequilapi-client.js'
 
-interface TequilapiClient {
+export interface TequilapiClient {
   healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
   stop (): Promise<void>,
 
@@ -59,7 +59,7 @@ interface TequilapiClient {
   location (timeout?: number): Promise<ConsumerLocationDTO>
 }
 
-class HttpTequilapiClient implements TequilapiClient {
+export class HttpTequilapiClient implements TequilapiClient {
   http: HttpInterface
 
   constructor (http: HttpInterface) {
@@ -177,6 +177,3 @@ class HttpTequilapiClient implements TequilapiClient {
     return parseConsumerLocationDTO(response)
   }
 }
-
-export { TequilapiClient }
-export default HttpTequilapiClient

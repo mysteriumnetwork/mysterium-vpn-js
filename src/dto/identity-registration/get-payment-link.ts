@@ -17,10 +17,9 @@
 
 import { IdentityProof } from './identity-proof'
 
-const getPaymentLink = (paymentBaseUrl: string, registration: IdentityProof): string => {
+export const getPaymentLink = (paymentBaseUrl: string, registration: IdentityProof): string => {
   const { publicKey, signature } = registration
   return paymentBaseUrl +
     `?part1=${publicKey.part1}&part2=${publicKey.part2}` +
     `&r=${signature.r}&s=${signature.s}&v=${signature.v}`
 }
-export { getPaymentLink }

@@ -15,12 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type ConnectionIPDTO = {
+export type ConnectionIPDTO = {
   ip?: string
 }
 
-function parseConnectionIPDTO (data: any): ConnectionIPDTO {
+export function parseConnectionIPDTO (data: any): ConnectionIPDTO {
   return { ip: data.ip }
 }
-
-export { ConnectionIPDTO, parseConnectionIPDTO }
