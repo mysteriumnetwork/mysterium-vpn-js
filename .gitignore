@@ -1,3 +1,5 @@
 node_modules
 .idea
-lib
+
+lib/**/*.js
+lib/**/*.ts
