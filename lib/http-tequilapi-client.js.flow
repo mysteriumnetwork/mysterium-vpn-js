@@ -7,17 +7,17 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { TequilapiClient } from "./client";
-import { HttpInterface } from "./adapters/interface";
+import type { TequilapiClient } from "./client";
+import type { HttpInterface } from "./adapters/interface";
 import type { NodeHealthcheckDTO } from "./dto/node-healthcheck";
 import type { IdentityDTO } from "./dto/identity";
 import type { ConsumerLocationDTO } from "./dto/consumer-location";
 import type { ConnectionStatisticsDTO } from "./dto/connection-statistics";
 import type { ConnectionIPDTO } from "./dto/connection-ip";
 import type { ConnectionStatusDTO } from "./dto/connection-status-dto";
-import { ConnectionRequest } from "./dto/query/connection-request";
-import { IdentityRegistrationDTO } from "./dto/identity-registration/identity-registration";
-import { ProposalQueryOptions } from "./dto/query/proposals-query-options";
+import type { ConnectionRequest } from "./dto/query/connection-request";
+import type { IdentityRegistrationDTO } from "./dto/identity-registration/identity-registration";
+import type { ProposalQueryOptions } from "./dto/query/proposals-query-options";
 import type { ProposalDTO } from "./dto/proposal";
 declare export class HttpTequilapiClient mixins TequilapiClient {
   http: HttpInterface;

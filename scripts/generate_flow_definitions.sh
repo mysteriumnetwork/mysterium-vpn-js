@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-regexp="(.*).d.ts"
+ts_extension='.d.ts'
+regexp="(.*)$ts_extension"
 
-for ts_name in lib/{,**/}*.d.ts
+files=`find lib -name "*$ts_extension"`
+for ts_name in $files
 do
     if ! [[ $ts_name =~ $regexp ]]
     then
