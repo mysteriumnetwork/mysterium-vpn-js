@@ -19,19 +19,27 @@ import { parseHealthcheckResponse } from '../../../src/dto/node-healthcheck'
 import { captureError } from '../../helpers/utils'
 
 describe('TequilapiClient DTO', () => {
-  describe('NodeHealthcheckDTO', () => {
+  describe('.parseHealthcheckResponse', () => {
     it('sets properties', async () => {
       const status = parseHealthcheckResponse({
         uptime: '1h10m',
         process: 1111,
         version: '0.0.6',
-        buildInfo: {}
+        buildInfo: {
+          commit: 'my commit',
+          branch: 'my branch',
+          buildNumber: 'my build number'
+        }
       })
 
       expect(status.uptime).to.equal('1h10m')
       expect(status.process).to.equal(1111)
       expect(status.version).to.equal('0.0.6')
-      expect(status.buildInfo).to.deep.equal({ commit: undefined, branch: undefined, buildNumber: undefined })
+      expect(status.buildInfo).to.deep.equal({
+        commit: 'my commit',
+        branch: 'my branch',
+        buildNumber: 'my build number'
+      })
     })
 
     it('throws error with empty data', async () => {

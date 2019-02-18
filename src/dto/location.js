@@ -17,11 +17,14 @@
 
 // @flow
 
+import { validate } from '../validation'
+
 type LocationDTO = {
-  country: ?string
+  country: string
 }
 
 function parseLocationDTO (data: Object) {
+  validate('LocationDTO', data, { name: 'country', type: 'string' })
   return { country: data.country }
 }
 

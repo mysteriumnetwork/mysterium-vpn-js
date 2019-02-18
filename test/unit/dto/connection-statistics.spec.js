@@ -31,20 +31,9 @@ describe('TequilapiClient DTO', () => {
       expect(stats.bytesSent).to.deep.equal(123321)
     })
 
-    it('sets empty properties', async () => {
-      const stats = parseConnectionStatisticsDTO({})
-
-      expect(stats.duration).to.be.undefined
-      expect(stats.bytesReceived).to.be.undefined
-      expect(stats.bytesSent).to.be.undefined
-    })
-
-    it('sets wrong properties', async () => {
-      const stats = parseConnectionStatisticsDTO('I am wrong')
-
-      expect(stats.duration).to.be.undefined
-      expect(stats.bytesReceived).to.be.undefined
-      expect(stats.bytesSent).to.be.undefined
+    it('throws error without required fields', async () => {
+      expect(() => parseConnectionStatisticsDTO({})).to.throw()
+      expect(() => parseConnectionStatisticsDTO('I am wrong')).to.throw()
     })
   })
 })

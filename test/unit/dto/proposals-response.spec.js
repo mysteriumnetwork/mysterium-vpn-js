@@ -31,7 +31,7 @@ describe('.parseProposalsResponseDTO', () => {
   it('throws error when invoked with an empty object', async () => {
     const error = captureError(() => parseProposalsResponseDTO({}))
 
-    expect(error.message).to.eql('ProposalResponseDTO: proposals is not provided')
+    expect(error.message).to.eql('ProposalsResponseDTO: proposals is not provided')
   })
 
   it('throws an error if proposal in array does not validate', async () => {

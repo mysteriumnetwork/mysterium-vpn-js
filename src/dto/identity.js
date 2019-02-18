@@ -17,11 +17,14 @@
 
 // @flow
 
+import { validate } from '../validation'
+
 type IdentityDTO = {
-  id: ?string
+  id: string
 }
 
 function parseIdentityDTO (data: Object): IdentityDTO {
+  validate('IdentityDTO', data, { name: 'id', type: 'string' })
   return { id: data.id }
 }
 

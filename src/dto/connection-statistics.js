@@ -17,13 +17,21 @@
 
 // @flow
 
+import { validateMultiple } from '../validation'
+
 type ConnectionStatisticsDTO = {
-  duration: ?number,
-  bytesReceived: ?number,
-  bytesSent: ?number
+  duration: number,
+  bytesReceived: number,
+  bytesSent: number
 }
 
 function parseConnectionStatisticsDTO (data: Object): ConnectionStatisticsDTO {
+  validateMultiple('ConnectionStatisticsDTO', data, [
+    { name: 'duration', type: 'number' },
+    { name: 'bytesReceived', type: 'number' },
+    { name: 'bytesSent', type: 'number' }
+  ])
+
   return {
     duration: data.duration,
     bytesReceived: data.bytesReceived,

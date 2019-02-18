@@ -20,25 +20,25 @@
 import { parseNodeBuildInfoDTO } from '../../../src/dto/node-build-info'
 
 describe('TequilapiClient DTO', () => {
-  describe('NodeBuildInfoDTO', () => {
+  describe('.parseNodeBuildInfoDTO', () => {
+    const data = {
+      commit: '0bcccc',
+      branch: 'master',
+      buildNumber: '001'
+    }
+
     it('sets properties', async () => {
-      const version = parseNodeBuildInfoDTO({
-        commit: '0bcccc',
-        branch: 'master',
-        buildNumber: '001'
-      })
+      const version = parseNodeBuildInfoDTO(data)
 
       expect(version.commit).to.equal('0bcccc')
       expect(version.branch).to.equal('master')
       expect(version.buildNumber).to.equal('001')
     })
 
-    it('sets empty properties', async () => {
-      const version = parseNodeBuildInfoDTO({})
-
-      expect(version.commit).to.be.undefined
-      expect(version.branch).to.be.undefined
-      expect(version.buildNumber).to.be.undefined
+    it('throws without required properties', async () => {
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ commit: undefined } })).to.throw()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ branch: undefined } })).to.throw()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ buildNumber: undefined } })).to.throw()
     })
   })
 })
