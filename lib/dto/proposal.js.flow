@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { ServiceDefinitionDTO } from "./service-definition";
-import { MetricsDTO } from "./metrics-dto";
+import type { ServiceDefinitionDTO } from "./service-definition";
+import type { MetricsDTO } from "./metrics-dto";
 export type ProposalDTO = {
   id: number,
   providerId: string,

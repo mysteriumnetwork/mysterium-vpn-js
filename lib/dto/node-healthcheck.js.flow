@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { NodeBuildInfoDTO } from "./node-build-info";
+import type { NodeBuildInfoDTO } from "./node-build-info";
 export type NodeHealthcheckDTO = {
   uptime: string,
   process: number,

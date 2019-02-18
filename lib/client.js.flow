@@ -8,16 +8,16 @@
  */
 
 import { HttpInterface } from "./adapters/interface";
-import { ProposalDTO } from "./dto/proposal";
+import type { ProposalDTO } from "./dto/proposal";
 import { ProposalQueryOptions } from "./dto/query/proposals-query-options";
-import { IdentityDTO } from "./dto/identity";
-import { NodeHealthcheckDTO } from "./dto/node-healthcheck";
-import { ConnectionStatusDTO } from "./dto/connection-status-dto";
+import type { IdentityDTO } from "./dto/identity";
+import type { NodeHealthcheckDTO } from "./dto/node-healthcheck";
+import type { ConnectionStatusDTO } from "./dto/connection-status-dto";
 import { ConnectionRequest } from "./dto/query/connection-request";
-import { ConsumerLocationDTO } from "./dto/consumer-location";
-import { ConnectionIPDTO } from "./dto/connection-ip";
+import type { ConsumerLocationDTO } from "./dto/consumer-location";
+import type { ConnectionIPDTO } from "./dto/connection-ip";
 import { IdentityRegistrationDTO } from "./dto/identity-registration/identity-registration";
-import { ConnectionStatisticsDTO } from "./dto/connection-statistics";
+import type { ConnectionStatisticsDTO } from "./dto/connection-statistics";
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;
   stop(): Promise<void>;

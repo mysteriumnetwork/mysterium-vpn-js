@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { ConnectCountDTO } from "./connect-count-dto";
+import type { ConnectCountDTO } from "./connect-count-dto";
 export type MetricsDTO = {
   connectCount?: ConnectCountDTO
 };

@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { ProposalDTO } from "./proposal";
+import type { ProposalDTO } from "./proposal";
 
 /**
  * Used only as an intermediate result - is not exposed to clients.
