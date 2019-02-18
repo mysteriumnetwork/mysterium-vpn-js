@@ -18,10 +18,9 @@
 import { AxiosInstance } from 'axios'
 import { HttpInterface, HttpQueryParams } from './interface'
 import { TIMEOUT_DEFAULT } from '../timeouts'
+import TequilapiError from '../tequilapi-error'
 
-// TODO
 class AxiosAdapter implements HttpInterface {
-  // TODO: check if AxiosInstance is correct
   _axios: AxiosInstance
   _timeout: number
 
@@ -30,17 +29,52 @@ class AxiosAdapter implements HttpInterface {
     this._timeout = defaultTimeout
   }
 
-  async get (path: string, query?: HttpQueryParams, timeout?: number): Promise<any> {
+  get (path: string, query?: HttpQueryParams, timeout?: number): Promise<any> {
+    const options = this._decorateOptions(timeout)
+    options.params = query
+
+    return decorateResponse(
+      this._axios.get(path, options),
+      path
+    )
   }
 
-  async post (path: string, data: any, timeout?: number): Promise<any> {
+  post (path: string, data: any, timeout?: number): Promise<any> {
+    return decorateResponse(
+      this._axios.post(path, data, this._decorateOptions(timeout)),
+      path
+    )
   }
 
-  async delete (path: string, timeout?: number): Promise<any> {
+  delete (path: string, timeout?: number): Promise<any> {
+    return decorateResponse(
+      this._axios.delete(path, this._decorateOptions(timeout)),
+      path
+    )
   }
 
-  async put (path: string, data: any, timeout?: number): Promise<any> {
+  put (path: string, data: any, timeout?: number): Promise<any> {
+    return decorateResponse(
+      this._axios.put(path, data, this._decorateOptions(timeout)),
+      path
+    )
   }
+
+  _decorateOptions (timeout?: number): any {
+    return {
+      timeout: timeout !== undefined ? timeout : this._timeout
+    }
+  }
+}
+
+async function decorateResponse (promise: Promise<any>, path: string): Promise<Object> {
+  let response
+  try {
+    response = await promise
+  } catch (err) {
+    throw new TequilapiError(err, path)
+  }
+  return response.data
 }
 
 export default AxiosAdapter
