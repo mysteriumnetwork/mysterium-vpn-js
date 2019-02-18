@@ -12,7 +12,7 @@ do
     # generate .js.flow file
     base_name="${BASH_REMATCH[1]}"
     flow_name=$base_name".js.flow"
-    yarn flowgen $ts_name -o $flow_name
+    npx flowgen $ts_name -o $flow_name
 
     # prepend @flow comment
     printf '%s\n%s\n' "// @flow" "$(cat $flow_name)" > $flow_name
