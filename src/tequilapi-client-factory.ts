@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
 import axios from 'axios'
 import AxiosAdapter from './adapters/axios-adapter'
 import { TIMEOUT_DEFAULT } from './timeouts'
