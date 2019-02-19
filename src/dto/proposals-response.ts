@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ProposalDTO, parseProposalDTO } from './proposal'
 import { validate } from '../validation'
+import { parseProposalDTO, ProposalDTO } from './proposal'
 
 /**
  * Used only as an intermediate result - is not exposed to clients.
  */
-type ProposalsResponseDTO = {
-  proposals: Array<ProposalDTO>
+interface ProposalsResponseDTO {
+  proposals: ProposalDTO[]
 }
 
 export function parseProposalsResponseDTO (responseData: any): ProposalsResponseDTO {

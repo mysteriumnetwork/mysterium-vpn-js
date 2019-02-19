@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export type PublicKeyDTO = {
+export interface PublicKeyDTO {
   part1: string,
   part2: string
 }

@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectionStatus } from './connection-status'
 import { validate } from '../validation'
+import { ConnectionStatus } from './connection-status'
 
-export type ConnectionStatusDTO = {
+export interface ConnectionStatusDTO {
   status: ConnectionStatus,
   sessionId?: string
 }

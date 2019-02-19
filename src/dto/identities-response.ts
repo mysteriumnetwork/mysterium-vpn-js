@@ -17,8 +17,8 @@
 
 import { IdentityDTO, parseIdentityDTO } from './identity'
 
-export type IdentitiesResponseDTO = {
-  identities: Array<IdentityDTO>
+export interface IdentitiesResponseDTO {
+  identities: IdentityDTO[]
 }
 
 export function parseIdentitiesResponseDTO (responseData: any): IdentitiesResponseDTO {

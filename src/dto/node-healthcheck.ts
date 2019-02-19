@@ -17,7 +17,7 @@
 
 import { NodeBuildInfoDTO, parseNodeBuildInfoDTO } from './node-build-info'
 
-export type NodeHealthcheckDTO = {
+export interface NodeHealthcheckDTO {
   uptime: string,
   process: number,
   version: string,

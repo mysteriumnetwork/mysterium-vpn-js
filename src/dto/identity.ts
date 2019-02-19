@@ -17,7 +17,7 @@
 
 import { validate } from '../validation'
 
-export type IdentityDTO = {
+export interface IdentityDTO {
   id: string
 }
 

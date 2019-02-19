@@ -18,7 +18,7 @@
 import { PublicKeyDTO } from './public-key'
 import { SignatureDTO } from './signature'
 
-export type IdentityProof = {
+export interface IdentityProof {
   publicKey: PublicKeyDTO,
   signature: SignatureDTO
 }

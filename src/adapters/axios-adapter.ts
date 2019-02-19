@@ -16,20 +16,20 @@
  */
 
 import { AxiosInstance } from 'axios'
-import { HttpInterface, HttpQueryParams } from './interface'
-import { TIMEOUT_DEFAULT } from '../timeouts'
 import TequilapiError from '../tequilapi-error'
+import { TIMEOUT_DEFAULT } from '../timeouts'
+import { HttpInterface, HttpQueryParams } from './interface'
 
 export default class AxiosAdapter implements HttpInterface {
-  _axios: AxiosInstance
-  _timeout: number
+  public _axios: AxiosInstance
+  public _timeout: number
 
   constructor (axiosInstance: AxiosInstance, defaultTimeout: number = TIMEOUT_DEFAULT) {
     this._axios = axiosInstance
     this._timeout = defaultTimeout
   }
 
-  get (path: string, query?: HttpQueryParams, timeout?: number): Promise<any> {
+  public get (path: string, query?: HttpQueryParams, timeout?: number): Promise<any> {
     const options = this._decorateOptions(timeout)
     options.params = query
 
@@ -39,35 +39,35 @@ export default class AxiosAdapter implements HttpInterface {
     )
   }
 
-  post (path: string, data: any, timeout?: number): Promise<any> {
+  public post (path: string, data: any, timeout?: number): Promise<any> {
     return decorateResponse(
       this._axios.post(path, data, this._decorateOptions(timeout)),
       path
     )
   }
 
-  delete (path: string, timeout?: number): Promise<any> {
+  public delete (path: string, timeout?: number): Promise<any> {
     return decorateResponse(
       this._axios.delete(path, this._decorateOptions(timeout)),
       path
     )
   }
 
-  put (path: string, data: any, timeout?: number): Promise<any> {
+  public put (path: string, data: any, timeout?: number): Promise<any> {
     return decorateResponse(
       this._axios.put(path, data, this._decorateOptions(timeout)),
       path
     )
   }
 
-  _decorateOptions (timeout?: number): any {
+  public _decorateOptions (timeout?: number): any {
     return {
       timeout: timeout !== undefined ? timeout : this._timeout
     }
   }
 }
 
-async function decorateResponse (promise: Promise<any>, path: string): Promise<Object> {
+async function decorateResponse (promise: Promise<any>, path: string): Promise<any> {
   let response
   try {
     response = await promise

@@ -17,7 +17,7 @@
 
 import { validateMultiple } from '../validation'
 
-export type NodeBuildInfoDTO = {
+export interface NodeBuildInfoDTO {
   commit: string,
   branch: string,
   buildNumber: string

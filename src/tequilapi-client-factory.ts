@@ -17,27 +17,27 @@
 
 import axios from 'axios'
 import AxiosAdapter from './adapters/axios-adapter'
-import { TIMEOUT_DEFAULT } from './timeouts'
-import { TequilapiClient } from './client'
 import { HttpInterface } from './adapters/interface'
+import { TequilapiClient } from './client'
 import { HttpTequilapiClient } from './http-tequilapi-client'
+import { TIMEOUT_DEFAULT } from './timeouts'
 
 const TEQUILAPI_URL: string = 'http://127.0.0.1:4050'
 
 class TequilapiClientFactory {
-  _baseUrl: string
-  _defaultTimeout: number
+  public _baseUrl: string
+  public _defaultTimeout: number
 
   constructor (baseUrl: string = TEQUILAPI_URL, defaultTimeout: number = TIMEOUT_DEFAULT) {
     this._baseUrl = baseUrl
     this._defaultTimeout = defaultTimeout
   }
 
-  build (adapter: HttpInterface): TequilapiClient {
+  public build (adapter: HttpInterface): TequilapiClient {
     return new HttpTequilapiClient(adapter)
   }
 
-  buildAdapter (): HttpInterface {
+  public buildAdapter (): HttpInterface {
     const axiosInstance = axios.create({
       baseURL: this._baseUrl,
       headers: {

@@ -15,16 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export type AxiosError = {
+export interface AxiosError {
   message: string,
   response?: { status: number },
   code?: string
 }
 
 export default class TequilapiError extends Error {
-  name: string = 'TequilapiError'
+  public name: string = 'TequilapiError'
 
-  _originalError: AxiosError
+  public _originalError: AxiosError
 
   constructor (originalError: Error, path: string) {
     super(`${originalError.message} (path="${path}")`)
@@ -48,7 +48,7 @@ export default class TequilapiError extends Error {
     return this._hasHttpStatus(httpResponseCodes.SERVICE_UNAVAILABLE)
   }
 
-  _hasHttpStatus (expectedStatus: number): boolean {
+  public _hasHttpStatus (expectedStatus: number): boolean {
     if (!this._originalError.response) {
       return false
     }

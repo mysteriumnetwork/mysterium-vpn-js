@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseConnectionCountDTO, ConnectCountDTO } from './connect-count-dto'
+import { ConnectCountDTO, parseConnectionCountDTO } from './connect-count-dto'
 
-export type MetricsDTO = {
+export interface MetricsDTO {
   connectCount?: ConnectCountDTO
 }
 
@@ -26,6 +26,7 @@ export function parseMetricsDTO (data: any): MetricsDTO {
     try {
       return { connectCount: parseConnectionCountDTO(data.connectCount) }
     } catch (err) {
+      // unknown metrics are ignored
     }
   }
   return { connectCount: undefined }

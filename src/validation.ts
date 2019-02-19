@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-type Property = {
+interface Property {
   name: string,
   type: 'number' | 'string' | 'object' | 'array'
 }
@@ -38,8 +38,8 @@ function getTypeString (value: any) {
   return typeof value
 }
 
-function validateMultiple (typeName: string, obj: Object, properties: Property[]) {
-  properties.forEach(property => validate(typeName, obj, property))
+function validateMultiple (typeName: string, obj: any, properties: Property[]) {
+  properties.forEach((property) => validate(typeName, obj, property))
 }
 
 export { validateMultiple, validate }

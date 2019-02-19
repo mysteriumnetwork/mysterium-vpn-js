@@ -17,13 +17,13 @@
 
 import { validateMultiple } from '../validation'
 
-export type ConnectCountDTO = {
+export interface ConnectCountDTO {
   success: number,
   fail: number,
   timeout: number
 }
 
-export function parseConnectionCountDTO (data: Object): ConnectCountDTO {
+export function parseConnectionCountDTO (data: any): ConnectCountDTO {
   validateMultiple('ConnectCountDTO', data, [
     { name: 'success', type: 'number' },
     { name: 'fail', type: 'number' }

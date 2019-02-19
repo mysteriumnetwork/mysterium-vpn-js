@@ -15,12 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parsePublicKeyDTO } from './public-key'
-import { parseSignatureDTO } from './signature'
-import { PublicKeyDTO } from './public-key'
-import { SignatureDTO } from './signature'
+import { parsePublicKeyDTO, PublicKeyDTO } from './public-key'
+import { parseSignatureDTO, SignatureDTO } from './signature'
 
-export type IdentityRegistrationDTO = {
+export interface IdentityRegistrationDTO {
   registered: boolean,
   publicKey?: PublicKeyDTO,
   signature?: SignatureDTO

@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ServiceDefinitionDTO, parseServiceDefinitionDTO } from './service-definition'
 import { validateMultiple } from '../validation'
 import { MetricsDTO } from './metrics-dto'
+import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from './service-definition'
 
-export type ProposalDTO = {
+export interface ProposalDTO {
   id: number,
   providerId: string,
   serviceType: string,

@@ -17,7 +17,7 @@
 
 import { validateMultiple } from '../validation'
 
-export type ConnectionStatisticsDTO = {
+export interface ConnectionStatisticsDTO {
   duration: number,
   bytesReceived: number,
   bytesSent: number

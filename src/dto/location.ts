@@ -17,7 +17,7 @@
 
 import { validate } from '../validation'
 
-export type LocationDTO = {
+export interface LocationDTO {
   country: string
 }
 

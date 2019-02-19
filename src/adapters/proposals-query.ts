@@ -15,17 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { HttpQueryParams } from './interface'
 import { ProposalQueryOptions } from '../dto/query/proposals-query-options'
+import { HttpQueryParams } from './interface'
 
 export default class ProposalsQuery {
-  options?: ProposalQueryOptions
+  public options?: ProposalQueryOptions
 
   constructor (options?: ProposalQueryOptions) {
     this.options = options
   }
 
-  toQueryParams (): HttpQueryParams {
+  public toQueryParams (): HttpQueryParams {
     const queryObj: HttpQueryParams = {}
 
     const options = this.options

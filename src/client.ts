@@ -15,16 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ProposalDTO } from './dto/proposal'
-import { ProposalQueryOptions } from './dto/query/proposals-query-options'
-import { IdentityDTO } from './dto/identity'
-import { NodeHealthcheckDTO } from './dto/node-healthcheck'
-import { ConnectionStatusDTO } from './dto/connection-status-dto'
-import { ConnectionRequest } from './dto/query/connection-request'
-import { ConsumerLocationDTO } from './dto/consumer-location'
 import { ConnectionIPDTO } from './dto/connection-ip'
-import { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
 import { ConnectionStatisticsDTO } from './dto/connection-statistics'
+import { ConnectionStatusDTO } from './dto/connection-status-dto'
+import { ConsumerLocationDTO } from './dto/consumer-location'
+import { IdentityDTO } from './dto/identity'
+import { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
+import { NodeHealthcheckDTO } from './dto/node-healthcheck'
+import { ProposalDTO } from './dto/proposal'
+import { ConnectionRequest } from './dto/query/connection-request'
+import { ProposalQueryOptions } from './dto/query/proposals-query-options'
 
 // TODO: rename file to 'tequilapi-client.ts'
 
@@ -32,12 +32,12 @@ export interface TequilapiClient {
   healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
   stop (): Promise<void>,
 
-  identitiesList (): Promise<Array<IdentityDTO>>,
+  identitiesList (): Promise<IdentityDTO[]>,
   identityCreate (passphrase: string): Promise<IdentityDTO>,
   identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
-  findProposals (options?: ProposalQueryOptions): Promise<Array<ProposalDTO>>,
+  findProposals (options?: ProposalQueryOptions): Promise<ProposalDTO[]>,
 
   connectionCreate (request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusDTO>,
   connectionStatus (): Promise<ConnectionStatusDTO>,
