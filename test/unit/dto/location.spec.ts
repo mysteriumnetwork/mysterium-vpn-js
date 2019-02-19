@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../validation'
+import { parseLocationDTO } from '../../../src/dto/location'
 
-export type LocationDTO = {
-  country: string
-}
+describe('TequilapiClient DTO', () => {
+  describe('.parseLocationDTO', () => {
+    it('sets properties with full structure', async () => {
+      const location = parseLocationDTO({
+        asn: '',
+        country: 'LT'
+      })
 
-export function parseLocationDTO (data: any) {
-  validate('LocationDTO', data, { name: 'country', type: 'string' })
-  return { country: data.country }
-}
+      expect(location.country).toEqual('LT')
+    })
+
+    it('throws when country is missing', async () => {
+      expect(() => parseLocationDTO({})).toThrow()
+    })
+  })
+})

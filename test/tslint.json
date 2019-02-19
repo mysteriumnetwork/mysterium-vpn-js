@@ -1,0 +1,13 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:latest",
+        "tslint-config-standard"
+    ],
+    "jsRules": {},
+    "rules": {
+        "semicolon": [ true, "never" ],
+        "interface-name": [true, "never-prefix"]
+    },
+    "rulesDirectory": []
+}
