@@ -15,23 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-// @flow
-
 import ProposalsQuery from '../../../src/adapters/proposals-query'
 
 describe('ProposalsQuery', () => {
   describe('toQueryParams', () => {
     it('defaults to fetching metrics if nothing was passed to constructor', () => {
       const q = new ProposalsQuery()
-      expect(q.toQueryParams()).to.eql({})
+      expect(q.toQueryParams()).toEqual({})
     })
     it('returns empty quert Obj if fetchConnectCounts was given false in constructor', () => {
       const q = new ProposalsQuery({ fetchConnectCounts: true })
-      expect(q.toQueryParams()).to.eql({ fetchConnectCounts: true })
+      expect(q.toQueryParams()).toEqual({ fetchConnectCounts: true })
     })
     it('makes a query object with providerId if given so in constructor', () => {
       const q = new ProposalsQuery({ fetchConnectCounts: true, providerId: 'pID' })
-      expect(q.toQueryParams()).to.eql({ fetchConnectCounts: true, providerId: 'pID' })
+      expect(q.toQueryParams()).toEqual({ fetchConnectCounts: true, providerId: 'pID' })
     })
   })
 })

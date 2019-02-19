@@ -16,7 +16,6 @@
  */
 
 import { parseProposalDTO } from '../../../src/dto/proposal'
-import { captureError } from '../../helpers/utils'
 
 describe('.parseProposalDTO', () => {
   const proposalObject = {
@@ -29,60 +28,44 @@ describe('.parseProposalDTO', () => {
   it('sets properties with full structure', () => {
     const proposal = parseProposalDTO(proposalObject)
 
-    expect(proposal.id).to.equal(1)
-    expect(proposal.providerId).to.equal('0x1')
-    expect(proposal.serviceType).to.equal('openvpn')
-    expect(proposal.serviceDefinition).to.deep.equal({ locationOriginate: undefined })
-    expect(proposal.metrics).to.be.undefined
+    expect(proposal.id).toEqual(1)
+    expect(proposal.providerId).toEqual('0x1')
+    expect(proposal.serviceType).toEqual('openvpn')
+    expect(proposal.serviceDefinition).toEqual({ locationOriginate: undefined })
+    expect(proposal.metrics).toBeUndefined()
   })
 
   it('throws error with null data', () => {
-    const err = captureError(() => parseProposalDTO(null))
-    expect(err).to.be.instanceOf(Error)
+    expect(() => parseProposalDTO(null)).toThrowError()
   })
 
   it('throws error with missing id', () => {
     const object = { ...proposalObject, id: undefined }
-    const err = captureError(() => parseProposalDTO(object))
-    if (!(err instanceof Error)) {
-      throw Error('Error expected')
-    }
-    expect(err.message).to.eql('ProposalDTO: id is not provided')
+    expect(() => parseProposalDTO(object)).toThrowError('ProposalDTO: id is not provided')
   })
 
-  it('throws error with wrong id type', async () => {
+  it('throws error with wrong id type', () => {
     const object = { ...proposalObject, id: 'string id' }
-    const err = captureError(() => parseProposalDTO(object))
-    if (!(err instanceof Error)) {
-      throw Error('Error expected')
-    }
-    expect(err.message).to.eql('ProposalDTO: id should be "number"')
+    expect(() => parseProposalDTO(object)).toThrowError('ProposalDTO: id should be "number"')
   })
 
   it('throws error with missing providerId', () => {
     const object = { ...proposalObject, providerId: undefined }
-    const err = captureError(() => parseProposalDTO(object))
-    if (!(err instanceof Error)) {
-      throw Error('Error expected')
-    }
-    expect(err.message).to.eql('ProposalDTO: providerId is not provided')
+    expect(() => parseProposalDTO(object)).toThrowError('ProposalDTO: providerId is not provided')
   })
 
   it('throws error with wrong providerId type', () => {
     const object = { ...proposalObject, providerId: 2 }
-    const err = captureError(() => parseProposalDTO(object))
-    expect(err).to.be.instanceOf(Error)
+    expect(() => parseProposalDTO(object)).toThrowError()
   })
 
   it('throws error with no serviceType', () => {
     const object = { ...proposalObject, serviceType: undefined }
-    const err = captureError(() => parseProposalDTO(object))
-    expect(err).to.be.instanceOf(Error)
+    expect(() => parseProposalDTO(object)).toThrowError()
   })
 
   it('throws error with invalid serviceDefinition', () => {
     const object = { ...proposalObject, serviceDefinition: '2' }
-    const err = captureError(() => parseProposalDTO(object))
-    expect(err).to.be.instanceOf(Error)
+    expect(() => parseProposalDTO(object)).toThrowError()
   })
 })

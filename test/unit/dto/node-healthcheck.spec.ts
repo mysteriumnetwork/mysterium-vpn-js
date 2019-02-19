@@ -16,7 +16,6 @@
  */
 
 import { parseHealthcheckResponse } from '../../../src/dto/node-healthcheck'
-import { captureError } from '../../helpers/utils'
 
 describe('TequilapiClient DTO', () => {
   describe('.parseHealthcheckResponse', () => {
@@ -32,10 +31,10 @@ describe('TequilapiClient DTO', () => {
         }
       })
 
-      expect(status.uptime).to.equal('1h10m')
-      expect(status.process).to.equal(1111)
-      expect(status.version).to.equal('0.0.6')
-      expect(status.buildInfo).to.deep.equal({
+      expect(status.uptime).toEqual('1h10m')
+      expect(status.process).toEqual(1111)
+      expect(status.version).toEqual('0.0.6')
+      expect(status.buildInfo).toEqual({
         commit: 'my commit',
         branch: 'my branch',
         buildNumber: 'my build number'
@@ -43,15 +42,11 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('throws error with empty data', async () => {
-      const err = captureError(() => parseHealthcheckResponse({}))
-      expect(err).to.be.an('error')
-      expect(err.message).to.eql('Unable to parse healthcheck response: {}')
+      expect(() => parseHealthcheckResponse({})).toThrowError('Unable to parse healthcheck response: {}')
     })
 
     it('throws error with wrong data', async () => {
-      const err = captureError(() => parseHealthcheckResponse('I am wrong'))
-      expect(err).to.be.an('error')
-      expect(err.message).to.eql('Unable to parse healthcheck response: "I am wrong"')
+      expect(() => parseHealthcheckResponse('I am wrong')).toThrowError('Unable to parse healthcheck response: "I am wrong"')
     })
   })
 })

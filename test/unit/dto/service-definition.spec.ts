@@ -26,13 +26,13 @@ describe('TequilapiClient DTO', () => {
         }
       })
 
-      expect(service.locationOriginate).to.deep.equal({ country: 'lt' })
+      expect(service.locationOriginate).toEqual({ country: 'lt' })
     })
 
     it('sets empty properties structure', async () => {
       const service = parseServiceDefinitionDTO({})
 
-      expect(service.locationOriginate).to.be.undefined
+      expect(service.locationOriginate).toBeUndefined()
     })
   })
 })

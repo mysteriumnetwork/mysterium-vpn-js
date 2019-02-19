@@ -15,21 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
-import type { ConnectCountDTO } from '../../../src/dto/connect-count-dto'
-import { parseConnectionCountDTO } from '../../../src/dto/connect-count-dto'
+import { ConnectCountDTO, parseConnectionCountDTO  } from '../../../src/dto/connect-count-dto'
 
 describe('.parseConnectionCountDTO', () => {
   it('returns ConnectionCountDTO', () => {
     const dto: ConnectCountDTO = parseConnectionCountDTO({ success: 1, fail: 2, timeout: 3 })
-    expect(dto).to.be.ok
+    expect(dto).toBeDefined()
   })
 
   it('throws error for invalid data', () => {
     expect(() => parseConnectionCountDTO({ success: 1, timeout: 3 }))
-      .to.throw('ConnectCountDTO: fail is not provided')
+      .toThrow('ConnectCountDTO: fail is not provided')
     expect(() => parseConnectionCountDTO({ success: '1', fail: 2, timeout: 3 }))
-      .to.throw('ConnectCountDTO: success should be "number"')
+      .toThrow('ConnectCountDTO: success should be "number"')
   })
 })

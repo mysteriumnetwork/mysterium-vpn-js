@@ -15,25 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseConnectionStatisticsDTO } from '../../../src/dto/connection-statistics'
+import { ConnectionIPDTO, parseConnectionIPDTO } from '../../../src/dto/connection-ip'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseConnectionStatisticsDTO', () => {
+  describe('.parseConnectionIPDTO', () => {
     it('sets properties', async () => {
-      const stats = parseConnectionStatisticsDTO({
-        duration: 13325,
-        bytesReceived: 1232133, // 1.17505 MB
-        bytesSent: 123321 // 0.117608 MB
-      })
+      const model: ConnectionIPDTO = parseConnectionIPDTO({ ip: 'mock ip' })
 
-      expect(stats.duration).to.equal(13325)
-      expect(stats.bytesReceived).to.equal(1232133)
-      expect(stats.bytesSent).to.deep.equal(123321)
+      expect(model.ip).toEqual('mock ip')
     })
 
-    it('throws error without required fields', async () => {
-      expect(() => parseConnectionStatisticsDTO({})).to.throw()
-      expect(() => parseConnectionStatisticsDTO('I am wrong')).to.throw()
+    it('sets empty properties', async () => {
+      const model: ConnectionIPDTO = parseConnectionIPDTO({})
+
+      expect(model.ip).toBeUndefined()
     })
   })
 })

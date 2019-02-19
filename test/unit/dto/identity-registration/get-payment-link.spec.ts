@@ -15,10 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
 import { getPaymentLink } from '../../../../src/dto/identity-registration/get-payment-link'
-import type { IdentityProof } from '../../../../src/dto/identity-registration/identity-proof'
+import { IdentityProof } from '../../../../src/dto/identity-registration/identity-proof'
 
 describe('.getPaymentLink', () => {
   it('generates valid payment link', () => {
@@ -34,7 +32,7 @@ describe('.getPaymentLink', () => {
       }
     }
     const link = getPaymentLink('http://walletx.mysterium.network/', proof)
-    expect(link).to.be.eql(
+    expect(link).toEqual(
       'http://walletx.mysterium.network/' +
       '?part1=0xfb22c62ed2ddc65eb2994a8af5b1094b239aacc04a6505fd2bc581f55547175a' +
       '&part2=0xef3156a0d95c3832b191c03c272a5900e3e30484b9c8a65a0387f1f8d436867f' +

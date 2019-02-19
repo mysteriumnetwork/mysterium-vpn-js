@@ -18,12 +18,11 @@
 import axios from 'axios/index'
 import AxiosAdapter from '../../../src/adapters/axios-adapter'
 import MockAdapter from 'axios-mock-adapter'
-import { capturePromiseError } from '../../helpers/utils'
 import TequilapiError from '../../../src/tequilapi-error'
 
 describe('TequilapiClient AxiosAdapter', () => {
-  let adapter
-  let mock
+  let adapter: AxiosAdapter
+  let mock: MockAdapter
   beforeEach(() => {
     const axioInstance = axios.create()
     adapter = new AxiosAdapter(axioInstance, 1)
@@ -35,7 +34,7 @@ describe('TequilapiClient AxiosAdapter', () => {
     mock.onGet('test-url').reply(200, responseExpected)
 
     const response = await adapter.get('test-url')
-    expect(response).to.deep.equal(responseExpected)
+    expect(response).toEqual(responseExpected)
   })
 
   it('handles post response', async () => {
@@ -44,7 +43,7 @@ describe('TequilapiClient AxiosAdapter', () => {
     mock.onPost('test-url', requestExpected).reply(200, responseExpected)
 
     const response = await adapter.post('test-url', requestExpected)
-    expect(response).to.deep.equal(responseExpected)
+    expect(response).toEqual(responseExpected)
   })
 
   it('handles put response', async () => {
@@ -53,7 +52,7 @@ describe('TequilapiClient AxiosAdapter', () => {
     mock.onPut('test-url', requestExpected).reply(200, responseExpected)
 
     const response = await adapter.put('test-url', requestExpected)
-    expect(response).to.deep.equal(responseExpected)
+    expect(response).toEqual(responseExpected)
   })
 
   it('handles delete response', async () => {
@@ -61,30 +60,25 @@ describe('TequilapiClient AxiosAdapter', () => {
     mock.onDelete('test-url').reply(200, responseExpected)
 
     const response = await adapter.delete('test-url')
-    expect(response).to.deep.equal(responseExpected)
+    expect(response).toEqual(responseExpected)
   })
 
-  it('returns network error', async () => {
+  it('returns network error', () => {
     mock.onGet('test-url').networkError()
 
-    const err = await capturePromiseError(adapter.get('test-url'))
-    expect(err).to.be.instanceOf(TequilapiError)
+    expect(adapter.get('test-url')).rejects.toBeInstanceOf(TequilapiError)
   })
 
-  it('returns timeout error', async () => {
+  it('returns timeout error', () => {
     mock.onGet('test-url').timeout()
 
-    const err = await capturePromiseError(adapter.get('test-url'))
-    expect(err).to.be.instanceOf(TequilapiError)
-    expect(err.isTimeoutError).to.be.true
-    expect(err.toString()).to.eql('TequilapiError: timeout of 1ms exceeded (path="test-url")')
+    expect(adapter.get('test-url'))
+      .rejects.toHaveProperty('message', 'timeout of 1ms exceeded (path="test-url")')
   })
 
-  it('returns 404 response error', async () => {
+  it('returns 404 response error', () => {
     mock.onGet('test-url').reply(404, { message: 'What is wrong' })
 
-    const err = await capturePromiseError(adapter.get('test-url'))
-    expect(err).to.be.instanceOf(Error)
-    expect(err.message).to.be.equal('Request failed with status code 404 (path="test-url")')
+    expect(adapter.get('test-url')).rejects.toEqual(new Error('Request failed with status code 404 (path="test-url")'))
   })
 })

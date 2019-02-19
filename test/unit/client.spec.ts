@@ -15,19 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import HttpTequilapiClient from '../../src/client'
+import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
 import { parseProposalDTO } from '../../src/dto/proposal'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import axios from 'axios/index'
 import MockAdapter from 'axios-mock-adapter'
-import { capturePromiseError } from '../helpers/utils'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
 
 describe('HttpTequilapiClient', () => {
-  let api
-  let mock
+  let api: HttpTequilapiClient
+  let mock: MockAdapter
+
   beforeEach(() => {
     const axioInstance = axios.create()
     api = new HttpTequilapiClient(new AxiosAdapter(axioInstance))
@@ -50,12 +50,12 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('healthcheck').reply(200, response)
 
       const healthcheck = await api.healthCheck()
-      expect(healthcheck).to.deep.equal(parseHealthcheckResponse(response))
-      expect(healthcheck.version).to.eql('0.0.6')
-      expect(healthcheck.buildInfo).to.eql(buildInfo)
+      expect(healthcheck).toEqual(parseHealthcheckResponse(response))
+      expect(healthcheck.version).toEqual('0.0.6')
+      expect(healthcheck.buildInfo).toEqual(buildInfo)
     })
 
-    it('throws error with unexpected response body', async () => {
+    it('throws error with unexpected response body', () => {
       const response = {
         uptime: '1h10m',
         process: 1111,
@@ -67,19 +67,16 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onGet('healthcheck').reply(200, response)
 
-      const err = await capturePromiseError(api.healthCheck())
-      expect(err).to.be.an('error')
-      expect(err.message).to.eql(
+      expect(api.healthCheck()).rejects.toEqual(new Error(
         'Unable to parse healthcheck response: ' +
         '{"uptime":"1h10m","process":1111,"version":{"commit":"0bcccc","branch":"master","buildNumber":"001"}}'
-      )
+      ))
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('/healthcheck').reply(500)
 
-      const e = await capturePromiseError(api.healthCheck())
-      expect(e.message).to.equal('Request failed with status code 500 (path="healthcheck")')
+      expect(api.healthCheck()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="healthcheck")')
     })
   })
 
@@ -89,14 +86,13 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('stop', expectedRequest).reply(200)
 
       const response = await api.stop()
-      expect(response).to.be.undefined
+      expect(response).toBeUndefined()
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onPost('stop').reply(500)
 
-      const e = await capturePromiseError(api.stop())
-      expect(e.message).to.equal('Request failed with status code 500 (path="stop")')
+      expect(api.stop()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="stop")')
     })
   })
 
@@ -128,9 +124,9 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('proposals').reply(200, response)
 
       const proposals = await api.findProposals()
-      expect(proposals).to.have.lengthOf(2)
-      expect(proposals[0]).to.deep.equal(parseProposalDTO(response.proposals[0]))
-      expect(proposals[1]).to.deep.equal(parseProposalDTO(response.proposals[1]))
+      expect(proposals).toHaveLength(2)
+      expect(proposals[0]).toEqual(parseProposalDTO(response.proposals[0]))
+      expect(proposals[1]).toEqual(parseProposalDTO(response.proposals[1]))
     })
 
     it('fetches connect counts when option is given', async () => {
@@ -156,14 +152,14 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onGet('proposals', { params: { fetchConnectCounts: true } }).reply(200, response)
       const proposals = await api.findProposals({ fetchConnectCounts: true })
-      expect(proposals).to.have.lengthOf(1)
+      expect(proposals).toHaveLength(1)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('proposals').reply(500)
 
-      const e = await capturePromiseError(api.findProposals())
-      expect(e.message).to.equal('Request failed with status code 500 (path="proposals")')
+      expect(api.findProposals())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="proposals")')
     })
   })
 
@@ -178,16 +174,16 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('identities').reply(200, response)
 
       const identities = await api.identitiesList()
-      expect(identities).to.have.lengthOf(2)
-      expect(identities[0]).to.deep.equal(parseIdentityDTO(response.identities[0]))
-      expect(identities[1]).to.deep.equal(parseIdentityDTO(response.identities[1]))
+      expect(identities).toHaveLength(2)
+      expect(identities[0]).toEqual(parseIdentityDTO(response.identities[0]))
+      expect(identities[1]).toEqual(parseIdentityDTO(response.identities[1]))
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('identities').reply(500)
 
-      const e = await capturePromiseError(api.identitiesList())
-      expect(e.message).to.equal('Request failed with status code 500 (path="identities")')
+      expect(api.identitiesList())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="identities")')
     })
   })
 
@@ -197,14 +193,14 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('identities', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCreate('test')
-      expect(identity).to.deep.equal(parseIdentityDTO(response))
+      expect(identity).toEqual(parseIdentityDTO(response))
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onPost('identities').reply(500)
 
-      const e = await capturePromiseError(api.identityCreate('test'))
-      expect(e.message).to.equal('Request failed with status code 500 (path="identities")')
+      expect(api.identityCreate('test'))
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="identities")')
     })
   })
 
@@ -221,11 +217,11 @@ describe('HttpTequilapiClient', () => {
       await api.identityUnlock('0x0000bEEF', 'test', 10000)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onPut('identities/0x0000bEEF/unlock').reply(500)
 
-      const e = await capturePromiseError(api.identityUnlock('0x0000bEEF', 'test'))
-      expect(e.message).to.equal('Request failed with status code 500 (path="identities/0x0000bEEF/unlock")')
+      expect(api.identityUnlock('0x0000bEEF', 'test'))
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="identities/0x0000bEEF/unlock")')
     })
   })
 
@@ -246,14 +242,15 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('identities/0x0000bEEF/registration').reply(200, response)
 
       const registration = await api.identityRegistration('0x0000bEEF')
-      expect(registration).to.be.deep.equal(response)
+      expect(registration).toEqual(response)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('identities/0x0000bEEF/registration').reply(500)
 
-      const e = await capturePromiseError(api.identityRegistration('0x0000bEEF'))
-      expect(e.message).to.equal('Request failed with status code 500 (path="identities/0x0000bEEF/registration")')
+      expect(api.identityRegistration('0x0000bEEF'))
+        .rejects
+        .toHaveProperty('message', 'Request failed with status code 500 (path="identities/0x0000bEEF/registration")')
     })
   })
 
@@ -272,14 +269,14 @@ describe('HttpTequilapiClient', () => {
 
       const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
       const stats = await api.connectionCreate(request)
-      expect(stats).to.deep.equal(response)
+      expect(stats).toEqual(response)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onPut('connection').reply(500)
       const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
-      const e = await capturePromiseError(api.connectionCreate(request))
-      expect(e.message).to.equal('Request failed with status code 500 (path="connection")')
+      expect(api.connectionCreate(request))
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection")')
     })
   })
 
@@ -292,14 +289,14 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection').reply(200, response)
 
       const connection = await api.connectionStatus()
-      expect(connection).to.deep.equal(response)
+      expect(connection).toEqual(response)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('connection').reply(500)
 
-      const e = await capturePromiseError(api.connectionStatus())
-      expect(e.message).to.equal('Request failed with status code 500 (path="connection")')
+      expect(api.connectionStatus())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection")')
     })
   })
 
@@ -311,11 +308,11 @@ describe('HttpTequilapiClient', () => {
       await api.connectionCancel()
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onDelete('connection').reply(500)
 
-      const e = await capturePromiseError(api.connectionCancel())
-      expect(e.message).to.equal('Request failed with status code 500 (path="connection")')
+      expect(api.connectionCancel())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection")')
     })
   })
 
@@ -325,14 +322,14 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection/ip').reply(200, response)
 
       const stats = await api.connectionIP()
-      expect(stats).to.deep.equal(response)
+      expect(stats).toEqual(response)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('connection/ip').reply(500)
 
-      const e = await capturePromiseError(api.connectionIP())
-      expect(e.message).to.equal('Request failed with status code 500 (path="connection/ip")')
+      expect(api.connectionIP())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection/ip")')
     })
   })
 
@@ -346,14 +343,14 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('connection/statistics').reply(200, response)
 
       const stats = await api.connectionStatistics()
-      expect(stats).to.deep.equal(response)
+      expect(stats).toEqual(response)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('connection/statistics').reply(500)
 
-      const e = await capturePromiseError(api.connectionStatistics())
-      expect(e.message).to.equal('Request failed with status code 500 (path="connection/statistics")')
+      expect(api.connectionStatistics())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection/statistics")')
     })
   })
 
@@ -368,18 +365,17 @@ describe('HttpTequilapiClient', () => {
       const stats = await api.location()
 
       const dto = parseConsumerLocationDTO(response)
-      expect(stats.originalCountry).to.equal(dto.originalCountry)
-      expect(stats.originalIP).to.equal(dto.originalIP)
-      expect(stats.currentCountry).to.equal(dto.currentCountry)
-      expect(stats.currentIP).to.equal(dto.currentIP)
-      expect(stats).to.deep.equal(dto)
+      expect(stats.originalCountry).toEqual(dto.originalCountry)
+      expect(stats.originalIP).toEqual(dto.originalIP)
+      expect(stats.currentCountry).toEqual(dto.currentCountry)
+      expect(stats.currentIP).toEqual(dto.currentIP)
+      expect(stats).toEqual(dto)
     })
 
-    it('handles error', async () => {
+    it('handles error', () => {
       mock.onGet('location').reply(500)
 
-      const e = await capturePromiseError(api.location())
-      expect(e.message).to.equal('Request failed with status code 500 (path="location")')
+      expect(api.location()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="location")')
     })
   })
 })

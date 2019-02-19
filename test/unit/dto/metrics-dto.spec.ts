@@ -15,15 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
 import { parseMetricsDTO } from '../../../src/dto/metrics-dto'
 
 describe('MetricsDTO', () => {
   describe('.parseMetricsDTO', () => {
     it('returns empty metrics if they are empty', () => {
       const dto = parseMetricsDTO({})
-      expect(dto).to.eql({ connectCount: null })
+      expect(dto).toEqual({ connectCount: undefined })
     })
   })
 })

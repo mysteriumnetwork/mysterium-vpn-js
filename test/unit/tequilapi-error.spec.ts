@@ -15,21 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
 import TequilapiError from '../../src/tequilapi-error'
-import type { AxiosError } from '../../src/tequilapi-error'
+import { AxiosError } from '../../src/tequilapi-error'
 
 function createTequilapiErrorWithCode (code: string): TequilapiError {
   const error = new Error('test error')
-  const axiosError = (error: AxiosError)
+  const axiosError = error as AxiosError
   axiosError.code = code
   return new TequilapiError(error, 'test-path')
 }
 
 function createTequilapiErrorWithResponseStatus (status: number): TequilapiError {
   const error = new Error('test error')
-  const axiosError = (error: AxiosError)
+  const axiosError = error as AxiosError
   axiosError.response = { status }
   return new TequilapiError(error, 'test-path')
 }
@@ -41,72 +39,72 @@ describe('TequilapiError', () => {
   it('is instance of TequilapiError', () => {
     // seems like redundant spec, but it's valuable, because this doesn't work by default:
     // "babel-plugin-transform-builtin-extend" plugin was used to make this work
-    expect(simpleTequilapiError).to.be.instanceOf(TequilapiError)
+    expect(simpleTequilapiError).toBeInstanceOf(TequilapiError)
   })
 
   it('is instance of Error', () => {
-    expect(simpleTequilapiError).to.be.instanceOf(Error)
+    expect(simpleTequilapiError).toBeInstanceOf(Error)
   })
 
   describe('.name', () => {
     it('returns TequilapiError', () => {
-      expect(simpleTequilapiError.name).to.eql('TequilapiError')
+      expect(simpleTequilapiError.name).toEqual('TequilapiError')
     })
   })
 
   describe('.message', () => {
     it('returns extended message', () => {
-      expect(simpleTequilapiError.message).to.eql('test error (path="test-path")')
+      expect(simpleTequilapiError.message).toEqual('test error (path="test-path")')
     })
   })
 
   describe('.code', () => {
     it('returns undefined for simple error', () => {
-      expect(simpleTequilapiError.code).to.be.undefined
+      expect(simpleTequilapiError.code).toBeUndefined()
     })
 
     it('returns code of original error for error with code', () => {
       const tequilapiError = createTequilapiErrorWithCode('SOME CODE')
-      expect(tequilapiError.code).to.eql('SOME CODE')
+      expect(tequilapiError.code).toEqual('SOME CODE')
     })
   })
 
   describe('.isTimeoutError', () => {
     it('returns false for simple error', () => {
-      expect(simpleTequilapiError.isTimeoutError).to.be.false
+      expect(simpleTequilapiError.isTimeoutError).toBe(false)
     })
 
     it('returns true for errors with timeout code', () => {
       const tequilapiError = createTequilapiErrorWithCode('ECONNABORTED')
-      expect(tequilapiError.isTimeoutError).to.be.true
+      expect(tequilapiError.isTimeoutError).toBe(true)
     })
   })
 
   describe('.isRequestClosedError', () => {
     it('returns false for simple error', () => {
-      expect(simpleTequilapiError.isRequestClosedError).to.be.false
+      expect(simpleTequilapiError.isRequestClosedError).toBe(false)
     })
 
     it('returns true for errors with request closed status', () => {
       const tequilapiError = createTequilapiErrorWithResponseStatus(499)
-      expect(tequilapiError.isRequestClosedError).to.be.true
+      expect(tequilapiError.isRequestClosedError).toBe(true)
     })
   })
 
   describe('.isServiceUnavailableError', () => {
     it('returns false for simple error', () => {
-      expect(simpleTequilapiError.isServiceUnavailableError).to.be.false
+      expect(simpleTequilapiError.isServiceUnavailableError).toBe(false)
     })
 
     it('returns true for errors with request closed status', () => {
       const tequilapiError = createTequilapiErrorWithResponseStatus(503)
-      expect(tequilapiError.isServiceUnavailableError).to.be.true
+      expect(tequilapiError.isServiceUnavailableError).toBe(true)
     })
   })
 
   describe('.toString', () => {
     it('returns error message with class name', () => {
-      expect(simpleTequilapiError.toString()).to.eql('TequilapiError: test error (path="test-path")')
+      expect(simpleTequilapiError.toString()).toEqual('TequilapiError: test error (path="test-path")')
     })
   })
 })

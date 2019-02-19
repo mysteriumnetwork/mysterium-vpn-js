@@ -15,14 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentityRegistrationDTO } from '../../../../src/dto/identity-registration/identity-registration'
+import {
+  IdentityRegistrationDTO,
+  parseIdentityRegistrationDTO
+} from '../../../../src/dto/identity-registration/identity-registration'
 
 describe('TequilapiClient DTO', () => {
   describe('.parseIdentityRegistrationDTO', () => {
-    const checkUndefinedFields = identity => {
-      expect(identity.registered).to.be.undefined
-      expect(identity.publicKey).to.be.null
-      expect(identity.signature).to.be.null
+    const checkUndefinedFields = (identity: IdentityRegistrationDTO) => {
+      expect(identity.registered).toBeUndefined()
+      expect(identity.publicKey).toBeUndefined()
+      expect(identity.signature).toBeUndefined()
     }
 
     it('sets properties', () => {
@@ -39,16 +42,18 @@ describe('TequilapiClient DTO', () => {
         }
       })
 
-      expect(identity.registered).to.be.false
+      expect(identity.registered).toBe(false)
 
-      expect(Object.keys(identity.publicKey)).to.have.lengthOf(2)
-      expect(identity.publicKey.part1).to.be.eql('0xfb22c62ed2ddc65eb2994a8af5b1094b239aacc04a6505fd2bc581f55547175a')
-      expect(identity.publicKey.part2).to.be.eql('0xef3156a0d95c3832b191c03c272a5900e3e30484b9c8a65a0387f1f8d436867f')
+      expect(identity.publicKey).toEqual({
+        part1: '0xfb22c62ed2ddc65eb2994a8af5b1094b239aacc04a6505fd2bc581f55547175a',
+        part2: '0xef3156a0d95c3832b191c03c272a5900e3e30484b9c8a65a0387f1f8d436867f'
+      })
 
-      expect(Object.keys(identity.signature)).to.have.lengthOf(3)
-      expect(identity.signature.r).to.be.eql('0xb48616d33aba008f687d500cac9e9f2ca2b3c275fab6fc21318b81e09571d993')
-      expect(identity.signature.s).to.be.eql('0x49c0d7e1445389dbc805275f0aeb0b7f23e50e26a772b5a3bc4b2cc39f1bb3aa')
-      expect(identity.signature.v).to.be.eql(28)
+      expect(identity.signature).toEqual({
+        r: '0xb48616d33aba008f687d500cac9e9f2ca2b3c275fab6fc21318b81e09571d993',
+        s: '0x49c0d7e1445389dbc805275f0aeb0b7f23e50e26a772b5a3bc4b2cc39f1bb3aa',
+        v: 28
+      })
     })
 
     it('sets empty properties', () => {

@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
 import { parseNodeBuildInfoDTO } from '../../../src/dto/node-build-info'
 
 describe('TequilapiClient DTO', () => {
@@ -30,15 +28,15 @@ describe('TequilapiClient DTO', () => {
     it('sets properties', async () => {
       const version = parseNodeBuildInfoDTO(data)
 
-      expect(version.commit).to.equal('0bcccc')
-      expect(version.branch).to.equal('master')
-      expect(version.buildNumber).to.equal('001')
+      expect(version.commit).toEqual('0bcccc')
+      expect(version.branch).toEqual('master')
+      expect(version.buildNumber).toEqual('001')
     })
 
     it('throws without required properties', async () => {
-      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ commit: undefined } })).to.throw()
-      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ branch: undefined } })).to.throw()
-      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ buildNumber: undefined } })).to.throw()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ commit: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ branch: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ buildNumber: undefined } })).toThrow()
     })
   })
 })

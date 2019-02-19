@@ -16,7 +16,6 @@
  */
 
 import { parseProposalsResponseDTO } from '../../../src/dto/proposals-response'
-import { captureError } from '../../helpers/utils'
 
 describe('.parseProposalsResponseDTO', () => {
   it('sets properties with full structure', async () => {
@@ -24,19 +23,15 @@ describe('.parseProposalsResponseDTO', () => {
       proposals: [{ id: 100, providerId: 'id', serviceType: 'type', serviceDefinition: {} }]
     })
 
-    expect(response.proposals).to.have.lengthOf(1)
-    expect(response.proposals[0].id).to.equal(100)
+    expect(response.proposals).toHaveLength(1)
+    expect(response.proposals[0].id).toEqual(100)
   })
 
   it('throws error when invoked with an empty object', async () => {
-    const error = captureError(() => parseProposalsResponseDTO({}))
-
-    expect(error.message).to.eql('ProposalsResponseDTO: proposals is not provided')
+    expect(() => parseProposalsResponseDTO({})).toThrowError('ProposalsResponseDTO: proposals is not provided')
   })
 
   it('throws an error if proposal in array does not validate', async () => {
-    const error = captureError(() => parseProposalsResponseDTO({ proposals: [{}] }))
-
-    expect(error.message).to.eql('ProposalDTO: id is not provided')
+    expect(() => parseProposalsResponseDTO({ proposals: [{}] })).toThrowError('ProposalDTO: id is not provided')
   })
 })
