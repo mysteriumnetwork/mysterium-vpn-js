@@ -34,7 +34,7 @@ export interface TequilapiClient {
 
   identitiesList (): Promise<Array<IdentityDTO>>,
   identityCreate (passphrase: string): Promise<IdentityDTO>,
-  identityUnlock (id: string, passphrase: string): Promise<void>,
+  identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
 
   findProposals (options?: ProposalQueryOptions): Promise<Array<ProposalDTO>>,
