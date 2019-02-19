@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { IdentityDTO } from "./identity";
+import type { IdentityDTO } from "./identity";
 export type IdentitiesResponseDTO = {
   identities: Array<IdentityDTO>
 };

@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { TequilapiClient } from "./client";
+import { TequilapiClient } from "./client";
 import type { HttpInterface } from "./adapters/interface";
 import type { NodeHealthcheckDTO } from "./dto/node-healthcheck";
 import type { IdentityDTO } from "./dto/identity";
@@ -19,7 +19,7 @@ import type { ConnectionRequest } from "./dto/query/connection-request";
 import type { IdentityRegistrationDTO } from "./dto/identity-registration/identity-registration";
 import type { ProposalQueryOptions } from "./dto/query/proposals-query-options";
 import type { ProposalDTO } from "./dto/proposal";
-declare export class HttpTequilapiClient mixins TequilapiClient {
+declare export class HttpTequilapiClient implements TequilapiClient {
   http: HttpInterface;
   constructor(http: HttpInterface): this;
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;

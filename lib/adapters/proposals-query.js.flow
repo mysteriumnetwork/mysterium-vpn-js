@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { HttpQueryParams } from "./interface";
-import { ProposalQueryOptions } from "../dto/query/proposals-query-options";
+import type { HttpQueryParams } from "./interface";
+import type { ProposalQueryOptions } from "../dto/query/proposals-query-options";
 declare export default class ProposalsQuery {
   options: ProposalQueryOptions;
   constructor(options?: ProposalQueryOptions): this;

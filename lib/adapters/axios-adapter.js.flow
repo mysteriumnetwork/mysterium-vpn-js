@@ -7,12 +7,13 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { AxiosInstance } from "axios";
-import { HttpInterface, HttpQueryParams } from "./interface";
-declare export default class AxiosAdapter mixins HttpInterface {
-  _axios: AxiosInstance;
+import { Axios } from "axios";
+import { HttpInterface, } from "./interface";
+import type { HttpQueryParams  } from "./interface";
+declare export default class AxiosAdapter implements HttpInterface {
+  _axios: Axios;
   _timeout: number;
-  constructor(axiosInstance: AxiosInstance, defaultTimeout?: number): this;
+  constructor(axiosInstance: Axios, defaultTimeout?: number): this;
   get(path: string, query?: HttpQueryParams, timeout?: number): Promise<any>;
   post(path: string, data: any, timeout?: number): Promise<any>;
   delete(path: string, timeout?: number): Promise<any>;
