@@ -1,13 +1,9 @@
 {
     "defaultSeverity": "error",
-    "extends": [
-        "tslint:latest",
-        "tslint-config-standard"
-    ],
-    "jsRules": {},
+    "extends": "../tslint-base.json",
     "rules": {
-        "semicolon": [ true, "never" ],
-        "interface-name": [true, "never-prefix"]
-    },
-    "rulesDirectory": []
+        "no-implicit-dependencies": [true, "dev"],
+        // TODO: remove
+        "no-floating-promises": false
+    }
 }

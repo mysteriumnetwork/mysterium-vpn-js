@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
-import { parseProposalDTO } from '../../src/dto/proposal'
-import AxiosAdapter from '../../src/adapters/axios-adapter'
-import axios from 'axios/index'
+import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
+import AxiosAdapter from '../../src/adapters/axios-adapter'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
+import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
+import { parseProposalDTO } from '../../src/dto/proposal'
+import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
 
 describe('HttpTequilapiClient', () => {
   let api: HttpTequilapiClient
@@ -76,7 +76,8 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('/healthcheck').reply(500)
 
-      expect(api.healthCheck()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="healthcheck")')
+      expect(api.healthCheck())
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="healthcheck")')
     })
   })
 

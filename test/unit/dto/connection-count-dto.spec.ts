@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectCountDTO, parseConnectionCountDTO  } from '../../../src/dto/connect-count-dto'
+import { ConnectCountDTO, parseConnectionCountDTO } from '../../../src/dto/connect-count-dto'
 
 describe('.parseConnectionCountDTO', () => {
   it('returns ConnectionCountDTO', () => {

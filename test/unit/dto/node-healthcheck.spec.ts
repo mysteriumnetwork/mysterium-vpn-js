@@ -46,7 +46,8 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('throws error with wrong data', async () => {
-      expect(() => parseHealthcheckResponse('I am wrong')).toThrowError('Unable to parse healthcheck response: "I am wrong"')
+      expect(() => parseHealthcheckResponse('I am wrong'))
+        .toThrowError('Unable to parse healthcheck response: "I am wrong"')
     })
   })
 })

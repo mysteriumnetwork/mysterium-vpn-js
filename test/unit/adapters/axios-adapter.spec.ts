@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import axios from 'axios/index'
-import AxiosAdapter from '../../../src/adapters/axios-adapter'
+import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import AxiosAdapter from '../../../src/adapters/axios-adapter'
 import TequilapiError from '../../../src/tequilapi-error'
 
 describe('TequilapiClient AxiosAdapter', () => {

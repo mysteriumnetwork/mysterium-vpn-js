@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import TequilapiError from '../../src/tequilapi-error'
-import { AxiosError } from '../../src/tequilapi-error'
+import TequilapiError, { AxiosError } from '../../src/tequilapi-error'
 
 function createTequilapiErrorWithCode (code: string): TequilapiError {
   const error = new Error('test error')
