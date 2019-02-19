@@ -6,13 +6,13 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "jest --config test/jest.config.js",
-    "ci": "npm run flow && npm run test",
+    "ci": "npm run lint && npm run flow && npm run test",
     "lint": "tslint -p src && tslint -p test",
+    "flow": "node_modules/.bin/flow",
+    "test": "jest --config test/jest.config.js",
     "prepack": "tsc -p src",
     "generate:flow": "./scripts/generate_flow_definitions.sh",
-    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios",
-    "flow": "node_modules/.bin/flow"
+    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
