@@ -15,4 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export { default, TEQUILAPI_URL } from './tequilapi-client-factory'
+import TequilapiClientFactory, { TEQUILAPI_URL } from './tequilapi-client-factory'
+
+export default TequilapiClientFactory
+export { TEQUILAPI_URL }

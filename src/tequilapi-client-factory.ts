@@ -33,12 +33,11 @@ class TequilapiClientFactory {
     this._defaultTimeout = defaultTimeout
   }
 
-  build (): TequilapiClient {
-    const adapter = this._buildAdapter()
+  build (adapter: HttpInterface): TequilapiClient {
     return new HttpTequilapiClient(adapter)
   }
 
-  _buildAdapter (): HttpInterface {
+  buildAdapter (): HttpInterface {
     const axiosInstance = axios.create({
       baseURL: this._baseUrl,
       headers: {

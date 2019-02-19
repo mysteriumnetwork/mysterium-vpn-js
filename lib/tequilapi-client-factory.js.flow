@@ -14,8 +14,8 @@ declare class TequilapiClientFactory {
   _baseUrl: string;
   _defaultTimeout: number;
   constructor(baseUrl?: string, defaultTimeout?: number): this;
-  build(): TequilapiClient;
-  _buildAdapter(): HttpInterface;
+  build(adapter: HttpInterface): TequilapiClient;
+  buildAdapter(): HttpInterface;
 }
 declare export { TEQUILAPI_URL };
 declare export default typeof TequilapiClientFactory;
