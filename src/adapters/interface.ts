@@ -19,6 +19,7 @@ export interface HttpQueryParams {
   [s: string]: any
 }
 
+// TODO: rename to something more generic - HTTP is implementation
 export interface HttpInterface {
   get (path: string, query?: HttpQueryParams, timeout?: number): Promise<any>
   post (path: string, data?: any, timeout?: number): Promise<any>
