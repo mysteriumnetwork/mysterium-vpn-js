@@ -22,9 +22,9 @@ export interface IdentitiesResponseDTO {
 }
 
 export function parseIdentitiesResponseDTO (responseData: any): IdentitiesResponseDTO {
-  if (responseData && Array.isArray(responseData.identities)) {
-    return { identities: responseData.identities.map((identity: any) => parseIdentityDTO(identity)) }
-  } else {
+  if (!(responseData && Array.isArray(responseData.identities))) {
     return { identities: [] }
   }
+
+  return { identities: responseData.identities.map((identity: any) => parseIdentityDTO(identity)) }
 }

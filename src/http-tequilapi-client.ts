@@ -93,10 +93,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     const responseDto = parseProposalsResponseDTO(response)
     const proposals = responseDto.proposals
 
-    if (!proposals) {
-      return []
-    }
-    return proposals
+    return proposals || []
   }
 
   public async connectionCreate (

@@ -22,12 +22,9 @@ export interface MetricsDTO {
 }
 
 export function parseMetricsDTO (data: any): MetricsDTO {
-  if (data.connectCount) {
-    try {
-      return { connectCount: parseConnectionCountDTO(data.connectCount) }
-    } catch (err) {
-      // unknown metrics are ignored
-    }
+  try {
+    return { connectCount: parseConnectionCountDTO(data.connectCount) }
+  } catch (err) {
+    return { connectCount: undefined }
   }
-  return { connectCount: undefined }
 }
