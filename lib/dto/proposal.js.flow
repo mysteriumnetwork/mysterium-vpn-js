@@ -7,13 +7,13 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { ServiceDefinitionDTO } from "./service-definition";
-import type { MetricsDTO } from "./metrics-dto";
-export type ProposalDTO = {
-  id: number,
-  providerId: string,
-  serviceType: string,
-  serviceDefinition: ServiceDefinitionDTO,
-  metrics?: MetricsDTO
-};
+import { MetricsDTO } from "./metrics-dto";
+import { ServiceDefinitionDTO } from "./service-definition";
+export interface ProposalDTO {
+  id: number;
+  providerId: string;
+  serviceType: string;
+  serviceDefinition: ServiceDefinitionDTO;
+  metrics?: MetricsDTO;
+}
 declare export function parseProposalDTO(data: any): ProposalDTO;

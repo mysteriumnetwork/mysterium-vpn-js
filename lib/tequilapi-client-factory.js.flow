@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import { TequilapiClient } from "./client";
 import { HttpInterface } from "./adapters/interface";
+import { TequilapiClient } from "./client";
 declare var TEQUILAPI_URL: string;
 declare class TequilapiClientFactory {
   _baseUrl: string;

@@ -7,9 +7,9 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { PublicKeyDTO } from "./public-key";
-import type { SignatureDTO } from "./signature";
-export type IdentityProof = {
-  publicKey: PublicKeyDTO,
-  signature: SignatureDTO
-};
+import { PublicKeyDTO } from "./public-key";
+import { SignatureDTO } from "./signature";
+export interface IdentityProof {
+  publicKey: PublicKeyDTO;
+  signature: SignatureDTO;
+}

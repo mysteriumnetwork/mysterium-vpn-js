@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { ConnectCountDTO } from "./connect-count-dto";
-export type MetricsDTO = {
-  connectCount?: ConnectCountDTO
-};
+import { ConnectCountDTO } from "./connect-count-dto";
+export interface MetricsDTO {
+  connectCount?: ConnectCountDTO;
+}
 declare export function parseMetricsDTO(data: any): MetricsDTO;

@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type ConnectionIPDTO = {
-  ip?: string
-};
+export interface ConnectionIPDTO {
+  ip?: string;
+}
 declare export function parseConnectionIPDTO(data: any): ConnectionIPDTO;

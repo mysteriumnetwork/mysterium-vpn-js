@@ -7,9 +7,9 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type SignatureDTO = {
-  r: string,
-  s: string,
-  v: string
-};
+export interface SignatureDTO {
+  r: string;
+  s: string;
+  v: string;
+}
 declare export function parseSignatureDTO(data: any): SignatureDTO;

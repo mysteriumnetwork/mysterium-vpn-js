@@ -7,11 +7,11 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type ConnectionStatisticsDTO = {
-  duration: number,
-  bytesReceived: number,
-  bytesSent: number
-};
+export interface ConnectionStatisticsDTO {
+  duration: number;
+  bytesReceived: number;
+  bytesSent: number;
+}
 declare export function parseConnectionStatisticsDTO(
   data: any
 ): ConnectionStatisticsDTO;

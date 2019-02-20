@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type PublicKeyDTO = {
-  part1: string,
-  part2: string
-};
+export interface PublicKeyDTO {
+  part1: string;
+  part2: string;
+}
 declare export function parsePublicKeyDTO(data: any): PublicKeyDTO;

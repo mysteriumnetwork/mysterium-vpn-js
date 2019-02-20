@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { IdentityProof } from "./identity-proof";
+import { IdentityProof } from "./identity-proof";
 declare export var getPaymentLink: (
   paymentBaseUrl: string,
   registration: IdentityProof

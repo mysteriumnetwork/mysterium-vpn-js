@@ -7,10 +7,10 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { IdentityDTO } from "./identity";
-export type IdentitiesResponseDTO = {
-  identities: Array<IdentityDTO>
-};
+import { IdentityDTO } from "./identity";
+export interface IdentitiesResponseDTO {
+  identities: IdentityDTO[];
+}
 declare export function parseIdentitiesResponseDTO(
   responseData: any
 ): IdentitiesResponseDTO;

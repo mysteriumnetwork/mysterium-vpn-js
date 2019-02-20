@@ -7,9 +7,9 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type ConnectCountDTO = {
-  success: number,
-  fail: number,
-  timeout: number
-};
-declare export function parseConnectionCountDTO(data: Object): ConnectCountDTO;
+export interface ConnectCountDTO {
+  success: number;
+  fail: number;
+  timeout: number;
+}
+declare export function parseConnectionCountDTO(data: any): ConnectCountDTO;

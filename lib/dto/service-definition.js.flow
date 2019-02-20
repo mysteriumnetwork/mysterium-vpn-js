@@ -7,10 +7,10 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { LocationDTO } from "./location";
-export type ServiceDefinitionDTO = {
-  locationOriginate?: LocationDTO
-};
+import { LocationDTO } from "./location";
+export interface ServiceDefinitionDTO {
+  locationOriginate?: LocationDTO;
+}
 declare export function parseServiceDefinitionDTO(
   data: any
 ): ServiceDefinitionDTO;

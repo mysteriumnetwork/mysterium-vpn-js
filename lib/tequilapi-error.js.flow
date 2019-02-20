@@ -7,13 +7,13 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type AxiosError = {
-  message: string,
+export interface AxiosError {
+  message: string;
   response?: {
     status: number
-  },
-  code?: string
-};
+  };
+  code?: string;
+}
 declare export default class TequilapiError mixins Error {
   name: string;
   _originalError: AxiosError;

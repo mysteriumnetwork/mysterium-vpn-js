@@ -7,20 +7,20 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { ProposalDTO } from "./dto/proposal";
-import type { ProposalQueryOptions } from "./dto/query/proposals-query-options";
-import type { IdentityDTO } from "./dto/identity";
-import type { NodeHealthcheckDTO } from "./dto/node-healthcheck";
-import type { ConnectionStatusDTO } from "./dto/connection-status-dto";
-import type { ConnectionRequest } from "./dto/query/connection-request";
-import type { ConsumerLocationDTO } from "./dto/consumer-location";
-import type { ConnectionIPDTO } from "./dto/connection-ip";
-import type { IdentityRegistrationDTO } from "./dto/identity-registration/identity-registration";
-import type { ConnectionStatisticsDTO } from "./dto/connection-statistics";
+import { ConnectionIPDTO } from "./dto/connection-ip";
+import { ConnectionStatisticsDTO } from "./dto/connection-statistics";
+import { ConnectionStatusDTO } from "./dto/connection-status-dto";
+import { ConsumerLocationDTO } from "./dto/consumer-location";
+import { IdentityDTO } from "./dto/identity";
+import { IdentityRegistrationDTO } from "./dto/identity-registration/identity-registration";
+import { NodeHealthcheckDTO } from "./dto/node-healthcheck";
+import { ProposalDTO } from "./dto/proposal";
+import { ConnectionRequest } from "./dto/query/connection-request";
+import { ProposalQueryOptions } from "./dto/query/proposals-query-options";
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;
   stop(): Promise<void>;
-  identitiesList(): Promise<Array<IdentityDTO>>;
+  identitiesList(): Promise<IdentityDTO[]>;
   identityCreate(passphrase: string): Promise<IdentityDTO>;
   identityUnlock(
     id: string,
@@ -28,7 +28,7 @@ export interface TequilapiClient {
     timeout?: number
   ): Promise<void>;
   identityRegistration(id: string): Promise<IdentityRegistrationDTO>;
-  findProposals(options?: ProposalQueryOptions): Promise<Array<ProposalDTO>>;
+  findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]>;
   connectionCreate(
     request: ConnectionRequest,
     timeout?: number

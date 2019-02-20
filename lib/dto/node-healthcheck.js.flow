@@ -7,13 +7,13 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { NodeBuildInfoDTO } from "./node-build-info";
-export type NodeHealthcheckDTO = {
-  uptime: string,
-  process: number,
-  version: string,
-  buildInfo: NodeBuildInfoDTO
-};
+import { NodeBuildInfoDTO } from "./node-build-info";
+export interface NodeHealthcheckDTO {
+  uptime: string;
+  process: number;
+  version: string;
+  buildInfo: NodeBuildInfoDTO;
+}
 /**
  * Validates and converts mixed type into NodeHealthcheckDTO.
  * @param data to be conveted

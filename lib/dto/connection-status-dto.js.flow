@@ -8,10 +8,10 @@
  */
 
 import { ConnectionStatus } from "./connection-status";
-export type ConnectionStatusDTO = {
-  status: ConnectionStatus,
-  sessionId?: string
-};
+export interface ConnectionStatusDTO {
+  status: ConnectionStatus;
+  sessionId?: string;
+}
 declare export function parseConnectionStatusDTO(
   data: any
 ): {

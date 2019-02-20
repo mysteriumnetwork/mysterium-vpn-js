@@ -7,11 +7,11 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type NodeBuildInfoDTO = {
-  commit: string,
-  branch: string,
-  buildNumber: string
-};
+export interface NodeBuildInfoDTO {
+  commit: string;
+  branch: string;
+  buildNumber: string;
+}
 declare export function parseNodeBuildInfoDTO(
   data: any
 ): {

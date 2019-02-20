@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type ConnectionRequest = {
-  consumerId: string,
-  providerId: string,
-  serviceType: string
-};
+export interface ConnectionRequest {
+  consumerId: string;
+  providerId: string;
+  serviceType: string;
+}

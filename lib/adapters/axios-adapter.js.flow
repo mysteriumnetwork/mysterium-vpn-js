@@ -8,8 +8,7 @@
  */
 
 import { Axios } from "axios";
-import { HttpInterface, } from "./interface";
-import type { HttpQueryParams  } from "./interface";
+import { HttpInterface, HttpQueryParams } from "./interface";
 declare export default class AxiosAdapter implements HttpInterface {
   _axios: Axios;
   _timeout: number;

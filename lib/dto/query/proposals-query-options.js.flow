@@ -7,8 +7,8 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type ProposalQueryOptions = {
-  providerId?: string,
-  serviceType?: string,
-  fetchConnectCounts?: boolean
-};
+export interface ProposalQueryOptions {
+  providerId?: string;
+  serviceType?: string;
+  fetchConnectCounts?: boolean;
+}

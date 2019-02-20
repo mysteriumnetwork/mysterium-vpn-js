@@ -7,14 +7,14 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-import type { ProposalDTO } from "./proposal";
+import { ProposalDTO } from "./proposal";
 
 /**
  * Used only as an intermediate result - is not exposed to clients.
  */
-declare type ProposalsResponseDTO = {
-  proposals: Array<ProposalDTO>
-};
+declare interface ProposalsResponseDTO {
+  proposals: ProposalDTO[];
+}
 declare export function parseProposalsResponseDTO(
   responseData: any
 ): ProposalsResponseDTO;

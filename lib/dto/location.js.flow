@@ -7,9 +7,9 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type LocationDTO = {
-  country: string
-};
+export interface LocationDTO {
+  country: string;
+}
 declare export function parseLocationDTO(
   data: any
 ): {

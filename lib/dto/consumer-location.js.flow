@@ -7,12 +7,12 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-export type ConsumerLocationDTO = {
-  originalCountry?: string,
-  originalIP?: string,
-  currentCountry?: string,
-  currentIP?: string
-};
+export interface ConsumerLocationDTO {
+  originalCountry?: string;
+  originalIP?: string;
+  currentCountry?: string;
+  currentIP?: string;
+}
 declare export function parseConsumerLocationDTO(
   data: any
 ): ConsumerLocationDTO;
