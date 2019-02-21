@@ -1,8 +1,6 @@
 src
 test
-flow-typed
 .babelrc
-.eslintrc.js
 .idea
 .flowconfig
 .travis.yml

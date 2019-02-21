@@ -14,7 +14,7 @@ npm i mysterium-tequilapi
 ```javascript
 import TequilapiClientFactory, { TEQUILAPI_URL } from 'mysterium-tequilapi'
 const factory = new TequilapiClientFactory(TEQUILAPI_URL)
-const client = factory.build()
+const client = factory.build(factory.buildAdapter())
 client.identitiesList().then((identities) => {
   console.log(identities)
 })
@@ -28,7 +28,7 @@ Output:
 ```javascript
 const Tequilapi = require("mysterium-tequilapi")
 const factory = new Tequilapi.default(Tequilapi.TEQUILAPI_URL)
-const client = factory.build()
+const client = factory.build(factory.buildAdapter())
 
 client.healthCheck().then((res) => {
   console.log(res)
