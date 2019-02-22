@@ -22,7 +22,7 @@ interface Property {
 
 function validate (typeName: string, obj: any, property: Property) {
   const value = obj[property.name]
-  if (!value) {
+  if (typeof value === 'undefined') {
     throw new TypeError(`${typeName}: ${property.name} is not provided`)
   }
 
