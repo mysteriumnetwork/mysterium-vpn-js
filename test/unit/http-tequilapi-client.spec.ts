@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// TODO: rename file
-
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
