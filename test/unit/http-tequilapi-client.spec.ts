@@ -22,6 +22,7 @@ import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import { parseProposalDTO } from '../../src/dto/proposal'
+import { parseServiceListDTO } from '../../src/dto/service-list'
 import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
 
 describe('HttpTequilapiClient', () => {
@@ -446,6 +447,39 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onGet('sessions').reply(200, response)
       expect(api.sessionsList()).rejects.toBeInstanceOf(Error)
+    })
+  })
+
+  const serviceObject = {
+    id: 'service1',
+    status: 'Starting',
+    proposal: {
+      id: 1,
+      providerId: '0x1',
+      serviceType: 'openvpn',
+      serviceDefinition: {
+        locationOriginate: {
+          country: 'NL'
+        }
+      }
+    },
+    options: {}
+  }
+  describe('serviceList()', () => {
+    it('returns response', async () => {
+      const response = [serviceObject]
+      mock.onGet('services').reply(200, response)
+
+      const services = await api.serviceList()
+      expect(services).toEqual(parseServiceListDTO(response))
+    })
+
+    it('handles error', () => {
+      mock.onGet('services').reply(500)
+
+      expect(
+        api.serviceList()
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
     })
   })
 })

@@ -33,6 +33,8 @@ import { ProposalDTO } from './dto/proposal'
 import { parseProposalsResponseDTO } from './dto/proposals-response'
 import { ConnectionRequest } from './dto/query/connection-request'
 import { ProposalQueryOptions } from './dto/query/proposals-query-options'
+import { ServiceInfoDTO } from './dto/service-info'
+import { parseServiceListDTO } from './dto/service-list'
 import { SessionDTO, validateSession } from './dto/session'
 import { TIMEOUT_DISABLED } from './timeouts'
 
@@ -157,5 +159,14 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Location response body is missing')
     }
     return response.sessions.map(validateSession)
+  }
+
+  public async serviceList (): Promise<ServiceInfoDTO[]> {
+    const response = await this.http.get('services')
+    if (!response) {
+      throw new Error('Proposals response body is missing')
+    }
+
+    return parseServiceListDTO(response)
   }
 }
