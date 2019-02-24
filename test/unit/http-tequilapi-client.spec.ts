@@ -522,4 +522,20 @@ describe('HttpTequilapiClient', () => {
         .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
     })
   })
+
+  describe('serviceStop()', () => {
+    it('succeeds', async () => {
+      const expectedRequest = undefined
+      mock.onDelete('services/service1', expectedRequest).reply(202)
+
+      await api.serviceStop('service1')
+    })
+
+    it('handles error', () => {
+      mock.onDelete('services/service1').reply(500)
+
+      expect(api.serviceStop('service1'))
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services/service1")')
+    })
+  })
 })

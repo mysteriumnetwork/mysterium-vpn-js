@@ -53,5 +53,6 @@ export interface TequilapiClient {
 
   serviceList (): Promise<ServiceInfoDTO[]>,
   serviceGet (serviceId: string): Promise<ServiceInfoDTO>,
-  serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>
+  serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>,
+  serviceStop (serviceId: string): Promise<void>
 }

@@ -198,4 +198,8 @@ export class HttpTequilapiClient implements TequilapiClient {
     }
     return parseServiceInfoDTO(response)
   }
+
+  public async serviceStop (serviceId: string): Promise<void> {
+    await this.http.delete('services/' + serviceId)
+  }
 }
