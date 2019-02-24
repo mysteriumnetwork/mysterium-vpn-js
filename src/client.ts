@@ -32,6 +32,7 @@ import { SessionDTO } from './dto/session'
 export interface TequilapiClient {
   healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
   stop (): Promise<void>,
+  location (timeout?: number): Promise<ConsumerLocationDTO>,
 
   identitiesList (): Promise<IdentityDTO[]>,
   identityCreate (passphrase: string): Promise<IdentityDTO>,
@@ -45,6 +46,6 @@ export interface TequilapiClient {
   connectionCancel (): Promise<void>,
   connectionIP (timeout?: number): Promise<ConnectionIPDTO>,
   connectionStatistics (): Promise<ConnectionStatisticsDTO>,
-  location (timeout?: number): Promise<ConsumerLocationDTO>,
+
   sessionsList (): Promise<SessionDTO[]>
 }

@@ -55,6 +55,14 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.post('stop')
   }
 
+  public async location (timeout?: number): Promise<ConsumerLocationDTO> {
+    const response = await this.http.get('location', undefined, timeout)
+    if (!response) {
+      throw new Error('Location response body is missing')
+    }
+    return parseConsumerLocationDTO(response)
+  }
+
   public async identitiesList (): Promise<IdentityDTO[]> {
     const response = await this.http.get('identities')
     if (!response) {
@@ -141,14 +149,6 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Connection statistics response body is missing')
     }
     return parseConnectionStatisticsDTO(response)
-  }
-
-  public async location (timeout?: number): Promise<ConsumerLocationDTO> {
-    const response = await this.http.get('location', undefined, timeout)
-    if (!response) {
-      throw new Error('Location response body is missing')
-    }
-    return parseConsumerLocationDTO(response)
   }
 
   public async sessionsList (): Promise<SessionDTO[]> {
