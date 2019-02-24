@@ -51,4 +51,5 @@ export interface TequilapiClient {
   sessionsList (): Promise<SessionDTO[]>,
 
   serviceList (): Promise<ServiceInfoDTO[]>
+  serviceGet (serviceId: string): Promise<ServiceInfoDTO>
 }

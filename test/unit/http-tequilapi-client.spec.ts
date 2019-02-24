@@ -22,6 +22,7 @@ import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import { parseProposalDTO } from '../../src/dto/proposal'
+import { parseServiceInfoDTO } from '../../src/dto/service-info'
 import { parseServiceListDTO } from '../../src/dto/service-list'
 import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
 
@@ -480,6 +481,23 @@ describe('HttpTequilapiClient', () => {
       expect(
         api.serviceList()
       ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
+    })
+  })
+
+  describe('serviceGet()', () => {
+    it('returns response', async () => {
+      mock.onGet('services/service1').reply(200, serviceObject)
+
+      const service = await api.serviceGet('service1')
+      expect(service).toEqual(parseServiceInfoDTO(serviceObject))
+    })
+
+    it('handles error', () => {
+      mock.onGet('services/service1').reply(500)
+
+      expect(
+        api.serviceGet('service1')
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services/service1")')
     })
   })
 })
