@@ -35,6 +35,7 @@ import { ConnectionRequest } from './dto/query/connection-request'
 import { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import { parseServiceInfoDTO, ServiceInfoDTO } from './dto/service-info'
 import { parseServiceListDTO } from './dto/service-list'
+import { ServiceRequest } from './dto/service-request'
 import { SessionDTO, validateSession } from './dto/session'
 import { TIMEOUT_DISABLED } from './timeouts'
 
@@ -176,6 +177,25 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Service response body is missing')
     }
 
+    return parseServiceInfoDTO(response)
+  }
+
+  public async serviceStart (
+    request: ServiceRequest,
+    timeout: number | undefined = TIMEOUT_DISABLED
+  ): Promise<ServiceInfoDTO> {
+
+    const response = await this.http.post(
+      'services',
+      {
+        providerId: request.providerId,
+        serviceType: request.serviceType
+      },
+      timeout
+    )
+    if (!response) {
+      throw new Error('Service creation response body is missing')
+    }
     return parseServiceInfoDTO(response)
   }
 }
