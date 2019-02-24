@@ -19,12 +19,14 @@ import { NodeHealthcheckDTO } from "./dto/node-healthcheck";
 import { ProposalDTO } from "./dto/proposal";
 import { ConnectionRequest } from "./dto/query/connection-request";
 import { ProposalQueryOptions } from "./dto/query/proposals-query-options";
-import { SessionDTO } from "./dto/session";
-declare export class HttpTequilapiClient implements TequilapiClient {
+import { ServiceInfoDTO } from "./dto/service-info";
+import { ServiceRequest } from "./dto/service-request";
+declare export class HttpTequilapiClient mixins TequilapiClient {
   http: HttpInterface;
   constructor(http: HttpInterface): this;
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;
   stop(): Promise<void>;
+  location(timeout?: number): Promise<ConsumerLocationDTO>;
   identitiesList(): Promise<IdentityDTO[]>;
   identityCreate(passphrase: string): Promise<IdentityDTO>;
   identityUnlock(
@@ -42,6 +44,11 @@ declare export class HttpTequilapiClient implements TequilapiClient {
   connectionCancel(): Promise<void>;
   connectionIP(timeout?: number): Promise<ConnectionIPDTO>;
   connectionStatistics(): Promise<ConnectionStatisticsDTO>;
-  location(timeout?: number): Promise<ConsumerLocationDTO>;
-  sessionsList(): Promise<SessionDTO[]>;
+  serviceList(): Promise<ServiceInfoDTO[]>;
+  serviceGet(serviceId: string): Promise<ServiceInfoDTO>;
+  serviceStart(
+    request: ServiceRequest,
+    timeout?: number | void
+  ): Promise<ServiceInfoDTO>;
+  serviceStop(serviceId: string): Promise<void>;
 }
