@@ -157,7 +157,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async sessionsList (): Promise<SessionDTO[]> {
     const response = await this.http.get('sessions')
     if (!response) {
-      throw new Error('Location response body is missing')
+      throw new Error('Session list response body is missing')
     }
     return response.sessions.map(validateSession)
   }
@@ -165,14 +165,14 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async serviceList (): Promise<ServiceInfoDTO[]> {
     const response = await this.http.get('services')
     if (!response) {
-      throw new Error('Proposals response body is missing')
+      throw new Error('Service list response body is missing')
     }
 
     return parseServiceListDTO(response)
   }
 
-  public async serviceGet (serviceId: string): Promise<ServiceInfoDTO> {
-    const response = await this.http.get('services/' + serviceId)
+  public async serviceGet (id: string): Promise<ServiceInfoDTO> {
+    const response = await this.http.get('services/' + id)
     if (!response) {
       throw new Error('Service response body is missing')
     }

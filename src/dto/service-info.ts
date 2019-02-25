@@ -21,12 +21,12 @@ import { ServiceStatus } from './service-status'
 
 export interface ServiceInfoDTO {
   id: string,
-  status: ServiceStatus
+  status: ServiceStatus,
   proposal: ProposalDTO,
-  options: object
+  options: { [key: string]: any }
 }
 
-export function parseServiceInfoDTO (data: any) {
+export function parseServiceInfoDTO (data: any): ServiceInfoDTO {
   // TODO: validate that status has value from ServiceStatus enum
   validateMultiple('ServiceInfoDTO', data, [
     { name: 'id', type: 'string' },

@@ -49,4 +49,10 @@ describe('.parseServiceListDTO', () => {
       parseServiceListDTO([{}])
     }).toThrowError('ServiceInfoDTO: id is not provided')
   })
+
+  it('throws an error if service list in not an array', async () => {
+    expect(() => {
+      parseServiceListDTO({})
+    }).toThrowError('ServiceInfoDTO[]: should be "array"')
+  })
 })
