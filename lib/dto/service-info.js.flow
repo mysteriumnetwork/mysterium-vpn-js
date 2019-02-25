@@ -13,13 +13,8 @@ export interface ServiceInfoDTO {
   id: string;
   status: ServiceStatus;
   proposal: ProposalDTO;
-  options: { [key: string]: any };
+  options: {
+    [key: string]: any
+  };
 }
-declare export function parseServiceInfoDTO(
-  data: any
-): {
-  id: any,
-  status: any,
-  proposal: ProposalDTO,
-  options: any
-};
+declare export function parseServiceInfoDTO(data: any): ServiceInfoDTO;
