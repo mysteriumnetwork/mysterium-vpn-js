@@ -49,11 +49,7 @@ class TimeFormatter {
   }
 
   private formatTwoDigitNumber (value: number): string {
-    let s = value.toString()
-    while (s.length < 2) {
-      s = '0' + s
-    }
-    return s
+    return value > 9 ? value.toString() : `0${value}`
   }
 }
 

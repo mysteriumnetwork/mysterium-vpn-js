@@ -26,13 +26,11 @@ export class DurationFormatter {
     if (typeof (seconds as any) !== 'number' || seconds < 0) {
       throw new Error('invalid input')
     }
-    const hInt = Math.floor(seconds / 3600)
-    const hString = hInt > 9 ? hInt : '0' + hInt
-    const mInt = Math.floor((seconds % 3600) / 60)
-    const mString = mInt > 9 ? mInt : '0' + mInt
-    const sInt = (seconds % 60)
-    const sString = sInt > 9 ? sInt : '0' + sInt
-    return `${hString}:${mString}:${sString}`
+
+    const h = this.formatTwoDigitNumber(Math.floor(seconds / 3600))
+    const m = this.formatTwoDigitNumber(Math.floor((seconds % 3600) / 60))
+    const s = this.formatTwoDigitNumber(seconds % 60)
+    return `${h}:${m}:${s}`
   }
 
   public formatOrDefault (seconds: number): string {
@@ -41,6 +39,10 @@ export class DurationFormatter {
     } catch (err) {
       return timeDisplayDefault
     }
+  }
+
+  private formatTwoDigitNumber (value: number): string {
+    return value > 9 ? value.toString() : `0${value}`
   }
 }
 
