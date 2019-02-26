@@ -27,9 +27,5 @@ describe('TequilapiClient DTO', () => {
 
       expect(location.country).toEqual('LT')
     })
-
-    it('throws when country is missing', async () => {
-      expect(() => parseLocationDTO({})).toThrow()
-    })
   })
 })

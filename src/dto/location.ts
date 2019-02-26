@@ -15,13 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../validation'
-
 export interface LocationDTO {
-  country: string
+  country?: string
 }
 
-export function parseLocationDTO (data: any) {
-  validate('LocationDTO', data, { name: 'country', type: 'string' })
+export function parseLocationDTO (data: any): LocationDTO {
   return { country: data.country }
 }
