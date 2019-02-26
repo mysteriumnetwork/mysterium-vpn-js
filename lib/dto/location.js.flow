@@ -8,10 +8,6 @@
  */
 
 export interface LocationDTO {
-  country: string;
+  country?: string;
 }
-declare export function parseLocationDTO(
-  data: any
-): {
-  country: any
-};
+declare export function parseLocationDTO(data: any): LocationDTO;
