@@ -17,4 +17,5 @@ declare function validateMultiple(
   obj: any,
   properties: Property[]
 ): void;
-declare export { validateMultiple, validate };
+declare function validateArray(typeName: string, arr: any): void;
+declare export { validateMultiple, validateArray, validate };

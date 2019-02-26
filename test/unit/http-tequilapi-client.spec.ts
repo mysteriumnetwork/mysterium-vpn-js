@@ -22,6 +22,8 @@ import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import { parseProposalDTO } from '../../src/dto/proposal'
+import { parseServiceInfoDTO } from '../../src/dto/service-info'
+import { parseServiceListDTO } from '../../src/dto/service-list'
 import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
 
 describe('HttpTequilapiClient', () => {
@@ -94,6 +96,31 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('stop').reply(500)
 
       expect(api.stop()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="stop")')
+    })
+  })
+
+  describe('location()', () => {
+    it('returns response', async () => {
+      const response = {
+        original: { ip: '100.100.100.100', country: 'original country' },
+        current: { ip: '123.123.123.123', country: 'current country' }
+      }
+      mock.onGet('location').reply(200, response)
+
+      const stats = await api.location()
+
+      const dto = parseConsumerLocationDTO(response)
+      expect(stats.originalCountry).toEqual(dto.originalCountry)
+      expect(stats.originalIP).toEqual(dto.originalIP)
+      expect(stats.currentCountry).toEqual(dto.currentCountry)
+      expect(stats.currentIP).toEqual(dto.currentIP)
+      expect(stats).toEqual(dto)
+    })
+
+    it('handles error', () => {
+      mock.onGet('location').reply(500)
+
+      expect(api.location()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="location")')
     })
   })
 
@@ -355,31 +382,6 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('location()', () => {
-    it('returns response', async () => {
-      const response = {
-        original: { ip: '100.100.100.100', country: 'original country' },
-        current: { ip: '123.123.123.123', country: 'current country' }
-      }
-      mock.onGet('location').reply(200, response)
-
-      const stats = await api.location()
-
-      const dto = parseConsumerLocationDTO(response)
-      expect(stats.originalCountry).toEqual(dto.originalCountry)
-      expect(stats.originalIP).toEqual(dto.originalIP)
-      expect(stats.currentCountry).toEqual(dto.currentCountry)
-      expect(stats.currentIP).toEqual(dto.currentIP)
-      expect(stats).toEqual(dto)
-    })
-
-    it('handles error', () => {
-      mock.onGet('location').reply(500)
-
-      expect(api.location()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="location")')
-    })
-  })
-
   describe('sessionsList()', () => {
     it('returns response', async () => {
       const response = {
@@ -446,6 +448,94 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onGet('sessions').reply(200, response)
       expect(api.sessionsList()).rejects.toBeInstanceOf(Error)
+    })
+  })
+
+  const serviceObject = {
+    id: 'service1',
+    status: 'Starting',
+    proposal: {
+      id: 1,
+      providerId: '0x1',
+      serviceType: 'openvpn',
+      serviceDefinition: {
+        locationOriginate: {
+          country: 'NL'
+        }
+      }
+    },
+    options: {}
+  }
+  describe('serviceList()', () => {
+    it('returns response', async () => {
+      const response = [serviceObject]
+      mock.onGet('services').reply(200, response)
+
+      const services = await api.serviceList()
+      expect(services).toEqual(parseServiceListDTO(response))
+    })
+
+    it('handles error', () => {
+      mock.onGet('services').reply(500)
+
+      expect(
+        api.serviceList()
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
+    })
+  })
+
+  describe('serviceGet()', () => {
+    it('returns response', async () => {
+      mock.onGet('services/service1').reply(200, serviceObject)
+
+      const service = await api.serviceGet('service1')
+      expect(service).toEqual(parseServiceInfoDTO(serviceObject))
+    })
+
+    it('handles error', () => {
+      mock.onGet('services/service1').reply(500)
+
+      expect(
+        api.serviceGet('service1')
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services/service1")')
+    })
+  })
+
+  describe('serviceStart()', () => {
+    it('returns response', async () => {
+      const expectedRequest = {
+        providerId: '0x2000FACE',
+        serviceType: 'openvpn'
+      }
+      mock.onPost('services', expectedRequest).reply(200, serviceObject)
+
+      const request = { providerId: '0x2000FACE', serviceType: 'openvpn' }
+      const response = await api.serviceStart(request)
+      expect(response).toEqual(serviceObject)
+    })
+
+    it('handles error', () => {
+      mock.onPost('services').reply(500)
+
+      const request = { providerId: '0x2000FACE', serviceType: 'openvpn' }
+      expect(api.serviceStart(request))
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
+    })
+  })
+
+  describe('serviceStop()', () => {
+    it('succeeds', async () => {
+      const expectedRequest = undefined
+      mock.onDelete('services/service1', expectedRequest).reply(202)
+
+      await api.serviceStop('service1')
+    })
+
+    it('handles error', () => {
+      mock.onDelete('services/service1').reply(500)
+
+      expect(api.serviceStop('service1'))
+        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services/service1")')
     })
   })
 })

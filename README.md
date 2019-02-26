@@ -69,6 +69,18 @@ interface TequilapiClient {
 }
 ```
 
+## Contribution
+
+Run CI checks:
+
+`npm run ci`
+
+After modifying TS files run:
+
+`npm run prepack && npm run generate:flow`
+
+## Docs
+
 API docs are available [tequilapi.mysterium.network](http://tequilapi.mysterium.network)
 
 ## Authors

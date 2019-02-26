@@ -42,4 +42,10 @@ function validateMultiple (typeName: string, obj: any, properties: Property[]) {
   properties.forEach((property) => validate(typeName, obj, property))
 }
 
-export { validateMultiple, validate }
+function validateArray (typeName: string, arr: any) {
+  if (getTypeString(arr) !== 'array') {
+    throw new TypeError(`${typeName}: should be "array"`)
+  }
+}
+
+export { validateMultiple, validateArray, validate }

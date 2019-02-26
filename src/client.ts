@@ -25,6 +25,8 @@ import { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import { ProposalDTO } from './dto/proposal'
 import { ConnectionRequest } from './dto/query/connection-request'
 import { ProposalQueryOptions } from './dto/query/proposals-query-options'
+import { ServiceInfoDTO } from './dto/service-info'
+import { ServiceRequest } from './dto/service-request'
 import { SessionDTO } from './dto/session'
 
 // TODO: rename file to 'tequilapi-client.ts'
@@ -32,6 +34,7 @@ import { SessionDTO } from './dto/session'
 export interface TequilapiClient {
   healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
   stop (): Promise<void>,
+  location (timeout?: number): Promise<ConsumerLocationDTO>,
 
   identitiesList (): Promise<IdentityDTO[]>,
   identityCreate (passphrase: string): Promise<IdentityDTO>,
@@ -45,6 +48,11 @@ export interface TequilapiClient {
   connectionCancel (): Promise<void>,
   connectionIP (timeout?: number): Promise<ConnectionIPDTO>,
   connectionStatistics (): Promise<ConnectionStatisticsDTO>,
-  location (timeout?: number): Promise<ConsumerLocationDTO>,
-  sessionsList (): Promise<SessionDTO[]>
+
+  sessionsList (): Promise<SessionDTO[]>,
+
+  serviceList (): Promise<ServiceInfoDTO[]>,
+  serviceGet (serviceId: string): Promise<ServiceInfoDTO>,
+  serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>,
+  serviceStop (serviceId: string): Promise<void>
 }
