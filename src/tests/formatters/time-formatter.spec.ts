@@ -41,8 +41,7 @@ describe('TimeFormatter', () => {
   })
 
   describe('.formatTime', () => {
-    it('returns readable time', () => {
-      // -120
+    it('returns readable time in given timezone', () => {
       const date = new Date(Date.UTC(2018, 8, 24, 14, 3, 55))
       expect(formatter.formatTime(date)).toEqual('16:03:55')
     })
@@ -50,8 +49,13 @@ describe('TimeFormatter', () => {
 
   describe('.formatDate', () => {
     it('returns readable date', () => {
-      const date = new Date(2018, 8, 24, 14, 3, 55)
+      const date = new Date(Date.UTC(2018, 8, 24, 14, 3, 55))
       expect(formatter.formatDate(date)).toEqual('24/09/2018')
+    })
+
+    it('returns different day when day differs for given timezone offset', () => {
+      const date = new Date(Date.UTC(2018, 8, 24, 23, 3, 55))
+      expect(formatter.formatDate(date)).toEqual('25/09/2018')
     })
   })
 })

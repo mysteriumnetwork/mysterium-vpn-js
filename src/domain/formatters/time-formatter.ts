@@ -19,12 +19,19 @@ class TimeFormatter {
   constructor (private readonly minutesOffset: number) {}
 
   public formatDate (date: Date): string {
-    return date.toLocaleDateString(FORMAT_LOCALE)
+    const newDate = this.getDateWithOffset(date)
+    const year = newDate.getUTCFullYear()
+    const month = this.formatTwoDigitNumber(newDate.getUTCMonth() + 1)
+    const day = this.formatTwoDigitNumber(newDate.getUTCDate())
+    return `${day}/${month}/${year}`
   }
 
   public formatTime (date: Date): string {
     const newDate = this.getDateWithOffset(date)
-    return newDate.toLocaleTimeString(FORMAT_LOCALE, { timeZone: 'UTC' })
+    const hours = this.formatTwoDigitNumber(newDate.getUTCHours())
+    const minutes = this.formatTwoDigitNumber(newDate.getUTCMinutes())
+    const seconds = this.formatTwoDigitNumber(newDate.getUTCSeconds())
+    return `${hours}:${minutes}:${seconds}`
   }
 
   public formatISODateTime (date: Date): string {
@@ -40,8 +47,14 @@ class TimeFormatter {
     newDate.setMinutes(newDate.getMinutes() - this.minutesOffset)
     return newDate
   }
-}
 
-const FORMAT_LOCALE = 'en-GB'
+  private formatTwoDigitNumber (value: number): string {
+    let s = value.toString()
+    while (s.length < 2) {
+      s = '0' + s
+    }
+    return s
+  }
+}
 
 export { TimeFormatter }
