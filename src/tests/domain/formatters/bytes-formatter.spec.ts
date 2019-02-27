@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { BytesFormatter } from '../../domain/formatters/bytes-formatter'
+import { BytesFormatter } from '../../../domain/formatters/bytes-formatter'
 
 describe('BytesFormatter', () => {
   const formatter = new BytesFormatter()
