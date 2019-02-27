@@ -18,6 +18,11 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@types/filesize@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/filesize/-/filesize-4.0.1.tgz#6ddde9183d80e7e8261641d7db46ab1ffd20bdcb"
+  integrity sha512-GzPnNTUdyLSdLuKwPaI5dLJ783D/pEVTsikxX+3Q+8QNelZF2k5HQgEv0yFMo7N/vj5tvpRi9xAzXDQNUwuvfg==
+
 "@types/jest@<24.0.0":
   version "23.3.14"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
@@ -1030,6 +1035,11 @@ fileset@^2.0.2:
   dependencies:
     glob "^7.0.3"
     minimatch "^3.0.3"
+
+filesize@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-4.1.2.tgz#fcd570af1353cea97897be64f56183adb995994b"
+  integrity sha512-iSWteWtfNcrWQTkQw8ble2bnonSl7YJImsn9OZKpE2E4IHhXI78eASpDYUljXZZdYj36QsEKjOs/CsiDqmKMJw==
 
 fill-range@^2.1.0:
   version "2.2.4"
