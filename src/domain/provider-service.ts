@@ -16,18 +16,72 @@
  */
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
+import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
+import { ServiceStatus } from 'mysterium-tequilapi/lib/dto/service-status'
+import { logger } from '../logger'
+import { FunctionLooper } from './looper/function-looper'
+import { Publisher } from './publisher'
 
 export class ProviderService {
+  private statusPublisher: Publisher<ServiceStatus> = new Publisher()
+
+  private serviceId?: string
+  private statusFetcher?: FunctionLooper
+  private lastStatus: ServiceStatus = ServiceStatus.NOT_RUNNING
+
   constructor (
     private tequilapiClient: TequilapiClient,
     private providerId: string,
     private serviceType: string) {}
 
   public async start () {
-    await this.tequilapiClient.serviceStart({ providerId: this.providerId, serviceType: this.serviceType })
+    const info = await this.tequilapiClient.serviceStart({ providerId: this.providerId, serviceType: this.serviceType })
+    this.processNewServiceInfo(info)
+    this.serviceId = info.id
+    this.startFetchingStatus()
   }
 
   public async stop () {
-    await this.tequilapiClient.serviceStop(this.serviceType)
+    if (!this.serviceId) {
+      throw new Error('Service id is unknown, make sure to start service before stopping it')
+    }
+
+    await this.tequilapiClient.serviceStop(this.serviceId)
+    if (this.statusFetcher) {
+      await this.statusFetcher.stop()
+    }
+    this.processStatus(ServiceStatus.NOT_RUNNING)
+  }
+
+  public onStatusChange (callback: (newStatus: ServiceStatus) => any) {
+    this.statusPublisher.addSubscriber(callback)
+    callback(this.lastStatus)
+  }
+
+  private startFetchingStatus () {
+    this.statusFetcher = new FunctionLooper(async () => this.fetchStatus(), 1000)
+    this.statusFetcher.start()
+  }
+
+  private async fetchStatus () {
+    if (!this.serviceId) {
+      logger.error('Service status fetching failed because serviceId is missing')
+      return
+    }
+    const info = await this.tequilapiClient.serviceGet(this.serviceId)
+    this.processNewServiceInfo(info)
+  }
+
+  private processNewServiceInfo (info: ServiceInfoDTO) {
+    this.processStatus(info.status)
+  }
+
+  private processStatus (status: ServiceStatus) {
+    if (status === this.lastStatus) {
+      return
+    }
+
+    this.statusPublisher.publish(status)
+    this.lastStatus = status
   }
 }
