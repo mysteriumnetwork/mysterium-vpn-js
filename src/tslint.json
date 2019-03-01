@@ -6,7 +6,7 @@
     ],
     "jsRules": {},
     "rules": {
-        "semicolon": [ true, "never" ],
+        "semicolon": [true, "never"],
         "interface-name": [true, "never-prefix"],
         "no-submodule-imports": [true, "mysterium-tequilapi"]
     },
