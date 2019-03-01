@@ -97,7 +97,7 @@ describe('ProviderService', () => {
     })
   })
 
-  describe('.onStatusChange', () => {
+  describe('.addStatusSubscriber', () => {
     let clock: InstalledClock<NodeClock>
 
     beforeAll(() => {
@@ -110,7 +110,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with NOT_RUNNING status initially', async () => {
       let status = null
-      service.onStatusChange((newStatus) => {
+      service.addStatusSubscriber((newStatus) => {
         status = newStatus
       })
 
@@ -119,7 +119,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with STARTING status after starting service', async () => {
       let status = null
-      service.onStatusChange((newStatus) => {
+      service.addStatusSubscriber((newStatus) => {
         status = newStatus
       })
 
@@ -129,7 +129,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with NOT_RUNNING after stopping service', async () => {
       let status = null
-      service.onStatusChange((newStatus) => {
+      service.addStatusSubscriber((newStatus) => {
         status = newStatus
       })
 
@@ -140,7 +140,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with NOT_RUNNING if service stops unexpectedly', async () => {
       let status = null
-      service.onStatusChange((newStatus) => {
+      service.addStatusSubscriber((newStatus) => {
         status = newStatus
       })
 
@@ -170,7 +170,7 @@ describe('ProviderService', () => {
 
     it('does not invoke with the same status again', async () => {
       const statuses: ServiceStatus[] = []
-      service.onStatusChange((newStatus) => {
+      service.addStatusSubscriber((newStatus) => {
         statuses.push(newStatus)
       })
 
@@ -188,7 +188,7 @@ describe('ProviderService', () => {
       await service.start()
 
       let status = null
-      service.onStatusChange((newStatus) => {
+      service.addStatusSubscriber((newStatus) => {
         status = newStatus
       })
 
@@ -198,16 +198,16 @@ describe('ProviderService', () => {
     // TODO: if service is running, we should do ServiceList and find service by service type
   })
 
-  describe('.removeOnStatusChange', () => {
+  describe('.removeStatusSubscriber', () => {
     it('stops invoking callback on status change', async () => {
       let status = null
       const callback = (newStatus: ServiceStatus) => {
         status = newStatus
       }
-      service.onStatusChange(callback)
+      service.addStatusSubscriber(callback)
       status = null
 
-      service.removeOnStatusChange(callback)
+      service.removeStatusSubscriber(callback)
       await service.start()
 
       expect(status).toBeNull()

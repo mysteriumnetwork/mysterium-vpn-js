@@ -53,13 +53,13 @@ export class ProviderService {
     this.processStatus(ServiceStatus.NOT_RUNNING)
   }
 
-  public onStatusChange (callback: (newStatus: ServiceStatus) => any) {
-    this.statusPublisher.addSubscriber(callback)
-    callback(this.lastStatus)
+  public addStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
+    this.statusPublisher.addSubscriber(subscriber)
+    subscriber(this.lastStatus)
   }
 
-  public removeOnStatusChange (callback: (newStatus: ServiceStatus) => any) {
-    this.statusPublisher.removeSubscriber(callback)
+  public removeStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
+    this.statusPublisher.removeSubscriber(subscriber)
   }
 
   private startFetchingStatus () {
