@@ -197,4 +197,20 @@ describe('ProviderService', () => {
 
     // TODO: if service is running, we should do ServiceList and find service by service type
   })
+
+  describe('.removeOnStatusChange', () => {
+    it('stops invoking callback on status change', async () => {
+      let status = null
+      const callback = (newStatus: ServiceStatus) => {
+        status = newStatus
+      }
+      service.onStatusChange(callback)
+      status = null
+
+      service.removeOnStatusChange(callback)
+      await service.start()
+
+      expect(status).toBeNull()
+    })
+  })
 })

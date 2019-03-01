@@ -58,6 +58,10 @@ export class ProviderService {
     callback(this.lastStatus)
   }
 
+  public removeOnStatusChange (callback: (newStatus: ServiceStatus) => any) {
+    this.statusPublisher.removeSubscriber(callback)
+  }
+
   private startFetchingStatus () {
     this.statusFetcher = new FunctionLooper(async () => this.fetchStatus(), 1000)
     this.statusFetcher.start()
