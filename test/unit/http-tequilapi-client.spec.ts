@@ -507,11 +507,11 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const expectedRequest = {
         providerId: '0x2000FACE',
-        serviceType: 'openvpn'
+        type: 'openvpn'
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', serviceType: 'openvpn' }
+      const request = { providerId: '0x2000FACE', type: 'openvpn' }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
@@ -519,7 +519,7 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onPost('services').reply(500)
 
-      const request = { providerId: '0x2000FACE', serviceType: 'openvpn' }
+      const request = { providerId: '0x2000FACE', type: 'openvpn' }
       expect(api.serviceStart(request))
         .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
     })

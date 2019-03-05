@@ -189,7 +189,7 @@ export class HttpTequilapiClient implements TequilapiClient {
       'services',
       {
         providerId: request.providerId,
-        serviceType: request.serviceType
+        type: request.type
       },
       timeout
     )
