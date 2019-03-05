@@ -11,10 +11,12 @@ import { ProposalDTO } from "./proposal";
 import { ServiceStatus } from "./service-status";
 export interface ServiceInfoDTO {
   id: string;
-  status: ServiceStatus;
-  proposal: ProposalDTO;
-  options: {
+  providerId: string;
+  type: string;
+  options?: {
     [key: string]: any
   };
+  status: ServiceStatus;
+  proposal: ProposalDTO;
 }
 declare export function parseServiceInfoDTO(data: any): ServiceInfoDTO;

@@ -453,6 +453,9 @@ describe('HttpTequilapiClient', () => {
 
   const serviceObject = {
     id: 'service1',
+    providerId: '0x1',
+    type: 'openvpn',
+    options: {},
     status: 'Starting',
     proposal: {
       id: 1,
@@ -463,8 +466,7 @@ describe('HttpTequilapiClient', () => {
           country: 'NL'
         }
       }
-    },
-    options: {}
+    }
   }
   describe('serviceList()', () => {
     it('returns response', async () => {
