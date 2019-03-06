@@ -382,7 +382,7 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('sessionsList()', () => {
+  describe('connectionSessions()', () => {
     it('returns response', async () => {
       const response = {
         sessions: [
@@ -406,9 +406,9 @@ describe('HttpTequilapiClient', () => {
           }
         ]
       }
-      mock.onGet('sessions').reply(200, response)
+      mock.onGet('connection-sessions').reply(200, response)
 
-      const sessions = await api.sessionsList()
+      const sessions = await api.connectionSessions()
       expect(sessions).toHaveLength(2)
       expect(sessions[0].sessionId).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
     })
@@ -427,17 +427,17 @@ describe('HttpTequilapiClient', () => {
           }
         ]
       }
-      mock.onGet('sessions').reply(200, response)
+      mock.onGet('connection-sessions').reply(200, response)
 
-      const sessions = await api.sessionsList()
+      const sessions = await api.connectionSessions()
       expect(sessions).toHaveLength(1)
     })
 
     it('throws error when sessions key is missing', async () => {
       const response = {}
-      mock.onGet('sessions').reply(200, response)
+      mock.onGet('connection-sessions').reply(200, response)
       // TODO: improve error message
-      expect(api.sessionsList()).rejects.toBeInstanceOf(Error)
+      expect(api.connectionSessions()).rejects.toBeInstanceOf(Error)
     })
 
     it('throws error when empty session is returned', async () => {
@@ -446,8 +446,8 @@ describe('HttpTequilapiClient', () => {
           {}
         ]
       }
-      mock.onGet('sessions').reply(200, response)
-      expect(api.sessionsList()).rejects.toBeInstanceOf(Error)
+      mock.onGet('connection-sessions').reply(200, response)
+      expect(api.connectionSessions()).rejects.toBeInstanceOf(Error)
     })
   })
 

@@ -15,11 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// @flow
-
 import { validateMultiple } from '../validation'
 
-export interface SessionDTO {
+export interface ConnectionSessionDTO {
   sessionId: string,
   providerId: string,
   providerCountry: string,
@@ -29,8 +27,8 @@ export interface SessionDTO {
   duration: number
 }
 
-export function validateSession (data: any): SessionDTO {
-  validateMultiple('SessionDTO', data, [
+export function validateSession (data: any): ConnectionSessionDTO {
+  validateMultiple('ConnectionSessionDTO', data, [
     { name: 'sessionId', type: 'string' },
     { name: 'providerId', type: 'string' },
     { name: 'providerCountry', type: 'string' },
