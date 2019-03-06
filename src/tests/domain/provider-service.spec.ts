@@ -45,10 +45,17 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
     this.serviceStarted = request
 
     const options: { [key: string]: any } = {}
-    const proposal = { id: 1, providerId: request.providerId, serviceType: request.serviceType, serviceDefinition: {} }
+    const proposal = { id: 1, providerId: request.providerId, serviceType: request.type, serviceDefinition: {} }
     this.servicesCreated += 1
     const serviceId = `service id ${this.servicesCreated}`
-    const serviceInfo = { id: serviceId, status: ServiceStatus.STARTING, proposal, options }
+    const serviceInfo = {
+      id: serviceId,
+      options,
+      proposal,
+      providerId: request.providerId,
+      status: ServiceStatus.STARTING,
+      type: request.type
+    }
 
     this.serviceInfoMocks.set(serviceId, serviceInfo)
     return serviceInfo
@@ -78,7 +85,7 @@ describe('ProviderService', () => {
   describe('.start', () => {
     it('starts providing service', async () => {
       await service.start()
-      const expectedService: ServiceRequest = { providerId: 'my provider id', serviceType: 'test service' }
+      const expectedService: ServiceRequest = { providerId: 'my provider id', type: 'test service' }
       expect(tequilapiClient.serviceStarted).toEqual(expectedService)
     })
   })

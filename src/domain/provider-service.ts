@@ -35,7 +35,7 @@ export class ProviderService {
     private serviceType: string) {}
 
   public async start () {
-    const info = await this.tequilapiClient.serviceStart({ providerId: this.providerId, serviceType: this.serviceType })
+    const info = await this.tequilapiClient.serviceStart({ providerId: this.providerId, type: this.serviceType })
     this.processNewServiceInfo(info)
     this.serviceId = info.id
     this.startFetchingStatus()
