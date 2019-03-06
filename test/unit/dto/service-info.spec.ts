@@ -28,16 +28,20 @@ describe('TequilapiClient DTO', () => {
     }
     const serviceObject = parseServiceInfoDTO({
       id: 'service1',
+      providerId: '0x1',
+      type: 'openvpn',
+      options: { foo: 'bar' },
       status: 'Running',
-      proposal: proposalObject,
-      options: { foo: 'bar' }
+      proposal: proposalObject
     })
 
     it('sets properties', async () => {
       expect(serviceObject.id).toEqual('service1')
+      expect(serviceObject.providerId).toEqual('0x1')
+      expect(serviceObject.type).toEqual('openvpn')
+      expect(serviceObject.options).toEqual({ foo: 'bar' })
       expect(serviceObject.status).toEqual(ServiceStatus.RUNNING)
       expect(serviceObject.proposal).toEqual(proposalObject)
-      expect(serviceObject.options).toEqual({ foo: 'bar' })
     })
 
     it('throws error with null data', () => {
