@@ -49,10 +49,6 @@ export class ProviderService {
     }
 
     await this.tequilapiClient.serviceStop(this.serviceId)
-    if (this.statusFetcher) {
-      await this.statusFetcher.stop()
-    }
-    this.processStatus(ServiceStatus.NOT_RUNNING)
   }
 
   public addStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
@@ -69,6 +65,15 @@ export class ProviderService {
     this.statusFetcher.start()
   }
 
+  private async stopFetchingStatus () {
+    if (!this.statusFetcher) {
+      return
+    }
+
+    await this.statusFetcher.stop()
+    this.statusFetcher = undefined
+  }
+
   private async fetchStatus () {
     if (!this.serviceId) {
       logger.error('Service status fetching failed because serviceId is missing')
@@ -80,6 +85,7 @@ export class ProviderService {
     } catch (err) {
       if (err.name === TequilapiError.name && (err as TequilapiError).isNotFoundError) {
         this.processStatus(ServiceStatus.NOT_RUNNING)
+        this.stopFetchingStatus().catch((err: Error) => logger.error('Failed stopping fetching status', err))
         return
       }
 

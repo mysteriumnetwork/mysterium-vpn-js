@@ -150,6 +150,12 @@ describe('ProviderService', () => {
 
       await service.start()
       await service.stop()
+
+      // give some time for ProviderService to see this change
+      await nextTick()
+      clock.runToLast()
+      await nextTick()
+
       expect(status).toBe(ServiceStatus.NOT_RUNNING)
     })
 
@@ -174,17 +180,20 @@ describe('ProviderService', () => {
       await service.start()
       await service.stop()
 
-      const serviceGetInvoked = tequilapiClient.serviceGetInvoked
-
+      // give some time for ProviderService to see this change
       clock.runAll()
       await nextTick()
       clock.runToLast()
       await nextTick()
 
+      const serviceGetInvoked = tequilapiClient.serviceGetInvoked
+
+      // wait for a possible pulling
+      clock.runToLast()
+      await nextTick()
+
       expect(tequilapiClient.serviceGetInvoked).toEqual(serviceGetInvoked)
     })
-
-    // TODO: it does not send status requests after it stops unexpectedly
 
     it('does not invoke with the same status again', async () => {
       const statuses: ServiceStatus[] = []
