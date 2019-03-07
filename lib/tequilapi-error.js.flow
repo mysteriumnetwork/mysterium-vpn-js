@@ -22,5 +22,6 @@ declare export default class TequilapiError mixins Error {
   isTimeoutError: boolean;
   isRequestClosedError: boolean;
   isServiceUnavailableError: boolean;
+  isNotFoundError: boolean;
   _hasHttpStatus(expectedStatus: number): boolean;
 }
