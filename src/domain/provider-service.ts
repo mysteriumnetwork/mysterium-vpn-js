@@ -18,6 +18,7 @@
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
 import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
+import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
 import { logger } from '../logger'
 import { ServiceStatus } from '../models/service-status'
 import { FunctionLooper } from './looper/function-looper'
@@ -37,8 +38,8 @@ export class ProviderService {
 
   public async start () {
     const info = await this.tequilapiClient.serviceStart({ providerId: this.providerId, type: this.serviceType })
-    this.processNewServiceInfo(info)
     this.serviceId = info.id
+    this.processNewServiceInfo(info)
     this.startFetchingStatus()
   }
 
@@ -73,8 +74,17 @@ export class ProviderService {
       logger.error('Service status fetching failed because serviceId is missing')
       return
     }
-    const info = await this.tequilapiClient.serviceGet(this.serviceId)
-    this.processNewServiceInfo(info)
+    try {
+      const info = await this.tequilapiClient.serviceGet(this.serviceId)
+      this.processNewServiceInfo(info)
+    } catch (err) {
+      if (err.name === TequilapiError.name && (err as TequilapiError).isNotFoundError) {
+        this.processStatus(ServiceStatus.NOT_RUNNING)
+        return
+      }
+
+      throw err
+    }
   }
 
   private processNewServiceInfo (info: ServiceInfoDTO) {

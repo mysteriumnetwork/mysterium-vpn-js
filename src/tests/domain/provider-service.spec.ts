@@ -19,6 +19,7 @@ import lolex, { InstalledClock, NodeClock } from 'lolex'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
 import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
 import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
+import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
 import { ProviderService } from '../../domain/provider-service'
 import { ServiceStatus } from '../../models/service-status'
 import { EmptyTequilapiClientMock } from '../utils/empty-tequilapi-client-mock'
@@ -37,7 +38,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
 
     const info = this.serviceInfoMocks.get(serviceId)
     if (info === undefined) {
-      throw Error('Service info is not available')
+      throw this.buildTequilapiError('Service not found', 404)
     }
     return info
   }
@@ -65,12 +66,18 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
   public async serviceStop (serviceId: string): Promise<void> {
     this.serviceStopped = serviceId
 
-    const info = this.serviceInfoMocks.get(serviceId)
-    if (!info) {
+    if (!this.serviceInfoMocks.delete(serviceId)) {
       throw Error('Stopping service not found')
     }
+  }
 
-    info.status = ServiceStatusDTO.NOT_RUNNING
+  // TODO: refactor TequilapiError to allow instantiating TequilapiError with custom status easier,
+  // i.e. add 'status' as constructor parameter
+  private buildTequilapiError (message: string, status: number) {
+    const originalError = new Error(message)
+    const originalErrorObj = originalError as any
+    originalErrorObj.response = { status }
+    return new TequilapiError(originalError, '/mock-path')
   }
 }
 
@@ -156,6 +163,7 @@ describe('ProviderService', () => {
       await tequilapiClient.serviceStop('service id 1')
 
       // give some time for ProviderService to see this change
+      await nextTick()
       clock.runToLast()
       await nextTick()
 
@@ -175,6 +183,8 @@ describe('ProviderService', () => {
 
       expect(tequilapiClient.serviceGetInvoked).toEqual(serviceGetInvoked)
     })
+
+    // TODO: it does not send status requests after it stops unexpectedly
 
     it('does not invoke with the same status again', async () => {
       const statuses: ServiceStatus[] = []
