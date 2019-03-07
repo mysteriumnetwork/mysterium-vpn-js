@@ -48,6 +48,10 @@ export default class TequilapiError extends Error {
     return this._hasHttpStatus(httpResponseCodes.SERVICE_UNAVAILABLE)
   }
 
+  get isNotFoundError (): boolean {
+    return this._hasHttpStatus(httpResponseCodes.NOT_FOUND)
+  }
+
   public _hasHttpStatus (expectedStatus: number): boolean {
     if (!this._originalError.response) {
       return false
@@ -58,7 +62,8 @@ export default class TequilapiError extends Error {
 
 const httpResponseCodes = {
   CLIENT_CLOSED_REQUEST: 499,
-  SERVICE_UNAVAILABLE: 503
+  SERVICE_UNAVAILABLE: 503,
+  NOT_FOUND: 404
 }
 
 const errorCodes = {

@@ -101,6 +101,17 @@ describe('TequilapiError', () => {
     })
   })
 
+  describe('.isNotFoundError', () => {
+    it('returns false for simple error', () => {
+      expect(simpleTequilapiError.isNotFoundError).toBe(false)
+    })
+
+    it('returns true for errors with request closed status', () => {
+      const tequilapiError = createTequilapiErrorWithResponseStatus(404)
+      expect(tequilapiError.isNotFoundError).toBe(true)
+    })
+  })
+
   describe('.toString', () => {
     it('returns error message with class name', () => {
       expect(simpleTequilapiError.toString()).toEqual('TequilapiError: test error (path="test-path")')
