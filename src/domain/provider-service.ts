@@ -17,8 +17,9 @@
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
-import { ServiceStatus } from 'mysterium-tequilapi/lib/dto/service-status'
+import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
 import { logger } from '../logger'
+import { ServiceStatus } from '../models/service-status'
 import { FunctionLooper } from './looper/function-looper'
 import { Publisher } from './publisher'
 
@@ -77,7 +78,8 @@ export class ProviderService {
   }
 
   private processNewServiceInfo (info: ServiceInfoDTO) {
-    this.processStatus(info.status)
+    const status = this.serviceStatusDTOToModel(info.status)
+    this.processStatus(status)
   }
 
   private processStatus (status: ServiceStatus) {
@@ -87,5 +89,18 @@ export class ProviderService {
 
     this.statusPublisher.publish(status)
     this.lastStatus = status
+  }
+
+  private serviceStatusDTOToModel (status: ServiceStatusDTO): ServiceStatus {
+    if (status === ServiceStatusDTO.NOT_RUNNING) {
+      return ServiceStatus.NOT_RUNNING
+    }
+    if (status === ServiceStatusDTO.STARTING) {
+      return ServiceStatus.STARTING
+    }
+    if (status === ServiceStatusDTO.RUNNING) {
+      return ServiceStatus.RUNNING
+    }
+    throw new Error(`Unknown status: ${status}, ${ServiceStatusDTO.NOT_RUNNING}`)
   }
 }

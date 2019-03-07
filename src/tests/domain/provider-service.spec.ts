@@ -18,8 +18,9 @@
 import lolex, { InstalledClock, NodeClock } from 'lolex'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
 import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
-import { ServiceStatus } from 'mysterium-tequilapi/lib/dto/service-status'
+import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
 import { ProviderService } from '../../domain/provider-service'
+import { ServiceStatus } from '../../models/service-status'
 import { EmptyTequilapiClientMock } from '../utils/empty-tequilapi-client-mock'
 import { nextTick } from '../utils/utils'
 
@@ -53,7 +54,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
       options,
       proposal,
       providerId: request.providerId,
-      status: ServiceStatus.STARTING,
+      status: ServiceStatusDTO.STARTING,
       type: request.type
     }
 
@@ -69,7 +70,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
       throw Error('Stopping service not found')
     }
 
-    info.status = ServiceStatus.NOT_RUNNING
+    info.status = ServiceStatusDTO.NOT_RUNNING
   }
 }
 
