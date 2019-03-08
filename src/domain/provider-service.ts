@@ -131,6 +131,6 @@ export class ProviderService {
     if (status === ServiceStatusDTO.RUNNING) {
       return ServiceStatus.RUNNING
     }
-    throw new Error(`Unknown status: ${status}, ${ServiceStatusDTO.NOT_RUNNING}`)
+    throw new Error(`Unknown status: ${status}`)
   }
 }
