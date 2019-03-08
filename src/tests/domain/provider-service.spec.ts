@@ -88,6 +88,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
 describe('ProviderService', () => {
   let service: ProviderService
   let tequilapiClient: ProviderServiceTequilapiClientMock
+  const providerId = 'my provider id'
 
   let clock: InstalledClock<NodeClock>
 
@@ -101,20 +102,20 @@ describe('ProviderService', () => {
 
   beforeEach(() => {
     tequilapiClient = new ProviderServiceTequilapiClientMock()
-    service = new ProviderService(tequilapiClient, 'my provider id', 'test service')
+    service = new ProviderService(tequilapiClient, 'test service')
   })
 
   describe('.start', () => {
     it('starts providing service', async () => {
-      await service.start()
-      const expectedService: ServiceRequest = { providerId: 'my provider id', type: 'test service' }
+      await service.start(providerId)
+      const expectedService: ServiceRequest = { providerId, type: 'test service' }
       expect(tequilapiClient.serviceStarted).toEqual(expectedService)
     })
   })
 
   describe('.stop', () => {
     it('stops providing service', async () => {
-      await service.start()
+      await service.start(providerId)
 
       await service.stop()
       expect(tequilapiClient.serviceStopped).toEqual('service id 1')
@@ -129,8 +130,8 @@ describe('ProviderService', () => {
   describe('.checkForExistingService', () => {
     describe('when existing service is running', () => {
       beforeEach(async () => {
-        const otherService = new ProviderService(tequilapiClient, 'my provider id', 'test service')
-        await otherService.start()
+        const otherService = new ProviderService(tequilapiClient, 'test service')
+        await otherService.start(providerId)
       })
 
       it('updates status when existing service is running', async () => {
@@ -178,8 +179,8 @@ describe('ProviderService', () => {
     })
 
     it('does not change status when existing service of different type is running', async () => {
-      const otherService = new ProviderService(tequilapiClient, 'my provider id', 'other test service')
-      await otherService.start()
+      const otherService = new ProviderService(tequilapiClient, 'other test service')
+      await otherService.start(providerId)
 
       let status
       service.addStatusSubscriber((newStatus: ServiceStatus) => {
@@ -207,7 +208,7 @@ describe('ProviderService', () => {
         status = newStatus
       })
 
-      await service.start()
+      await service.start(providerId)
       expect(status).toBe(ServiceStatus.STARTING)
     })
 
@@ -217,7 +218,7 @@ describe('ProviderService', () => {
         status = newStatus
       })
 
-      await service.start()
+      await service.start(providerId)
       await service.stop()
 
       // give some time for ProviderService to see this change
@@ -234,7 +235,7 @@ describe('ProviderService', () => {
         status = newStatus
       })
 
-      await service.start()
+      await service.start(providerId)
       await tequilapiClient.serviceStop('service id 1')
 
       // give some time for ProviderService to see this change
@@ -246,7 +247,7 @@ describe('ProviderService', () => {
     })
 
     it('does not send status requests after being stopped', async () => {
-      await service.start()
+      await service.start(providerId)
       await service.stop()
 
       // give some time for ProviderService to see this change
@@ -270,7 +271,7 @@ describe('ProviderService', () => {
         statuses.push(newStatus)
       })
 
-      await service.start()
+      await service.start(providerId)
 
       clock.runAll()
       await nextTick()
@@ -281,7 +282,7 @@ describe('ProviderService', () => {
     })
 
     it('invokes callback with STARTING status when subscribing to starting service', async () => {
-      await service.start()
+      await service.start(providerId)
 
       let status = null
       service.addStatusSubscriber((newStatus) => {
@@ -304,7 +305,7 @@ describe('ProviderService', () => {
       status = null
 
       service.removeStatusSubscriber(callback)
-      await service.start()
+      await service.start(providerId)
 
       expect(status).toBeNull()
     })

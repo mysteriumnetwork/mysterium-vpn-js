@@ -31,13 +31,11 @@ export class ProviderService {
   private statusFetcher?: FunctionLooper
   private lastStatus: ServiceStatus = ServiceStatus.NOT_RUNNING
 
-  constructor (
-    private tequilapiClient: TequilapiClient,
-    private providerId: string,
-    private serviceType: string) {}
+  constructor (private tequilapiClient: TequilapiClient, private serviceType: string) {}
 
-  public async start () {
-    const service = await this.tequilapiClient.serviceStart({ providerId: this.providerId, type: this.serviceType })
+  public async start (providerId: string) {
+    const type = this.serviceType
+    const service = await this.tequilapiClient.serviceStart({ providerId, type })
     this.handleStartedService(service)
   }
 
