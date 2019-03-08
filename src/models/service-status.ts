@@ -16,7 +16,7 @@
  */
 
 export enum ServiceStatus {
-  NOT_RUNNING,
-  STARTING,
-  RUNNING
+  NOT_RUNNING = 'NOT_RUNNING',
+  STARTING = 'STARTING',
+  RUNNING = 'RUNNING'
 }

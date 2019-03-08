@@ -37,10 +37,8 @@ export class ProviderService {
     private serviceType: string) {}
 
   public async start () {
-    const info = await this.tequilapiClient.serviceStart({ providerId: this.providerId, type: this.serviceType })
-    this.serviceId = info.id
-    this.processNewServiceInfo(info)
-    this.startFetchingStatus()
+    const service = await this.tequilapiClient.serviceStart({ providerId: this.providerId, type: this.serviceType })
+    this.handleStartedService(service)
   }
 
   public async stop () {
@@ -51,6 +49,16 @@ export class ProviderService {
     await this.tequilapiClient.serviceStop(this.serviceId)
   }
 
+  public async checkForExistingService () {
+    const services = await this.tequilapiClient.serviceList()
+    const service = services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
+    if (!service) {
+      return
+    }
+
+    this.handleStartedService(service)
+  }
+
   public addStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
     this.statusPublisher.addSubscriber(subscriber)
     subscriber(this.lastStatus)
@@ -58,6 +66,12 @@ export class ProviderService {
 
   public removeStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
     this.statusPublisher.removeSubscriber(subscriber)
+  }
+
+  private handleStartedService (service: ServiceInfoDTO) {
+    this.serviceId = service.id
+    this.processNewServiceInfo(service)
+    this.startFetchingStatus()
   }
 
   private startFetchingStatus () {

@@ -33,6 +33,10 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
   private serviceInfoMocks: Map<string, ServiceInfoDTO> = new Map<string, ServiceInfoDTO>()
   private servicesCreated: number = 0
 
+  public async serviceList (): Promise<ServiceInfoDTO[]> {
+    return Array.from(this.serviceInfoMocks.values())
+  }
+
   public async serviceGet (serviceId: string): Promise<ServiceInfoDTO> {
     this.serviceGetInvoked++
 
@@ -85,6 +89,16 @@ describe('ProviderService', () => {
   let service: ProviderService
   let tequilapiClient: ProviderServiceTequilapiClientMock
 
+  let clock: InstalledClock<NodeClock>
+
+  beforeAll(() => {
+    clock = lolex.install()
+  })
+
+  afterAll(() => {
+    clock.uninstall()
+  })
+
   beforeEach(() => {
     tequilapiClient = new ProviderServiceTequilapiClientMock()
     service = new ProviderService(tequilapiClient, 'my provider id', 'test service')
@@ -112,17 +126,72 @@ describe('ProviderService', () => {
     })
   })
 
+  describe('.checkForExistingService', () => {
+    describe('when existing service is running', () => {
+      beforeEach(async () => {
+        const otherService = new ProviderService(tequilapiClient, 'my provider id', 'test service')
+        await otherService.start()
+      })
+
+      it('updates status when existing service is running', async () => {
+        let status
+        service.addStatusSubscriber((newStatus: ServiceStatus) => {
+          status = newStatus
+        })
+
+        await service.checkForExistingService()
+        expect(status).toBe(ServiceStatus.STARTING)
+      })
+
+      it('allows stopping existing service', async () => {
+        await service.checkForExistingService()
+
+        await service.stop()
+      })
+
+      it('starts notifying about later status changes', async () => {
+        let status
+        service.addStatusSubscriber((newStatus: ServiceStatus) => {
+          status = newStatus
+        })
+
+        await service.checkForExistingService()
+        await service.stop()
+
+        // give some time for ProviderService to see this change
+        await nextTick()
+        clock.runToLast()
+        await nextTick()
+
+        expect(status).toBe(ServiceStatus.NOT_RUNNING)
+      })
+    })
+
+    it('does not change status when no services are running', async () => {
+      let status
+      service.addStatusSubscriber((newStatus: ServiceStatus) => {
+        status = newStatus
+      })
+
+      await service.checkForExistingService()
+      expect(status).toBe(ServiceStatus.NOT_RUNNING)
+    })
+
+    it('does not change status when existing service of different type is running', async () => {
+      const otherService = new ProviderService(tequilapiClient, 'my provider id', 'other test service')
+      await otherService.start()
+
+      let status
+      service.addStatusSubscriber((newStatus: ServiceStatus) => {
+        status = newStatus
+      })
+
+      await service.checkForExistingService()
+      expect(status).toBe(ServiceStatus.NOT_RUNNING)
+    })
+  })
+
   describe('.addStatusSubscriber', () => {
-    let clock: InstalledClock<NodeClock>
-
-    beforeAll(() => {
-      clock = lolex.install()
-    })
-
-    afterAll(() => {
-      clock.uninstall()
-    })
-
     it('invokes callback with NOT_RUNNING status initially', async () => {
       let status = null
       service.addStatusSubscriber((newStatus) => {
