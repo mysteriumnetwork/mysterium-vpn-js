@@ -37,6 +37,7 @@ import { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import { parseServiceInfoDTO, ServiceInfoDTO } from './dto/service-info'
 import { parseServiceListDTO } from './dto/service-list'
 import { ServiceRequest } from './dto/service-request'
+import { parseServiceSessionListDTO, ServiceSessionDTO } from './dto/service-session'
 import { TIMEOUT_DISABLED } from './timeouts'
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -201,5 +202,13 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async serviceStop (serviceId: string): Promise<void> {
     await this.http.delete('services/' + serviceId)
+  }
+
+  public async serviceSessions (): Promise<ServiceSessionDTO[]> {
+    const response = await this.http.get('service-sessions')
+    if (!response) {
+      throw new Error('Service sessions response body is missing')
+    }
+    return parseServiceSessionListDTO(response)
   }
 }

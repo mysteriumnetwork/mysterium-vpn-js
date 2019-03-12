@@ -8,6 +8,7 @@
  */
 
 import { ConnectionIPDTO } from "./dto/connection-ip";
+import { ConnectionSessionDTO } from "./dto/connection-session";
 import { ConnectionStatisticsDTO } from "./dto/connection-statistics";
 import { ConnectionStatusDTO } from "./dto/connection-status-dto";
 import { ConsumerLocationDTO } from "./dto/consumer-location";
@@ -19,7 +20,7 @@ import { ConnectionRequest } from "./dto/query/connection-request";
 import { ProposalQueryOptions } from "./dto/query/proposals-query-options";
 import { ServiceInfoDTO } from "./dto/service-info";
 import { ServiceRequest } from "./dto/service-request";
-import { ConnectionSessionDTO } from "./dto/connection-session";
+import { ServiceSessionDTO } from "./dto/service-session";
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;
   stop(): Promise<void>;
@@ -49,4 +50,5 @@ export interface TequilapiClient {
     timeout?: number
   ): Promise<ServiceInfoDTO>;
   serviceStop(serviceId: string): Promise<void>;
+  serviceSessions(): Promise<ServiceSessionDTO[]>;
 }

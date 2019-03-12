@@ -28,6 +28,7 @@ import { ConnectionRequest } from './dto/query/connection-request'
 import { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import { ServiceInfoDTO } from './dto/service-info'
 import { ServiceRequest } from './dto/service-request'
+import { ServiceSessionDTO } from './dto/service-session'
 
 // TODO: rename file to 'tequilapi-client.ts'
 
@@ -53,5 +54,6 @@ export interface TequilapiClient {
   serviceList (): Promise<ServiceInfoDTO[]>,
   serviceGet (serviceId: string): Promise<ServiceInfoDTO>,
   serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>,
-  serviceStop (serviceId: string): Promise<void>
+  serviceStop (serviceId: string): Promise<void>,
+  serviceSessions (): Promise<ServiceSessionDTO[]>
 }
