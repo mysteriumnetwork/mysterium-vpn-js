@@ -17,8 +17,10 @@
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
-import { ServiceStatus } from 'mysterium-tequilapi/lib/dto/service-status'
+import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
+import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
 import { logger } from '../logger'
+import { ServiceStatus } from '../models/service-status'
 import { FunctionLooper } from './looper/function-looper'
 import { Publisher } from './publisher'
 
@@ -29,16 +31,12 @@ export class ProviderService {
   private statusFetcher?: FunctionLooper
   private lastStatus: ServiceStatus = ServiceStatus.NOT_RUNNING
 
-  constructor (
-    private tequilapiClient: TequilapiClient,
-    private providerId: string,
-    private serviceType: string) {}
+  constructor (private tequilapiClient: TequilapiClient, private serviceType: string) {}
 
-  public async start () {
-    const info = await this.tequilapiClient.serviceStart({ providerId: this.providerId, serviceType: this.serviceType })
-    this.processNewServiceInfo(info)
-    this.serviceId = info.id
-    this.startFetchingStatus()
+  public async start (providerId: string) {
+    const type = this.serviceType
+    const service = await this.tequilapiClient.serviceStart({ providerId, type })
+    this.handleStartedService(service)
   }
 
   public async stop () {
@@ -47,10 +45,16 @@ export class ProviderService {
     }
 
     await this.tequilapiClient.serviceStop(this.serviceId)
-    if (this.statusFetcher) {
-      await this.statusFetcher.stop()
+  }
+
+  public async checkForExistingService () {
+    const services = await this.tequilapiClient.serviceList()
+    const service = services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
+    if (!service) {
+      return
     }
-    this.processStatus(ServiceStatus.NOT_RUNNING)
+
+    this.handleStartedService(service)
   }
 
   public addStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
@@ -62,9 +66,24 @@ export class ProviderService {
     this.statusPublisher.removeSubscriber(subscriber)
   }
 
+  private handleStartedService (service: ServiceInfoDTO) {
+    this.serviceId = service.id
+    this.processNewServiceInfo(service)
+    this.startFetchingStatus()
+  }
+
   private startFetchingStatus () {
     this.statusFetcher = new FunctionLooper(async () => this.fetchStatus(), 1000)
     this.statusFetcher.start()
+  }
+
+  private async stopFetchingStatus () {
+    if (!this.statusFetcher) {
+      return
+    }
+
+    await this.statusFetcher.stop()
+    this.statusFetcher = undefined
   }
 
   private async fetchStatus () {
@@ -72,12 +91,23 @@ export class ProviderService {
       logger.error('Service status fetching failed because serviceId is missing')
       return
     }
-    const info = await this.tequilapiClient.serviceGet(this.serviceId)
-    this.processNewServiceInfo(info)
+    try {
+      const info = await this.tequilapiClient.serviceGet(this.serviceId)
+      this.processNewServiceInfo(info)
+    } catch (err) {
+      if (err.name === TequilapiError.name && (err as TequilapiError).isNotFoundError) {
+        this.processStatus(ServiceStatus.NOT_RUNNING)
+        this.stopFetchingStatus().catch((err: Error) => logger.error('Failed stopping fetching status', err))
+        return
+      }
+
+      throw err
+    }
   }
 
   private processNewServiceInfo (info: ServiceInfoDTO) {
-    this.processStatus(info.status)
+    const status = this.serviceStatusDTOToModel(info.status)
+    this.processStatus(status)
   }
 
   private processStatus (status: ServiceStatus) {
@@ -87,5 +117,18 @@ export class ProviderService {
 
     this.statusPublisher.publish(status)
     this.lastStatus = status
+  }
+
+  private serviceStatusDTOToModel (status: ServiceStatusDTO): ServiceStatus {
+    if (status === ServiceStatusDTO.NOT_RUNNING) {
+      return ServiceStatus.NOT_RUNNING
+    }
+    if (status === ServiceStatusDTO.STARTING) {
+      return ServiceStatus.STARTING
+    }
+    if (status === ServiceStatusDTO.RUNNING) {
+      return ServiceStatus.RUNNING
+    }
+    throw new Error(`Unknown status: ${status}`)
   }
 }
