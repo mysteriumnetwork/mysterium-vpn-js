@@ -31,11 +31,15 @@ export class ProviderService {
   private statusFetcher?: FunctionLooper
   private lastStatus: ServiceStatus = ServiceStatus.NOT_RUNNING
 
-  constructor (private tequilapiClient: TequilapiClient, private serviceType: string) {}
+  constructor (private tequilapiClient: TequilapiClient, private serviceType: string) {
+  }
 
   public async start (providerId: string) {
-    const type = this.serviceType
-    const service = await this.tequilapiClient.serviceStart({ providerId, type })
+    const service = await this.tequilapiClient.serviceStart({
+      providerId,
+      type: this.serviceType
+    })
+
     this.handleStartedService(service)
   }
 
@@ -45,6 +49,7 @@ export class ProviderService {
     }
 
     await this.tequilapiClient.serviceStop(this.serviceId)
+    await this.fetchStatus()
   }
 
   public async checkForExistingService () {
@@ -83,6 +88,7 @@ export class ProviderService {
     }
 
     await this.statusFetcher.stop()
+
     this.statusFetcher = undefined
   }
 
@@ -91,6 +97,7 @@ export class ProviderService {
       logger.error('Service status fetching failed because serviceId is missing')
       return
     }
+
     try {
       const info = await this.tequilapiClient.serviceGet(this.serviceId)
       this.processNewServiceInfo(info)
