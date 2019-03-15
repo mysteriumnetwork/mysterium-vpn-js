@@ -19,6 +19,7 @@ import { HttpInterface } from './adapters/interface'
 import ProposalsQuery from './adapters/proposals-query'
 import { TequilapiClient } from './client'
 import { ConnectionIPDTO, parseConnectionIPDTO } from './dto/connection-ip'
+import { ConnectionSessionDTO, validateSession } from './dto/connection-session'
 import { ConnectionStatisticsDTO, parseConnectionStatisticsDTO } from './dto/connection-statistics'
 import { ConnectionStatusDTO, parseConnectionStatusDTO } from './dto/connection-status-dto'
 import { ConsumerLocationDTO, parseConsumerLocationDTO } from './dto/consumer-location'
@@ -36,7 +37,7 @@ import { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import { parseServiceInfoDTO, ServiceInfoDTO } from './dto/service-info'
 import { parseServiceListDTO } from './dto/service-list'
 import { ServiceRequest } from './dto/service-request'
-import { SessionDTO, validateSession } from './dto/session'
+import { parseServiceSessionListDTO, ServiceSessionDTO } from './dto/service-session'
 import { TIMEOUT_DISABLED } from './timeouts'
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -154,10 +155,10 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseConnectionStatisticsDTO(response)
   }
 
-  public async sessionsList (): Promise<SessionDTO[]> {
-    const response = await this.http.get('sessions')
+  public async connectionSessions (): Promise<ConnectionSessionDTO[]> {
+    const response = await this.http.get('connection-sessions')
     if (!response) {
-      throw new Error('Session list response body is missing')
+      throw new Error('Connection sessions response body is missing')
     }
     return response.sessions.map(validateSession)
   }
@@ -201,5 +202,13 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async serviceStop (serviceId: string): Promise<void> {
     await this.http.delete('services/' + serviceId)
+  }
+
+  public async serviceSessions (): Promise<ServiceSessionDTO[]> {
+    const response = await this.http.get('service-sessions')
+    if (!response) {
+      throw new Error('Service sessions response body is missing')
+    }
+    return parseServiceSessionListDTO(response)
   }
 }

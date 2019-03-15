@@ -16,6 +16,7 @@
  */
 
 import { ConnectionIPDTO } from './dto/connection-ip'
+import { ConnectionSessionDTO } from './dto/connection-session'
 import { ConnectionStatisticsDTO } from './dto/connection-statistics'
 import { ConnectionStatusDTO } from './dto/connection-status-dto'
 import { ConsumerLocationDTO } from './dto/consumer-location'
@@ -27,7 +28,7 @@ import { ConnectionRequest } from './dto/query/connection-request'
 import { ProposalQueryOptions } from './dto/query/proposals-query-options'
 import { ServiceInfoDTO } from './dto/service-info'
 import { ServiceRequest } from './dto/service-request'
-import { SessionDTO } from './dto/session'
+import { ServiceSessionDTO } from './dto/service-session'
 
 // TODO: rename file to 'tequilapi-client.ts'
 
@@ -48,11 +49,11 @@ export interface TequilapiClient {
   connectionCancel (): Promise<void>,
   connectionIP (timeout?: number): Promise<ConnectionIPDTO>,
   connectionStatistics (): Promise<ConnectionStatisticsDTO>,
-
-  sessionsList (): Promise<SessionDTO[]>,
+  connectionSessions (): Promise<ConnectionSessionDTO[]>,
 
   serviceList (): Promise<ServiceInfoDTO[]>,
   serviceGet (serviceId: string): Promise<ServiceInfoDTO>,
   serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>,
-  serviceStop (serviceId: string): Promise<void>
+  serviceStop (serviceId: string): Promise<void>,
+  serviceSessions (): Promise<ServiceSessionDTO[]>
 }
