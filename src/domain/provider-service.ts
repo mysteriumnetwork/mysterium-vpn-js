@@ -49,17 +49,8 @@ export class ProviderService {
     }
 
     await this.tequilapiClient.serviceStop(this.serviceId)
-    await this.fetchStatus()
-  }
-
-  public async checkForExistingService () {
-    const services = await this.tequilapiClient.serviceList()
-    const service = services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
-    if (!service) {
-      return
-    }
-
-    this.handleStartedService(service)
+    await this.stopFetchingStatus()
+    this.processStatus(ServiceStatus.NOT_RUNNING)
   }
 
   public addStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
