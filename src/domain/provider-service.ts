@@ -34,6 +34,16 @@ export class ProviderService {
   constructor (private tequilapiClient: TequilapiClient, private serviceType: string) {
   }
 
+  public async checkForExistingService () {
+    const services = await this.tequilapiClient.serviceList()
+    const service = services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
+    if (!service) {
+      return
+    }
+
+    this.handleStartedService(service)
+  }
+
   public async start (providerId: string) {
     const service = await this.tequilapiClient.serviceStart({
       providerId,
