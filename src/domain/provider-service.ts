@@ -35,13 +35,34 @@ export class ProviderService {
   }
 
   public async checkForExistingService () {
-    const services = await this.tequilapiClient.serviceList()
-    const service = services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
+    const service = await this.findRunningService()
     if (!service) {
       return
     }
 
     this.handleStartedService(service)
+  }
+
+  public async isActive (): Promise<boolean> {
+    try {
+      const service = await this.findRunningService()
+
+      return !!service
+    } catch (e) {
+      // no need to handle
+    }
+
+    return false
+  }
+
+  public async findRunningService () {
+    try {
+      const services = await this.tequilapiClient.serviceList()
+
+      return services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
+    } catch (e) {
+      // no need to handle
+    }
   }
 
   public async start (providerId: string) {
