@@ -25,13 +25,14 @@ import { FunctionLooper } from './looper/function-looper'
 import { Publisher } from './publisher'
 
 export class ProviderService {
-  private statusPublisher: Publisher<ServiceStatus> = new Publisher()
+  // Currently running service instance
+  private serviceInstance?: ServiceInfoDTO
 
-  private serviceId?: string
+  private statusPublisher: Publisher<ServiceStatus> = new Publisher()
   private statusFetcher?: FunctionLooper
   private lastStatus: ServiceStatus = ServiceStatus.NOT_RUNNING
 
-  constructor (private tequilapiClient: TequilapiClient, private serviceType: string) {
+  constructor (private tequilapiClient: TequilapiClient) {
   }
 
   public async checkForExistingService () {
@@ -59,27 +60,27 @@ export class ProviderService {
     try {
       const services = await this.tequilapiClient.serviceList()
 
-      return services.find((s: ServiceInfoDTO) => s.type === this.serviceType)
+      return services.find(() => true)
     } catch (e) {
       // no need to handle
     }
   }
 
-  public async start (providerId: string) {
+  public async start (providerId: string, serviceType: string) {
     const service = await this.tequilapiClient.serviceStart({
       providerId,
-      type: this.serviceType
+      type: serviceType
     })
 
     this.handleStartedService(service)
   }
 
   public async stop () {
-    if (!this.serviceId) {
+    if (!this.serviceInstance) {
       throw new Error('Service id is unknown, make sure to start service before stopping it')
     }
 
-    await this.tequilapiClient.serviceStop(this.serviceId)
+    await this.tequilapiClient.serviceStop(this.serviceInstance.id)
     await this.stopFetchingStatus()
     this.processStatus(ServiceStatus.NOT_RUNNING)
   }
@@ -94,7 +95,7 @@ export class ProviderService {
   }
 
   private handleStartedService (service: ServiceInfoDTO) {
-    this.serviceId = service.id
+    this.serviceInstance = service
     this.processNewServiceInfo(service)
     this.startFetchingStatus()
   }
@@ -115,14 +116,14 @@ export class ProviderService {
   }
 
   private async fetchStatus () {
-    if (!this.serviceId) {
+    if (!this.serviceInstance) {
       logger.error('Service status fetching failed because serviceId is missing')
       return
     }
 
     try {
-      const info = await this.tequilapiClient.serviceGet(this.serviceId)
-      this.processNewServiceInfo(info)
+      const service = await this.tequilapiClient.serviceGet(this.serviceInstance.id)
+      this.processNewServiceInfo(service)
     } catch (err) {
       if (err.name === TequilapiError.name && (err as TequilapiError).isNotFoundError) {
         this.processStatus(ServiceStatus.NOT_RUNNING)
