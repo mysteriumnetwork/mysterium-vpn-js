@@ -59,8 +59,7 @@ export class ProviderService {
   public async findRunningService () {
     try {
       const services = await this.tequilapiClient.serviceList()
-
-      return services.find(() => true)
+      return services.pop()
     } catch (e) {
       // no need to handle
     }
