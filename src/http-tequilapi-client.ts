@@ -97,6 +97,10 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseIdentityRegistrationDTO(response)
   }
 
+  public async updateIdentityPayout (id: string, ethAddress: string) {
+    await this.http.put(`identities/${id}/payout`, { ethAddress })
+  }
+
   public async findProposals (options?: ProposalQueryOptions): Promise<ProposalDTO[]> {
     const params = options ? new ProposalsQuery(options).toQueryParams() : undefined
     const response = await this.http.get('proposals', params)
