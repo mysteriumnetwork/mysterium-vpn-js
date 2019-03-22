@@ -1,0 +1,34 @@
+import { TequilapiClient } from 'mysterium-tequilapi/lib/client';
+import { ConnectionIPDTO } from 'mysterium-tequilapi/lib/dto/connection-ip';
+import { ConnectionStatisticsDTO } from 'mysterium-tequilapi/lib/dto/connection-statistics';
+import { ConnectionStatusDTO } from 'mysterium-tequilapi/lib/dto/connection-status-dto';
+import { ConsumerLocationDTO } from 'mysterium-tequilapi/lib/dto/consumer-location';
+import { IdentityDTO } from 'mysterium-tequilapi/lib/dto/identity';
+import { IdentityRegistrationDTO } from 'mysterium-tequilapi/lib/dto/identity-registration/identity-registration';
+import { NodeHealthcheckDTO } from 'mysterium-tequilapi/lib/dto/node-healthcheck';
+import { ProposalDTO } from 'mysterium-tequilapi/lib/dto/proposal';
+import { ConnectionRequest } from 'mysterium-tequilapi/lib/dto/query/connection-request';
+import { ProposalQueryOptions } from 'mysterium-tequilapi/lib/dto/query/proposals-query-options';
+import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info';
+import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request';
+import { SessionDTO } from 'mysterium-tequilapi/lib/dto/session';
+export declare class EmptyTequilapiClientMock implements TequilapiClient {
+    connectionCancel(): Promise<void>;
+    connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusDTO>;
+    connectionIP(timeout?: number): Promise<ConnectionIPDTO>;
+    connectionStatistics(): Promise<ConnectionStatisticsDTO>;
+    connectionStatus(): Promise<ConnectionStatusDTO>;
+    findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]>;
+    healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;
+    identitiesList(): Promise<IdentityDTO[]>;
+    identityCreate(passphrase: string): Promise<IdentityDTO>;
+    identityRegistration(id: string): Promise<IdentityRegistrationDTO>;
+    identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>;
+    location(timeout?: number): Promise<ConsumerLocationDTO>;
+    serviceGet(serviceId: string): Promise<ServiceInfoDTO>;
+    serviceList(): Promise<ServiceInfoDTO[]>;
+    serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>;
+    serviceStop(serviceId: string): Promise<void>;
+    sessionsList(): Promise<SessionDTO[]>;
+    stop(): Promise<void>;
+}
