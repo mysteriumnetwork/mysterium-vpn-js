@@ -1,6 +1,6 @@
 {
   "name": "mysterium-vpn-js",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Library for domain logic used in MysteriumVPN applications",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
