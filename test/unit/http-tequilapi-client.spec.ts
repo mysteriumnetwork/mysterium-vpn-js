@@ -282,6 +282,13 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
+  describe('updateIdentityPayout()', () => {
+    it('succeeds', async () => {
+      mock.onPut('identities/test-id/payout', { ethAddress: 'my eth address' }).reply(200)
+      await api.updateIdentityPayout('test-id', 'my eth address')
+    })
+  })
+
   describe('connectionCreate()', () => {
     it('returns response', async () => {
       const expectedRequest = {
@@ -330,8 +337,7 @@ describe('HttpTequilapiClient', () => {
 
   describe('connectionCancel()', () => {
     it('succeeds', async () => {
-      const expectedRequest = undefined
-      mock.onDelete('connection', expectedRequest).reply(200)
+      mock.onDelete('connection').reply(200)
 
       await api.connectionCancel()
     })

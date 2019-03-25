@@ -41,6 +41,7 @@ export interface TequilapiClient {
   identityCreate (passphrase: string): Promise<IdentityDTO>,
   identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
+  updateIdentityPayout (id: string, ethAddress: string): Promise<void>,
 
   findProposals (options?: ProposalQueryOptions): Promise<ProposalDTO[]>,
 
