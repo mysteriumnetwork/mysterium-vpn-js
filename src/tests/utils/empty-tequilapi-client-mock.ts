@@ -17,6 +17,7 @@
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { ConnectionIPDTO } from 'mysterium-tequilapi/lib/dto/connection-ip'
+import { ConnectionSessionDTO } from 'mysterium-tequilapi/lib/dto/connection-session'
 import { ConnectionStatisticsDTO } from 'mysterium-tequilapi/lib/dto/connection-statistics'
 import { ConnectionStatusDTO } from 'mysterium-tequilapi/lib/dto/connection-status-dto'
 import { ConsumerLocationDTO } from 'mysterium-tequilapi/lib/dto/consumer-location'
@@ -28,7 +29,7 @@ import { ConnectionRequest } from 'mysterium-tequilapi/lib/dto/query/connection-
 import { ProposalQueryOptions } from 'mysterium-tequilapi/lib/dto/query/proposals-query-options'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
 import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
-import { SessionDTO } from 'mysterium-tequilapi/lib/dto/session'
+import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel (): Promise<void> {
@@ -71,6 +72,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
+  public updateIdentityPayout (id: string, ethAddress: string): Promise<void> {
+    throw Error('Not implemented')
+  }
+
   public identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void> {
     throw Error('Not implemented')
   }
@@ -95,7 +100,11 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public sessionsList (): Promise<SessionDTO[]> {
+  public connectionSessions (): Promise<ConnectionSessionDTO[]> {
+    throw Error('Not implemented')
+  }
+
+  public serviceSessions (): Promise<ServiceSessionDTO[]> {
     throw Error('Not implemented')
   }
 
