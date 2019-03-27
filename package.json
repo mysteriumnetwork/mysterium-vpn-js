@@ -1,6 +1,6 @@
 {
   "name": "mysterium-tequilapi",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "Api library to control mysterium client and node",
   "repository": "github:mysteriumnetwork/mysterium-tequilapi",
   "main": "lib/index.js",
