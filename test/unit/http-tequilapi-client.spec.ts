@@ -20,6 +20,7 @@ import MockAdapter from 'axios-mock-adapter'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
+import { IdentityPayoutDTO } from '../../src/dto/identity-payout'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import { parseProposalDTO } from '../../src/dto/proposal'
 import { parseServiceInfoDTO } from '../../src/dto/service-info'
@@ -279,6 +280,27 @@ describe('HttpTequilapiClient', () => {
       expect(api.identityRegistration('0x0000bEEF'))
         .rejects
         .toHaveProperty('message', 'Request failed with status code 500 (path="identities/0x0000bEEF/registration")')
+    })
+  })
+
+  describe('identityPayout()', () => {
+    it('returns identity payout info', async () => {
+      const response = { eth_address: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca' }
+      mock.onGet('identities/test-id/payout').reply(200, response)
+      const info = await api.identityPayout('test-id')
+      expect(info).toEqual({ ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca' })
+    })
+
+    it('returns error when api does not return body', async () => {
+      mock.onGet('identities/test-id/payout').reply(200)
+      expect(api.identityPayout('test-id'))
+        .rejects.toHaveProperty('message', 'Identity payout response body is missing')
+    })
+
+    it('returns error when eth address is missing', async () => {
+      mock.onGet('identities/test-id/payout').reply(200, {})
+      expect(api.identityPayout('test-id'))
+          .rejects.toHaveProperty('message', 'IdentityPayoutDTO: eth_address is not provided')
     })
   })
 

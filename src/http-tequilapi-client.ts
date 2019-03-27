@@ -25,6 +25,7 @@ import { ConnectionStatusDTO, parseConnectionStatusDTO } from './dto/connection-
 import { ConsumerLocationDTO, parseConsumerLocationDTO } from './dto/consumer-location'
 import { parseIdentitiesResponseDTO } from './dto/identities-response'
 import { IdentityDTO, parseIdentityDTO } from './dto/identity'
+import { IdentityPayoutDTO, parseIdentityPayoutDTO } from './dto/identity-payout'
 import {
   IdentityRegistrationDTO,
   parseIdentityRegistrationDTO
@@ -95,6 +96,14 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Identities registration response body is missing')
     }
     return parseIdentityRegistrationDTO(response)
+  }
+
+  public async identityPayout (id: string): Promise<IdentityPayoutDTO> {
+    const response = await this.http.get(`identities/${id}/payout`)
+    if (!response) {
+      throw new Error('Identity payout response body is missing')
+    }
+    return parseIdentityPayoutDTO(response)
   }
 
   public async updateIdentityPayout (id: string, ethAddress: string) {

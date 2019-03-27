@@ -21,6 +21,7 @@ import { ConnectionStatisticsDTO } from './dto/connection-statistics'
 import { ConnectionStatusDTO } from './dto/connection-status-dto'
 import { ConsumerLocationDTO } from './dto/consumer-location'
 import { IdentityDTO } from './dto/identity'
+import { IdentityPayoutDTO } from './dto/identity-payout'
 import { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
 import { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import { ProposalDTO } from './dto/proposal'
@@ -41,6 +42,7 @@ export interface TequilapiClient {
   identityCreate (passphrase: string): Promise<IdentityDTO>,
   identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void>,
   identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
+  identityPayout (id: string): Promise<IdentityPayoutDTO>,
   updateIdentityPayout (id: string, ethAddress: string): Promise<void>,
 
   findProposals (options?: ProposalQueryOptions): Promise<ProposalDTO[]>,
