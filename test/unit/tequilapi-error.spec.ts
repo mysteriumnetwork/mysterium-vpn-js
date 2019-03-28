@@ -57,6 +57,12 @@ describe('TequilapiError', () => {
     })
   })
 
+  describe('.isTequilapiError', () => {
+    it('returns true', () => {
+      expect(simpleTequilapiError.isTequilapiError).toBe(true)
+    })
+  })
+
   describe('.code', () => {
     it('returns undefined for simple error', () => {
       expect(simpleTequilapiError.code).toBeUndefined()

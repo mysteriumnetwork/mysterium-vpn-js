@@ -18,6 +18,7 @@ declare export default class TequilapiError mixins Error {
   name: string;
   _originalError: AxiosError;
   constructor(originalError: Error, path: string): this;
+  isTequilapiError: boolean;
   code: string | void;
   isTimeoutError: boolean;
   isRequestClosedError: boolean;
