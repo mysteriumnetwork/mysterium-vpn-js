@@ -49,17 +49,17 @@ describe('ProviderSessions', () => {
     service = new ProviderSessions(tequilapiClient)
   })
 
-  describe('.onCount', () => {
-    it('doest not invoke callback initially', async () => {
+  describe('.addCountSubscriber', () => {
+    it('does not invoke callback initially', async () => {
       const callbackMock = jest.fn()
-      service.onCount(callbackMock)
+      service.addCountSubscriber(callbackMock)
 
       expect(callbackMock).toBeCalledTimes(0)
     })
 
     it('starts notifying later', async () => {
       const callbackMock = jest.fn()
-      service.onCount(callbackMock)
+      service.addCountSubscriber(callbackMock)
 
       // give some time for ProviderSessions to see this change
       await nextTick()
@@ -67,6 +67,20 @@ describe('ProviderSessions', () => {
 
       expect(callbackMock).toBeCalledTimes(1)
       expect(callbackMock).toBeCalledWith(1)
+    })
+  })
+
+  describe('.removeCountSubscriber', () => {
+    it('stops invoking callback on status change', async () => {
+      const callbackMock = jest.fn()
+      service.addCountSubscriber(callbackMock)
+      service.removeCountSubscriber(callbackMock)
+
+      // give some time for ProviderSessions to see this change
+      await nextTick()
+      clock.runToLast()
+
+      expect(callbackMock).toBeCalledTimes(0)
     })
   })
 })

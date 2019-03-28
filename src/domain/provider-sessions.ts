@@ -20,6 +20,8 @@ import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
 import { FunctionLooper } from './looper/function-looper'
 import { Publisher } from './publisher'
 
+type CountSubscriber = (count: number) => any
+
 export class ProviderSessions {
   private fetcher: FunctionLooper
 
@@ -30,9 +32,13 @@ export class ProviderSessions {
     this.fetcher = new FunctionLooper(async () => this.fetch(), 1000)
   }
 
-  public onCount (callback: (count: number) => any) {
-    this.countPublisher.addSubscriber(callback)
+  public addCountSubscriber (subscriber: CountSubscriber) {
+    this.countPublisher.addSubscriber(subscriber)
     this.fetcher.start()
+  }
+
+  public removeCountSubscriber (subscriber: CountSubscriber) {
+    this.countPublisher.removeSubscriber(subscriber)
   }
 
   private async fetch () {
