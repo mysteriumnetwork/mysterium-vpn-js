@@ -32,6 +32,10 @@ export default class TequilapiError extends Error {
     this._originalError = originalError
   }
 
+  get isTequilapiError (): boolean {
+    return true
+  }
+
   get code (): string | undefined {
     return this._originalError.code
   }
