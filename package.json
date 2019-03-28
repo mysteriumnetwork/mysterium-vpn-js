@@ -10,7 +10,7 @@
     "lint": "tslint -p src && tslint -p test",
     "flow": "node_modules/.bin/flow",
     "test": "jest --config test/jest.config.js",
-    "prepack": "tsc -p src",
+    "prepack": "npx tsc -p src",
     "generate:flow": "./scripts/generate_flow_definitions.sh",
     "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios"
   },
