@@ -10,5 +10,6 @@
 export interface ProposalQueryOptions {
   providerId?: string;
   serviceType?: string;
+  accessList?: string;
   fetchConnectCounts?: boolean;
 }
