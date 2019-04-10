@@ -230,7 +230,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async accessLists (): Promise<AccessListDTO[]> {
     const response = await this.http.get('access-lists')
     if (!response) {
-      throw new Error('Service sessions response body is missing')
+      throw new Error('Access lists response body is missing')
     }
     return parseAccessListDTO(response)
   }
