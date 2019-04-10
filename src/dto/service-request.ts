@@ -18,5 +18,6 @@
 export interface ServiceRequest {
   providerId: string,
   type: string,
+  accessList?: string,
   options?: { [key: string]: any }
 }

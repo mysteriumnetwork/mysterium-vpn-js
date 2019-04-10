@@ -203,7 +203,8 @@ export class HttpTequilapiClient implements TequilapiClient {
       'services',
       {
         providerId: request.providerId,
-        type: request.type
+        type: request.type,
+        accessList: request.accessList
       },
       timeout
     )
