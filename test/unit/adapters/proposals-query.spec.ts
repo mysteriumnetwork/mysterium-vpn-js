@@ -31,5 +31,9 @@ describe('ProposalsQuery', () => {
       const q = new ProposalsQuery({ fetchConnectCounts: true, providerId: 'pID' })
       expect(q.toQueryParams()).toEqual({ fetchConnectCounts: true, providerId: 'pID' })
     })
+    it('makes a query object with accessList if given so in constructor', () => {
+      const q = new ProposalsQuery({ accessList: 'null' })
+      expect(q.toQueryParams()).toEqual({ accessList: 'null' })
+    })
   })
 })

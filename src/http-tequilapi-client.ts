@@ -18,6 +18,7 @@
 import { HttpInterface } from './adapters/interface'
 import ProposalsQuery from './adapters/proposals-query'
 import { TequilapiClient } from './client'
+import { AccessListDTO, parseAccessListDTO } from './dto/access-list'
 import { ConnectionIPDTO, parseConnectionIPDTO } from './dto/connection-ip'
 import { ConnectionSessionDTO, validateSession } from './dto/connection-session'
 import { ConnectionStatisticsDTO, parseConnectionStatisticsDTO } from './dto/connection-statistics'
@@ -224,5 +225,13 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Service sessions response body is missing')
     }
     return parseServiceSessionListDTO(response)
+  }
+
+  public async accessLists (): Promise<AccessListDTO[]> {
+    const response = await this.http.get('access-lists')
+    if (!response) {
+      throw new Error('Service sessions response body is missing')
+    }
+    return parseAccessListDTO(response)
   }
 }

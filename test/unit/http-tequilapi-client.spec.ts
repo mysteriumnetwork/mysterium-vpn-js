@@ -300,7 +300,7 @@ describe('HttpTequilapiClient', () => {
     it('returns error when eth address is missing', async () => {
       mock.onGet('identities/test-id/payout').reply(200, {})
       expect(api.identityPayout('test-id'))
-          .rejects.toHaveProperty('message', 'IdentityPayoutDTO: eth_address is not provided')
+        .rejects.toHaveProperty('message', 'IdentityPayoutDTO: eth_address is not provided')
     })
   })
 
@@ -506,11 +506,12 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const expectedRequest = {
         providerId: '0x2000FACE',
+        accessList: '123',
         type: 'openvpn'
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn' }
+      const request = { providerId: '0x2000FACE', type: 'openvpn', accessList: '123' }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
@@ -569,4 +570,45 @@ describe('HttpTequilapiClient', () => {
       ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="service-sessions")')
     })
   })
+
+  describe('accessLists()', () => {
+    it('returns response', async () => {
+      const response = [
+        {
+          name: 'mysterium',
+          description: 'Mysterium Network approved identities',
+          allow: [
+            {
+              type: 'identity',
+              value: '0x123'
+            }
+          ]
+        },
+        {
+          name: 'mysterium #2',
+          description: 'Mysterium Network approved identities #2',
+          allow: [
+            {
+              type: 'identity',
+              value: '0x123'
+            }
+          ]
+        }
+      ]
+      mock.onGet('access-lists').reply(200, response)
+
+      const sessions = await api.accessLists()
+      expect(sessions).toHaveLength(2)
+      expect(sessions[0].name).toEqual('mysterium')
+    })
+
+    it('handles error', () => {
+      mock.onGet('access-lists').reply(500)
+
+      expect(
+        api.accessLists()
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="access-lists")')
+    })
+  })
+
 })
