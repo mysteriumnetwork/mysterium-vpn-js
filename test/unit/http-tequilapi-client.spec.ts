@@ -508,12 +508,12 @@ describe('HttpTequilapiClient', () => {
         providerId: '0x2000FACE',
         type: 'openvpn',
         acl: {
-          listIds: ['http']
+          listIds: ['mysterium-verified']
         }
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn', acl: { listIds: ['http'] } }
+      const request = { providerId: '0x2000FACE', type: 'openvpn', acl: { listIds: ['mysterium-verified'] } }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
