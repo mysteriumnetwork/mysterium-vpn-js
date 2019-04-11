@@ -506,12 +506,14 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const expectedRequest = {
         providerId: '0x2000FACE',
-        accessList: '123',
-        type: 'openvpn'
+        type: 'openvpn',
+        acl: {
+          listIds: ['http']
+        }
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn', accessList: '123' }
+      const request = { providerId: '0x2000FACE', type: 'openvpn', acl: { listIds: ['http'] } }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
@@ -575,7 +577,8 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const response = [
         {
-          name: 'mysterium',
+          id: 'mysterium',
+          title: 'mysterium verified',
           description: 'Mysterium Network approved identities',
           allow: [
             {
@@ -585,7 +588,8 @@ describe('HttpTequilapiClient', () => {
           ]
         },
         {
-          name: 'mysterium #2',
+          id: 'mysterium #2',
+          title: 'mysterium verified #2',
           description: 'Mysterium Network approved identities #2',
           allow: [
             {
@@ -595,19 +599,19 @@ describe('HttpTequilapiClient', () => {
           ]
         }
       ]
-      mock.onGet('access-lists').reply(200, response)
+      mock.onGet('acl').reply(200, response)
 
       const sessions = await api.accessLists()
       expect(sessions).toHaveLength(2)
-      expect(sessions[0].name).toEqual('mysterium')
+      expect(sessions[0].id).toEqual('mysterium')
     })
 
     it('handles error', () => {
-      mock.onGet('access-lists').reply(500)
+      mock.onGet('acl').reply(500)
 
       expect(
         api.accessLists()
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="access-lists")')
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="acl")')
     })
   })
 

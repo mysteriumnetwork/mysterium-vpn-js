@@ -19,7 +19,8 @@ import { parseAccessListDTO, parseAccessListItemDTO } from '../../../src/dto/acc
 
 describe('.parseAccessListDTO', () => {
   const accessListItem = {
-    name: 'mysterium',
+    id: 'mysterium',
+    title: 'mysterium verified',
     description: 'mysterium access list',
     allow: [
       {
@@ -44,7 +45,7 @@ describe('.parseAccessListDTO', () => {
   it('throws an error if services in array does not validate', async () => {
     expect(() => {
       parseAccessListDTO([{}])
-    }).toThrowError('AccessListItem: name is not provided')
+    }).toThrowError('AccessListItem: id is not provided')
   })
 
   it('throws an error if service list in not an array', async () => {

@@ -205,7 +205,7 @@ export class HttpTequilapiClient implements TequilapiClient {
       {
         providerId: request.providerId,
         type: request.type,
-        accessList: request.accessList
+        acl: request.acl
       },
       timeout
     )
@@ -228,7 +228,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async accessLists (): Promise<AccessListDTO[]> {
-    const response = await this.http.get('access-lists')
+    const response = await this.http.get('acl')
     if (!response) {
       throw new Error('Access lists response body is missing')
     }

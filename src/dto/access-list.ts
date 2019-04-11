@@ -19,19 +19,19 @@ import { validateArray, validateMultiple } from '../validation'
 
 interface AllowedRule {
   type: string,
-  value: string
+  value?: string
 }
 
 export interface AccessListDTO {
-  name: string,
+  id: string,
+  title: string,
   description: string,
   allow: AllowedRule[]
 }
 
 function parseAllowedRule (responseData: any): AllowedRule {
   validateMultiple('AllowRules', responseData, [
-    { name: 'type', type: 'string' },
-    { name: 'value', type: 'string' }
+    { name: 'type', type: 'string' }
   ])
 
   return {
@@ -42,13 +42,15 @@ function parseAllowedRule (responseData: any): AllowedRule {
 
 export function parseAccessListItemDTO (responseData: any): AccessListDTO {
   validateMultiple('AccessListItem', responseData, [
-    { name: 'name', type: 'string' },
+    { name: 'id', type: 'string' },
+    { name: 'title', type: 'string' },
     { name: 'description', type: 'string' },
     { name: 'allow', type: 'array' }
   ])
 
   return {
-    name: responseData.name,
+    id: responseData.id,
+    title: responseData.title,
     description: responseData.description,
     allow: responseData.allow.map(parseAllowedRule)
   }

@@ -18,10 +18,7 @@
 export interface ProposalQueryOptions {
   providerId?: string,
   serviceType?: string,
-  // accessList:
-  // undefined - returns all proposals (with and without listIds)
-  // "null" (as string) - returns all proposals that do not have listId set
-  // "listId" - returns all proposals with that listId set
-  accessList?: string,
+  aclProtocol?: string,
+  aclListId?: string,
   fetchConnectCounts?: boolean,
 }
