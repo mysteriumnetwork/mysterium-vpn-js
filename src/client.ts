@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { AccessPolicyDTO } from './dto/access-policies'
 import { ConnectionIPDTO } from './dto/connection-ip'
 import { ConnectionSessionDTO } from './dto/connection-session'
 import { ConnectionStatisticsDTO } from './dto/connection-statistics'
@@ -58,5 +59,7 @@ export interface TequilapiClient {
   serviceGet (serviceId: string): Promise<ServiceInfoDTO>,
   serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>,
   serviceStop (serviceId: string): Promise<void>,
-  serviceSessions (): Promise<ServiceSessionDTO[]>
+  serviceSessions (): Promise<ServiceSessionDTO[]>,
+
+  accessPolicies (): Promise<AccessPolicyDTO[]>
 }

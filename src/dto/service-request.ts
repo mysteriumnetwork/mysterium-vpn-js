@@ -18,8 +18,8 @@
 export interface ServiceRequest {
   providerId: string,
   type: string,
-  acl?: {
-    listIds: string[]
+  accessPolicies?: {
+    ids: string[]
   },
   options?: { [key: string]: any }
 }

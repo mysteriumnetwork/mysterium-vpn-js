@@ -10,7 +10,9 @@
 export interface ServiceRequest {
   providerId: string;
   type: string;
-  accessList?: string;
+  accessPolicies?: {
+    ids: string[]
+  };
   options?: {
     [key: string]: any
   };

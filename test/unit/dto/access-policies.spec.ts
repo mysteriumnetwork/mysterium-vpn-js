@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseAccessListDTO, parseAccessListItemDTO } from '../../../src/dto/access-list'
+import { parseAccessPoliciesDTO, parseAccessPolicyDTO } from '../../../src/dto/access-policies'
 
 describe('.parseAccessListDTO', () => {
-  const accessListItem = {
+  const accessPolicy = {
     id: 'mysterium',
     title: 'mysterium verified',
     description: 'mysterium access list',
@@ -31,26 +31,32 @@ describe('.parseAccessListDTO', () => {
   }
 
   it('sets properties with full structure', async () => {
-    const services = parseAccessListDTO([accessListItem])
+    const services = parseAccessPoliciesDTO({ entries: [accessPolicy] })
 
     expect(services).toHaveLength(1)
-    expect(services[0]).toEqual(parseAccessListItemDTO(accessListItem))
+    expect(services[0]).toEqual(parseAccessPolicyDTO(accessPolicy))
   })
 
   it('sets properties with an empty structure', async () => {
-    const services = parseAccessListDTO([])
+    const services = parseAccessPoliciesDTO({ entries: [] })
     expect(services).toEqual([])
   })
 
   it('throws an error if services in array does not validate', async () => {
     expect(() => {
-      parseAccessListDTO([{}])
-    }).toThrowError('AccessListItem: id is not provided')
+      parseAccessPoliciesDTO({ entries: [{}] })
+    }).toThrowError('AccessPolicyDTO: id is not provided')
+  })
+
+  it('throws an error if access policy list in not an object', async () => {
+    expect(() => {
+      parseAccessPoliciesDTO({})
+    }).toThrowError('AccessPolicyDTO[]: entries is not provided')
   })
 
   it('throws an error if service list in not an array', async () => {
     expect(() => {
-      parseAccessListDTO({})
-    }).toThrowError('AccessListDTO[]: should be "array"')
+      parseAccessPoliciesDTO({ entries: {} })
+    }).toThrowError('AccessPolicyDTO[]: entries should be "array"')
   })
 })

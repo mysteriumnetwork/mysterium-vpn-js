@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateArray, validateMultiple } from '../validation'
+import { validate, validateArray, validateMultiple } from '../validation'
 
 interface AllowedRule {
   type: string,
   value?: string
 }
 
-export interface AccessListDTO {
+export interface AccessPolicyDTO {
   id: string,
   title: string,
   description: string,
@@ -40,8 +40,8 @@ function parseAllowedRule (responseData: any): AllowedRule {
   }
 }
 
-export function parseAccessListItemDTO (responseData: any): AccessListDTO {
-  validateMultiple('AccessListItem', responseData, [
+export function parseAccessPolicyDTO (responseData: any): AccessPolicyDTO {
+  validateMultiple('AccessPolicyDTO', responseData, [
     { name: 'id', type: 'string' },
     { name: 'title', type: 'string' },
     { name: 'description', type: 'string' },
@@ -56,8 +56,8 @@ export function parseAccessListItemDTO (responseData: any): AccessListDTO {
   }
 }
 
-export function parseAccessListDTO (responseData: any): AccessListDTO[] {
-  validateArray('AccessListDTO[]', responseData)
+export function parseAccessPoliciesDTO (responseData: any): AccessPolicyDTO[] {
+  validate('AccessPolicyDTO[]', responseData, { name: 'entries', type: 'array' })
 
-  return responseData.map(parseAccessListItemDTO)
+  return responseData.entries.map(parseAccessPolicyDTO)
 }

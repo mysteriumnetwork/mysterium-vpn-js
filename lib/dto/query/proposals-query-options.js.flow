@@ -10,6 +10,7 @@
 export interface ProposalQueryOptions {
   providerId?: string;
   serviceType?: string;
-  accessList?: string;
+  aclProtocol?: string;
+  aclListId?: string;
   fetchConnectCounts?: boolean;
 }

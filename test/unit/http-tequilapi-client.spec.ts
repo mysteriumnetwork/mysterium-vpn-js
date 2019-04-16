@@ -507,13 +507,13 @@ describe('HttpTequilapiClient', () => {
       const expectedRequest = {
         providerId: '0x2000FACE',
         type: 'openvpn',
-        acl: {
-          listIds: ['mysterium-verified']
+        accessPolicies: {
+          ids: ['mysterium-verified']
         }
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn', acl: { listIds: ['mysterium-verified'] } }
+      const request = { providerId: '0x2000FACE', type: 'openvpn', accessPolicies: { ids: ['mysterium-verified'] } }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
@@ -573,46 +573,48 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('accessLists()', () => {
+  describe('accessPolicies()', () => {
     it('returns response', async () => {
-      const response = [
-        {
-          id: 'mysterium',
-          title: 'mysterium verified',
-          description: 'Mysterium Network approved identities',
-          allow: [
-            {
-              type: 'identity',
-              value: '0x123'
-            }
-          ]
-        },
-        {
-          id: 'mysterium #2',
-          title: 'mysterium verified #2',
-          description: 'Mysterium Network approved identities #2',
-          allow: [
-            {
-              type: 'identity',
-              value: '0x123'
-            }
-          ]
-        }
-      ]
-      mock.onGet('acl').reply(200, response)
+      const response = {
+        entries: [
+          {
+            id: 'mysterium',
+            title: 'mysterium verified',
+            description: 'Mysterium Network approved identities',
+            allow: [
+              {
+                type: 'identity',
+                value: '0x123'
+              }
+            ]
+          },
+          {
+            id: 'mysterium #2',
+            title: 'mysterium verified #2',
+            description: 'Mysterium Network approved identities #2',
+            allow: [
+              {
+                type: 'identity',
+                value: '0x123'
+              }
+            ]
+          }
+        ]
+      }
 
-      const sessions = await api.accessLists()
+      mock.onGet('access-policies').reply(200, response)
+
+      const sessions = await api.accessPolicies()
       expect(sessions).toHaveLength(2)
       expect(sessions[0].id).toEqual('mysterium')
     })
 
     it('handles error', () => {
-      mock.onGet('acl').reply(500)
+      mock.onGet('access-policies').reply(500)
 
       expect(
-        api.accessLists()
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="acl")')
+        api.accessPolicies()
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="access-policies")')
     })
   })
-
 })

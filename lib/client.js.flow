@@ -7,6 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
+import { AccessPolicyDTO } from "./dto/access-policies";
 import { ConnectionIPDTO } from "./dto/connection-ip";
 import { ConnectionSessionDTO } from "./dto/connection-session";
 import { ConnectionStatisticsDTO } from "./dto/connection-statistics";
@@ -54,4 +55,5 @@ export interface TequilapiClient {
   ): Promise<ServiceInfoDTO>;
   serviceStop(serviceId: string): Promise<void>;
   serviceSessions(): Promise<ServiceSessionDTO[]>;
+  accessPolicies(): Promise<AccessPolicyDTO[]>;
 }
