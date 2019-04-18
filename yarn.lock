@@ -2435,10 +2435,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
-mysterium-tequilapi@^0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/mysterium-tequilapi/-/mysterium-tequilapi-0.7.5.tgz#bf3e555be6c22fb51675245a5fb10f549b0ee56f"
-  integrity sha512-HRnyp1Uxi9xeQd8n/jsNxUc9vfrlhmX0kyA7DSBMsIlsZhWrD+bWuJ0z4K24DI93L0SH1mPSvCc6X07pyQkoAw==
+mysterium-tequilapi@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/mysterium-tequilapi/-/mysterium-tequilapi-0.8.0.tgz#8b0f869a74d709836206412d0e67fd1744d202df"
+  integrity sha512-htDdpVYLnfdP9eBverIBfCEvlKz7j2h/ASeJjJztw6YTds2vKD0aZHWc+2u8ChCm7esKnneiPOfj5o3PbZ9Fqg==
   dependencies:
     "@babel/runtime" "^7.1.5"
     axios "^0.18.0"

@@ -16,7 +16,9 @@
  */
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
+import { AccessPolicyDTO } from 'mysterium-tequilapi/lib/dto/access-policies'
 import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
+import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
 import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
 import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
 import { logger } from '../logger'
@@ -65,11 +67,33 @@ export class ProviderService {
     }
   }
 
-  public async start (providerId: string, serviceType: string) {
-    const service = await this.tequilapiClient.serviceStart({
+  public async getFirstAccessPolicy (): Promise<AccessPolicyDTO | null> {
+    try {
+      const accessPolicies = await this.tequilapiClient.accessPolicies()
+
+      if (accessPolicies.length > 0) {
+        return accessPolicies[0]
+      }
+    } catch (e) {
+      logger.error('Failed fetching first access policy', e)
+    }
+
+    return null
+  }
+
+  public async start (providerId: string, serviceType: string, accessPolicyId?: string) {
+    const request: ServiceRequest = {
       providerId,
       type: serviceType
-    })
+    }
+
+    if (accessPolicyId) {
+      request.accessPolicies = {
+        ids: [accessPolicyId]
+      }
+    }
+
+    const service = await this.tequilapiClient.serviceStart(request)
 
     this.handleStartedService(service)
   }
