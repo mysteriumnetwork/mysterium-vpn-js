@@ -64,6 +64,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
     }
 
     this.serviceInfoMocks.set(serviceId, serviceInfo)
+
     return serviceInfo
   }
 
