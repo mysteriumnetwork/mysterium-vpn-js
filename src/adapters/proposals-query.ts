@@ -39,11 +39,11 @@ export default class ProposalsQuery {
     if (options.serviceType) {
       queryObj.serviceType = options.serviceType
     }
-    if (options.aclProtocol) {
-      queryObj.aclProtocol = options.aclProtocol
+    if (options.accessPolicyProtocol) {
+      queryObj.accessPolicyProtocol = options.accessPolicyProtocol
     }
-    if (options.aclListId) {
-      queryObj.aclListId = options.aclListId
+    if (options.accessPolicyId) {
+      queryObj.accessPolicyId = options.accessPolicyId
     }
     if (options.fetchConnectCounts) {
       queryObj.fetchConnectCounts = options.fetchConnectCounts

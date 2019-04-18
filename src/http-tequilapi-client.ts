@@ -230,7 +230,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async accessPolicies (): Promise<AccessPolicyDTO[]> {
     const response = await this.http.get('access-policies')
     if (!response) {
-      throw new Error('Access lists response body is missing')
+      throw new Error('Access policies response body is missing')
     }
 
     return parseAccessPoliciesDTO(response)

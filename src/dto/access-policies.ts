@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate, validateArray, validateMultiple } from '../validation'
+import { validate, validateMultiple } from '../validation'
 
-interface AllowedRule {
+interface AccessRule {
   type: string,
   value?: string
 }
@@ -26,13 +26,17 @@ export interface AccessPolicyDTO {
   id: string,
   title: string,
   description: string,
-  allow: AllowedRule[]
+  allow: AccessRule[]
 }
 
-function parseAllowedRule (responseData: any): AllowedRule {
-  validateMultiple('AllowRules', responseData, [
+function parseAccessRule (responseData: any): AccessRule {
+  validateMultiple('AccessRule', responseData, [
     { name: 'type', type: 'string' }
   ])
+
+  if (responseData.value) {
+    validate('AccessRule.value', responseData, { name: 'value', type: 'string' })
+  }
 
   return {
     type: responseData.type,
@@ -52,7 +56,7 @@ export function parseAccessPolicyDTO (responseData: any): AccessPolicyDTO {
     id: responseData.id,
     title: responseData.title,
     description: responseData.description,
-    allow: responseData.allow.map(parseAllowedRule)
+    allow: responseData.allow.map(parseAccessRule)
   }
 }
 

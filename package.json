@@ -12,7 +12,8 @@
     "test": "jest --config test/jest.config.js",
     "prepack": "npx tsc -p src",
     "generate:flow": "./scripts/generate_flow_definitions.sh",
-    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios"
+    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios",
+    "build": "npm run prepack && npm run generate:flow"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",

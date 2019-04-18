@@ -7,7 +7,7 @@
  * Repo: http://github.com/joarwilk/flowgen
  */
 
-declare interface AllowedRule {
+declare interface AccessRule {
   type: string;
   value?: string;
 }
@@ -15,7 +15,7 @@ export interface AccessPolicyDTO {
   id: string;
   title: string;
   description: string;
-  allow: AllowedRule[];
+  allow: AccessRule[];
 }
 declare export function parseAccessPolicyDTO(
   responseData: any

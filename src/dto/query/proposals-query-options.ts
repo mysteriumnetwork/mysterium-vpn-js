@@ -18,7 +18,7 @@
 export interface ProposalQueryOptions {
   providerId?: string,
   serviceType?: string,
-  aclProtocol?: string,
-  aclListId?: string,
+  accessPolicyProtocol?: string,
+  accessPolicyId?: string,
   fetchConnectCounts?: boolean,
 }

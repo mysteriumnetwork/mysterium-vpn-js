@@ -17,7 +17,7 @@
 
 import { parseAccessPoliciesDTO, parseAccessPolicyDTO } from '../../../src/dto/access-policies'
 
-describe('.parseAccessListDTO', () => {
+describe('.parseAccessPoliciesDTO', () => {
   const accessPolicy = {
     id: 'mysterium',
     title: 'mysterium verified',
