@@ -81,8 +81,16 @@ export class ProviderService {
     return null
   }
 
-  public async start (providerId: string, serviceType: string, accessPolicyId?: string) {
+  public async start (
+      providerId: string,
+      serviceType: string,
+      accessPolicyId?: string,
+      options?: {
+        [key: string]: any;
+      }
+  ) {
     const request: ServiceRequest = {
+      options,
       providerId,
       type: serviceType
     }
