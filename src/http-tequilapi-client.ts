@@ -205,7 +205,8 @@ export class HttpTequilapiClient implements TequilapiClient {
       {
         providerId: request.providerId,
         type: request.type,
-        accessPolicies: request.accessPolicies
+        accessPolicies: request.accessPolicies,
+        options: request.options
       },
       timeout
     )
