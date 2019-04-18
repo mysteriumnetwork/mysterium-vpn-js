@@ -69,9 +69,11 @@ export class ProviderService {
 
   public async getFirstAccessPolicy (): Promise<AccessPolicyDTO | null> {
     try {
-      const accessPolicy = await this.tequilapiClient.accessPolicies()
+      const accessPolicies = await this.tequilapiClient.accessPolicies()
 
-      return accessPolicy[0]
+      if (accessPolicies.length > 0) {
+        return accessPolicies[0]
+      }
     } catch (e) {
       logger.error('Failed fetching first access policy', e)
     }
