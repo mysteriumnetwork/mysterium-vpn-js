@@ -79,15 +79,15 @@ export class ProviderService {
     return null
   }
 
-  public async start (providerId: string, serviceType: string, accessListId?: string) {
+  public async start (providerId: string, serviceType: string, accessPolicyId?: string) {
     const request: ServiceRequest = {
       providerId,
       type: serviceType
     }
 
-    if (accessListId) {
+    if (accessPolicyId) {
       request.accessPolicies = {
-        ids: [accessListId]
+        ids: [accessPolicyId]
       }
     }
 
