@@ -1,6 +1,6 @@
 {
   "name": "mysterium-tequilapi",
-  "version": "0.7.7",
+  "version": "0.8.0",
   "description": "Api library to control mysterium client and node",
   "repository": "github:mysteriumnetwork/mysterium-tequilapi",
   "main": "lib/index.js",
@@ -12,7 +12,8 @@
     "test": "jest --config test/jest.config.js",
     "prepack": "npx tsc -p src",
     "generate:flow": "./scripts/generate_flow_definitions.sh",
-    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios"
+    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios",
+    "build": "npm run prepack && npm run generate:flow"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",

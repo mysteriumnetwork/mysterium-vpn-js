@@ -9,6 +9,7 @@
 
 import { HttpInterface } from "./adapters/interface";
 import { TequilapiClient } from "./client";
+import { AccessPolicyDTO } from "./dto/access-policies";
 import { ConnectionIPDTO } from "./dto/connection-ip";
 import { ConnectionSessionDTO } from "./dto/connection-session";
 import { ConnectionStatisticsDTO } from "./dto/connection-statistics";
@@ -58,4 +59,5 @@ declare export class HttpTequilapiClient implements TequilapiClient {
   ): Promise<ServiceInfoDTO>;
   serviceStop(serviceId: string): Promise<void>;
   serviceSessions(): Promise<ServiceSessionDTO[]>;
+  accessPolicies(): Promise<AccessPolicyDTO[]>;
 }

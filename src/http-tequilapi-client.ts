@@ -18,6 +18,7 @@
 import { HttpInterface } from './adapters/interface'
 import ProposalsQuery from './adapters/proposals-query'
 import { TequilapiClient } from './client'
+import { AccessPolicyDTO, parseAccessPoliciesDTO } from './dto/access-policies'
 import { ConnectionIPDTO, parseConnectionIPDTO } from './dto/connection-ip'
 import { ConnectionSessionDTO, validateSession } from './dto/connection-session'
 import { ConnectionStatisticsDTO, parseConnectionStatisticsDTO } from './dto/connection-statistics'
@@ -203,7 +204,8 @@ export class HttpTequilapiClient implements TequilapiClient {
       'services',
       {
         providerId: request.providerId,
-        type: request.type
+        type: request.type,
+        accessPolicies: request.accessPolicies
       },
       timeout
     )
@@ -223,5 +225,14 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Service sessions response body is missing')
     }
     return parseServiceSessionListDTO(response)
+  }
+
+  public async accessPolicies (): Promise<AccessPolicyDTO[]> {
+    const response = await this.http.get('access-policies')
+    if (!response) {
+      throw new Error('Access policies response body is missing')
+    }
+
+    return parseAccessPoliciesDTO(response)
   }
 }

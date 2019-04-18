@@ -300,7 +300,7 @@ describe('HttpTequilapiClient', () => {
     it('returns error when eth address is missing', async () => {
       mock.onGet('identities/test-id/payout').reply(200, {})
       expect(api.identityPayout('test-id'))
-          .rejects.toHaveProperty('message', 'IdentityPayoutDTO: eth_address is not provided')
+        .rejects.toHaveProperty('message', 'IdentityPayoutDTO: eth_address is not provided')
     })
   })
 
@@ -506,11 +506,14 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const expectedRequest = {
         providerId: '0x2000FACE',
-        type: 'openvpn'
+        type: 'openvpn',
+        accessPolicies: {
+          ids: ['mysterium-verified']
+        }
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn' }
+      const request = { providerId: '0x2000FACE', type: 'openvpn', accessPolicies: { ids: ['mysterium-verified'] } }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
@@ -567,6 +570,51 @@ describe('HttpTequilapiClient', () => {
       expect(
         api.serviceSessions()
       ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="service-sessions")')
+    })
+  })
+
+  describe('accessPolicies()', () => {
+    it('returns response', async () => {
+      const response = {
+        entries: [
+          {
+            id: 'mysterium',
+            title: 'mysterium verified',
+            description: 'Mysterium Network approved identities',
+            allow: [
+              {
+                type: 'identity',
+                value: '0x123'
+              }
+            ]
+          },
+          {
+            id: 'mysterium #2',
+            title: 'mysterium verified #2',
+            description: 'Mysterium Network approved identities #2',
+            allow: [
+              {
+                type: 'identity',
+                value: '0x123'
+              }
+            ]
+          }
+        ]
+      }
+
+      mock.onGet('access-policies').reply(200, response)
+
+      const sessions = await api.accessPolicies()
+      expect(sessions).toHaveLength(2)
+      expect(sessions[0].id).toEqual('mysterium')
+    })
+
+    it('handles error', () => {
+      mock.onGet('access-policies').reply(500)
+
+      expect(
+        api.accessPolicies()
+      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="access-policies")')
     })
   })
 })
