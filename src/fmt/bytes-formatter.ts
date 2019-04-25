@@ -22,6 +22,13 @@ export interface BytesReadable {
   units: string
 }
 
+interface FilesizeResult {
+  value: number
+  symbol: string
+}
+
+const bytesReadableDefault: BytesReadable = { amount: '-', units: 'KB' }
+
 export class BytesFormatter {
   /**
    * @function
@@ -29,18 +36,23 @@ export class BytesFormatter {
    * @returns {{amount:number,units:string}} result - holds amount and units
    * @throws if argument is null
    */
-  public format (bytes: number): BytesReadable {
+  public format(bytes: number): BytesReadable {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof (bytes as any) !== 'number') {
       throw new Error('provide valid input for conversion')
     }
-    const calculated = filesize(bytes, { standard: 'jedec', output: 'object' }) as any
+    const calculated = (filesize(bytes, {
+      standard: 'jedec',
+      output: 'object',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }) as any) as FilesizeResult
     return {
       amount: calculated.value.toFixed(2),
-      units: calculated.symbol.replace('i', '')
+      units: calculated.symbol.replace('i', ''),
     }
   }
 
-  public formatOrDefault (bytes: number): BytesReadable {
+  public formatOrDefault(bytes: number): BytesReadable {
     try {
       return this.format(bytes)
     } catch (err) {
@@ -48,5 +60,3 @@ export class BytesFormatter {
     }
   }
 }
-
-const bytesReadableDefault: BytesReadable = { amount: '-', units: 'KB' }

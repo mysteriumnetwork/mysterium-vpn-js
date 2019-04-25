@@ -24,11 +24,11 @@ import { QualityLevel } from './quality-level'
 import { ServiceStatus } from './service-status'
 
 export {
-    Metrics,
-    ProviderService,
-    ProviderSessions,
-    Publisher,
-    QualityCalculator,
-    QualityLevel,
-    ServiceStatus
+  Metrics,
+  ProviderService,
+  ProviderSessions,
+  Publisher,
+  QualityCalculator,
+  QualityLevel,
+  ServiceStatus,
 }

@@ -22,7 +22,7 @@ enum QualityLevel {
   LOW,
   MEDIUM,
   HIGH,
-  UNKNOWN
+  UNKNOWN,
 }
 
 export { QualityLevel }

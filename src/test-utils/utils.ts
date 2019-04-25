@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export function nextTick (): Promise<void> {
-  return new Promise((resolve) => {
+export function nextTick(): Promise<void> {
+  return new Promise(resolve => {
     process.nextTick(() => {
       resolve()
     })

@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { AccessPolicyDTO } from 'mysterium-tequilapi/lib/dto/access-policies'
 import { ConnectionIPDTO } from 'mysterium-tequilapi/lib/dto/connection-ip'
@@ -34,91 +36,94 @@ import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
 import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
-  public connectionCancel (): Promise<void> {
+  public connectionCancel(): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public connectionCreate (request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusDTO> {
+  public connectionCreate(
+    request: ConnectionRequest,
+    timeout?: number
+  ): Promise<ConnectionStatusDTO> {
     throw Error('Not implemented')
   }
 
-  public connectionIP (timeout?: number): Promise<ConnectionIPDTO> {
+  public connectionIP(timeout?: number): Promise<ConnectionIPDTO> {
     throw Error('Not implemented')
   }
 
-  public connectionStatistics (): Promise<ConnectionStatisticsDTO> {
+  public connectionStatistics(): Promise<ConnectionStatisticsDTO> {
     throw Error('Not implemented')
   }
 
-  public connectionStatus (): Promise<ConnectionStatusDTO> {
+  public connectionStatus(): Promise<ConnectionStatusDTO> {
     throw Error('Not implemented')
   }
 
-  public findProposals (options?: ProposalQueryOptions): Promise<ProposalDTO[]> {
+  public findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]> {
     throw Error('Not implemented')
   }
 
-  public healthCheck (timeout?: number): Promise<NodeHealthcheckDTO> {
+  public healthCheck(timeout?: number): Promise<NodeHealthcheckDTO> {
     throw Error('Not implemented')
   }
 
-  public identitiesList (): Promise<IdentityDTO[]> {
+  public identitiesList(): Promise<IdentityDTO[]> {
     throw Error('Not implemented')
   }
 
-  public identityCreate (passphrase: string): Promise<IdentityDTO> {
+  public identityCreate(passphrase: string): Promise<IdentityDTO> {
     throw Error('Not implemented')
   }
 
-  public identityRegistration (id: string): Promise<IdentityRegistrationDTO> {
+  public identityRegistration(id: string): Promise<IdentityRegistrationDTO> {
     throw Error('Not implemented')
   }
 
-  public updateIdentityPayout (id: string, ethAddress: string): Promise<void> {
+  public updateIdentityPayout(id: string, ethAddress: string): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void> {
+  public identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public identityPayout (id: string): Promise<IdentityPayoutDTO> {
+  public identityPayout(id: string): Promise<IdentityPayoutDTO> {
     throw Error('Not implemented')
   }
 
-  public location (timeout?: number): Promise<ConsumerLocationDTO> {
+  public location(timeout?: number): Promise<ConsumerLocationDTO> {
     throw Error('Not implemented')
   }
 
-  public serviceGet (serviceId: string): Promise<ServiceInfoDTO> {
+  public serviceGet(serviceId: string): Promise<ServiceInfoDTO> {
     throw Error('Not implemented')
   }
 
-  public serviceList (): Promise<ServiceInfoDTO[]> {
+  public serviceList(): Promise<ServiceInfoDTO[]> {
     throw Error('Not implemented')
   }
 
-  public serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
+  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
     throw Error('Not implemented')
   }
 
-  public serviceStop (serviceId: string): Promise<void> {
+  public serviceStop(serviceId: string): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public connectionSessions (): Promise<ConnectionSessionDTO[]> {
+  public connectionSessions(): Promise<ConnectionSessionDTO[]> {
     throw Error('Not implemented')
   }
 
-  public serviceSessions (): Promise<ServiceSessionDTO[]> {
+  public serviceSessions(): Promise<ServiceSessionDTO[]> {
     throw Error('Not implemented')
   }
 
-  public stop (): Promise<void> {
+  public stop(): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public accessPolicies (): Promise<AccessPolicyDTO[]> {
+  public accessPolicies(): Promise<AccessPolicyDTO[]> {
     throw Error('Not implemented')
   }
 }

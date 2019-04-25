@@ -16,9 +16,13 @@
  */
 
 class TimeFormatter {
-  constructor (private readonly minutesOffset: number) {}
+  private readonly minutesOffset: number
 
-  public formatDate (date: Date): string {
+  public constructor(minutesOffset: number) {
+    this.minutesOffset = minutesOffset
+  }
+
+  public formatDate(date: Date): string {
     const newDate = this.getDateWithOffset(date)
     const year = newDate.getUTCFullYear()
     const month = this.formatTwoDigitNumber(newDate.getUTCMonth() + 1)
@@ -26,7 +30,7 @@ class TimeFormatter {
     return `${day}/${month}/${year}`
   }
 
-  public formatTime (date: Date): string {
+  public formatTime(date: Date): string {
     const newDate = this.getDateWithOffset(date)
     const hours = this.formatTwoDigitNumber(newDate.getUTCHours())
     const minutes = this.formatTwoDigitNumber(newDate.getUTCMinutes())
@@ -34,21 +38,21 @@ class TimeFormatter {
     return `${hours}:${minutes}:${seconds}`
   }
 
-  public formatISODateTime (date: Date): string {
+  public formatISODateTime(date: Date): string {
     return date.toISOString()
   }
 
-  public getCurrentISODateTime (): string {
+  public getCurrentISODateTime(): string {
     return this.formatISODateTime(new Date())
   }
 
-  private getDateWithOffset (date: Date): Date {
+  private getDateWithOffset(date: Date): Date {
     const newDate = new Date(date.getTime())
     newDate.setMinutes(newDate.getMinutes() - this.minutesOffset)
     return newDate
   }
 
-  private formatTwoDigitNumber (value: number): string {
+  private formatTwoDigitNumber(value: number): string {
     return value > 9 ? value.toString() : `0${value}`
   }
 }

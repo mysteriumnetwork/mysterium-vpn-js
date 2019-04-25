@@ -31,7 +31,7 @@ describe('FunctionLooper', () => {
     clock.uninstall()
   })
 
-  async function tickWithDelay (duration: number): Promise<void> {
+  async function tickWithDelay(duration: number): Promise<void> {
     clock.tick(duration)
     await nextTick()
   }
@@ -43,7 +43,7 @@ describe('FunctionLooper', () => {
   describe('.start', () => {
     it('executes function multiple times with threshold', async () => {
       let counter = 0
-      async function increaseCounter () {
+      async function increaseCounter() {
         counter++
       }
 
@@ -65,7 +65,7 @@ describe('FunctionLooper', () => {
 
     it('does not starts second loop when invoked twice', () => {
       let counter = 0
-      async function increaseCounter () {
+      async function increaseCounter() {
         counter++
       }
 
@@ -77,7 +77,7 @@ describe('FunctionLooper', () => {
 
     it('executes function multiple times when function throws exception', async () => {
       let counter = 0
-      async function throwError () {
+      async function throwError() {
         counter++
         throw new Error('mock error')
       }
@@ -96,7 +96,7 @@ describe('FunctionLooper', () => {
   describe('.stop', () => {
     it('stops function execution', async () => {
       let counter = 0
-      async function increaseCounter () {
+      async function increaseCounter() {
         counter++
       }
 
@@ -115,7 +115,7 @@ describe('FunctionLooper', () => {
 
     it('waits for the last execution', async () => {
       let counter = 0
-      async function increaseCounter () {
+      async function increaseCounter() {
         await sleep(400)
         counter++
       }
@@ -124,7 +124,9 @@ describe('FunctionLooper', () => {
       looper.start()
 
       let stopped = false
-      looper.stop().then(() => { stopped = true })
+      looper.stop().then(() => {
+        stopped = true
+      })
       expect(stopped).toEqual(false)
       expect(counter).toEqual(0)
 
@@ -158,14 +160,14 @@ describe('FunctionLooper', () => {
     it('registers function error handler', async () => {
       const mockError = new Error('mock error')
       let counter = 0
-      async function throwError () {
+      async function throwError() {
         counter++
         throw mockError
       }
 
       const looper = new FunctionLooper(throwError, 1000)
       let error = null
-      looper.onFunctionError((err) => {
+      looper.onFunctionError(err => {
         error = err
       })
       expect(counter).toEqual(0)
@@ -183,17 +185,17 @@ describe('FunctionLooper', () => {
     it('registers multiple error handlers', async () => {
       const mockError = new Error('mock error')
 
-      async function throwError () {
+      async function throwError() {
         throw mockError
       }
 
       const looper = new FunctionLooper(throwError, 1000)
       let error1 = null
       let error2 = null
-      looper.onFunctionError((err) => {
+      looper.onFunctionError(err => {
         error1 = err
       })
-      looper.onFunctionError((err) => {
+      looper.onFunctionError(err => {
         error2 = err
       })
 

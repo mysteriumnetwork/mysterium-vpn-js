@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+const timeDisplayDefault = '--:--:--'
+
 export class DurationFormatter {
   /**
    * @function
@@ -22,7 +24,8 @@ export class DurationFormatter {
    * @returns {string} readable in --:--:-- format
    * @throws {Error} if argument is null
    */
-  public format (seconds: number): string {
+  public format(seconds: number): string {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof (seconds as any) !== 'number' || seconds < 0) {
       throw new Error('invalid input')
     }
@@ -33,7 +36,7 @@ export class DurationFormatter {
     return `${h}:${m}:${s}`
   }
 
-  public formatOrDefault (seconds: number): string {
+  public formatOrDefault(seconds: number): string {
     try {
       return this.format(seconds)
     } catch (err) {
@@ -41,9 +44,7 @@ export class DurationFormatter {
     }
   }
 
-  private formatTwoDigitNumber (value: number): string {
+  private formatTwoDigitNumber(value: number): string {
     return value > 9 ? value.toString() : `0${value}`
   }
 }
-
-const timeDisplayDefault = '--:--:--'

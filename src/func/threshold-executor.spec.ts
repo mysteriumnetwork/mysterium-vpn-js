@@ -32,7 +32,7 @@ describe('ThresholdExecutor', () => {
     clock.uninstall()
   })
 
-  async function tickWithDelay (duration: number): Promise<void> {
+  async function tickWithDelay(duration: number): Promise<void> {
     clock.tick(duration)
     await nextTick()
   }
@@ -42,7 +42,7 @@ describe('ThresholdExecutor', () => {
   }
 
   const asyncFunc = (duration: number) => async () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         funcDone = true
         resolve()
@@ -55,7 +55,7 @@ describe('ThresholdExecutor', () => {
     thresholdDone = false
   })
 
-  function markThresholdDone () {
+  function markThresholdDone() {
     thresholdDone = true
   }
 
@@ -130,7 +130,7 @@ describe('ThresholdExecutor', () => {
     let executor: ThresholdExecutor
 
     const mockError = new Error('Mock error')
-    async function errorFunc () {
+    async function errorFunc() {
       throw mockError
     }
 

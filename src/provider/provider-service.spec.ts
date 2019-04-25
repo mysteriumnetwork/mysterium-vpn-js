@@ -33,11 +33,11 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
   private serviceInfoMocks: Map<string, ServiceInfoDTO> = new Map<string, ServiceInfoDTO>()
   private servicesCreated: number = 0
 
-  public async serviceList (): Promise<ServiceInfoDTO[]> {
+  public async serviceList(): Promise<ServiceInfoDTO[]> {
     return Array.from(this.serviceInfoMocks.values())
   }
 
-  public async serviceGet (serviceId: string): Promise<ServiceInfoDTO> {
+  public async serviceGet(serviceId: string): Promise<ServiceInfoDTO> {
     this.serviceGetInvoked++
 
     const info = this.serviceInfoMocks.get(serviceId)
@@ -47,11 +47,17 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
     return info
   }
 
-  public async serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
     this.serviceStarted = request
 
     const options: { [key: string]: any } = {}
-    const proposal = { id: 1, providerId: request.providerId, serviceType: request.type, serviceDefinition: {} }
+    const proposal = {
+      id: 1,
+      providerId: request.providerId,
+      serviceType: request.type,
+      serviceDefinition: {},
+    }
     this.servicesCreated += 1
     const serviceId = `service id ${this.servicesCreated}`
     const serviceInfo = {
@@ -60,7 +66,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
       proposal,
       providerId: request.providerId,
       status: ServiceStatusDTO.STARTING,
-      type: request.type
+      type: request.type,
     }
 
     this.serviceInfoMocks.set(serviceId, serviceInfo)
@@ -68,7 +74,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
     return serviceInfo
   }
 
-  public async serviceStop (serviceId: string): Promise<void> {
+  public async serviceStop(serviceId: string): Promise<void> {
     this.serviceStopped = serviceId
 
     if (!this.serviceInfoMocks.delete(serviceId)) {
@@ -78,7 +84,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
 
   // TODO: refactor TequilapiError to allow instantiating TequilapiError with custom status easier,
   // i.e. add 'status' as constructor parameter
-  private buildTequilapiError (message: string, status: number) {
+  private buildTequilapiError(message: string, status: number) {
     const originalError = new Error(message)
     const originalErrorObj = originalError as any
     originalErrorObj.response = { status }
@@ -123,8 +129,10 @@ describe('ProviderService', () => {
     })
 
     it('throws error when stopping without starting', async () => {
-      expect(service.stop())
-        .rejects.toHaveProperty('message', 'Service id is unknown, make sure to start service before stopping it')
+      expect(service.stop()).rejects.toHaveProperty(
+        'message',
+        'Service id is unknown, make sure to start service before stopping it'
+      )
     })
   })
 
@@ -183,7 +191,7 @@ describe('ProviderService', () => {
   describe('.addStatusSubscriber', () => {
     it('invokes callback with NOT_RUNNING status initially', async () => {
       let status = null
-      service.addStatusSubscriber((newStatus) => {
+      service.addStatusSubscriber(newStatus => {
         status = newStatus
       })
 
@@ -192,7 +200,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with STARTING status after starting service', async () => {
       let status = null
-      service.addStatusSubscriber((newStatus) => {
+      service.addStatusSubscriber(newStatus => {
         status = newStatus
       })
 
@@ -202,7 +210,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with NOT_RUNNING after stopping service', async () => {
       let status = null
-      service.addStatusSubscriber((newStatus) => {
+      service.addStatusSubscriber(newStatus => {
         status = newStatus
       })
 
@@ -219,7 +227,7 @@ describe('ProviderService', () => {
 
     it('invokes callback with NOT_RUNNING if service stops unexpectedly', async () => {
       let status = null
-      service.addStatusSubscriber((newStatus) => {
+      service.addStatusSubscriber(newStatus => {
         status = newStatus
       })
 
@@ -255,7 +263,7 @@ describe('ProviderService', () => {
 
     it('does not invoke with the same status again', async () => {
       const statuses: ServiceStatus[] = []
-      service.addStatusSubscriber((newStatus) => {
+      service.addStatusSubscriber(newStatus => {
         statuses.push(newStatus)
       })
 
@@ -266,14 +274,14 @@ describe('ProviderService', () => {
       clock.runToLast()
       await nextTick()
 
-      expect(statuses.filter((s) => s === ServiceStatus.STARTING).length).toEqual(1)
+      expect(statuses.filter(s => s === ServiceStatus.STARTING).length).toEqual(1)
     })
 
     it('invokes callback with STARTING status when subscribing to starting service', async () => {
       await service.start(providerId, 'test service')
 
       let status = null
-      service.addStatusSubscriber((newStatus) => {
+      service.addStatusSubscriber(newStatus => {
         status = newStatus
       })
 

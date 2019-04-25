@@ -88,7 +88,9 @@ describe('Publisher', () => {
       }
       publisher.addSubscriber(cb)
       publisher.removeSubscriber(cb)
-      expect(() => publisher.removeSubscriber(cb)).toThrowError('Callback being unsubscribed was not found')
+      expect(() => publisher.removeSubscriber(cb)).toThrowError(
+        'Callback being unsubscribed was not found'
+      )
     })
   })
 })

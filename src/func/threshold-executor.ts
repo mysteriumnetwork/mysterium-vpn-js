@@ -19,9 +19,15 @@
 import { sleep } from './utils'
 
 interface ExecutionResult {
-  error?: Error,
+  error?: Error
   duration: number
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ExecutorFn = () => Promise<any>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ErrorCallback = (err: Error) => any
 
 /**
  * Executes given function and sleeps for remaining time.
@@ -29,11 +35,14 @@ interface ExecutionResult {
  */
 export class ThresholdExecutor {
   private canceled: boolean
+  private readonly func: ExecutorFn
+  private readonly threshold: number
+  private readonly errorCallback?: ErrorCallback
 
-  constructor (
-    private func: () => Promise<any>,
-    private threshold: number,
-    private errorCallback?: (err: Error) => any) {
+  public constructor(func: ExecutorFn, threshold: number, errorCallback?: ErrorCallback) {
+    this.func = func
+    this.threshold = threshold
+    this.errorCallback = errorCallback
     this.canceled = false
   }
 
@@ -41,7 +50,7 @@ export class ThresholdExecutor {
    * Executes given function and sleeps for remaining time, if .cancel() was not invoked.
    * @returns {Promise<void>}
    */
-  public async execute (): Promise<void> {
+  public async execute(): Promise<void> {
     const executionResult = await this.executeFunction()
     if (executionResult.error && this.errorCallback) {
       this.errorCallback(executionResult.error)
@@ -52,11 +61,11 @@ export class ThresholdExecutor {
   /**
    * Forces currently function execution to skip sleep.
    */
-  public cancel () {
+  public cancel(): void {
     this.canceled = true
   }
 
-  private async executeFunction (): Promise<ExecutionResult> {
+  private async executeFunction(): Promise<ExecutionResult> {
     const start = Date.now()
     let error = null
     try {
@@ -68,14 +77,14 @@ export class ThresholdExecutor {
     return { duration: end - start, error }
   }
 
-  private async sleepRemainingTime (duration: number): Promise<void> {
+  private async sleepRemainingTime(duration: number): Promise<void> {
     const sleepTime = this._remainingSleepTime(duration)
     if (sleepTime > 0) {
       await sleep(sleepTime)
     }
   }
 
-  private _remainingSleepTime (duration: number): number {
+  private _remainingSleepTime(duration: number): number {
     if (this.canceled || duration >= this.threshold) {
       return 0
     }
