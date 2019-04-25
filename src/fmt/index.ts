@@ -19,8 +19,4 @@ import { BytesFormatter } from './bytes-formatter'
 import { DurationFormatter } from './duration-formatter'
 import { TimeFormatter } from './time-formatter'
 
-export {
-    BytesFormatter,
-    DurationFormatter,
-    TimeFormatter
-}
+export { BytesFormatter, DurationFormatter, TimeFormatter }

@@ -21,10 +21,13 @@ import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
 import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
 import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
 import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
-import { FunctionLooper } from '../func/function-looper'
+import { FunctionLooper } from '../func'
 import { logger } from '../logger'
 import { Publisher } from './publisher'
 import { ServiceStatus } from './service-status'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type StatusSubscriber = (newStatus: ServiceStatus) => any
 
 export class ProviderService {
   // Currently running service instance
@@ -33,11 +36,13 @@ export class ProviderService {
   private statusPublisher: Publisher<ServiceStatus> = new Publisher()
   private statusFetcher?: FunctionLooper
   private lastStatus: ServiceStatus = ServiceStatus.NOT_RUNNING
+  private tequilapiClient: TequilapiClient
 
-  constructor (private tequilapiClient: TequilapiClient) {
+  public constructor(tequilapiClient: TequilapiClient) {
+    this.tequilapiClient = tequilapiClient
   }
 
-  public async checkForExistingService () {
+  public async checkForExistingService(): Promise<void> {
     const service = await this.findRunningService()
     if (!service) {
       return
@@ -46,7 +51,7 @@ export class ProviderService {
     this.handleStartedService(service)
   }
 
-  public async isActive (): Promise<boolean> {
+  public async isActive(): Promise<boolean> {
     try {
       const service = await this.findRunningService()
 
@@ -58,7 +63,7 @@ export class ProviderService {
     return false
   }
 
-  public async findRunningService () {
+  public async findRunningService(): Promise<ServiceInfoDTO | undefined> {
     try {
       const services = await this.tequilapiClient.serviceList()
       return services.pop()
@@ -67,7 +72,7 @@ export class ProviderService {
     }
   }
 
-  public async getFirstAccessPolicy (): Promise<AccessPolicyDTO | null> {
+  public async getFirstAccessPolicy(): Promise<AccessPolicyDTO | null> {
     try {
       const accessPolicies = await this.tequilapiClient.accessPolicies()
 
@@ -81,23 +86,24 @@ export class ProviderService {
     return null
   }
 
-  public async start (
-      providerId: string,
-      serviceType: string,
-      accessPolicyId?: string,
-      options?: {
-        [key: string]: any;
-      }
-  ) {
+  public async start(
+    providerId: string,
+    serviceType: string,
+    accessPolicyId?: string,
+    options?: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      [key: string]: any
+    }
+  ): Promise<void> {
     const request: ServiceRequest = {
       options,
       providerId,
-      type: serviceType
+      type: serviceType,
     }
 
     if (accessPolicyId) {
       request.accessPolicies = {
-        ids: [accessPolicyId]
+        ids: [accessPolicyId],
       }
     }
 
@@ -106,7 +112,7 @@ export class ProviderService {
     this.handleStartedService(service)
   }
 
-  public async stop () {
+  public async stop(): Promise<void> {
     if (!this.serviceInstance) {
       throw new Error('Service id is unknown, make sure to start service before stopping it')
     }
@@ -116,27 +122,27 @@ export class ProviderService {
     this.processStatus(ServiceStatus.NOT_RUNNING)
   }
 
-  public addStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
+  public addStatusSubscriber(subscriber: StatusSubscriber): void {
     this.statusPublisher.addSubscriber(subscriber)
     subscriber(this.lastStatus)
   }
 
-  public removeStatusSubscriber (subscriber: (newStatus: ServiceStatus) => any) {
+  public removeStatusSubscriber(subscriber: StatusSubscriber): void {
     this.statusPublisher.removeSubscriber(subscriber)
   }
 
-  private handleStartedService (service: ServiceInfoDTO) {
+  private handleStartedService(service: ServiceInfoDTO): void {
     this.serviceInstance = service
     this.processNewServiceInfo(service)
     this.startFetchingStatus()
   }
 
-  private startFetchingStatus () {
+  private startFetchingStatus(): void {
     this.statusFetcher = new FunctionLooper(async () => this.fetchStatus(), 1000)
     this.statusFetcher.start()
   }
 
-  private async stopFetchingStatus () {
+  private async stopFetchingStatus(): Promise<void> {
     if (!this.statusFetcher) {
       return
     }
@@ -146,7 +152,7 @@ export class ProviderService {
     this.statusFetcher = undefined
   }
 
-  private async fetchStatus () {
+  private async fetchStatus(): Promise<void> {
     if (!this.serviceInstance) {
       logger.error('Service status fetching failed because serviceId is missing')
       return
@@ -158,7 +164,9 @@ export class ProviderService {
     } catch (err) {
       if (err.name === TequilapiError.name && (err as TequilapiError).isNotFoundError) {
         this.processStatus(ServiceStatus.NOT_RUNNING)
-        this.stopFetchingStatus().catch((err: Error) => logger.error('Failed stopping fetching status', err))
+        this.stopFetchingStatus().catch((err: Error) =>
+          logger.error('Failed stopping fetching status', err)
+        )
         return
       }
 
@@ -166,12 +174,12 @@ export class ProviderService {
     }
   }
 
-  private processNewServiceInfo (info: ServiceInfoDTO) {
-    const status = this.serviceStatusDTOToModel(info.status)
+  private processNewServiceInfo(info: ServiceInfoDTO): void {
+    const status = ProviderService.serviceStatusDTOToModel(info.status)
     this.processStatus(status)
   }
 
-  private processStatus (status: ServiceStatus) {
+  private processStatus(status: ServiceStatus): void {
     if (status === this.lastStatus) {
       return
     }
@@ -180,7 +188,7 @@ export class ProviderService {
     this.lastStatus = status
   }
 
-  private serviceStatusDTOToModel (status: ServiceStatusDTO): ServiceStatus {
+  private static serviceStatusDTOToModel(status: ServiceStatusDTO): ServiceStatus {
     if (status === ServiceStatusDTO.NOT_RUNNING) {
       return ServiceStatus.NOT_RUNNING
     }

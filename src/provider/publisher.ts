@@ -19,18 +19,23 @@ import { logger } from '../logger'
 
 type Unsubscribe = () => void
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Subscriber<T> = (value: T) => any
+
 /**
  * Allows subscribing callbacks and publishing data to them.
  */
 export class Publisher<T> {
-  private subscribers: Array<(value: T) => any> = []
+  private subscribers: Subscriber<T>[] = []
 
-  public addSubscriber (subscriber: (value: T) => any): Unsubscribe {
+  public addSubscriber(subscriber: Subscriber<T>): Unsubscribe {
     this.subscribers.push(subscriber)
-    return () => { this.removeSubscriber(subscriber) }
+    return () => {
+      this.removeSubscriber(subscriber)
+    }
   }
 
-  public removeSubscriber (subscriber: (value: T) => any) {
+  public removeSubscriber(subscriber: Subscriber<T>): void {
     const index = this.subscribers.indexOf(subscriber)
     if (index === -1) {
       throw new Error('Callback being unsubscribed was not found')
@@ -38,8 +43,8 @@ export class Publisher<T> {
     this.subscribers.splice(index, 1)
   }
 
-  public publish (data: T) {
-    this.subscribers.forEach((callback: (value: T) => any) => {
+  public publish(data: T): void {
+    this.subscribers.forEach((callback: Subscriber<T>) => {
       try {
         callback(data)
       } catch (err) {

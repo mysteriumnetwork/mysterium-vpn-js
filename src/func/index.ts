@@ -18,7 +18,4 @@
 import { FunctionLooper } from './function-looper'
 import { ThresholdExecutor } from './threshold-executor'
 
-export {
-    FunctionLooper,
-    ThresholdExecutor
-}
+export { FunctionLooper, ThresholdExecutor }

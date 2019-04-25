@@ -67,8 +67,12 @@ describe('BytesFormatter', () => {
       expect(formatter.format(0).amount).toEqual('0.00')
     })
     it('throws', () => {
-      expect(() => formatter.format(undefined as any)).toThrowError('provide valid input for conversion')
-      expect(() => formatter.format('str' as any)).toThrowError('provide valid input for conversion')
+      expect(() => formatter.format(undefined as any)).toThrowError(
+        'provide valid input for conversion'
+      )
+      expect(() => formatter.format('str' as any)).toThrowError(
+        'provide valid input for conversion'
+      )
     })
   })
 
@@ -76,14 +80,14 @@ describe('BytesFormatter', () => {
     it('returns readable value', () => {
       expect(formatter.formatOrDefault(10000)).toEqual({
         amount: '9.77',
-        units: 'KB'
+        units: 'KB',
       })
     })
 
     it('returns default value when parsing fails', () => {
       expect(formatter.formatOrDefault('a' as any)).toEqual({
         amount: '-',
-        units: 'KB'
+        units: 'KB',
       })
     })
   })

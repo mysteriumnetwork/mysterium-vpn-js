@@ -16,7 +16,7 @@
  */
 
 export class Logger {
-  public error (message: string, error?: Error) {
+  public error(message: string, error?: Error): void {
     if (error) {
       // tslint:disable-next-line no-console
       console.error(message, error)

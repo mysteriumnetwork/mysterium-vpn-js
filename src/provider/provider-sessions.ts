@@ -17,9 +17,10 @@
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
-import { FunctionLooper } from '../func/function-looper'
+import { FunctionLooper } from '../func'
 import { Publisher } from './publisher'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CountSubscriber = (count: number) => any
 
 export class ProviderSessions {
@@ -27,26 +28,28 @@ export class ProviderSessions {
 
   private countPublisher: Publisher<number> = new Publisher()
   private countLast?: number
+  private tequilapiClient: TequilapiClient
 
-  constructor (private tequilapiClient: TequilapiClient) {
+  public constructor(tequilapiClient: TequilapiClient) {
+    this.tequilapiClient = tequilapiClient
     this.fetcher = new FunctionLooper(async () => this.fetch(), 1000)
   }
 
-  public addCountSubscriber (subscriber: CountSubscriber) {
+  public addCountSubscriber(subscriber: CountSubscriber): void {
     this.countPublisher.addSubscriber(subscriber)
     this.fetcher.start()
   }
 
-  public removeCountSubscriber (subscriber: CountSubscriber) {
+  public removeCountSubscriber(subscriber: CountSubscriber): void {
     this.countPublisher.removeSubscriber(subscriber)
   }
 
-  private async fetch () {
+  private async fetch(): Promise<void> {
     const sessions = await this.tequilapiClient.serviceSessions()
     this.processSessionCount(sessions)
   }
 
-  private processSessionCount (sessions: ServiceSessionDTO[]) {
+  private processSessionCount(sessions: ServiceSessionDTO[]): void {
     if (sessions.length !== this.countLast) {
       this.countPublisher.publish(sessions.length)
     }

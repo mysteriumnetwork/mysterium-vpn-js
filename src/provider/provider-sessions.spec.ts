@@ -22,11 +22,9 @@ import { nextTick } from '../test-utils/utils'
 import { ProviderSessions } from './provider-sessions'
 
 class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
-  public serviceSessionsMock: ServiceSessionDTO[] = [
-    { id: 'id1', consumerId: '0x1' }
-  ]
+  public serviceSessionsMock: ServiceSessionDTO[] = [{ id: 'id1', consumerId: '0x1' }]
 
-  public async serviceSessions (): Promise<ServiceSessionDTO[]> {
+  public async serviceSessions(): Promise<ServiceSessionDTO[]> {
     return Promise.resolve(this.serviceSessionsMock)
   }
 }
