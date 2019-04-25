@@ -1,7 +1,8 @@
 {
   "exclude": [
     "**/*.spec.ts",
-    "**/test-utils/**"
+    "**/test-utils/**",
+    "lib"
   ],
   "compilerOptions": {
     /* Basic Options */
