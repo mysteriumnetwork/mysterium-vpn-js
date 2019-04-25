@@ -17,7 +17,7 @@
 
 import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
 import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
-import { FunctionLooper } from './looper/function-looper'
+import { FunctionLooper } from '../func/function-looper'
 import { Publisher } from './publisher'
 
 type CountSubscriber = (count: number) => any

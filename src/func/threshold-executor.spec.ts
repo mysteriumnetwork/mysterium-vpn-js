@@ -16,7 +16,7 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { nextTick } from '../../test-utils/utils'
+import { nextTick } from '../test-utils/utils'
 import { ThresholdExecutor } from './threshold-executor'
 
 describe('ThresholdExecutor', () => {

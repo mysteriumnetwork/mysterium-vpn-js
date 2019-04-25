@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { QualityCalculator } from './domain/quality-calculator'
-import { Metrics } from './models/metrics'
-import { QualityLevel } from './models/quality-level'
+import { Metrics } from './provider/metrics'
+import { QualityCalculator } from './provider/quality-calculator'
+import { QualityLevel } from './provider/quality-level'
 
 export { QualityCalculator, QualityLevel, Metrics }

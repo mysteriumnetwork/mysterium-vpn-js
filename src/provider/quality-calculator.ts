@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Metrics } from '../models/metrics'
-import { QualityLevel } from '../models/quality-level'
+import { Metrics } from './metrics'
+import { QualityLevel } from './quality-level'
 
 export class QualityCalculator {
   /**
