@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Publisher } from '../publisher'
+import { Publisher } from '../provider/publisher'
 import { ThresholdExecutor } from './threshold-executor'
 
 export class FunctionLooper {

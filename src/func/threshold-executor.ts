@@ -16,7 +16,7 @@
  */
 
 // Internal type for capturing duration and error of function
-import { sleep } from '../utils'
+import { sleep } from './utils'
 
 interface ExecutionResult {
   error?: Error,

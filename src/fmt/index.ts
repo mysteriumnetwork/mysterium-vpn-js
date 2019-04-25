@@ -15,10 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Logger } from './logger'
+import { BytesFormatter } from './bytes-formatter'
+import { DurationFormatter } from './duration-formatter'
+import { TimeFormatter } from './time-formatter'
 
-export * from './fmt'
-export * from './func'
-export * from './provider'
-
-export { Logger }
+export {
+    BytesFormatter,
+    DurationFormatter,
+    TimeFormatter
+}

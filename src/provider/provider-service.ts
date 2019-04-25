@@ -21,10 +21,10 @@ import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
 import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
 import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
 import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
+import { FunctionLooper } from '../func/function-looper'
 import { logger } from '../logger'
-import { ServiceStatus } from '../models/service-status'
-import { FunctionLooper } from './looper/function-looper'
 import { Publisher } from './publisher'
+import { ServiceStatus } from './service-status'
 
 export class ProviderService {
   // Currently running service instance

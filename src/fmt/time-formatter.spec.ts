@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TimeFormatter } from '../../../domain/formatters/time-formatter'
+import { TimeFormatter } from './time-formatter'
 
 describe('TimeFormatter', () => {
   let formatter: TimeFormatter

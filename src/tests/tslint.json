@@ -1,9 +1,0 @@
-{
-    "defaultSeverity": "error",
-    "extends": "../tslint.json",
-    "rules": {
-        "no-implicit-dependencies": [true, "dev"],
-        "no-floating-promises": false
-    },
-    "rulesDirectory": []
-}
