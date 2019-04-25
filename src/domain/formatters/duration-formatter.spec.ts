@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { DurationFormatter } from '../../../domain/formatters/duration-formatter'
+import { DurationFormatter } from './duration-formatter'
 
 describe('DurationFormatter', () => {
   const formatter = new DurationFormatter()

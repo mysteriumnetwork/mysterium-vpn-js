@@ -16,8 +16,8 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { ThresholdExecutor } from '../../../domain/looper/threshold-executor'
-import { nextTick } from '../../utils/utils'
+import { nextTick } from '../../test-utils/utils'
+import { ThresholdExecutor } from './threshold-executor'
 
 describe('ThresholdExecutor', () => {
   let funcDone: boolean

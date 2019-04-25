@@ -8,7 +8,9 @@
     "rules": {
         "semicolon": [true, "never"],
         "interface-name": [true, "never-prefix"],
-        "no-submodule-imports": [true, "mysterium-tequilapi"]
+        "no-submodule-imports": [true, "mysterium-tequilapi"],
+        "no-implicit-dependencies": [true, "dev"],
+        "no-floating-promises": false
     },
     "rulesDirectory": []
 }

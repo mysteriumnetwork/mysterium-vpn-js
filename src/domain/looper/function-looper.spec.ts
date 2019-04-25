@@ -16,9 +16,9 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { FunctionLooper } from '../../../domain/looper/function-looper'
-import { sleep } from '../../../domain/utils'
-import { nextTick } from '../../utils/utils'
+import { nextTick } from '../../test-utils/utils'
+import { sleep } from '../utils'
+import { FunctionLooper } from './function-looper'
 
 describe('FunctionLooper', () => {
   let clock: InstalledClock<NodeClock>

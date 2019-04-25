@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Publisher } from '../../domain/publisher'
+import { Publisher } from './publisher'
 
 describe('Publisher', () => {
   let publisher: Publisher<string>
