@@ -20,7 +20,6 @@ import MockAdapter from 'axios-mock-adapter'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
-import { IdentityPayoutDTO } from '../../src/dto/identity-payout'
 import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
 import { parseProposalDTO } from '../../src/dto/proposal'
 import { parseServiceInfoDTO } from '../../src/dto/service-info'
@@ -103,18 +102,27 @@ describe('HttpTequilapiClient', () => {
   describe('location()', () => {
     it('returns response', async () => {
       const response = {
-        original: { ip: '100.100.100.100', country: 'original country' },
-        current: { ip: '123.123.123.123', country: 'current country' }
+        ip: '0.0.0.0',
+        asn: 8764,
+        isp: 'Telia Lietuva, AB',
+        continent: 'EU',
+        country: 'LT',
+        city: 'Vilnius',
+        node_type: 'residential'
       }
+
       mock.onGet('location').reply(200, response)
 
       const stats = await api.location()
 
       const dto = parseConsumerLocationDTO(response)
-      expect(stats.originalCountry).toEqual(dto.originalCountry)
-      expect(stats.originalIP).toEqual(dto.originalIP)
-      expect(stats.currentCountry).toEqual(dto.currentCountry)
-      expect(stats.currentIP).toEqual(dto.currentIP)
+      expect(stats.ip).toEqual(dto.ip)
+      expect(stats.asn).toEqual(dto.asn)
+      expect(stats.isp).toEqual(dto.isp)
+      expect(stats.continent).toEqual(dto.continent)
+      expect(stats.country).toEqual(dto.country)
+      expect(stats.city).toEqual(dto.city)
+      expect(stats.node_type).toEqual(dto.node_type)
       expect(stats).toEqual(dto)
     })
 

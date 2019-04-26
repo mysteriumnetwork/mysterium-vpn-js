@@ -16,20 +16,23 @@
  */
 
 export interface ConsumerLocationDTO {
-  originalCountry?: string,
-  originalIP?: string,
-  currentCountry?: string,
-  currentIP?: string
+  ip?: string,
+  asn: any,
+  isp?: string,
+  continent?: string,
+  country?: string,
+  city?: string,
+  node_type?: string,
 }
 
 export function parseConsumerLocationDTO (data: any): ConsumerLocationDTO {
-  const original = data.original || {}
-  const current = data.current || {}
-
   return {
-    originalCountry: original.country,
-    originalIP: original.ip,
-    currentCountry: current.country,
-    currentIP: current.ip
+    ip: data.ip,
+    asn: data.asn,
+    isp: data.isp,
+    continent: data.continent,
+    country: data.country,
+    city: data.city,
+    node_type: data.node_type
   }
 }
