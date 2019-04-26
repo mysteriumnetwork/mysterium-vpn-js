@@ -8,10 +8,13 @@
  */
 
 export interface ConsumerLocationDTO {
-  originalCountry?: string;
-  originalIP?: string;
-  currentCountry?: string;
-  currentIP?: string;
+  ip?: string;
+  asn: any;
+  isp?: string;
+  continent?: string;
+  country?: string;
+  city?: string;
+  node_type?: string;
 }
 declare export function parseConsumerLocationDTO(
   data: any

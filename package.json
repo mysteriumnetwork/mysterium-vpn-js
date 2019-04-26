@@ -25,7 +25,7 @@
     "axios-mock-adapter": "^1.15.0",
     "flow-bin": "^0.80.0",
     "flow-typed": "^2.5.1",
-    "flowgen": "^1.5.8",
+    "flowgen": "1.5.8",
     "jest": "^24.1.0",
     "ts-jest": "^24.0.0",
     "tslint": "^5.12.1",
