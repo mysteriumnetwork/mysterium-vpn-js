@@ -26,7 +26,7 @@ import { ProposalQueryOptions } from "./dto/query/proposals-query-options";
 import { ServiceInfoDTO } from "./dto/service-info";
 import { ServiceRequest } from "./dto/service-request";
 import { ServiceSessionDTO } from "./dto/service-session";
-declare export class HttpTequilapiClient mixins TequilapiClient {
+declare export class HttpTequilapiClient implements TequilapiClient {
   http: HttpInterface;
   constructor(http: HttpInterface): this;
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>;
