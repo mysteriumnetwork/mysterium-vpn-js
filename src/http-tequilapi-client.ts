@@ -31,6 +31,7 @@ import {
   IdentityRegistrationDTO,
   parseIdentityRegistrationDTO
 } from './dto/identity-registration/identity-registration'
+import { NatStatusDTO, parseNatStatusResponse } from './dto/nat-status-dto'
 import { NodeHealthcheckDTO, parseHealthcheckResponse } from './dto/node-healthcheck'
 import { ProposalDTO } from './dto/proposal'
 import { parseProposalsResponseDTO } from './dto/proposals-response'
@@ -55,6 +56,11 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Healthcheck response body is missing')
     }
     return parseHealthcheckResponse(response)
+  }
+
+  public async natStatus (): Promise<NatStatusDTO> {
+    const response = await this.http.get('nat/status')
+    return parseNatStatusResponse(response)
   }
 
   public async stop (): Promise<void> {

@@ -18,6 +18,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import AxiosAdapter from '../../src/adapters/axios-adapter'
+import { TequilapiClient } from '../../src/client'
 import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
 import { parseIdentityDTO } from '../../src/dto/identity'
 import { IdentityPayoutDTO } from '../../src/dto/identity-payout'
@@ -28,7 +29,7 @@ import { parseServiceListDTO } from '../../src/dto/service-list'
 import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
 
 describe('HttpTequilapiClient', () => {
-  let api: HttpTequilapiClient
+  let api: TequilapiClient
   let mock: MockAdapter
 
   beforeEach(() => {
@@ -81,6 +82,48 @@ describe('HttpTequilapiClient', () => {
 
       expect(api.healthCheck())
         .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="healthcheck")')
+    })
+  })
+
+  describe('natStatus()', () => {
+    it('returns successful response', async () => {
+      const response = {
+        status: 'success'
+      }
+      mock.onGet('nat/status').reply(200, response)
+
+      const status = await api.natStatus()
+      expect(status.status).toEqual('success')
+      expect(status.error).toBeUndefined()
+    })
+
+    it('returns failure response with error', async () => {
+      const response = {
+        status: 'failure',
+        error: 'mock error'
+      }
+      mock.onGet('nat/status').reply(200, response)
+
+      const status = await api.natStatus()
+      expect(status.status).toEqual('failure')
+      expect(status.error).toEqual('mock error')
+    })
+
+    it('returns error when status is missing', async () => {
+      const response = {}
+      mock.onGet('nat/status').reply(200, response)
+
+      expect(api.natStatus()).rejects.toHaveProperty('message', 'NatStatusDTO: status is not provided')
+    })
+
+    it('returns error when error has wrong type', async () => {
+      const response = {
+        status: 'failure',
+        error: 5
+      }
+      mock.onGet('nat/status').reply(200, response)
+
+      expect(api.natStatus()).rejects.toHaveProperty('message', 'NatStatusDTO: error should be \"string\"')
     })
   })
 
