@@ -24,6 +24,7 @@ import { ConsumerLocationDTO } from './dto/consumer-location'
 import { IdentityDTO } from './dto/identity'
 import { IdentityPayoutDTO } from './dto/identity-payout'
 import { IdentityRegistrationDTO } from './dto/identity-registration/identity-registration'
+import { NatStatusDTO } from './dto/nat-status-dto'
 import { NodeHealthcheckDTO } from './dto/node-healthcheck'
 import { ProposalDTO } from './dto/proposal'
 import { ConnectionRequest } from './dto/query/connection-request'
@@ -36,6 +37,7 @@ import { ServiceSessionDTO } from './dto/service-session'
 
 export interface TequilapiClient {
   healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
+  natStatus (): Promise<NatStatusDTO>,
   stop (): Promise<void>,
   location (timeout?: number): Promise<ConsumerLocationDTO>,
 
