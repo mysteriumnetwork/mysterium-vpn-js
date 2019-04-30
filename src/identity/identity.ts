@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Logger } from './logger'
-import TequilapiClientFactory, { TEQUILAPI_URL } from './tequilapi-client-factory'
+import { validate } from '../fmt/validation'
 
-export * from './access-policy'
-export * from './connection'
-export * from './consumer'
-export * from './daemon'
-export * from './fmt'
-export * from './func'
-export * from './http'
-export * from './identity'
-export * from './metric'
-export * from './nat'
-export * from './proposal'
-export * from './provider'
+export interface IdentityDTO {
+  id: string
+}
 
-export { Logger, TequilapiClientFactory, TEQUILAPI_URL }
+export function parseIdentityDTO (data: any): IdentityDTO {
+  validate('IdentityDTO', data, { name: 'id', type: 'string' })
+  return { id: data.id }
+}

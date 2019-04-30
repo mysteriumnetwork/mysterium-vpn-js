@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../validation'
-
-export interface IdentityDTO {
-  id: string
-}
-
-export function parseIdentityDTO (data: any): IdentityDTO {
-  validate('IdentityDTO', data, { name: 'id', type: 'string' })
-  return { id: data.id }
-}
+export * from './node-build-info'
+export * from './node-healthcheck'

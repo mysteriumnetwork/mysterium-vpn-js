@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateMultiple } from '../validation'
-import { parseProposalDTO, ProposalDTO } from './proposal'
+import { validateMultiple } from '../fmt/validation'
+import { parseProposalDTO, ProposalDTO } from '../proposal'
 import { ServiceStatus } from './service-status'
 
 export interface ServiceInfoDTO {

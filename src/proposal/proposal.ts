@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateMultiple } from '../validation'
-import { MetricsDTO } from './metrics-dto'
-import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from './service-definition'
+import { validateMultiple } from '../fmt/validation'
+import { MetricsDTO } from '../metric/metrics-dto'
+import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from '../provider/service-definition'
 
 export interface ProposalDTO {
   id: number,

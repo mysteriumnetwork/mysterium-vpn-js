@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,26 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate, validateMultiple } from '../validation'
+import { validateMultiple } from '../fmt/validation'
 
-export interface ServiceSessionDTO {
-  id: string,
-  consumerId: string
+export interface ConnectionStatisticsDTO {
+  duration: number,
+  bytesReceived: number,
+  bytesSent: number
 }
 
-export function parseServiceSessionDTO (data: any): ServiceSessionDTO {
-  validateMultiple('ServiceSessionDTO', data, [
-    { name: 'id', type: 'string' },
-    { name: 'consumerId', type: 'string' }
+export function parseConnectionStatisticsDTO (data: any): ConnectionStatisticsDTO {
+  validateMultiple('ConnectionStatisticsDTO', data, [
+    { name: 'duration', type: 'number' },
+    { name: 'bytesReceived', type: 'number' },
+    { name: 'bytesSent', type: 'number' }
   ])
+
   return {
-    id: data.id,
-    consumerId: data.consumerId
+    duration: data.duration,
+    bytesReceived: data.bytesReceived,
+    bytesSent: data.bytesSent
   }
-}
-
-export function parseServiceSessionListDTO (responseData: any): ServiceSessionDTO[] {
-  validate('ServiceSessionDTO[]', responseData, { name: 'sessions', type: 'array' })
-
-  return responseData.sessions.map(parseServiceSessionDTO)
 }

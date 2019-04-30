@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,17 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../validation'
-import { parseProposalDTO, ProposalDTO } from './proposal'
-
-/**
- * Used only as an intermediate result - is not exposed to clients.
- */
-interface ProposalsResponseDTO {
-  proposals: ProposalDTO[]
-}
-
-export function parseProposalsResponseDTO (responseData: any): ProposalsResponseDTO {
-  validate('ProposalsResponseDTO', responseData, { name: 'proposals', type: 'array' })
-  return { proposals: responseData.proposals.map(parseProposalDTO) }
-}
+export * from './proposal'
+export * from './proposals-query'
+export * from './proposals-query-options'
+export * from './proposals-response'

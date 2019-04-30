@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate, validateMultiple } from '../validation'
+import { validate, validateMultiple } from '../fmt/validation'
 
 interface AccessRule {
   type: string,

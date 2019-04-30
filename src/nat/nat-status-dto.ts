@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import TequilapiClientFactory, { TEQUILAPI_URL } from './tequilapi-client-factory'
+import { validate } from '../fmt/validation'
 
-export default TequilapiClientFactory
-export { TEQUILAPI_URL }
+export interface NatStatusDTO {
+  status: string
+  error?: string
+}
+
+export function parseNatStatusResponse (data: any): NatStatusDTO {
+  validate('NatStatusDTO', data, { name: 'status', type: 'string' })
+  if (data.error) {
+    validate('NatStatusDTO', data, { name: 'error', type: 'string' })
+  }
+  return { status: data.status, error: data.error }
+}

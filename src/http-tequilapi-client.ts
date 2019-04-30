@@ -15,33 +15,49 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { HttpInterface } from './adapters/interface'
-import ProposalsQuery from './adapters/proposals-query'
-import { TequilapiClient } from './client'
-import { AccessPolicyDTO, parseAccessPoliciesDTO } from './dto/access-policies'
-import { ConnectionIPDTO, parseConnectionIPDTO } from './dto/connection-ip'
-import { ConnectionSessionDTO, validateSession } from './dto/connection-session'
-import { ConnectionStatisticsDTO, parseConnectionStatisticsDTO } from './dto/connection-statistics'
-import { ConnectionStatusDTO, parseConnectionStatusDTO } from './dto/connection-status-dto'
-import { ConsumerLocationDTO, parseConsumerLocationDTO } from './dto/consumer-location'
-import { parseIdentitiesResponseDTO } from './dto/identities-response'
-import { IdentityDTO, parseIdentityDTO } from './dto/identity'
-import { IdentityPayoutDTO, parseIdentityPayoutDTO } from './dto/identity-payout'
-import {
+import { HttpInterface, TIMEOUT_DISABLED } from './http'
+import ProposalsQuery from './proposal/proposals-query'
+import { AccessPolicyDTO, parseAccessPoliciesDTO } from './access-policy'
+import { ConnectionRequest, ConnectionIPDTO, parseConnectionIPDTO, ConnectionSessionDTO, validateSession, ConnectionStatisticsDTO, parseConnectionStatisticsDTO, ConnectionStatusDTO, parseConnectionStatusDTO } from './connection'
+import { ConsumerLocationDTO, parseConsumerLocationDTO } from './consumer'
+import { IdentityDTO, parseIdentityDTO, parseIdentitiesResponseDTO, IdentityPayoutDTO, parseIdentityPayoutDTO,
   IdentityRegistrationDTO,
-  parseIdentityRegistrationDTO
-} from './dto/identity-registration/identity-registration'
-import { NatStatusDTO, parseNatStatusResponse } from './dto/nat-status-dto'
-import { NodeHealthcheckDTO, parseHealthcheckResponse } from './dto/node-healthcheck'
-import { ProposalDTO } from './dto/proposal'
-import { parseProposalsResponseDTO } from './dto/proposals-response'
-import { ConnectionRequest } from './dto/query/connection-request'
-import { ProposalQueryOptions } from './dto/query/proposals-query-options'
-import { parseServiceInfoDTO, ServiceInfoDTO } from './dto/service-info'
-import { parseServiceListDTO } from './dto/service-list'
-import { ServiceRequest } from './dto/service-request'
-import { parseServiceSessionListDTO, ServiceSessionDTO } from './dto/service-session'
-import { TIMEOUT_DISABLED } from './timeouts'
+  parseIdentityRegistrationDTO } from './identity'
+import { NatStatusDTO, parseNatStatusResponse } from './nat'
+import { NodeHealthcheckDTO, parseHealthcheckResponse } from './daemon'
+import { ProposalDTO, parseProposalsResponseDTO, ProposalQueryOptions } from './proposal'
+import { parseServiceInfoDTO, ServiceInfoDTO, parseServiceListDTO, ServiceRequest, parseServiceSessionListDTO, ServiceSessionDTO } from './provider'
+
+export interface TequilapiClient {
+  healthCheck (timeout?: number): Promise<NodeHealthcheckDTO>,
+  natStatus (): Promise<NatStatusDTO>,
+  stop (): Promise<void>,
+  location (timeout?: number): Promise<ConsumerLocationDTO>,
+
+  identitiesList (): Promise<IdentityDTO[]>,
+  identityCreate (passphrase: string): Promise<IdentityDTO>,
+  identityUnlock (id: string, passphrase: string, timeout?: number): Promise<void>,
+  identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
+  identityPayout (id: string): Promise<IdentityPayoutDTO>,
+  updateIdentityPayout (id: string, ethAddress: string): Promise<void>,
+
+  findProposals (options?: ProposalQueryOptions): Promise<ProposalDTO[]>,
+
+  connectionCreate (request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusDTO>,
+  connectionStatus (): Promise<ConnectionStatusDTO>,
+  connectionCancel (): Promise<void>,
+  connectionIP (timeout?: number): Promise<ConnectionIPDTO>,
+  connectionStatistics (): Promise<ConnectionStatisticsDTO>,
+  connectionSessions (): Promise<ConnectionSessionDTO[]>,
+
+  serviceList (): Promise<ServiceInfoDTO[]>,
+  serviceGet (serviceId: string): Promise<ServiceInfoDTO>,
+  serviceStart (request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>,
+  serviceStop (serviceId: string): Promise<void>,
+  serviceSessions (): Promise<ServiceSessionDTO[]>,
+
+  accessPolicies (): Promise<AccessPolicyDTO[]>
+}
 
 export class HttpTequilapiClient implements TequilapiClient {
   public http: HttpInterface

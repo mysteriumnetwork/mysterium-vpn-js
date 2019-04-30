@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateMultiple } from '../validation'
+import { validateMultiple } from '../fmt/validation'
 
 export interface ConnectionSessionDTO {
   sessionId: string,

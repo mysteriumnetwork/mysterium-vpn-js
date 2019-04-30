@@ -16,11 +16,10 @@
  */
 
 import axios from 'axios'
-import AxiosAdapter from './adapters/axios-adapter'
-import { HttpInterface } from './adapters/interface'
-import { TequilapiClient } from './client'
-import { HttpTequilapiClient } from './http-tequilapi-client'
-import { TIMEOUT_DEFAULT } from './timeouts'
+import AxiosAdapter from './http/axios-adapter'
+import { HttpInterface } from './http'
+import { HttpTequilapiClient, TequilapiClient } from './http-tequilapi-client'
+import { TIMEOUT_DEFAULT } from './http'
 
 const TEQUILAPI_URL: string = 'http://127.0.0.1:4050'
 

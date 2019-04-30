@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ProposalQueryOptions } from '../dto/query/proposals-query-options'
-import { HttpQueryParams } from './interface'
+import { ProposalQueryOptions } from './proposals-query-options'
+import { HttpQueryParams } from '../http/interface'
 
 export default class ProposalsQuery {
   public options?: ProposalQueryOptions

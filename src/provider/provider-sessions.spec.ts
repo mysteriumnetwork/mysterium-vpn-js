@@ -16,7 +16,7 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
+import { ServiceSessionDTO } from './service-session'
 import { EmptyTequilapiClientMock } from '../test-utils/empty-tequilapi-client-mock'
 import { nextTick } from '../test-utils/utils'
 import { ProviderSessions } from './provider-sessions'

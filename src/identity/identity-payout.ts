@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,18 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateMultiple } from '../validation'
+import { validate } from '../fmt/validation'
 
-export interface ConnectCountDTO {
-  success: number,
-  fail: number,
-  timeout: number
+export interface IdentityPayoutDTO {
+  ethAddress: string
 }
 
-export function parseConnectionCountDTO (data: any): ConnectCountDTO {
-  validateMultiple('ConnectCountDTO', data, [
-    { name: 'success', type: 'number' },
-    { name: 'fail', type: 'number' }
-  ])
-  return { success: 1, fail: 2, timeout: 3 }
+export function parseIdentityPayoutDTO (data: any): IdentityPayoutDTO {
+  validate('IdentityPayoutDTO', data, { name: 'eth_address', type: 'string' })
+  return { ethAddress: data.eth_address }
 }

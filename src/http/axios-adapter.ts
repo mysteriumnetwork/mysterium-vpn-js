@@ -17,7 +17,7 @@
 
 import { AxiosInstance } from 'axios'
 import TequilapiError from '../tequilapi-error'
-import { TIMEOUT_DEFAULT } from '../timeouts'
+import { TIMEOUT_DEFAULT } from './timeouts'
 import { HttpInterface, HttpQueryParams } from './interface'
 
 export default class AxiosAdapter implements HttpInterface {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Logger } from './logger'
-import TequilapiClientFactory, { TEQUILAPI_URL } from './tequilapi-client-factory'
+import { validateMultiple } from '../fmt/validation'
 
-export * from './access-policy'
-export * from './connection'
-export * from './consumer'
-export * from './daemon'
-export * from './fmt'
-export * from './func'
-export * from './http'
-export * from './identity'
-export * from './metric'
-export * from './nat'
-export * from './proposal'
-export * from './provider'
+export interface NodeBuildInfoDTO {
+  commit: string,
+  branch: string,
+  buildNumber: string
+}
 
-export { Logger, TequilapiClientFactory, TEQUILAPI_URL }
+export function parseNodeBuildInfoDTO (data: any) {
+  validateMultiple('NodeBuildInfoDTO', data, [
+    { name: 'commit', type: 'string' },
+    { name: 'branch', type: 'string' },
+    { name: 'buildNumber', type: 'string' }
+  ])
+  return {
+    commit: data.commit,
+    branch: data.branch,
+    buildNumber: data.buildNumber
+  }
+}

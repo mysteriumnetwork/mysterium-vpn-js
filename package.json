@@ -32,7 +32,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "filesize": "^4.1.2",
-    "mysterium-tequilapi": "^0.8.1"
+    "axios": "^0.18.0",
+    "filesize": "^4.1.2"
   }
 }

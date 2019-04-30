@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,19 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../validation'
-import { ConnectionStatus } from './connection-status'
-
-export interface ConnectionStatusDTO {
-  status: ConnectionStatus,
-  sessionId?: string
-}
-
-export function parseConnectionStatusDTO (data: any) {
-  // TODO: validate that status has value from ConnectionStatus enum
-  validate('ConnectionStatusDTO', data, { name: 'status', type: 'string' })
-  return {
-    status: data.status,
-    sessionId: data.sessionId
-  }
-}
+export * from './get-payment-link'
+export * from './identities-response'
+export * from './identity'
+export * from './identity-payout'
+export * from './identity-proof'
+export * from './identity-registration'
+export * from './public-key'
+export * from './signature'

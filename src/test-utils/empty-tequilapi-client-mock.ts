@@ -17,23 +17,15 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
-import { AccessPolicyDTO } from 'mysterium-tequilapi/lib/dto/access-policies'
-import { ConnectionIPDTO } from 'mysterium-tequilapi/lib/dto/connection-ip'
-import { ConnectionSessionDTO } from 'mysterium-tequilapi/lib/dto/connection-session'
-import { ConnectionStatisticsDTO } from 'mysterium-tequilapi/lib/dto/connection-statistics'
-import { ConnectionStatusDTO } from 'mysterium-tequilapi/lib/dto/connection-status-dto'
-import { ConsumerLocationDTO } from 'mysterium-tequilapi/lib/dto/consumer-location'
-import { IdentityDTO } from 'mysterium-tequilapi/lib/dto/identity'
-import { IdentityPayoutDTO } from 'mysterium-tequilapi/lib/dto/identity-payout'
-import { IdentityRegistrationDTO } from 'mysterium-tequilapi/lib/dto/identity-registration/identity-registration'
-import { NodeHealthcheckDTO } from 'mysterium-tequilapi/lib/dto/node-healthcheck'
-import { ProposalDTO } from 'mysterium-tequilapi/lib/dto/proposal'
-import { ConnectionRequest } from 'mysterium-tequilapi/lib/dto/query/connection-request'
-import { ProposalQueryOptions } from 'mysterium-tequilapi/lib/dto/query/proposals-query-options'
-import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
-import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
-import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
+import { TequilapiClient } from '../http-tequilapi-client'
+import { AccessPolicyDTO } from '../access-policy'
+import { ConnectionIPDTO, ConnectionSessionDTO, ConnectionStatisticsDTO, ConnectionStatusDTO, ConnectionRequest } from '../connection'
+import { ConsumerLocationDTO } from '../consumer'
+import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
+import { NodeHealthcheckDTO } from '../daemon'
+import { ProposalDTO, ProposalQueryOptions } from '../proposal'
+import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
+import { NatStatusDTO } from '../nat'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -93,6 +85,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
 
   public location(timeout?: number): Promise<ConsumerLocationDTO> {
     throw Error('Not implemented')
+  }
+
+  public natStatus(): Promise<NatStatusDTO> {
+    throw new Error('Not implemented')
   }
 
   public serviceGet(serviceId: string): Promise<ServiceInfoDTO> {

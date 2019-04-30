@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,23 +15,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateMultiple } from '../validation'
-
-export interface NodeBuildInfoDTO {
-  commit: string,
-  branch: string,
-  buildNumber: string
-}
-
-export function parseNodeBuildInfoDTO (data: any) {
-  validateMultiple('NodeBuildInfoDTO', data, [
-    { name: 'commit', type: 'string' },
-    { name: 'branch', type: 'string' },
-    { name: 'buildNumber', type: 'string' }
-  ])
-  return {
-    commit: data.commit,
-    branch: data.branch,
-    buildNumber: data.buildNumber
-  }
-}
+export * from './nat-status-dto'
+export * from './nat-status'

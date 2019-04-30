@@ -16,10 +16,10 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
-import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
-import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
-import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
+import { ServiceInfoDTO } from './service-info'
+import { ServiceRequest } from './service-request'
+import { ServiceStatus as ServiceStatusDTO } from './service-status'
+import TequilapiError from '../tequilapi-error'
 import { EmptyTequilapiClientMock } from '../test-utils/empty-tequilapi-client-mock'
 import { nextTick } from '../test-utils/utils'
 import { ProviderService } from './provider-service'

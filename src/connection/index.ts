@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,16 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectCountDTO, parseConnectionCountDTO } from './connect-count-dto'
-
-export interface MetricsDTO {
-  connectCount?: ConnectCountDTO
-}
-
-export function parseMetricsDTO (data: any): MetricsDTO {
-  try {
-    return { connectCount: parseConnectionCountDTO(data.connectCount) }
-  } catch (err) {
-    return { connectCount: undefined }
-  }
-}
+export * from './connect-count-dto'
+export * from './connection-ip'
+export * from './connection-request'
+export * from './connection-session'
+export * from './connection-statistics'
+export * from './connection-status'
+export * from './connection-status-dto'
