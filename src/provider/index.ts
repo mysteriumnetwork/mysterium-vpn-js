@@ -29,6 +29,7 @@ export * from './service-info'
 export * from './service-list'
 export * from './service-request'
 export * from './service-session'
+export * from './service-status'
 
 export {
   Metrics,
