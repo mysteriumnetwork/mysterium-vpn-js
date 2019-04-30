@@ -1,8 +1,12 @@
 src
+utils
+
+.eslintignore
+.eslintrc.js
+.prettierrc.js
 .travis.yml
 jest.config.js
+tsconfig.build.json
 tsconfig.json
-tslint.json
+
 .idea
-utils
-lib/tests
