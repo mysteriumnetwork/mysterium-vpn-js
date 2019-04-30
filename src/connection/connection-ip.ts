@@ -19,6 +19,6 @@ export interface ConnectionIPDTO {
   ip?: string
 }
 
-export function parseConnectionIPDTO (data: any): ConnectionIPDTO {
+export function parseConnectionIPDTO(data: any): ConnectionIPDTO {
   return { ip: data.ip }
 }

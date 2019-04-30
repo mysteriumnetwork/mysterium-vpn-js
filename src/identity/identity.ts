@@ -21,7 +21,7 @@ export interface IdentityDTO {
   id: string
 }
 
-export function parseIdentityDTO (data: any): IdentityDTO {
+export function parseIdentityDTO(data: any): IdentityDTO {
   validate('IdentityDTO', data, { name: 'id', type: 'string' })
   return { id: data.id }
 }

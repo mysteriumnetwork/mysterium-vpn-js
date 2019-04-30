@@ -19,7 +19,13 @@
 
 import { TequilapiClient } from '../http-tequilapi-client'
 import { AccessPolicyDTO } from '../access-policy'
-import { ConnectionIPDTO, ConnectionSessionDTO, ConnectionStatisticsDTO, ConnectionStatusDTO, ConnectionRequest } from '../connection'
+import {
+  ConnectionIPDTO,
+  ConnectionSessionDTO,
+  ConnectionStatisticsDTO,
+  ConnectionStatusDTO,
+  ConnectionRequest,
+} from '../connection'
 import { ConsumerLocationDTO } from '../consumer'
 import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
 import { NodeHealthcheckDTO } from '../daemon'

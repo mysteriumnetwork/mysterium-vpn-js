@@ -21,7 +21,7 @@ export interface IdentityPayoutDTO {
   ethAddress: string
 }
 
-export function parseIdentityPayoutDTO (data: any): IdentityPayoutDTO {
+export function parseIdentityPayoutDTO(data: any): IdentityPayoutDTO {
   validate('IdentityPayoutDTO', data, { name: 'eth_address', type: 'string' })
   return { ethAddress: data.eth_address }
 }

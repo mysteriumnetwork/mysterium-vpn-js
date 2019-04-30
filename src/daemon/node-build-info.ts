@@ -18,20 +18,20 @@
 import { validateMultiple } from '../fmt/validation'
 
 export interface NodeBuildInfoDTO {
-  commit: string,
-  branch: string,
+  commit: string
+  branch: string
   buildNumber: string
 }
 
-export function parseNodeBuildInfoDTO (data: any) {
+export function parseNodeBuildInfoDTO(data: any): NodeBuildInfoDTO {
   validateMultiple('NodeBuildInfoDTO', data, [
     { name: 'commit', type: 'string' },
     { name: 'branch', type: 'string' },
-    { name: 'buildNumber', type: 'string' }
+    { name: 'buildNumber', type: 'string' },
   ])
   return {
     commit: data.commit,
     branch: data.branch,
-    buildNumber: data.buildNumber
+    buildNumber: data.buildNumber,
   }
 }

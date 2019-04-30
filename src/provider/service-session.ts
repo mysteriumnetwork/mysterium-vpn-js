@@ -18,22 +18,22 @@
 import { validate, validateMultiple } from '../fmt/validation'
 
 export interface ServiceSessionDTO {
-  id: string,
+  id: string
   consumerId: string
 }
 
-export function parseServiceSessionDTO (data: any): ServiceSessionDTO {
+export function parseServiceSessionDTO(data: any): ServiceSessionDTO {
   validateMultiple('ServiceSessionDTO', data, [
     { name: 'id', type: 'string' },
-    { name: 'consumerId', type: 'string' }
+    { name: 'consumerId', type: 'string' },
   ])
   return {
     id: data.id,
-    consumerId: data.consumerId
+    consumerId: data.consumerId,
   }
 }
 
-export function parseServiceSessionListDTO (responseData: any): ServiceSessionDTO[] {
+export function parseServiceSessionListDTO(responseData: any): ServiceSessionDTO[] {
   validate('ServiceSessionDTO[]', responseData, { name: 'sessions', type: 'array' })
 
   return responseData.sessions.map(parseServiceSessionDTO)

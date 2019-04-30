@@ -18,9 +18,9 @@
 import { NodeBuildInfoDTO, parseNodeBuildInfoDTO } from './node-build-info'
 
 export interface NodeHealthcheckDTO {
-  uptime: string,
-  process: number,
-  version: string,
+  uptime: string
+  process: number
+  version: string
   buildInfo: NodeBuildInfoDTO
 }
 
@@ -29,7 +29,7 @@ export interface NodeHealthcheckDTO {
  * @param data to be conveted
  * @returns converted type
  */
-export function parseHealthcheckResponse (data: any): NodeHealthcheckDTO {
+export function parseHealthcheckResponse(data: any): NodeHealthcheckDTO {
   const errorMessage = `Unable to parse healthcheck response: ${JSON.stringify(data)}`
   if (data == null || typeof data !== 'object') {
     throw new Error(errorMessage)

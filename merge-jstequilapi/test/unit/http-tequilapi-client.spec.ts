@@ -42,13 +42,13 @@ describe('HttpTequilapiClient', () => {
       const buildInfo = {
         commit: '0bcccc',
         branch: 'master',
-        buildNumber: '001'
+        buildNumber: '001',
       }
       const response = {
         uptime: '1h10m',
         process: 1111,
         version: '0.0.6',
-        buildInfo
+        buildInfo,
       }
       mock.onGet('healthcheck').reply(200, response)
 
@@ -65,29 +65,33 @@ describe('HttpTequilapiClient', () => {
         version: {
           commit: '0bcccc',
           branch: 'master',
-          buildNumber: '001'
-        }
+          buildNumber: '001',
+        },
       }
       mock.onGet('healthcheck').reply(200, response)
 
-      expect(api.healthCheck()).rejects.toEqual(new Error(
-        'Unable to parse healthcheck response: ' +
-        '{"uptime":"1h10m","process":1111,"version":{"commit":"0bcccc","branch":"master","buildNumber":"001"}}'
-      ))
+      expect(api.healthCheck()).rejects.toEqual(
+        new Error(
+          'Unable to parse healthcheck response: ' +
+            '{"uptime":"1h10m","process":1111,"version":{"commit":"0bcccc","branch":"master","buildNumber":"001"}}'
+        )
+      )
     })
 
     it('handles error', () => {
       mock.onGet('/healthcheck').reply(500)
 
-      expect(api.healthCheck())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="healthcheck")')
+      expect(api.healthCheck()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="healthcheck")'
+      )
     })
   })
 
   describe('natStatus()', () => {
     it('returns successful response', async () => {
       const response = {
-        status: 'success'
+        status: 'success',
       }
       mock.onGet('nat/status').reply(200, response)
 
@@ -99,7 +103,7 @@ describe('HttpTequilapiClient', () => {
     it('returns failure response with error', async () => {
       const response = {
         status: 'failure',
-        error: 'mock error'
+        error: 'mock error',
       }
       mock.onGet('nat/status').reply(200, response)
 
@@ -112,17 +116,23 @@ describe('HttpTequilapiClient', () => {
       const response = {}
       mock.onGet('nat/status').reply(200, response)
 
-      expect(api.natStatus()).rejects.toHaveProperty('message', 'NatStatusDTO: status is not provided')
+      expect(api.natStatus()).rejects.toHaveProperty(
+        'message',
+        'NatStatusDTO: status is not provided'
+      )
     })
 
     it('returns error when error has wrong type', async () => {
       const response = {
         status: 'failure',
-        error: 5
+        error: 5,
       }
       mock.onGet('nat/status').reply(200, response)
 
-      expect(api.natStatus()).rejects.toHaveProperty('message', 'NatStatusDTO: error should be \"string\"')
+      expect(api.natStatus()).rejects.toHaveProperty(
+        'message',
+        'NatStatusDTO: error should be "string"'
+      )
     })
   })
 
@@ -138,7 +148,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onPost('stop').reply(500)
 
-      expect(api.stop()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="stop")')
+      expect(api.stop()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="stop")'
+      )
     })
   })
 
@@ -151,7 +164,8 @@ describe('HttpTequilapiClient', () => {
         continent: 'EU',
         country: 'LT',
         city: 'Vilnius',
-        node_type: 'residential'
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        node_type: 'residential',
       }
 
       mock.onGet('location').reply(200, response)
@@ -172,34 +186,40 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('location').reply(500)
 
-      expect(api.location()).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="location")')
+      expect(api.location()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="location")'
+      )
     })
   })
 
   describe('findProposals()', () => {
     it('returns proposal DTOs', async () => {
       const response = {
-        proposals: [{
-          id: 1,
-          providerId: '0x0',
-          serviceType: 'openvpn',
-          serviceDefinition: {
-            locationOriginate: {
-              asn: '',
-              country: 'NL'
-            }
-          }
-        }, {
-          id: 1,
-          providerId: '0x1',
-          serviceType: 'openvpn',
-          serviceDefinition: {
-            locationOriginate: {
-              asn: '',
-              country: 'LT'
-            }
-          }
-        }]
+        proposals: [
+          {
+            id: 1,
+            providerId: '0x0',
+            serviceType: 'openvpn',
+            serviceDefinition: {
+              locationOriginate: {
+                asn: '',
+                country: 'NL',
+              },
+            },
+          },
+          {
+            id: 1,
+            providerId: '0x1',
+            serviceType: 'openvpn',
+            serviceDefinition: {
+              locationOriginate: {
+                asn: '',
+                country: 'LT',
+              },
+            },
+          },
+        ],
       }
       mock.onGet('proposals').reply(200, response)
 
@@ -211,24 +231,26 @@ describe('HttpTequilapiClient', () => {
 
     it('fetches connect counts when option is given', async () => {
       const response = {
-        proposals: [{
-          id: 1,
-          providerId: '0x0',
-          serviceType: 'openvpn',
-          serviceDefinition: {
-            locationOriginate: {
-              asn: '',
-              country: 'NL'
-            }
+        proposals: [
+          {
+            id: 1,
+            providerId: '0x0',
+            serviceType: 'openvpn',
+            serviceDefinition: {
+              locationOriginate: {
+                asn: '',
+                country: 'NL',
+              },
+            },
+            metrics: {
+              connectCount: {
+                success: 1,
+                fail: 1,
+                ping: 1,
+              },
+            },
           },
-          metrics: {
-            connectCount: {
-              success: 1,
-              fail: 1,
-              ping: 1
-            }
-          }
-        }]
+        ],
       }
       mock.onGet('proposals', { params: { fetchConnectCounts: true } }).reply(200, response)
       const proposals = await api.findProposals({ fetchConnectCounts: true })
@@ -238,18 +260,17 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('proposals').reply(500)
 
-      expect(api.findProposals())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="proposals")')
+      expect(api.findProposals()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="proposals")'
+      )
     })
   })
 
   describe('identitiesList()', () => {
     it('returns identity DTOs', async () => {
       const response = {
-        identities: [
-          { id: '0x1000FACE' },
-          { id: '0x2000FACE' }
-        ]
+        identities: [{ id: '0x1000FACE' }, { id: '0x2000FACE' }],
       }
       mock.onGet('identities').reply(200, response)
 
@@ -262,8 +283,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('identities').reply(500)
 
-      expect(api.identitiesList())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="identities")')
+      expect(api.identitiesList()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities")'
+      )
     })
   })
 
@@ -279,8 +302,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onPost('identities').reply(500)
 
-      expect(api.identityCreate('test'))
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="identities")')
+      expect(api.identityCreate('test')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities")'
+      )
     })
   })
 
@@ -300,8 +325,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onPut('identities/0x0000bEEF/unlock').reply(500)
 
-      expect(api.identityUnlock('0x0000bEEF', 'test'))
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="identities/0x0000bEEF/unlock")')
+      expect(api.identityUnlock('0x0000bEEF', 'test')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities/0x0000bEEF/unlock")'
+      )
     })
   })
 
@@ -311,13 +338,13 @@ describe('HttpTequilapiClient', () => {
         registered: false,
         publicKey: {
           part1: '0xfb22c62ed2ddc65eb2994a8af5b1094b239aacc04a6505fd2bc581f55547175a',
-          part2: '0xef3156a0d95c3832b191c03c272a5900e3e30484b9c8a65a0387f1f8d436867f'
+          part2: '0xef3156a0d95c3832b191c03c272a5900e3e30484b9c8a65a0387f1f8d436867f',
         },
         signature: {
           r: '0xb48616d33aba008f687d500cac9e9f2ca2b3c275fab6fc21318b81e09571d993',
           s: '0x49c0d7e1445389dbc805275f0aeb0b7f23e50e26a772b5a3bc4b2cc39f1bb3aa',
-          v: 28
-        }
+          v: 28,
+        },
       }
       mock.onGet('identities/0x0000bEEF/registration').reply(200, response)
 
@@ -328,9 +355,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('identities/0x0000bEEF/registration').reply(500)
 
-      expect(api.identityRegistration('0x0000bEEF'))
-        .rejects
-        .toHaveProperty('message', 'Request failed with status code 500 (path="identities/0x0000bEEF/registration")')
+      expect(api.identityRegistration('0x0000bEEF')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities/0x0000bEEF/registration")'
+      )
     })
   })
 
@@ -344,14 +372,18 @@ describe('HttpTequilapiClient', () => {
 
     it('returns error when api does not return body', async () => {
       mock.onGet('identities/test-id/payout').reply(200)
-      expect(api.identityPayout('test-id'))
-        .rejects.toHaveProperty('message', 'Identity payout response body is missing')
+      expect(api.identityPayout('test-id')).rejects.toHaveProperty(
+        'message',
+        'Identity payout response body is missing'
+      )
     })
 
     it('returns error when eth address is missing', async () => {
       mock.onGet('identities/test-id/payout').reply(200, {})
-      expect(api.identityPayout('test-id'))
-        .rejects.toHaveProperty('message', 'IdentityPayoutDTO: eth_address is not provided')
+      expect(api.identityPayout('test-id')).rejects.toHaveProperty(
+        'message',
+        'IdentityPayoutDTO: eth_address is not provided'
+      )
     })
   })
 
@@ -367,11 +399,11 @@ describe('HttpTequilapiClient', () => {
       const expectedRequest = {
         consumerId: '0x1000FACE',
         providerId: '0x2000FACE',
-        serviceType: 'openvpn'
+        serviceType: 'openvpn',
       }
       const response = {
         status: 'Connected',
-        sessionId: 'My-super-session'
+        sessionId: 'My-super-session',
       }
       mock.onPut('connection', expectedRequest).reply(200, response)
 
@@ -383,8 +415,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onPut('connection').reply(500)
       const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
-      expect(api.connectionCreate(request))
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection")')
+      expect(api.connectionCreate(request)).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="connection")'
+      )
     })
   })
 
@@ -392,7 +426,7 @@ describe('HttpTequilapiClient', () => {
     it('returns response', async () => {
       const response = {
         status: 'Connected',
-        sessionId: 'My-super-session'
+        sessionId: 'My-super-session',
       }
       mock.onGet('connection').reply(200, response)
 
@@ -403,8 +437,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('connection').reply(500)
 
-      expect(api.connectionStatus())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection")')
+      expect(api.connectionStatus()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="connection")'
+      )
     })
   })
 
@@ -418,8 +454,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onDelete('connection').reply(500)
 
-      expect(api.connectionCancel())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection")')
+      expect(api.connectionCancel()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="connection")'
+      )
     })
   })
 
@@ -435,8 +473,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('connection/ip').reply(500)
 
-      expect(api.connectionIP())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection/ip")')
+      expect(api.connectionIP()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="connection/ip")'
+      )
     })
   })
 
@@ -445,7 +485,7 @@ describe('HttpTequilapiClient', () => {
       const response = {
         duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
-        bytesSent: 123321 // 0.117608 MB
+        bytesSent: 123321, // 0.117608 MB
       }
       mock.onGet('connection/statistics').reply(200, response)
 
@@ -456,8 +496,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('connection/statistics').reply(500)
 
-      expect(api.connectionStatistics())
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection/statistics")')
+      expect(api.connectionStatistics()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="connection/statistics")'
+      )
     })
   })
 
@@ -472,7 +514,7 @@ describe('HttpTequilapiClient', () => {
             dateStarted: '2019-02-14T11:04:15Z',
             duration: 35 * 60,
             bytesSent: 1024,
-            bytesReceived: 6000
+            bytesReceived: 6000,
           },
           {
             sessionId: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
@@ -481,9 +523,9 @@ describe('HttpTequilapiClient', () => {
             dateStarted: '2019-02-14T11:04:15Z',
             duration: 35 * 60,
             bytesSent: 1024,
-            bytesReceived: 6000
-          }
-        ]
+            bytesReceived: 6000,
+          },
+        ],
       }
       mock.onGet('connection-sessions').reply(200, response)
 
@@ -495,9 +537,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('connection-sessions').reply(500)
 
-      expect(
-        api.connectionSessions()
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="connection-sessions")')
+      expect(api.connectionSessions()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="connection-sessions")'
+      )
     })
   })
 
@@ -513,10 +556,10 @@ describe('HttpTequilapiClient', () => {
       serviceType: 'openvpn',
       serviceDefinition: {
         locationOriginate: {
-          country: 'NL'
-        }
-      }
-    }
+          country: 'NL',
+        },
+      },
+    },
   }
   describe('serviceList()', () => {
     it('returns response', async () => {
@@ -530,9 +573,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('services').reply(500)
 
-      expect(
-        api.serviceList()
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
+      expect(api.serviceList()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="services")'
+      )
     })
   })
 
@@ -547,9 +591,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('services/service1').reply(500)
 
-      expect(
-        api.serviceGet('service1')
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services/service1")')
+      expect(api.serviceGet('service1')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="services/service1")'
+      )
     })
   })
 
@@ -559,12 +604,16 @@ describe('HttpTequilapiClient', () => {
         providerId: '0x2000FACE',
         type: 'openvpn',
         accessPolicies: {
-          ids: ['mysterium-verified']
-        }
+          ids: ['mysterium-verified'],
+        },
       }
       mock.onPost('services', expectedRequest).reply(200, serviceObject)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn', accessPolicies: { ids: ['mysterium-verified'] } }
+      const request = {
+        providerId: '0x2000FACE',
+        type: 'openvpn',
+        accessPolicies: { ids: ['mysterium-verified'] },
+      }
       const response = await api.serviceStart(request)
       expect(response).toEqual(serviceObject)
     })
@@ -573,8 +622,10 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('services').reply(500)
 
       const request = { providerId: '0x2000FACE', type: 'openvpn' }
-      expect(api.serviceStart(request))
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services")')
+      expect(api.serviceStart(request)).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="services")'
+      )
     })
   })
 
@@ -589,8 +640,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onDelete('services/service1').reply(500)
 
-      expect(api.serviceStop('service1'))
-        .rejects.toHaveProperty('message', 'Request failed with status code 500 (path="services/service1")')
+      expect(api.serviceStop('service1')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="services/service1")'
+      )
     })
   })
 
@@ -600,13 +653,13 @@ describe('HttpTequilapiClient', () => {
         sessions: [
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
-            consumerId: '0x1000FACE'
+            consumerId: '0x1000FACE',
           },
           {
             id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
-            consumerId: '0x2000FACE'
-          }
-        ]
+            consumerId: '0x2000FACE',
+          },
+        ],
       }
       mock.onGet('service-sessions').reply(200, response)
 
@@ -618,9 +671,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('service-sessions').reply(500)
 
-      expect(
-        api.serviceSessions()
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="service-sessions")')
+      expect(api.serviceSessions()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="service-sessions")'
+      )
     })
   })
 
@@ -635,9 +689,9 @@ describe('HttpTequilapiClient', () => {
             allow: [
               {
                 type: 'identity',
-                value: '0x123'
-              }
-            ]
+                value: '0x123',
+              },
+            ],
           },
           {
             id: 'mysterium #2',
@@ -646,11 +700,11 @@ describe('HttpTequilapiClient', () => {
             allow: [
               {
                 type: 'identity',
-                value: '0x123'
-              }
-            ]
-          }
-        ]
+                value: '0x123',
+              },
+            ],
+          },
+        ],
       }
 
       mock.onGet('access-policies').reply(200, response)
@@ -663,9 +717,10 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onGet('access-policies').reply(500)
 
-      expect(
-        api.accessPolicies()
-      ).rejects.toHaveProperty('message', 'Request failed with status code 500 (path="access-policies")')
+      expect(api.accessPolicies()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="access-policies")'
+      )
     })
   })
 })

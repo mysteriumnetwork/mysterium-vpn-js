@@ -22,7 +22,7 @@ describe('TequilapiClient DTO', () => {
     it('sets properties with full structure', async () => {
       const location = parseLocationDTO({
         asn: '',
-        country: 'LT'
+        country: 'LT',
       })
 
       expect(location.country).toEqual('LT')

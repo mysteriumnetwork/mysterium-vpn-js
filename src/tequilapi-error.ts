@@ -16,9 +16,19 @@
  */
 
 export interface AxiosError {
-  message: string,
-  response?: { status: number },
+  message: string
+  response?: { status: number }
   code?: string
+}
+
+const errorCodes = {
+  CONNECTION_ABORTED_ERROR_CODE: 'ECONNABORTED',
+}
+
+const httpResponseCodes = {
+  CLIENT_CLOSED_REQUEST: 499,
+  SERVICE_UNAVAILABLE: 503,
+  NOT_FOUND: 404,
 }
 
 export default class TequilapiError extends Error {
@@ -26,50 +36,40 @@ export default class TequilapiError extends Error {
 
   public _originalError: AxiosError
 
-  constructor (originalError: Error, path: string) {
+  public constructor(originalError: Error, path: string) {
     super(`${originalError.message} (path="${path}")`)
 
     this._originalError = originalError
   }
 
-  get isTequilapiError (): boolean {
+  public get isTequilapiError(): boolean {
     return true
   }
 
-  get code (): string | undefined {
+  public get code(): string | undefined {
     return this._originalError.code
   }
 
-  get isTimeoutError (): boolean {
+  public get isTimeoutError(): boolean {
     return this.code === errorCodes.CONNECTION_ABORTED_ERROR_CODE
   }
 
-  get isRequestClosedError (): boolean {
+  public get isRequestClosedError(): boolean {
     return this._hasHttpStatus(httpResponseCodes.CLIENT_CLOSED_REQUEST)
   }
 
-  get isServiceUnavailableError (): boolean {
+  public get isServiceUnavailableError(): boolean {
     return this._hasHttpStatus(httpResponseCodes.SERVICE_UNAVAILABLE)
   }
 
-  get isNotFoundError (): boolean {
+  public get isNotFoundError(): boolean {
     return this._hasHttpStatus(httpResponseCodes.NOT_FOUND)
   }
 
-  public _hasHttpStatus (expectedStatus: number): boolean {
+  public _hasHttpStatus(expectedStatus: number): boolean {
     if (!this._originalError.response) {
       return false
     }
     return this._originalError.response.status === expectedStatus
   }
-}
-
-const httpResponseCodes = {
-  CLIENT_CLOSED_REQUEST: 499,
-  SERVICE_UNAVAILABLE: 503,
-  NOT_FOUND: 404
-}
-
-const errorCodes = {
-  CONNECTION_ABORTED_ERROR_CODE: 'ECONNABORTED'
 }

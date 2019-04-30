@@ -19,6 +19,6 @@ export interface LocationDTO {
   country?: string
 }
 
-export function parseLocationDTO (data: any): LocationDTO {
+export function parseLocationDTO(data: any): LocationDTO {
   return { country: data.country }
 }

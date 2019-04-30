@@ -16,16 +16,16 @@
  */
 
 export interface ConsumerLocationDTO {
-  ip?: string,
-  asn: any,
-  isp?: string,
-  continent?: string,
-  country?: string,
-  city?: string,
-  node_type?: string,
+  ip?: string
+  asn: any
+  isp?: string
+  continent?: string
+  country?: string
+  city?: string
+  node_type?: string
 }
 
-export function parseConsumerLocationDTO (data: any): ConsumerLocationDTO {
+export function parseConsumerLocationDTO(data: any): ConsumerLocationDTO {
   return {
     ip: data.ip,
     asn: data.asn,
@@ -33,6 +33,7 @@ export function parseConsumerLocationDTO (data: any): ConsumerLocationDTO {
     continent: data.continent,
     country: data.country,
     city: data.city,
-    node_type: data.node_type
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    node_type: data.node_type,
   }
 }

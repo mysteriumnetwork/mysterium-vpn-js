@@ -21,11 +21,11 @@ import { HttpQueryParams } from '../http/interface'
 export default class ProposalsQuery {
   public options?: ProposalQueryOptions
 
-  constructor (options?: ProposalQueryOptions) {
+  public constructor(options?: ProposalQueryOptions) {
     this.options = options
   }
 
-  public toQueryParams (): HttpQueryParams {
+  public toQueryParams(): HttpQueryParams {
     const queryObj: HttpQueryParams = {}
 
     const options = this.options

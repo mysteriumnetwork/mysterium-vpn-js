@@ -21,10 +21,7 @@ describe('TequilapiClient DTO', () => {
   describe('.parseIdentitiesResponseDTO', () => {
     it('sets properties', async () => {
       const response = parseIdentitiesResponseDTO({
-        identities: [
-          { id: '0x1000FACE' },
-          { id: '0x2000FACE' }
-        ]
+        identities: [{ id: '0x1000FACE' }, { id: '0x2000FACE' }],
       })
 
       expect(response.identities).toHaveLength(2)

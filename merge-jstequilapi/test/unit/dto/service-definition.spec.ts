@@ -22,8 +22,8 @@ describe('TequilapiClient DTO', () => {
     it('sets properties with full structure', async () => {
       const service = parseServiceDefinitionDTO({
         locationOriginate: {
-          country: 'lt'
-        }
+          country: 'lt',
+        },
       })
 
       expect(service.locationOriginate).toEqual({ country: 'lt' })

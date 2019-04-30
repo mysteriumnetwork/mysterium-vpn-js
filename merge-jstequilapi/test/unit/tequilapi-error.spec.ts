@@ -17,14 +17,14 @@
 
 import TequilapiError, { AxiosError } from '../../src/tequilapi-error'
 
-function createTequilapiErrorWithCode (code: string): TequilapiError {
+function createTequilapiErrorWithCode(code: string): TequilapiError {
   const error = new Error('test error')
   const axiosError = error as AxiosError
   axiosError.code = code
   return new TequilapiError(error, 'test-path')
 }
 
-function createTequilapiErrorWithResponseStatus (status: number): TequilapiError {
+function createTequilapiErrorWithResponseStatus(status: number): TequilapiError {
   const error = new Error('test error')
   const axiosError = error as AxiosError
   axiosError.response = { status }
@@ -120,7 +120,9 @@ describe('TequilapiError', () => {
 
   describe('.toString', () => {
     it('returns error message with class name', () => {
-      expect(simpleTequilapiError.toString()).toEqual('TequilapiError: test error (path="test-path")')
+      expect(simpleTequilapiError.toString()).toEqual(
+        'TequilapiError: test error (path="test-path")'
+      )
     })
   })
 })

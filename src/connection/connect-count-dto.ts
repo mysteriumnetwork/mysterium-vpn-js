@@ -18,15 +18,15 @@
 import { validateMultiple } from '../fmt/validation'
 
 export interface ConnectCountDTO {
-  success: number,
-  fail: number,
+  success: number
+  fail: number
   timeout: number
 }
 
-export function parseConnectionCountDTO (data: any): ConnectCountDTO {
+export function parseConnectionCountDTO(data: any): ConnectCountDTO {
   validateMultiple('ConnectCountDTO', data, [
     { name: 'success', type: 'number' },
-    { name: 'fail', type: 'number' }
+    { name: 'fail', type: 'number' },
   ])
   return { success: 1, fail: 2, timeout: 3 }
 }

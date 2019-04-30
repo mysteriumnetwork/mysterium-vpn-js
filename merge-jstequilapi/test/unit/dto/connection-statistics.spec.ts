@@ -23,7 +23,7 @@ describe('TequilapiClient DTO', () => {
       const stats = parseConnectionStatisticsDTO({
         duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
-        bytesSent: 123321 // 0.117608 MB
+        bytesSent: 123321, // 0.117608 MB
       })
 
       expect(stats.duration).toEqual(13325)

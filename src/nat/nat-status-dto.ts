@@ -22,7 +22,7 @@ export interface NatStatusDTO {
   error?: string
 }
 
-export function parseNatStatusResponse (data: any): NatStatusDTO {
+export function parseNatStatusResponse(data: any): NatStatusDTO {
   validate('NatStatusDTO', data, { name: 'status', type: 'string' })
   if (data.error) {
     validate('NatStatusDTO', data, { name: 'error', type: 'string' })

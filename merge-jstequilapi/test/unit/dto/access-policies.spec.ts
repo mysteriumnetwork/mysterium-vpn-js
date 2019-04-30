@@ -25,9 +25,9 @@ describe('.parseAccessPoliciesDTO', () => {
     allow: [
       {
         type: 'identity',
-        value: '0x2'
-      }
-    ]
+        value: '0x2',
+      },
+    ],
   }
 
   it('sets properties with full structure', async () => {

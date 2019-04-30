@@ -16,15 +16,15 @@
  */
 
 export interface SignatureDTO {
-  r: string,
-  s: string,
+  r: string
+  s: string
   v: string
 }
 
-export function parseSignatureDTO (data: any): SignatureDTO {
+export function parseSignatureDTO(data: any): SignatureDTO {
   return {
     r: data.r,
     s: data.s,
-    v: data.v
+    v: data.v,
   }
 }

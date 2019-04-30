@@ -18,7 +18,7 @@
 import { validateArray } from '../fmt/validation'
 import { parseServiceInfoDTO, ServiceInfoDTO } from './service-info'
 
-export function parseServiceListDTO (responseData: any): ServiceInfoDTO[] {
+export function parseServiceListDTO(responseData: any): ServiceInfoDTO[] {
   validateArray('ServiceInfoDTO[]', responseData)
 
   return responseData.map(parseServiceInfoDTO)

@@ -18,21 +18,19 @@
 import { validate, validateMultiple } from '../fmt/validation'
 
 interface AccessRule {
-  type: string,
+  type: string
   value?: string
 }
 
 export interface AccessPolicyDTO {
-  id: string,
-  title: string,
-  description: string,
+  id: string
+  title: string
+  description: string
   allow: AccessRule[]
 }
 
-function parseAccessRule (responseData: any): AccessRule {
-  validateMultiple('AccessRule', responseData, [
-    { name: 'type', type: 'string' }
-  ])
+function parseAccessRule(responseData: any): AccessRule {
+  validateMultiple('AccessRule', responseData, [{ name: 'type', type: 'string' }])
 
   if (responseData.value) {
     validate('AccessRule.value', responseData, { name: 'value', type: 'string' })
@@ -40,27 +38,27 @@ function parseAccessRule (responseData: any): AccessRule {
 
   return {
     type: responseData.type,
-    value: responseData.value
+    value: responseData.value,
   }
 }
 
-export function parseAccessPolicyDTO (responseData: any): AccessPolicyDTO {
+export function parseAccessPolicyDTO(responseData: any): AccessPolicyDTO {
   validateMultiple('AccessPolicyDTO', responseData, [
     { name: 'id', type: 'string' },
     { name: 'title', type: 'string' },
     { name: 'description', type: 'string' },
-    { name: 'allow', type: 'array' }
+    { name: 'allow', type: 'array' },
   ])
 
   return {
     id: responseData.id,
     title: responseData.title,
     description: responseData.description,
-    allow: responseData.allow.map(parseAccessRule)
+    allow: responseData.allow.map(parseAccessRule),
   }
 }
 
-export function parseAccessPoliciesDTO (responseData: any): AccessPolicyDTO[] {
+export function parseAccessPoliciesDTO(responseData: any): AccessPolicyDTO[] {
   validate('AccessPolicyDTO[]', responseData, { name: 'entries', type: 'array' })
 
   return responseData.entries.map(parseAccessPolicyDTO)

@@ -22,7 +22,7 @@ describe('TequilapiClient DTO', () => {
     const data = {
       commit: '0bcccc',
       branch: 'master',
-      buildNumber: '001'
+      buildNumber: '001',
     }
 
     it('sets properties', async () => {

@@ -15,12 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceSessionDTO, parseServiceSessionListDTO } from '../../../src/dto/service-session'
+import {
+  parseServiceSessionDTO,
+  parseServiceSessionListDTO,
+} from '../../../src/dto/service-session'
 
 describe('TequilapiClient DTO', () => {
   const sessionData = {
     id: 'id1',
-    consumerId: '0x1'
+    consumerId: '0x1',
   }
 
   describe('.parseServiceInfoDTO', () => {
@@ -37,19 +40,23 @@ describe('TequilapiClient DTO', () => {
 
     it('throws error with missing id', () => {
       const object = { ...sessionData, id: undefined }
-      expect(() => parseServiceSessionDTO(object)).toThrowError('ServiceSessionDTO: id is not provided')
+      expect(() => parseServiceSessionDTO(object)).toThrowError(
+        'ServiceSessionDTO: id is not provided'
+      )
     })
 
     it('throws error with missing consumerId', () => {
       const object = { ...sessionData, consumerId: undefined }
-      expect(() => parseServiceSessionDTO(object)).toThrowError('ServiceSessionDTO: consumerId is not provided')
+      expect(() => parseServiceSessionDTO(object)).toThrowError(
+        'ServiceSessionDTO: consumerId is not provided'
+      )
     })
   })
 
   describe('.parseServiceSessionListDTO', () => {
     it('sets properties with full structure', async () => {
       const sessions = parseServiceSessionListDTO({
-        sessions: [sessionData]
+        sessions: [sessionData],
       })
 
       expect(sessions).toHaveLength(1)
@@ -66,7 +73,7 @@ describe('TequilapiClient DTO', () => {
     it('throws an error if proposal in array does not validate', async () => {
       expect(() => {
         parseServiceSessionListDTO({
-          sessions: [{}]
+          sessions: [{}],
         })
       }).toThrowError('ServiceSessionDTO: id is not provided')
     })

@@ -24,7 +24,7 @@ describe('TequilapiClient DTO', () => {
       id: 1,
       providerId: '0x1',
       serviceType: 'openvpn',
-      serviceDefinition: {}
+      serviceDefinition: {},
     }
     const serviceObject = parseServiceInfoDTO({
       id: 'service1',
@@ -32,7 +32,7 @@ describe('TequilapiClient DTO', () => {
       type: 'openvpn',
       options: { foo: 'bar' },
       status: 'Running',
-      proposal: proposalObject
+      proposal: proposalObject,
     })
 
     it('sets properties', async () => {
@@ -55,17 +55,23 @@ describe('TequilapiClient DTO', () => {
 
     it('throws error with missing status', () => {
       const object = { ...serviceObject, status: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError('ServiceInfoDTO: status is not provided')
+      expect(() => parseServiceInfoDTO(object)).toThrowError(
+        'ServiceInfoDTO: status is not provided'
+      )
     })
 
     it('throws error with missing provider', () => {
       const object = { ...serviceObject, proposal: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError('ServiceInfoDTO: proposal is not provided')
+      expect(() => parseServiceInfoDTO(object)).toThrowError(
+        'ServiceInfoDTO: proposal is not provided'
+      )
     })
 
     it('throws error with missing options', () => {
       const object = { ...serviceObject, options: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError('ServiceInfoDTO: options is not provided')
+      expect(() => parseServiceInfoDTO(object)).toThrowError(
+        'ServiceInfoDTO: options is not provided'
+      )
     })
   })
 })

@@ -27,8 +27,8 @@ describe('TequilapiClient DTO', () => {
         buildInfo: {
           commit: 'my commit',
           branch: 'my branch',
-          buildNumber: 'my build number'
-        }
+          buildNumber: 'my build number',
+        },
       })
 
       expect(status.uptime).toEqual('1h10m')
@@ -37,17 +37,20 @@ describe('TequilapiClient DTO', () => {
       expect(status.buildInfo).toEqual({
         commit: 'my commit',
         branch: 'my branch',
-        buildNumber: 'my build number'
+        buildNumber: 'my build number',
       })
     })
 
     it('throws error with empty data', async () => {
-      expect(() => parseHealthcheckResponse({})).toThrowError('Unable to parse healthcheck response: {}')
+      expect(() => parseHealthcheckResponse({})).toThrowError(
+        'Unable to parse healthcheck response: {}'
+      )
     })
 
     it('throws error with wrong data', async () => {
-      expect(() => parseHealthcheckResponse('I am wrong'))
-        .toThrowError('Unable to parse healthcheck response: "I am wrong"')
+      expect(() => parseHealthcheckResponse('I am wrong')).toThrowError(
+        'Unable to parse healthcheck response: "I am wrong"'
+      )
     })
   })
 })

@@ -21,7 +21,7 @@ export interface IdentitiesResponseDTO {
   identities: IdentityDTO[]
 }
 
-export function parseIdentitiesResponseDTO (responseData: any): IdentitiesResponseDTO {
+export function parseIdentitiesResponseDTO(responseData: any): IdentitiesResponseDTO {
   if (!(responseData && Array.isArray(responseData.identities))) {
     return { identities: [] }
   }

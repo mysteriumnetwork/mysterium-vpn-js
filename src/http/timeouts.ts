@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const TIMEOUT_DEFAULT: number = 5000
-const TIMEOUT_DISABLED: number = 0
+const TIMEOUT_DEFAULT = 5000
+const TIMEOUT_DISABLED = 0
 
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED }

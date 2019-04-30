@@ -25,7 +25,7 @@ interface ProposalsResponseDTO {
   proposals: ProposalDTO[]
 }
 
-export function parseProposalsResponseDTO (responseData: any): ProposalsResponseDTO {
+export function parseProposalsResponseDTO(responseData: any): ProposalsResponseDTO {
   validate('ProposalsResponseDTO', responseData, { name: 'proposals', type: 'array' })
   return { proposals: responseData.proposals.map(parseProposalDTO) }
 }

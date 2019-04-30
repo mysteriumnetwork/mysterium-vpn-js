@@ -21,27 +21,27 @@ import { HttpInterface } from './http'
 import { HttpTequilapiClient, TequilapiClient } from './http-tequilapi-client'
 import { TIMEOUT_DEFAULT } from './http'
 
-const TEQUILAPI_URL: string = 'http://127.0.0.1:4050'
+const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
 class TequilapiClientFactory {
   public _baseUrl: string
   public _defaultTimeout: number
 
-  constructor (baseUrl: string = TEQUILAPI_URL, defaultTimeout: number = TIMEOUT_DEFAULT) {
+  public constructor(baseUrl: string = TEQUILAPI_URL, defaultTimeout: number = TIMEOUT_DEFAULT) {
     this._baseUrl = baseUrl
     this._defaultTimeout = defaultTimeout
   }
 
-  public build (adapter: HttpInterface): TequilapiClient {
+  public build(adapter: HttpInterface): TequilapiClient {
     return new HttpTequilapiClient(adapter)
   }
 
-  public buildAdapter (): HttpInterface {
+  public buildAdapter(): HttpInterface {
     const axiosInstance = axios.create({
       baseURL: this._baseUrl,
       headers: {
-        'Cache-Control': 'no-cache, no-store'
-      }
+        'Cache-Control': 'no-cache, no-store',
+      },
     })
     return new AxiosAdapter(axiosInstance, this._defaultTimeout)
   }

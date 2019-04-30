@@ -22,7 +22,7 @@ describe('.parseProposalDTO', () => {
     id: 1,
     providerId: '0x1',
     serviceType: 'openvpn',
-    serviceDefinition: {}
+    serviceDefinition: {},
   }
 
   it('sets properties with full structure', () => {

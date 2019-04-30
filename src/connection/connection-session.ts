@@ -18,16 +18,16 @@
 import { validateMultiple } from '../fmt/validation'
 
 export interface ConnectionSessionDTO {
-  sessionId: string,
-  providerId: string,
-  providerCountry: string,
-  dateStarted: string,
-  bytesSent: number,
-  bytesReceived: number,
+  sessionId: string
+  providerId: string
+  providerCountry: string
+  dateStarted: string
+  bytesSent: number
+  bytesReceived: number
   duration: number
 }
 
-export function validateSession (data: any): ConnectionSessionDTO {
+export function validateSession(data: any): ConnectionSessionDTO {
   validateMultiple('ConnectionSessionDTO', data, [
     { name: 'sessionId', type: 'string' },
     { name: 'providerId', type: 'string' },
@@ -35,7 +35,7 @@ export function validateSession (data: any): ConnectionSessionDTO {
     { name: 'dateStarted', type: 'string' },
     { name: 'bytesSent', type: 'number' },
     { name: 'bytesReceived', type: 'number' },
-    { name: 'duration', type: 'number' }
+    { name: 'duration', type: 'number' },
   ])
   return data
 }

@@ -19,15 +19,15 @@ import { validate } from '../fmt/validation'
 import { ConnectionStatus } from './connection-status'
 
 export interface ConnectionStatusDTO {
-  status: ConnectionStatus,
+  status: ConnectionStatus
   sessionId?: string
 }
 
-export function parseConnectionStatusDTO (data: any) {
+export function parseConnectionStatusDTO(data: any): ConnectionStatusDTO {
   // TODO: validate that status has value from ConnectionStatus enum
   validate('ConnectionStatusDTO', data, { name: 'status', type: 'string' })
   return {
     status: data.status,
-    sessionId: data.sessionId
+    sessionId: data.sessionId,
   }
 }

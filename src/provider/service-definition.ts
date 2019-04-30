@@ -21,7 +21,7 @@ export interface ServiceDefinitionDTO {
   locationOriginate?: LocationDTO
 }
 
-export function parseServiceDefinitionDTO (data: any): ServiceDefinitionDTO {
+export function parseServiceDefinitionDTO(data: any): ServiceDefinitionDTO {
   let locationOriginate: LocationDTO | undefined
   if (data.locationOriginate) {
     locationOriginate = parseLocationDTO(data.locationOriginate)

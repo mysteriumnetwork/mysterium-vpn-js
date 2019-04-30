@@ -24,7 +24,7 @@ describe('TequilapiClient DTO', () => {
     xit('sets properties', async () => {
       const connection = parseConnectionStatusDTO({
         status: 'Connected',
-        sessionId: 'My-super-session'
+        sessionId: 'My-super-session',
       })
 
       expect(connection.status).toEqual(ConnectionStatus.CONNECTED)

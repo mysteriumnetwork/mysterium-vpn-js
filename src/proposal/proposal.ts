@@ -20,19 +20,19 @@ import { MetricsDTO } from '../metric/metrics-dto'
 import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from '../provider/service-definition'
 
 export interface ProposalDTO {
-  id: number,
-  providerId: string,
-  serviceType: string,
-  serviceDefinition: ServiceDefinitionDTO,
+  id: number
+  providerId: string
+  serviceType: string
+  serviceDefinition: ServiceDefinitionDTO
   metrics?: MetricsDTO
 }
 
-export function parseProposalDTO (data: any): ProposalDTO {
+export function parseProposalDTO(data: any): ProposalDTO {
   validateMultiple('ProposalDTO', data, [
     { name: 'id', type: 'number' },
     { name: 'providerId', type: 'string' },
     { name: 'serviceType', type: 'string' },
-    { name: 'serviceDefinition', type: 'object' }
+    { name: 'serviceDefinition', type: 'object' },
   ])
 
   return {
@@ -40,6 +40,6 @@ export function parseProposalDTO (data: any): ProposalDTO {
     providerId: data.providerId,
     serviceType: data.serviceType,
     serviceDefinition: parseServiceDefinitionDTO(data.serviceDefinition),
-    metrics: data.metrics
+    metrics: data.metrics,
   }
 }

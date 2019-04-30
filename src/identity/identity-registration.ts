@@ -19,15 +19,15 @@ import { parsePublicKeyDTO, PublicKeyDTO } from './public-key'
 import { parseSignatureDTO, SignatureDTO } from './signature'
 
 export interface IdentityRegistrationDTO {
-  registered: boolean,
-  publicKey?: PublicKeyDTO,
+  registered: boolean
+  publicKey?: PublicKeyDTO
   signature?: SignatureDTO
 }
 
-export function parseIdentityRegistrationDTO (data: any): IdentityRegistrationDTO {
+export function parseIdentityRegistrationDTO(data: any): IdentityRegistrationDTO {
   return {
     registered: data.registered,
     publicKey: data.publicKey ? parsePublicKeyDTO(data.publicKey) : undefined,
-    signature: data.signature ? parseSignatureDTO(data.signature) : undefined
+    signature: data.signature ? parseSignatureDTO(data.signature) : undefined,
   }
 }

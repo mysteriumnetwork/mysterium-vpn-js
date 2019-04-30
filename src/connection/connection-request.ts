@@ -16,7 +16,7 @@
  */
 
 export interface ConnectionRequest {
-  consumerId: string,
-  providerId: string,
+  consumerId: string
+  providerId: string
   serviceType: string
 }

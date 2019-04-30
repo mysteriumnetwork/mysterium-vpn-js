@@ -18,21 +18,21 @@
 import { validateMultiple } from '../fmt/validation'
 
 export interface ConnectionStatisticsDTO {
-  duration: number,
-  bytesReceived: number,
+  duration: number
+  bytesReceived: number
   bytesSent: number
 }
 
-export function parseConnectionStatisticsDTO (data: any): ConnectionStatisticsDTO {
+export function parseConnectionStatisticsDTO(data: any): ConnectionStatisticsDTO {
   validateMultiple('ConnectionStatisticsDTO', data, [
     { name: 'duration', type: 'number' },
     { name: 'bytesReceived', type: 'number' },
-    { name: 'bytesSent', type: 'number' }
+    { name: 'bytesSent', type: 'number' },
   ])
 
   return {
     duration: data.duration,
     bytesReceived: data.bytesReceived,
-    bytesSent: data.bytesSent
+    bytesSent: data.bytesSent,
   }
 }

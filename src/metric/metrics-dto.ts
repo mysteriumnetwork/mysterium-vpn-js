@@ -21,7 +21,7 @@ export interface MetricsDTO {
   connectCount?: ConnectCountDTO
 }
 
-export function parseMetricsDTO (data: any): MetricsDTO {
+export function parseMetricsDTO(data: any): MetricsDTO {
   try {
     return { connectCount: parseConnectionCountDTO(data.connectCount) }
   } catch (err) {

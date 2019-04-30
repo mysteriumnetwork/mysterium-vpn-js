@@ -16,10 +16,10 @@
  */
 
 export interface PublicKeyDTO {
-  part1: string,
+  part1: string
   part2: string
 }
 
-export function parsePublicKeyDTO (data: any): PublicKeyDTO {
+export function parsePublicKeyDTO(data: any): PublicKeyDTO {
   return { part1: data.part1, part2: data.part2 }
 }

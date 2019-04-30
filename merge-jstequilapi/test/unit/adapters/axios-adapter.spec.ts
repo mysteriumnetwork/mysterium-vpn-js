@@ -72,13 +72,17 @@ describe('TequilapiClient AxiosAdapter', () => {
   it('returns timeout error', () => {
     mock.onGet('test-url').timeout()
 
-    expect(adapter.get('test-url'))
-      .rejects.toHaveProperty('message', 'timeout of 1ms exceeded (path="test-url")')
+    expect(adapter.get('test-url')).rejects.toHaveProperty(
+      'message',
+      'timeout of 1ms exceeded (path="test-url")'
+    )
   })
 
   it('returns 404 response error', () => {
     mock.onGet('test-url').reply(404, { message: 'What is wrong' })
 
-    expect(adapter.get('test-url')).rejects.toEqual(new Error('Request failed with status code 404 (path="test-url")'))
+    expect(adapter.get('test-url')).rejects.toEqual(
+      new Error('Request failed with status code 404 (path="test-url")')
+    )
   })
 })

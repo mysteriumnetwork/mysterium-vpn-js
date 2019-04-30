@@ -23,7 +23,7 @@ describe('.parseServiceListDTO', () => {
     id: 1,
     providerId: '0x1',
     serviceType: 'openvpn',
-    serviceDefinition: {}
+    serviceDefinition: {},
   }
   const serviceObject = {
     id: 'service1',
@@ -31,7 +31,7 @@ describe('.parseServiceListDTO', () => {
     type: 'openvpn',
     options: { foo: 'bar' },
     status: 'Running',
-    proposal: proposalObject
+    proposal: proposalObject,
   }
 
   it('sets properties with full structure', async () => {

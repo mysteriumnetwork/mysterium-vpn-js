@@ -16,11 +16,18 @@
  */
 
 interface Property {
-  name: string,
+  name: string
   type: 'number' | 'string' | 'object' | 'array'
 }
 
-function validate (typeName: string, obj: any, property: Property) {
+function getTypeString(value: any): string {
+  if (Array.isArray(value)) {
+    return 'array'
+  }
+  return typeof value
+}
+
+function validate(typeName: string, obj: any, property: Property): void {
   const value = obj[property.name]
   if (typeof value === 'undefined') {
     throw new TypeError(`${typeName}: ${property.name} is not provided`)
@@ -31,18 +38,11 @@ function validate (typeName: string, obj: any, property: Property) {
   }
 }
 
-function getTypeString (value: any) {
-  if (Array.isArray(value)) {
-    return 'array'
-  }
-  return typeof value
+function validateMultiple(typeName: string, obj: any, properties: Property[]): void {
+  properties.forEach(property => validate(typeName, obj, property))
 }
 
-function validateMultiple (typeName: string, obj: any, properties: Property[]) {
-  properties.forEach((property) => validate(typeName, obj, property))
-}
-
-function validateArray (typeName: string, arr: any) {
+function validateArray(typeName: string, arr: any): void {
   if (getTypeString(arr) !== 'array') {
     throw new TypeError(`${typeName}: should be "array"`)
   }
