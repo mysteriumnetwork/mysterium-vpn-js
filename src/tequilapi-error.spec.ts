@@ -36,8 +36,7 @@ describe('TequilapiError', () => {
   const simpleTequilapiError = new TequilapiError(simpleError, 'test-path')
 
   it('is instance of TequilapiError', () => {
-    // seems like redundant spec, but it's valuable, because this doesn't work by default:
-    // "babel-plugin-transform-builtin-extend" plugin was used to make this work
+    // seems like redundant spec, but it's valuable, because this doesn't work by default
     expect(simpleTequilapiError).toBeInstanceOf(TequilapiError)
   })
 

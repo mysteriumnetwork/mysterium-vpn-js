@@ -39,6 +39,22 @@ export default class TequilapiError extends Error {
   public constructor(originalError: Error, path: string) {
     super(`${originalError.message} (path="${path}")`)
 
+    /**
+     * Javascript's built-in class Error breaks the prototype chain by switching the object to be constructed (i.e. this) to a new,
+     * different object, when you call super and that new object doesn't have the expected prototype chain,
+     * i.e. it's an instance of Error not of CustomError.
+     * This problem can be elegantly solved using 'new.target', which is supported since Typescript 2.2:
+     * https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html
+     * https://stackoverflow.com/a/48342359
+     */
+    const actualProto = new.target.prototype
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(this, actualProto)
+    } else {
+      // @ts-ignore
+      this.__proto__ = actualProto
+    }
+
     this._originalError = originalError
   }
 
