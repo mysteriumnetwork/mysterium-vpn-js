@@ -1,0 +1,12 @@
+{
+    "defaultSeverity": "error",
+    "extends": "../tslint-base.json",
+    "jsRules": {},
+    "rules": {
+        "semicolon": [ true, "never" ],
+        "interface-name": [true, "never-prefix"],
+        // TODO: remove?
+        "object-literal-sort-keys": false
+    },
+    "rulesDirectory": []
+}

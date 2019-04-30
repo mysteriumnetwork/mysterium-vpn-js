@@ -1,0 +1,6 @@
+src
+test
+.babelrc
+.idea
+.flowconfig
+.travis.yml

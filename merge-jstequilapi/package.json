@@ -1,0 +1,46 @@
+{
+  "name": "mysterium-tequilapi",
+  "version": "0.8.3",
+  "description": "Api library to control mysterium client and node",
+  "repository": "github:mysteriumnetwork/mysterium-tequilapi",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "ci": "npm run lint && npm run flow && npm run test",
+    "lint": "tslint -p src && tslint -p test",
+    "flow": "node_modules/.bin/flow",
+    "test": "jest --config test/jest.config.js",
+    "prepack": "npx tsc -p src",
+    "generate:flow": "./scripts/generate_flow_definitions.sh",
+    "flow-typed": "npm i flow-typed && node_modules/.bin/flow-typed install axios",
+    "build": "npm run prepack && npm run generate:flow"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.5",
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^24.0.6",
+    "axios-mock-adapter": "^1.15.0",
+    "flow-bin": "^0.80.0",
+    "flow-typed": "^2.5.1",
+    "flowgen": "^1.5.8",
+    "jest": "^24.1.0",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.3.3"
+  },
+  "keywords": [
+    "mysterium",
+    "network",
+    "tequilapi",
+    "vpn"
+  ],
+  "author": {
+    "name": "Mysterium Network",
+    "email": "team@netsys.technology"
+  },
+  "license": "MIT"
+}
