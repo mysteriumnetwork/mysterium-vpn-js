@@ -5,11 +5,14 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "yarn tsc && ./utils/generate_flow_definitions.sh",
-    "ci": "yarn tsc-check && yarn lint && ./utils/check-headers.sh && yarn test",
-    "tsc-check": "yarn tsc --noEmit",
     "lint": "eslint . '**/*.{js,ts}'",
-    "test": "jest"
+    "test": "jest",
+    "copyright": "./utils/check-headers.sh",
+    "build:typescript": "yarn tsc -p tsconfig.build.json",
+    "build:flow": "./utils/generate_flow_definitions.sh",
+    "build": "yarn build:typescript && yarn build:flow",
+    "tsc-check": "yarn tsc --noEmit",
+    "ci": "yarn tsc-check && yarn lint && yarn test && yarn copyright && yarn build"
   },
   "author": "Mysterium Network <team@netsys.technology>",
   "license": "GPL-3.0",
