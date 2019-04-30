@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import AxiosAdapter from './axios-adapter'
+import { parseLocationDTO } from './location'
 
-export * from './interface'
-export * from './timeouts'
-export { AxiosAdapter }
+describe('TequilapiClient DTO', () => {
+  describe('.parseLocationDTO', () => {
+    it('sets properties with full structure', async () => {
+      const location = parseLocationDTO({
+        asn: '',
+        country: 'LT',
+      })
+
+      expect(location.country).toEqual('LT')
+    })
+  })
+})

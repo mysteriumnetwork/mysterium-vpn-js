@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseAccessPoliciesDTO, parseAccessPolicyDTO } from '../../../src/dto/access-policies'
+import { parseAccessPoliciesDTO, parseAccessPolicyDTO } from './access-policies'
 
 describe('.parseAccessPoliciesDTO', () => {
   const accessPolicy = {

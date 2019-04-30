@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { getPaymentLink } from '../../../../src/dto/identity-registration/get-payment-link'
-import { IdentityProof } from '../../../../src/dto/identity-registration/identity-proof'
+import { getPaymentLink } from './get-payment-link'
+import { IdentityProof } from './identity-proof'
 
 describe('.getPaymentLink', () => {
   it('generates valid payment link', () => {

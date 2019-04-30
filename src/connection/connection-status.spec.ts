@@ -15,17 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseLocationDTO } from '../../../src/dto/location'
+import { ConnectionStatus } from './connection-status'
+import { parseConnectionStatusDTO } from './connection-status-dto'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseLocationDTO', () => {
-    it('sets properties with full structure', async () => {
-      const location = parseLocationDTO({
-        asn: '',
-        country: 'LT',
+  describe('.parseConnectionStatusDTO', () => {
+    // TODO: fix
+    xit('sets properties', async () => {
+      const connection = parseConnectionStatusDTO({
+        status: 'Connected',
+        sessionId: 'My-super-session',
       })
 
-      expect(location.country).toEqual('LT')
+      expect(connection.status).toEqual(ConnectionStatus.CONNECTED)
+      expect(connection.sessionId).toEqual('My-super-session')
+    })
+
+    it('fails when status is missing', () => {
+      expect(() => parseConnectionStatusDTO({ sessionId: 'My-super-session' })).toThrow()
     })
   })
 })

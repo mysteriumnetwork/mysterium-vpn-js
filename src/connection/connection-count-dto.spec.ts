@@ -15,18 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentityPayoutDTO } from '../../../src/dto/identity-payout'
+import { ConnectCountDTO, parseConnectionCountDTO } from './connect-count-dto'
 
-describe('TequilapiClient DTO', () => {
-  describe('.parseIdentityPayoutDTO', () => {
-    it('sets properties', async () => {
-      const identity = parseIdentityPayoutDTO({ eth_address: '0xF000FACE' })
+describe('.parseConnectionCountDTO', () => {
+  it('returns ConnectionCountDTO', () => {
+    const dto: ConnectCountDTO = parseConnectionCountDTO({ success: 1, fail: 2, timeout: 3 })
+    expect(dto).toBeDefined()
+  })
 
-      expect(identity.ethAddress).toEqual('0xF000FACE')
-    })
-
-    it('throws when eth address is missing', async () => {
-      expect(() => parseIdentityPayoutDTO({})).toThrow()
-    })
+  it('throws error for invalid data', () => {
+    expect(() => parseConnectionCountDTO({ success: 1, timeout: 3 })).toThrow(
+      'ConnectCountDTO: fail is not provided'
+    )
+    expect(() => parseConnectionCountDTO({ success: '1', fail: 2, timeout: 3 })).toThrow(
+      'ConnectCountDTO: success should be "number"'
+    )
   })
 })

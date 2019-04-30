@@ -16,8 +16,8 @@
  */
 
 import { validateMultiple } from '../fmt/validation'
-import { MetricsDTO } from '../metric/metrics-dto'
-import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from '../provider/service-definition'
+import { MetricsDTO } from '../metric'
+import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from '../provider'
 
 export interface ProposalDTO {
   id: number

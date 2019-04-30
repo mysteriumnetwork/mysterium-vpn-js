@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-import ProposalsQuery from '../../../src/adapters/proposals-query'
+import ProposalsQuery from './proposals-query'
 
 describe('ProposalsQuery', () => {
   describe('toQueryParams', () => {

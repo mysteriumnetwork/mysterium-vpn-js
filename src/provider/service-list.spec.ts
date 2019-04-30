@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceInfoDTO } from '../../../src/dto/service-info'
-import { parseServiceListDTO } from '../../../src/dto/service-list'
+import { parseServiceInfoDTO } from './service-info'
+import { parseServiceListDTO } from './service-list'
 
 describe('.parseServiceListDTO', () => {
   const proposalObject = {

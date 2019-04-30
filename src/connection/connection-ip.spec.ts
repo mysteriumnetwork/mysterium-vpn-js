@@ -15,18 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentityDTO } from '../../../src/dto/identity'
+import { ConnectionIPDTO, parseConnectionIPDTO } from './connection-ip'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseIdentityDTO', () => {
+  describe('.parseConnectionIPDTO', () => {
     it('sets properties', async () => {
-      const identity = parseIdentityDTO({ id: '0xF000FACE' })
+      const model: ConnectionIPDTO = parseConnectionIPDTO({ ip: 'mock ip' })
 
-      expect(identity.id).toEqual('0xF000FACE')
+      expect(model.ip).toEqual('mock ip')
     })
 
-    it('throws when id is missing', async () => {
-      expect(() => parseIdentityDTO({})).toThrow()
+    it('sets empty properties', async () => {
+      const model: ConnectionIPDTO = parseConnectionIPDTO({})
+
+      expect(model.ip).toBeUndefined()
     })
   })
 })

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseProposalDTO } from '../../../src/dto/proposal'
+import { parseProposalDTO } from './proposal'
 
 describe('.parseProposalDTO', () => {
   const proposalObject = {

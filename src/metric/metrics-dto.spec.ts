@@ -15,20 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectCountDTO, parseConnectionCountDTO } from '../../../src/dto/connect-count-dto'
+import { parseMetricsDTO } from './metrics-dto'
 
-describe('.parseConnectionCountDTO', () => {
-  it('returns ConnectionCountDTO', () => {
-    const dto: ConnectCountDTO = parseConnectionCountDTO({ success: 1, fail: 2, timeout: 3 })
-    expect(dto).toBeDefined()
-  })
-
-  it('throws error for invalid data', () => {
-    expect(() => parseConnectionCountDTO({ success: 1, timeout: 3 })).toThrow(
-      'ConnectCountDTO: fail is not provided'
-    )
-    expect(() => parseConnectionCountDTO({ success: '1', fail: 2, timeout: 3 })).toThrow(
-      'ConnectCountDTO: success should be "number"'
-    )
+describe('MetricsDTO', () => {
+  describe('.parseMetricsDTO', () => {
+    it('returns empty metrics if they are empty', () => {
+      const dto = parseMetricsDTO({})
+      expect(dto).toEqual({ connectCount: undefined })
+    })
   })
 })

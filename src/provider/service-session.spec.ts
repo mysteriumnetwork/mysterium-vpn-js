@@ -15,10 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  parseServiceSessionDTO,
-  parseServiceSessionListDTO,
-} from '../../../src/dto/service-session'
+import { parseServiceSessionDTO, parseServiceSessionListDTO } from './service-session'
 
 describe('TequilapiClient DTO', () => {
   const sessionData = {

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseProposalsResponseDTO } from '../../../src/dto/proposals-response'
+import { parseProposalsResponseDTO } from './proposals-response'
 
 describe('.parseProposalsResponseDTO', () => {
   it('sets properties with full structure', async () => {

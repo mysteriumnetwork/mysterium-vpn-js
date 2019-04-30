@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseMetricsDTO } from '../../../src/dto/metrics-dto'
+import { parseIdentityDTO } from './identity'
 
-describe('MetricsDTO', () => {
-  describe('.parseMetricsDTO', () => {
-    it('returns empty metrics if they are empty', () => {
-      const dto = parseMetricsDTO({})
-      expect(dto).toEqual({ connectCount: undefined })
+describe('TequilapiClient DTO', () => {
+  describe('.parseIdentityDTO', () => {
+    it('sets properties', async () => {
+      const identity = parseIdentityDTO({ id: '0xF000FACE' })
+
+      expect(identity.id).toEqual('0xF000FACE')
+    })
+
+    it('throws when id is missing', async () => {
+      expect(() => parseIdentityDTO({})).toThrow()
     })
   })
 })

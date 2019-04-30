@@ -15,10 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  IdentityRegistrationDTO,
-  parseIdentityRegistrationDTO,
-} from '../../../../src/dto/identity-registration/identity-registration'
+import { IdentityRegistrationDTO, parseIdentityRegistrationDTO } from './identity-registration'
 
 describe('TequilapiClient DTO', () => {
   describe('.parseIdentityRegistrationDTO', () => {

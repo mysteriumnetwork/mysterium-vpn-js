@@ -15,25 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseConnectionStatisticsDTO } from '../../../src/dto/connection-statistics'
+import { parseNodeBuildInfoDTO } from './node-build-info'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseConnectionStatisticsDTO', () => {
-    it('sets properties', async () => {
-      const stats = parseConnectionStatisticsDTO({
-        duration: 13325,
-        bytesReceived: 1232133, // 1.17505 MB
-        bytesSent: 123321, // 0.117608 MB
-      })
+  describe('.parseNodeBuildInfoDTO', () => {
+    const data = {
+      commit: '0bcccc',
+      branch: 'master',
+      buildNumber: '001',
+    }
 
-      expect(stats.duration).toEqual(13325)
-      expect(stats.bytesReceived).toEqual(1232133)
-      expect(stats.bytesSent).toEqual(123321)
+    it('sets properties', async () => {
+      const version = parseNodeBuildInfoDTO(data)
+
+      expect(version.commit).toEqual('0bcccc')
+      expect(version.branch).toEqual('master')
+      expect(version.buildNumber).toEqual('001')
     })
 
-    it('throws error without required fields', async () => {
-      expect(() => parseConnectionStatisticsDTO({})).toThrow()
-      expect(() => parseConnectionStatisticsDTO('I am wrong')).toThrow()
+    it('throws without required properties', async () => {
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ commit: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ branch: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ buildNumber: undefined } })).toThrow()
     })
   })
 })

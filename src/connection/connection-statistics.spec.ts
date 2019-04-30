@@ -15,30 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentitiesResponseDTO } from '../../../src/dto/identities-response'
+import { parseConnectionStatisticsDTO } from './connection-statistics'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseIdentitiesResponseDTO', () => {
+  describe('.parseConnectionStatisticsDTO', () => {
     it('sets properties', async () => {
-      const response = parseIdentitiesResponseDTO({
-        identities: [{ id: '0x1000FACE' }, { id: '0x2000FACE' }],
+      const stats = parseConnectionStatisticsDTO({
+        duration: 13325,
+        bytesReceived: 1232133, // 1.17505 MB
+        bytesSent: 123321, // 0.117608 MB
       })
 
-      expect(response.identities).toHaveLength(2)
-      expect(response.identities[0].id).toEqual('0x1000FACE')
-      expect(response.identities[1].id).toEqual('0x2000FACE')
+      expect(stats.duration).toEqual(13325)
+      expect(stats.bytesReceived).toEqual(1232133)
+      expect(stats.bytesSent).toEqual(123321)
     })
 
-    it('returns empty array when properties are empty', async () => {
-      const response = parseIdentitiesResponseDTO({})
-
-      expect(response.identities).toEqual([])
-    })
-
-    it('returns empty array when properties are wrong', async () => {
-      const response = parseIdentitiesResponseDTO('I am wrong')
-
-      expect(response.identities).toEqual([])
+    it('throws error without required fields', async () => {
+      expect(() => parseConnectionStatisticsDTO({})).toThrow()
+      expect(() => parseConnectionStatisticsDTO('I am wrong')).toThrow()
     })
   })
 })

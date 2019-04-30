@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/js-tequilapi" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,24 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceDefinitionDTO } from '../../../src/dto/service-definition'
+import { parseIdentityPayoutDTO } from './identity-payout'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseServiceDefinitionDTO', () => {
-    it('sets properties with full structure', async () => {
-      const service = parseServiceDefinitionDTO({
-        locationOriginate: {
-          country: 'lt',
-        },
-      })
+  describe('.parseIdentityPayoutDTO', () => {
+    it('sets properties', async () => {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const identity = parseIdentityPayoutDTO({ eth_address: '0xF000FACE' })
 
-      expect(service.locationOriginate).toEqual({ country: 'lt' })
+      expect(identity.ethAddress).toEqual('0xF000FACE')
     })
 
-    it('sets empty properties structure', async () => {
-      const service = parseServiceDefinitionDTO({})
-
-      expect(service.locationOriginate).toBeUndefined()
+    it('throws when eth address is missing', async () => {
+      expect(() => parseIdentityPayoutDTO({})).toThrow()
     })
   })
 })

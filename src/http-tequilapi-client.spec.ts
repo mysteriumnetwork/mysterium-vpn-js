@@ -17,15 +17,13 @@
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import AxiosAdapter from '../../src/adapters/axios-adapter'
-import { TequilapiClient } from '../../src/client'
-import { parseConsumerLocationDTO } from '../../src/dto/consumer-location'
-import { parseIdentityDTO } from '../../src/dto/identity'
-import { parseHealthcheckResponse } from '../../src/dto/node-healthcheck'
-import { parseProposalDTO } from '../../src/dto/proposal'
-import { parseServiceInfoDTO } from '../../src/dto/service-info'
-import { parseServiceListDTO } from '../../src/dto/service-list'
-import { HttpTequilapiClient } from '../../src/http-tequilapi-client'
+import { AxiosAdapter } from './http'
+import { TequilapiClient, HttpTequilapiClient } from './http-tequilapi-client'
+import { parseConsumerLocationDTO } from './consumer'
+import { parseIdentityDTO } from './identity'
+import { parseHealthcheckResponse } from './daemon'
+import { parseProposalDTO } from './proposal'
+import { parseServiceInfoDTO, parseServiceListDTO } from './provider'
 
 describe('HttpTequilapiClient', () => {
   let api: TequilapiClient
@@ -364,6 +362,7 @@ describe('HttpTequilapiClient', () => {
 
   describe('identityPayout()', () => {
     it('returns identity payout info', async () => {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       const response = { eth_address: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca' }
       mock.onGet('identities/test-id/payout').reply(200, response)
       const info = await api.identityPayout('test-id')

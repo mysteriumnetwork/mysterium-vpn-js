@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceInfoDTO } from '../../../src/dto/service-info'
-import { ServiceStatus } from '../../../src/dto/service-status'
+import { parseServiceInfoDTO } from './service-info'
+import { ServiceStatus } from './service-status'
 
 describe('TequilapiClient DTO', () => {
   describe('.parseServiceInfoDTO', () => {
