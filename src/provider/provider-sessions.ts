@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
-import { ServiceSessionDTO } from 'mysterium-tequilapi/lib/dto/service-session'
+import { TequilapiClient } from '../http-tequilapi-client'
+import { ServiceSessionDTO } from '../provider'
 import { FunctionLooper } from '../func'
 import { Publisher } from './publisher'
 

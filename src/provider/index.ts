@@ -23,6 +23,14 @@ import { QualityCalculator } from './quality-calculator'
 import { QualityLevel } from './quality-level'
 import { ServiceStatus } from './service-status'
 
+export * from './location'
+export * from './service-definition'
+export * from './service-info'
+export * from './service-list'
+export * from './service-request'
+export * from './service-session'
+export * from './service-status'
+
 export {
   Metrics,
   ProviderService,

@@ -1,0 +1,16 @@
+{
+  "exclude": [
+    "**/*.spec.ts",
+    "**/test-utils/**",
+    "lib"
+  ],
+  "compilerOptions": {
+    "declaration": true,
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2015"],
+    "outDir": "lib",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}

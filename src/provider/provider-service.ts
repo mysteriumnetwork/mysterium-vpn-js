@@ -15,12 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TequilapiClient } from 'mysterium-tequilapi/lib/client'
-import { AccessPolicyDTO } from 'mysterium-tequilapi/lib/dto/access-policies'
-import { ServiceInfoDTO } from 'mysterium-tequilapi/lib/dto/service-info'
-import { ServiceRequest } from 'mysterium-tequilapi/lib/dto/service-request'
-import { ServiceStatus as ServiceStatusDTO } from 'mysterium-tequilapi/lib/dto/service-status'
-import TequilapiError from 'mysterium-tequilapi/lib/tequilapi-error'
+import { TequilapiClient } from '../http-tequilapi-client'
+import { AccessPolicyDTO } from '../access-policy'
+import { ServiceInfoDTO, ServiceRequest, ServiceStatus as ServiceStatusDTO } from '../provider'
+import TequilapiError from '../tequilapi-error'
 import { FunctionLooper } from '../func'
 import { logger } from '../logger'
 import { Publisher } from './publisher'
