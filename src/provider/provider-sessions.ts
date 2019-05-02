@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TequilapiClient } from '../http-tequilapi-client'
+import { TequilapiClient } from '../tequilapi-client'
 import { ServiceSessionDTO } from '../provider'
 import { FunctionLooper } from '../func'
 import { Publisher } from './publisher'

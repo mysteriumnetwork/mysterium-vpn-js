@@ -18,7 +18,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http'
-import { TequilapiClient, HttpTequilapiClient } from './http-tequilapi-client'
+import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
 import { parseConsumerLocationDTO } from './consumer'
 import { parseIdentityDTO } from './identity'
 import { parseHealthcheckResponse } from './daemon'

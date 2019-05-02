@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TequilapiClient } from '../http-tequilapi-client'
+import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicyDTO } from '../access-policy'
 import { ServiceInfoDTO, ServiceRequest, ServiceStatus as ServiceStatusDTO } from '../provider'
 import TequilapiError from '../tequilapi-error'

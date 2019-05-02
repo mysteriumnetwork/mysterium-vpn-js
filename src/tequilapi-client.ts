@@ -15,7 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { HttpInterface, TIMEOUT_DISABLED } from './http'
+import axios from 'axios'
+import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
+import AxiosAdapter from './http/axios-adapter'
 import ProposalsQuery from './proposal/proposals-query'
 import { AccessPolicyDTO, parseAccessPoliciesDTO } from './access-policy'
 import {
@@ -50,6 +52,8 @@ import {
   parseServiceSessionListDTO,
   ServiceSessionDTO,
 } from './provider'
+
+export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>
@@ -280,5 +284,29 @@ export class HttpTequilapiClient implements TequilapiClient {
     }
 
     return parseAccessPoliciesDTO(response)
+  }
+}
+
+export class TequilapiClientFactory {
+  public _baseUrl: string
+  public _defaultTimeout: number
+
+  public constructor(baseUrl: string = TEQUILAPI_URL, defaultTimeout: number = TIMEOUT_DEFAULT) {
+    this._baseUrl = baseUrl
+    this._defaultTimeout = defaultTimeout
+  }
+
+  public build(adapter: HttpInterface): TequilapiClient {
+    return new HttpTequilapiClient(adapter)
+  }
+
+  public buildAdapter(): HttpInterface {
+    const axiosInstance = axios.create({
+      baseURL: this._baseUrl,
+      headers: {
+        'Cache-Control': 'no-cache, no-store',
+      },
+    })
+    return new AxiosAdapter(axiosInstance, this._defaultTimeout)
   }
 }

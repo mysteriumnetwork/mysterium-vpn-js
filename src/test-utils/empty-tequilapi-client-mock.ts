@@ -17,7 +17,7 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { TequilapiClient } from '../http-tequilapi-client'
+import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicyDTO } from '../access-policy'
 import {
   ConnectionIPDTO,
