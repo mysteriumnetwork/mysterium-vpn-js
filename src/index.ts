@@ -17,6 +17,7 @@
 
 import { Logger } from './logger'
 import TequilapiClientFactory, { TEQUILAPI_URL } from './tequilapi-client-factory'
+import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
 
 export * from './access-policy'
 export * from './connection'
@@ -31,4 +32,4 @@ export * from './nat'
 export * from './proposal'
 export * from './provider'
 
-export { Logger, TequilapiClientFactory, TEQUILAPI_URL }
+export { Logger, TequilapiClientFactory, TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient }
