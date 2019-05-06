@@ -15,21 +15,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { NodeBuildInfoDTO, parseNodeBuildInfoDTO } from './node-build-info'
+import { validateMultiple } from '../fmt/validation'
 
-export interface NodeHealthcheckDTO {
+export interface NodeBuildInfo {
+  commit: string
+  branch: string
+  buildNumber: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseNodeBuildInfo(data: any): NodeBuildInfo {
+  validateMultiple('NodeBuildInfo', data, [
+    { name: 'commit', type: 'string' },
+    { name: 'branch', type: 'string' },
+    { name: 'buildNumber', type: 'string' },
+  ])
+  return {
+    commit: data.commit,
+    branch: data.branch,
+    buildNumber: data.buildNumber,
+  }
+}
+
+export interface NodeHealthcheck {
   uptime: string
   process: number
   version: string
-  buildInfo: NodeBuildInfoDTO
+  buildInfo: NodeBuildInfo
 }
 
-/**
- * Validates and converts mixed type into NodeHealthcheckDTO.
- * @param data to be conveted
- * @returns converted type
- */
-export function parseHealthcheckResponse(data: any): NodeHealthcheckDTO {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseHealthcheckResponse(data: any): NodeHealthcheck {
   const errorMessage = `Unable to parse healthcheck response: ${JSON.stringify(data)}`
   if (data == null || typeof data !== 'object') {
     throw new Error(errorMessage)
@@ -50,7 +66,7 @@ export function parseHealthcheckResponse(data: any): NodeHealthcheckDTO {
   if (data.buildInfo === null || typeof data.buildInfo !== 'object') {
     throw new Error(errorMessage)
   }
-  const buildInfo: NodeBuildInfoDTO = parseNodeBuildInfoDTO(data.buildInfo)
+  const buildInfo: NodeBuildInfo = parseNodeBuildInfo(data.buildInfo)
 
   return { uptime: data.uptime, process: data.process, version: data.version, buildInfo }
 }

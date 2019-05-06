@@ -25,7 +25,8 @@ export { ConnectionStatus } from './connection/status'
 
 export { ConsumerLocation } from './consumer/location'
 
-export * from './daemon'
+export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
+
 export * from './fmt'
 export * from './func'
 export * from './http'

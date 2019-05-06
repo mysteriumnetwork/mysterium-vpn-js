@@ -21,7 +21,7 @@ import { AxiosAdapter } from './http'
 import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
 import { parseConsumerLocation } from './consumer/location'
 import { parseIdentityDTO } from './identity'
-import { parseHealthcheckResponse } from './daemon'
+import { parseHealthcheckResponse } from './daemon/healthcheck'
 import { parseProposal } from './proposal/proposal'
 import { parseServiceInfoDTO, parseServiceListDTO } from './provider'
 

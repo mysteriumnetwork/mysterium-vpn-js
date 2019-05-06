@@ -26,7 +26,7 @@ import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicy } from '../access-policy/access-policy'
 import { ConsumerLocation } from '../consumer/location'
 import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
-import { NodeHealthcheckDTO } from '../daemon'
+import { NodeHealthcheck } from '../daemon/healthcheck'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
 import { NatStatusDTO } from '../nat'
@@ -59,7 +59,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public healthCheck(timeout?: number): Promise<NodeHealthcheckDTO> {
+  public healthCheck(timeout?: number): Promise<NodeHealthcheck> {
     throw Error('Not implemented')
   }
 

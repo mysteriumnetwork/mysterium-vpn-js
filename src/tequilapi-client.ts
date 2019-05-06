@@ -23,7 +23,7 @@ import { ConnectionIP, parseConnectionIP } from './connection/ip'
 import { ConnectionSession, validateSession } from './connection/session'
 import { parseConnectionStatistics, ConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
-import { NodeHealthcheckDTO, parseHealthcheckResponse } from './daemon'
+import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
 import AxiosAdapter from './http/axios-adapter'
 import {
@@ -49,7 +49,7 @@ import {
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
 export interface TequilapiClient {
-  healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>
+  healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusDTO>
   stop(): Promise<void>
   location(timeout?: number): Promise<ConsumerLocation>
@@ -86,7 +86,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     this.http = http
   }
 
-  public async healthCheck(timeout?: number): Promise<NodeHealthcheckDTO> {
+  public async healthCheck(timeout?: number): Promise<NodeHealthcheck> {
     const response = await this.http.get('healthcheck', undefined, timeout)
     if (!response) {
       throw new Error('Healthcheck response body is missing')

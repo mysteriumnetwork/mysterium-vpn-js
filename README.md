@@ -61,7 +61,7 @@ Output:
 Client object fulfills the following interface:
 ```typescript
 interface TequilapiClient {
-  healthCheck (timeout: ?number): Promise<NodeHealthcheckDTO>,
+  healthCheck (timeout: ?number): Promise<NodeHealthcheck>,
   stop (): Promise<void>,
 
   identitiesList (): Promise<Array<IdentityDTO>>,

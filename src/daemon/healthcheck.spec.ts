@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseHealthcheckResponse } from './node-healthcheck'
+import { parseHealthcheckResponse } from './healthcheck'
 
 describe('TequilapiClient DTO', () => {
   describe('.parseHealthcheckResponse', () => {
