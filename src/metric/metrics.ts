@@ -17,12 +17,12 @@
 
 import { ConnectionCount, parseConnectionCount } from '../connection/count'
 
-export interface MetricsDTO {
+export interface Metrics {
   connectCount?: ConnectionCount
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseMetricsDTO(data: any): MetricsDTO {
+export function parseMetrics(data: any): Metrics {
   try {
     return { connectCount: parseConnectionCount(data.connectCount) }
   } catch (err) {

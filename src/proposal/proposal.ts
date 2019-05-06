@@ -16,7 +16,7 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
-import { MetricsDTO } from '../metric'
+import { Metrics } from '../metric/metrics'
 import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from '../provider'
 
 export interface Proposal {
@@ -24,7 +24,7 @@ export interface Proposal {
   providerId: string
   serviceType: string
   serviceDefinition: ServiceDefinitionDTO
-  metrics?: MetricsDTO
+  metrics?: Metrics
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

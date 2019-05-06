@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseMetricsDTO } from './metrics-dto'
+import { parseMetrics } from './metrics'
 
-describe('MetricsDTO', () => {
-  describe('.parseMetricsDTO', () => {
+describe('Metrics', () => {
+  describe('.parseMetrics', () => {
     it('returns empty metrics if they are empty', () => {
-      const dto = parseMetricsDTO({})
+      const dto = parseMetrics({})
       expect(dto).toEqual({ connectCount: undefined })
     })
   })

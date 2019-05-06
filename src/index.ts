@@ -46,7 +46,8 @@ export { PublicKey } from './identity/public-key'
 export { IdentityRegistration } from './identity/registration'
 export { Signature } from './identity/signature'
 
-export * from './metric'
+export { Metrics } from './metric/metrics'
+
 export * from './nat'
 export { Proposal, ProposalQuery } from './proposal/proposal'
 export * from './provider'
