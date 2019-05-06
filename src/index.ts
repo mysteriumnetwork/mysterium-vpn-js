@@ -27,7 +27,10 @@ export { ConsumerLocation } from './consumer/location'
 
 export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
 
-export * from './fmt'
+export { BytesFormatter } from './fmt/bytes-formatter'
+export { DurationFormatter } from './fmt/duration-formatter'
+export { TimeFormatter } from './fmt/time-formatter'
+
 export * from './func'
 export * from './http'
 export * from './identity'
