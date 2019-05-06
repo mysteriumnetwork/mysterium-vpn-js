@@ -24,8 +24,9 @@ import { ConnectionSession, validateSession } from './connection/session'
 import { parseConnectionStatistics, ConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
-import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
-import AxiosAdapter from './http/axios-adapter'
+import { AxiosAdapter } from './http/axios-adapter'
+import { HttpInterface } from './http/interface'
+import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 import {
   IdentityDTO,
   IdentityPayoutDTO,

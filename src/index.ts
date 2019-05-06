@@ -35,7 +35,9 @@ export { FunctionLooper } from './func/function-looper'
 export { ThresholdExecutor } from './func/threshold-executor'
 export { sleep } from './func/sleep'
 
-export * from './http'
+export { AxiosAdapter } from './http/axios-adapter'
+export { HttpInterface, HttpQuery } from './http/interface'
+
 export * from './identity'
 export * from './metric'
 export * from './nat'
