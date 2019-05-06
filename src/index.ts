@@ -31,7 +31,10 @@ export { BytesFormatter } from './fmt/bytes-formatter'
 export { DurationFormatter } from './fmt/duration-formatter'
 export { TimeFormatter } from './fmt/time-formatter'
 
-export * from './func'
+export { FunctionLooper } from './func/function-looper'
+export { ThresholdExecutor } from './func/threshold-executor'
+export { sleep } from './func/sleep'
+
 export * from './http'
 export * from './identity'
 export * from './metric'

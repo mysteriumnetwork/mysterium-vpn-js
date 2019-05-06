@@ -17,7 +17,7 @@
 
 import { TequilapiClient } from '../tequilapi-client'
 import { ServiceSessionDTO } from '../provider'
-import { FunctionLooper } from '../func'
+import { FunctionLooper } from '../func/function-looper'
 import { Publisher } from './publisher'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
