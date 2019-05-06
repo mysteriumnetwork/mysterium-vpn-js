@@ -16,7 +16,7 @@
  */
 
 import { validateMultiple } from '../fmt/validation'
-import { parseProposalDTO, ProposalDTO } from '../proposal'
+import { parseProposal, Proposal } from '../proposal/proposal'
 import { ServiceStatus } from './service-status'
 
 export interface ServiceInfoDTO {
@@ -25,7 +25,7 @@ export interface ServiceInfoDTO {
   type: string
   options?: { [key: string]: any }
   status: ServiceStatus
-  proposal: ProposalDTO
+  proposal: Proposal
 }
 
 export function parseServiceInfoDTO(data: any): ServiceInfoDTO {
@@ -45,6 +45,6 @@ export function parseServiceInfoDTO(data: any): ServiceInfoDTO {
     type: data.type,
     options: data.options,
     status: data.status,
-    proposal: parseProposalDTO(data.proposal),
+    proposal: parseProposal(data.proposal),
   }
 }

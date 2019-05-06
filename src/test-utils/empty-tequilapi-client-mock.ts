@@ -29,7 +29,7 @@ import {
 import { ConsumerLocationDTO } from '../consumer'
 import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
 import { NodeHealthcheckDTO } from '../daemon'
-import { ProposalDTO, ProposalQueryOptions } from '../proposal'
+import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
 import { NatStatusDTO } from '../nat'
 
@@ -57,7 +57,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]> {
+  public findProposals(options?: ProposalQuery): Promise<Proposal[]> {
     throw Error('Not implemented')
   }
 

@@ -16,40 +16,39 @@
  */
 
 import axios from 'axios'
-import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
-import AxiosAdapter from './http/axios-adapter'
-import ProposalsQuery from './proposal/proposals-query'
 import { AccessPolicyDTO, parseAccessPoliciesDTO } from './access-policy'
 import {
-  ConnectionRequest,
   ConnectionIPDTO,
-  parseConnectionIPDTO,
+  ConnectionRequest,
   ConnectionSessionDTO,
-  validateSession,
   ConnectionStatisticsDTO,
-  parseConnectionStatisticsDTO,
   ConnectionStatusDTO,
+  parseConnectionIPDTO,
+  parseConnectionStatisticsDTO,
   parseConnectionStatusDTO,
+  validateSession,
 } from './connection'
 import { ConsumerLocationDTO, parseConsumerLocationDTO } from './consumer'
+import { NodeHealthcheckDTO, parseHealthcheckResponse } from './daemon'
+import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
+import AxiosAdapter from './http/axios-adapter'
 import {
   IdentityDTO,
-  parseIdentityDTO,
-  parseIdentitiesResponseDTO,
   IdentityPayoutDTO,
-  parseIdentityPayoutDTO,
   IdentityRegistrationDTO,
+  parseIdentitiesResponseDTO,
+  parseIdentityDTO,
+  parseIdentityPayoutDTO,
   parseIdentityRegistrationDTO,
 } from './identity'
 import { NatStatusDTO, parseNatStatusResponse } from './nat'
-import { NodeHealthcheckDTO, parseHealthcheckResponse } from './daemon'
-import { ProposalDTO, parseProposalsResponseDTO, ProposalQueryOptions } from './proposal'
+import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import {
   parseServiceInfoDTO,
-  ServiceInfoDTO,
   parseServiceListDTO,
-  ServiceRequest,
   parseServiceSessionListDTO,
+  ServiceInfoDTO,
+  ServiceRequest,
   ServiceSessionDTO,
 } from './provider'
 
@@ -68,7 +67,7 @@ export interface TequilapiClient {
   identityPayout(id: string): Promise<IdentityPayoutDTO>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
 
-  findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]>
+  findProposals(options?: ProposalQuery): Promise<Proposal[]>
 
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusDTO>
   connectionStatus(): Promise<ConnectionStatusDTO>
@@ -160,16 +159,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.put(`identities/${id}/payout`, { ethAddress })
   }
 
-  public async findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]> {
-    const params = options ? new ProposalsQuery(options).toQueryParams() : undefined
-    const response = await this.http.get('proposals', params)
+  public async findProposals(query?: ProposalQuery): Promise<Proposal[]> {
+    const response = await this.http.get('proposals', query)
     if (!response) {
       throw new Error('Proposals response body is missing')
     }
-    const responseDto = parseProposalsResponseDTO(response)
-    const proposals = responseDto.proposals
-
-    return proposals || []
+    return parseProposalList(response).proposals || []
   }
 
   public async connectionCreate(

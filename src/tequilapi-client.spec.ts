@@ -22,7 +22,7 @@ import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
 import { parseConsumerLocationDTO } from './consumer'
 import { parseIdentityDTO } from './identity'
 import { parseHealthcheckResponse } from './daemon'
-import { parseProposalDTO } from './proposal'
+import { parseProposal } from './proposal/proposal'
 import { parseServiceInfoDTO, parseServiceListDTO } from './provider'
 
 describe('HttpTequilapiClient', () => {
@@ -223,8 +223,8 @@ describe('HttpTequilapiClient', () => {
 
       const proposals = await api.findProposals()
       expect(proposals).toHaveLength(2)
-      expect(proposals[0]).toEqual(parseProposalDTO(response.proposals[0]))
-      expect(proposals[1]).toEqual(parseProposalDTO(response.proposals[1]))
+      expect(proposals[0]).toEqual(parseProposal(response.proposals[0]))
+      expect(proposals[1]).toEqual(parseProposal(response.proposals[1]))
     })
 
     it('fetches connect counts when option is given', async () => {

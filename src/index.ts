@@ -22,6 +22,7 @@ import {
   TequilapiClient,
   HttpTequilapiClient,
 } from './tequilapi-client'
+import { Proposal, ProposalQuery } from './proposal/proposal'
 
 export * from './access-policy'
 export * from './connection'
@@ -33,7 +34,14 @@ export * from './http'
 export * from './identity'
 export * from './metric'
 export * from './nat'
-export * from './proposal'
 export * from './provider'
 
-export { Logger, TequilapiClientFactory, TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient }
+export {
+  Logger,
+  TequilapiClientFactory,
+  TEQUILAPI_URL,
+  TequilapiClient,
+  HttpTequilapiClient,
+  Proposal,
+  ProposalQuery,
+}
