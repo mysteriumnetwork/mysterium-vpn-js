@@ -24,7 +24,7 @@ import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionStatusResponse } from '../connection/status'
 import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicy } from '../access-policy/access-policy'
-import { ConsumerLocationDTO } from '../consumer'
+import { ConsumerLocation } from '../consumer/location'
 import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
 import { NodeHealthcheckDTO } from '../daemon'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
@@ -87,7 +87,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public location(timeout?: number): Promise<ConsumerLocationDTO> {
+  public location(timeout?: number): Promise<ConsumerLocation> {
     throw Error('Not implemented')
   }
 

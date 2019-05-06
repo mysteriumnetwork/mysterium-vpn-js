@@ -76,7 +76,7 @@ interface TequilapiClient {
   connectionCancel (): Promise<void>,
   connectionIP (timeout: ?number): Promise<ConnectionIP>,
   connectionStatistics (): Promise<ConnectionStatistics>,
-  location (timeout: ?number): Promise<ConsumerLocationDTO>
+  location (timeout: ?number): Promise<ConsumerLocation>
 }
 ```
 

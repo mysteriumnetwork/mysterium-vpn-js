@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export interface ConsumerLocationDTO {
+export interface ConsumerLocation {
   ip?: string
   asn: any
   isp?: string
@@ -25,7 +25,8 @@ export interface ConsumerLocationDTO {
   node_type?: string
 }
 
-export function parseConsumerLocationDTO(data: any): ConsumerLocationDTO {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseConsumerLocation(data: any): ConsumerLocation {
   return {
     ip: data.ip,
     asn: data.asn,

@@ -22,7 +22,7 @@ import { ConnectionStatusResponse, parseConnectionStatusResponse } from './conne
 import { ConnectionIP, parseConnectionIP } from './connection/ip'
 import { ConnectionSession, validateSession } from './connection/session'
 import { parseConnectionStatistics, ConnectionStatistics } from './connection/statistics'
-import { ConsumerLocationDTO, parseConsumerLocationDTO } from './consumer'
+import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheckDTO, parseHealthcheckResponse } from './daemon'
 import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
 import AxiosAdapter from './http/axios-adapter'
@@ -52,7 +52,7 @@ export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheckDTO>
   natStatus(): Promise<NatStatusDTO>
   stop(): Promise<void>
-  location(timeout?: number): Promise<ConsumerLocationDTO>
+  location(timeout?: number): Promise<ConsumerLocation>
 
   identitiesList(): Promise<IdentityDTO[]>
   identityCreate(passphrase: string): Promise<IdentityDTO>
@@ -103,12 +103,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.post('stop')
   }
 
-  public async location(timeout?: number): Promise<ConsumerLocationDTO> {
+  public async location(timeout?: number): Promise<ConsumerLocation> {
     const response = await this.http.get('location', undefined, timeout)
     if (!response) {
       throw new Error('Location response body is missing')
     }
-    return parseConsumerLocationDTO(response)
+    return parseConsumerLocation(response)
   }
 
   public async identitiesList(): Promise<IdentityDTO[]> {

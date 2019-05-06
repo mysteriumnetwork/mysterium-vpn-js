@@ -19,7 +19,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http'
 import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
-import { parseConsumerLocationDTO } from './consumer'
+import { parseConsumerLocation } from './consumer/location'
 import { parseIdentityDTO } from './identity'
 import { parseHealthcheckResponse } from './daemon'
 import { parseProposal } from './proposal/proposal'
@@ -170,7 +170,7 @@ describe('HttpTequilapiClient', () => {
 
       const stats = await api.location()
 
-      const dto = parseConsumerLocationDTO(response)
+      const dto = parseConsumerLocation(response)
       expect(stats.ip).toEqual(dto.ip)
       expect(stats.asn).toEqual(dto.asn)
       expect(stats.isp).toEqual(dto.isp)

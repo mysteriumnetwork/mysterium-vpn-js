@@ -16,13 +16,15 @@
  */
 
 export { AccessPolicy, AccessRule } from './access-policy/access-policy'
+
 export { ConnectionCount } from './connection/count'
 export { ConnectionIP } from './connection/ip'
 export { ConnectionRequest } from './connection/request'
 export { ConnectionSession } from './connection/session'
 export { ConnectionStatus } from './connection/status'
 
-export * from './consumer'
+export { ConsumerLocation } from './consumer/location'
+
 export * from './daemon'
 export * from './fmt'
 export * from './func'
