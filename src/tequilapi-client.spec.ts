@@ -460,19 +460,19 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('connectionIP()', () => {
+  describe('connectionIp()', () => {
     it('returns response', async () => {
       const response = { ip: 'mock ip' }
       mock.onGet('connection/ip').reply(200, response)
 
-      const stats = await api.connectionIP()
+      const stats = await api.connectionIp()
       expect(stats).toEqual(response)
     })
 
     it('handles error', () => {
       mock.onGet('connection/ip').reply(500)
 
-      expect(api.connectionIP()).rejects.toHaveProperty(
+      expect(api.connectionIp()).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="connection/ip")'
       )

@@ -15,18 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectionIP, parseConnectionIP } from './ip'
+import { ConnectionIp, parseConnectionIp } from './ip'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseConnectionIP', () => {
+  describe('.parseConnectionIp', () => {
     it('sets properties', async () => {
-      const model: ConnectionIP = parseConnectionIP({ ip: 'mock ip' })
+      const model: ConnectionIp = parseConnectionIp({ ip: 'mock ip' })
 
       expect(model.ip).toEqual('mock ip')
     })
 
     it('sets empty properties', async () => {
-      const model: ConnectionIP = parseConnectionIP({})
+      const model: ConnectionIp = parseConnectionIp({})
 
       expect(model.ip).toBeUndefined()
     })

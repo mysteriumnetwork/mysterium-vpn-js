@@ -17,7 +17,7 @@
 
 import { validate } from '../fmt/validation'
 
-export enum NATStatus {
+export enum NatStatus {
   NOT_FINISHED = 'not_finished',
   FAILED = 'failure',
   SUCCESSFUL = 'successful',

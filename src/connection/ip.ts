@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export interface ConnectionIP {
+export interface ConnectionIp {
   ip?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseConnectionIP(data: any): ConnectionIP {
+export function parseConnectionIp(data: any): ConnectionIp {
   return { ip: data.ip }
 }

@@ -18,7 +18,7 @@
 export { AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { ConnectionCount } from './connection/count'
-export { ConnectionIP } from './connection/ip'
+export { ConnectionIp } from './connection/ip'
 export { ConnectionRequest } from './connection/request'
 export { ConnectionSession } from './connection/session'
 export { ConnectionStatus } from './connection/status'
@@ -48,7 +48,7 @@ export { Signature } from './identity/signature'
 
 export { Metrics } from './metric/metrics'
 
-export { NATStatus, NatStatusResponse } from './nat/status'
+export { NatStatus, NatStatusResponse } from './nat/status'
 
 export { Proposal, ProposalQuery } from './proposal/proposal'
 export * from './provider'

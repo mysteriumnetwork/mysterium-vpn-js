@@ -19,7 +19,7 @@ import axios from 'axios'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionRequest } from './connection/request'
 import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
-import { ConnectionIP, parseConnectionIP } from './connection/ip'
+import { ConnectionIp, parseConnectionIp } from './connection/ip'
 import { ConnectionSession, validateSession } from './connection/session'
 import { parseConnectionStatistics, ConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
@@ -61,7 +61,7 @@ export interface TequilapiClient {
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusResponse>
   connectionStatus(): Promise<ConnectionStatusResponse>
   connectionCancel(): Promise<void>
-  connectionIP(timeout?: number): Promise<ConnectionIP>
+  connectionIp(timeout?: number): Promise<ConnectionIp>
   connectionStatistics(): Promise<ConnectionStatistics>
   connectionSessions(): Promise<ConnectionSession[]>
 
@@ -187,12 +187,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.delete('connection')
   }
 
-  public async connectionIP(timeout?: number): Promise<ConnectionIP> {
+  public async connectionIp(timeout?: number): Promise<ConnectionIp> {
     const response = await this.http.get('connection/ip', undefined, timeout)
     if (!response) {
       throw new Error('Connection IP response body is missing')
     }
-    return parseConnectionIP(response)
+    return parseConnectionIp(response)
   }
 
   public async connectionStatistics(): Promise<ConnectionStatistics> {

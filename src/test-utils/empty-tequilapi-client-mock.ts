@@ -18,7 +18,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { AccessPolicy } from '../access-policy/access-policy'
-import { ConnectionIP } from '../connection/ip'
+import { ConnectionIp } from '../connection/ip'
 import { ConnectionRequest } from '../connection/request'
 import { ConnectionSession } from '../connection/session'
 import { ConnectionStatistics } from '../connection/statistics'
@@ -45,7 +45,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionIP(timeout?: number): Promise<ConnectionIP> {
+  public connectionIp(timeout?: number): Promise<ConnectionIp> {
     throw Error('Not implemented')
   }
 
