@@ -15,5 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export * from './nat-status-dto'
-export * from './nat-status'
+import { validate } from '../fmt/validation'
+
+export enum NATStatus {
+  NOT_FINISHED = 'not_finished',
+  FAILED = 'failure',
+  SUCCESSFUL = 'successful',
+}
+
+export interface NatStatusResponse {
+  status: string
+  error?: string
+}
+
+export function parseNatStatusResponse(data: any): NatStatusResponse {
+  validate('NatStatusResponse', data, { name: 'status', type: 'string' })
+  if (data.error) {
+    validate('NatStatusResponse', data, { name: 'error', type: 'string' })
+  }
+  return { status: data.status, error: data.error }
+}

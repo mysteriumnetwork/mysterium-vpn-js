@@ -28,7 +28,7 @@ import { NodeHealthcheck } from '../daemon/healthcheck'
 import { Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
 import { IdentityRegistration } from '../identity/registration'
-import { NatStatusDTO } from '../nat'
+import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
 import { TequilapiClient } from '../tequilapi-client'
@@ -93,7 +93,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public natStatus(): Promise<NatStatusDTO> {
+  public natStatus(): Promise<NatStatusResponse> {
     throw new Error('Not implemented')
   }
 

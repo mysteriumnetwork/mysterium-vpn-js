@@ -48,7 +48,8 @@ export { Signature } from './identity/signature'
 
 export { Metrics } from './metric/metrics'
 
-export * from './nat'
+export { NATStatus, NatStatusResponse } from './nat/status'
+
 export { Proposal, ProposalQuery } from './proposal/proposal'
 export * from './provider'
 

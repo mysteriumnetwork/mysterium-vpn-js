@@ -116,7 +116,7 @@ describe('HttpTequilapiClient', () => {
 
       expect(api.natStatus()).rejects.toHaveProperty(
         'message',
-        'NatStatusDTO: status is not provided'
+        'NatStatusResponse: status is not provided'
       )
     })
 
@@ -129,7 +129,7 @@ describe('HttpTequilapiClient', () => {
 
       expect(api.natStatus()).rejects.toHaveProperty(
         'message',
-        'NatStatusDTO: error should be "string"'
+        'NatStatusResponse: error should be "string"'
       )
     })
   })

@@ -30,7 +30,7 @@ import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 import { Identity, parseIdentityList, parseIdentity } from './identity/identity'
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import { IdentityRegistration, parseIdentityRegistration } from './identity/registration'
-import { NatStatusDTO, parseNatStatusResponse } from './nat'
+import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import {
   parseServiceInfoDTO,
@@ -45,7 +45,7 @@ export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
-  natStatus(): Promise<NatStatusDTO>
+  natStatus(): Promise<NatStatusResponse>
   stop(): Promise<void>
   location(timeout?: number): Promise<ConsumerLocation>
 
@@ -89,7 +89,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseHealthcheckResponse(response)
   }
 
-  public async natStatus(): Promise<NatStatusDTO> {
+  public async natStatus(): Promise<NatStatusResponse> {
     const response = await this.http.get('nat/status')
     return parseNatStatusResponse(response)
   }
