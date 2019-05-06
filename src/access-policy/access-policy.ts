@@ -32,15 +32,10 @@ export interface AccessPolicy {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseAccessRule(responseData: any): AccessRule {
   validateMultiple('AccessRule', responseData, [{ name: 'type', type: 'string' }])
-
   if (responseData.value) {
     validate('AccessRule.value', responseData, { name: 'value', type: 'string' })
   }
-
-  return {
-    type: responseData.type,
-    value: responseData.value,
-  }
+  return responseData
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,9 +48,7 @@ export function parseAccessPolicy(responseData: any): AccessPolicy {
   ])
 
   return {
-    id: responseData.id,
-    title: responseData.title,
-    description: responseData.description,
+    ...responseData,
     allow: responseData.allow.map(parseAccessRule),
   }
 }

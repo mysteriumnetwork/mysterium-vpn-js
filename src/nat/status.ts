@@ -33,5 +33,5 @@ export function parseNatStatusResponse(data: any): NatStatusResponse {
   if (data.error) {
     validate('NatStatusResponse', data, { name: 'error', type: 'string' })
   }
-  return { status: data.status, error: data.error }
+  return data
 }

@@ -18,7 +18,3 @@
 export interface Location {
   country?: string
 }
-
-export function parseLocation(data: any): Location {
-  return { country: data.country }
-}

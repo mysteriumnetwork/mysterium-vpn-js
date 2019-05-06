@@ -21,5 +21,5 @@ export interface ConnectionIp {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseConnectionIp(data: any): ConnectionIp {
-  return { ip: data.ip }
+  return data
 }

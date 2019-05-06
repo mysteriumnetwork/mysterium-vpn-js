@@ -30,11 +30,7 @@ export function parseNodeBuildInfo(data: any): NodeBuildInfo {
     { name: 'branch', type: 'string' },
     { name: 'buildNumber', type: 'string' },
   ])
-  return {
-    commit: data.commit,
-    branch: data.branch,
-    buildNumber: data.buildNumber,
-  }
+  return data
 }
 
 export interface NodeHealthcheck {
@@ -68,5 +64,5 @@ export function parseHealthcheckResponse(data: any): NodeHealthcheck {
   }
   const buildInfo: NodeBuildInfo = parseNodeBuildInfo(data.buildInfo)
 
-  return { uptime: data.uptime, process: data.process, version: data.version, buildInfo }
+  return { ...data, buildInfo }
 }

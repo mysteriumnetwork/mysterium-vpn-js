@@ -33,8 +33,5 @@ export interface ConnectionStatusResponse {
 export function parseConnectionStatusResponse(data: any): ConnectionStatusResponse {
   // TODO: validate that status has value from ConnectionStatus enum
   validate('ConnectionStatusResponse', data, { name: 'status', type: 'string' })
-  return {
-    status: data.status,
-    sessionId: data.sessionId,
-  }
+  return data
 }

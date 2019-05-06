@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parsePublicKey, PublicKey } from './public-key'
-import { parseSignature, Signature } from './signature'
+import { PublicKey } from './public-key'
+import { Signature } from './signature'
 
 export interface IdentityRegistration {
   registered: boolean
@@ -26,9 +26,5 @@ export interface IdentityRegistration {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseIdentityRegistration(data: any): IdentityRegistration {
-  return {
-    registered: data.registered,
-    publicKey: data.publicKey ? parsePublicKey(data.publicKey) : undefined,
-    signature: data.signature ? parseSignature(data.signature) : undefined,
-  }
+  return data
 }

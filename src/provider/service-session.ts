@@ -27,14 +27,10 @@ export function parseServiceSession(data: any): ServiceSession {
     { name: 'id', type: 'string' },
     { name: 'consumerId', type: 'string' },
   ])
-  return {
-    id: data.id,
-    consumerId: data.consumerId,
-  }
+  return data
 }
 
 export function parseServiceSessionList(responseData: any): ServiceSession[] {
   validate('ServiceSession[]', responseData, { name: 'sessions', type: 'array' })
-
   return responseData.sessions.map(parseServiceSession)
 }

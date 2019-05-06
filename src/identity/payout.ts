@@ -24,5 +24,7 @@ export interface IdentityPayout {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseIdentityPayout(data: any): IdentityPayout {
   validate('IdentityPayout', data, { name: 'eth_address', type: 'string' })
-  return { ethAddress: data.eth_address }
+  return {
+    ethAddress: data.eth_address,
+  }
 }

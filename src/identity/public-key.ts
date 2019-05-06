@@ -19,8 +19,3 @@ export interface PublicKey {
   part1: string
   part2: string
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parsePublicKey(data: any): PublicKey {
-  return { part1: data.part1, part2: data.part2 }
-}

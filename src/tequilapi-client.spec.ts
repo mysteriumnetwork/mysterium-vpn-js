@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /*
  * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
@@ -162,7 +163,6 @@ describe('HttpTequilapiClient', () => {
         continent: 'EU',
         country: 'LT',
         city: 'Vilnius',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         node_type: 'residential',
       }
 
@@ -362,7 +362,6 @@ describe('HttpTequilapiClient', () => {
 
   describe('identityPayout()', () => {
     it('returns identity payout info', async () => {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       const response = { eth_address: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca' }
       mock.onGet('identities/test-id/payout').reply(200, response)
       const info = await api.identityPayout('test-id')

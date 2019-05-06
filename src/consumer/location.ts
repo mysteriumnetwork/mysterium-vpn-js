@@ -27,14 +27,5 @@ export interface ConsumerLocation {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseConsumerLocation(data: any): ConsumerLocation {
-  return {
-    ip: data.ip,
-    asn: data.asn,
-    isp: data.isp,
-    continent: data.continent,
-    country: data.country,
-    city: data.city,
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    node_type: data.node_type,
-  }
+  return data
 }

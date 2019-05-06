@@ -40,11 +40,7 @@ export function parseServiceInfo(data: any): ServiceInfo {
   ])
 
   return {
-    id: data.id,
-    providerId: data.providerId,
-    type: data.type,
-    options: data.options,
-    status: data.status,
+    ...data,
     proposal: parseProposal(data.proposal),
   }
 }

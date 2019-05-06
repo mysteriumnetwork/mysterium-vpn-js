@@ -29,5 +29,5 @@ export function parseConnectionCount(data: any): ConnectionCount {
     { name: 'success', type: 'number' },
     { name: 'fail', type: 'number' },
   ])
-  return { success: 1, fail: 2, timeout: 3 }
+  return data
 }

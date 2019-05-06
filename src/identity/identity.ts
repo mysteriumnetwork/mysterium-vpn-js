@@ -24,7 +24,7 @@ export interface Identity {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseIdentity(data: any): Identity {
   validate('Identity', data, { name: 'id', type: 'string' })
-  return { id: data.id }
+  return data
 }
 
 export interface IdentityList {

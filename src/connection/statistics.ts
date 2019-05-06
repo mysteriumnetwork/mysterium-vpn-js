@@ -30,10 +30,5 @@ export function parseConnectionStatistics(data: any): ConnectionStatistics {
     { name: 'bytesReceived', type: 'number' },
     { name: 'bytesSent', type: 'number' },
   ])
-
-  return {
-    duration: data.duration,
-    bytesReceived: data.bytesReceived,
-    bytesSent: data.bytesSent,
-  }
+  return data
 }

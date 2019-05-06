@@ -20,12 +20,3 @@ export interface Signature {
   s: string
   v: string
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseSignature(data: any): Signature {
-  return {
-    r: data.r,
-    s: data.s,
-    v: data.v,
-  }
-}

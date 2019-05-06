@@ -15,16 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Location, parseLocation } from './location'
+import { Location } from './location'
 
 export interface ServiceDefinition {
   locationOriginate?: Location
-}
-
-export function parseServiceDefinition(data: any): ServiceDefinition {
-  let locationOriginate: Location | undefined
-  if (data.locationOriginate) {
-    locationOriginate = parseLocation(data.locationOriginate)
-  }
-  return { locationOriginate }
 }
