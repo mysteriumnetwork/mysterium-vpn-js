@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { PublicKeyDTO } from './public-key'
-import { SignatureDTO } from './signature'
+import { PublicKey } from './public-key'
+import { Signature } from './signature'
 
 export interface IdentityProof {
-  publicKey: PublicKeyDTO
-  signature: SignatureDTO
+  publicKey: PublicKey
+  signature: Signature
 }

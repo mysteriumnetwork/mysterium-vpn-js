@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,16 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IdentityDTO, parseIdentityDTO } from './identity'
+import { parsePublicKey, PublicKey } from './public-key'
+import { parseSignature, Signature } from './signature'
 
-export interface IdentitiesResponseDTO {
-  identities: IdentityDTO[]
+export interface IdentityRegistration {
+  registered: boolean
+  publicKey?: PublicKey
+  signature?: Signature
 }
 
-export function parseIdentitiesResponseDTO(responseData: any): IdentitiesResponseDTO {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseIdentityRegistration(data: any): IdentityRegistration {
+  return {
+    registered: data.registered,
+    publicKey: data.publicKey ? parsePublicKey(data.publicKey) : undefined,
+    signature: data.signature ? parseSignature(data.signature) : undefined,
   }
-
-  return { identities: responseData.identities.map((identity: any) => parseIdentityDTO(identity)) }
 }

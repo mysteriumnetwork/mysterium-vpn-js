@@ -27,15 +27,9 @@ import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { AxiosAdapter } from './http/axios-adapter'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
-import {
-  IdentityDTO,
-  IdentityPayoutDTO,
-  IdentityRegistrationDTO,
-  parseIdentitiesResponseDTO,
-  parseIdentityDTO,
-  parseIdentityPayoutDTO,
-  parseIdentityRegistrationDTO,
-} from './identity'
+import { Identity, parseIdentityList, parseIdentity } from './identity/identity'
+import { IdentityPayout, parseIdentityPayout } from './identity/payout'
+import { IdentityRegistration, parseIdentityRegistration } from './identity/registration'
 import { NatStatusDTO, parseNatStatusResponse } from './nat'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import {
@@ -55,11 +49,11 @@ export interface TequilapiClient {
   stop(): Promise<void>
   location(timeout?: number): Promise<ConsumerLocation>
 
-  identitiesList(): Promise<IdentityDTO[]>
-  identityCreate(passphrase: string): Promise<IdentityDTO>
+  identityList(): Promise<Identity[]>
+  identityCreate(passphrase: string): Promise<Identity>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
-  identityRegistration(id: string): Promise<IdentityRegistrationDTO>
-  identityPayout(id: string): Promise<IdentityPayoutDTO>
+  identityRegistration(id: string): Promise<IdentityRegistration>
+  identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
@@ -112,42 +106,42 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseConsumerLocation(response)
   }
 
-  public async identitiesList(): Promise<IdentityDTO[]> {
+  public async identityList(): Promise<Identity[]> {
     const response = await this.http.get('identities')
     if (!response) {
       throw new Error('Identities response body is missing')
     }
-    const responseDto = parseIdentitiesResponseDTO(response)
+    const responseDto = parseIdentityList(response)
 
     return responseDto.identities
   }
 
-  public async identityCreate(passphrase: string): Promise<IdentityDTO> {
+  public async identityCreate(passphrase: string): Promise<Identity> {
     const response = await this.http.post('identities', { passphrase })
     if (!response) {
       throw new Error('Identities creation response body is missing')
     }
-    return parseIdentityDTO(response)
+    return parseIdentity(response)
   }
 
   public async identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void> {
     await this.http.put('identities/' + id + '/unlock', { passphrase }, timeout)
   }
 
-  public async identityRegistration(id: string): Promise<IdentityRegistrationDTO> {
+  public async identityRegistration(id: string): Promise<IdentityRegistration> {
     const response = await this.http.get(`identities/${id}/registration`)
     if (!response) {
       throw new Error('Identities registration response body is missing')
     }
-    return parseIdentityRegistrationDTO(response)
+    return parseIdentityRegistration(response)
   }
 
-  public async identityPayout(id: string): Promise<IdentityPayoutDTO> {
+  public async identityPayout(id: string): Promise<IdentityPayout> {
     const response = await this.http.get(`identities/${id}/payout`)
     if (!response) {
       throw new Error('Identity payout response body is missing')
     }
-    return parseIdentityPayoutDTO(response)
+    return parseIdentityPayout(response)
   }
 
   public async updateIdentityPayout(id: string, ethAddress: string): Promise<void> {

@@ -15,11 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export * from './get-payment-link'
-export * from './identities-response'
-export * from './identity'
-export * from './identity-payout'
-export * from './identity-proof'
-export * from './identity-registration'
-export * from './public-key'
-export * from './signature'
+import { validate } from '../fmt/validation'
+
+export interface IdentityPayout {
+  ethAddress: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseIdentityPayout(data: any): IdentityPayout {
+  validate('IdentityPayout', data, { name: 'eth_address', type: 'string' })
+  return { ethAddress: data.eth_address }
+}

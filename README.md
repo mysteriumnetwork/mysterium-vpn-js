@@ -21,7 +21,7 @@ npm i mysterium-tequilapi
 import TequilapiClientFactory, { TEQUILAPI_URL } from 'mysterium-vpn-js'
 const factory = new TequilapiClientFactory(TEQUILAPI_URL)
 const client = factory.build(factory.buildAdapter())
-client.identitiesList().then((identities) => {
+client.identityList().then((identities) => {
   console.log(identities)
 })
 ```
@@ -64,10 +64,10 @@ interface TequilapiClient {
   healthCheck (timeout: ?number): Promise<NodeHealthcheck>,
   stop (): Promise<void>,
 
-  identitiesList (): Promise<Array<IdentityDTO>>,
-  identityCreate (passphrase: string): Promise<IdentityDTO>,
+  identityList (): Promise<Array<Identity>>,
+  identityCreate (passphrase: string): Promise<Identity>,
   identityUnlock (id: string, passphrase: string): Promise<void>,
-  identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
+  identityRegistration (id: string): Promise<IdentityRegistration>,
 
   findProposals (query: ?ProposalQuery): Promise<Array<Proposal>>,
 

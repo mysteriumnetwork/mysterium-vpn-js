@@ -20,7 +20,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http/axios-adapter'
 import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
 import { parseConsumerLocation } from './consumer/location'
-import { parseIdentityDTO } from './identity'
+import { parseIdentity } from './identity/identity'
 import { parseHealthcheckResponse } from './daemon/healthcheck'
 import { parseProposal } from './proposal/proposal'
 import { parseServiceInfoDTO, parseServiceListDTO } from './provider'
@@ -265,23 +265,23 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('identitiesList()', () => {
+  describe('identityList()', () => {
     it('returns identity DTOs', async () => {
       const response = {
         identities: [{ id: '0x1000FACE' }, { id: '0x2000FACE' }],
       }
       mock.onGet('identities').reply(200, response)
 
-      const identities = await api.identitiesList()
+      const identities = await api.identityList()
       expect(identities).toHaveLength(2)
-      expect(identities[0]).toEqual(parseIdentityDTO(response.identities[0]))
-      expect(identities[1]).toEqual(parseIdentityDTO(response.identities[1]))
+      expect(identities[0]).toEqual(parseIdentity(response.identities[0]))
+      expect(identities[1]).toEqual(parseIdentity(response.identities[1]))
     })
 
     it('handles error', () => {
       mock.onGet('identities').reply(500)
 
-      expect(api.identitiesList()).rejects.toHaveProperty(
+      expect(api.identityList()).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="identities")'
       )
@@ -294,7 +294,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('identities', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCreate('test')
-      expect(identity).toEqual(parseIdentityDTO(response))
+      expect(identity).toEqual(parseIdentity(response))
     })
 
     it('handles error', () => {
@@ -381,7 +381,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('identities/test-id/payout').reply(200, {})
       expect(api.identityPayout('test-id')).rejects.toHaveProperty(
         'message',
-        'IdentityPayoutDTO: eth_address is not provided'
+        'IdentityPayout: eth_address is not provided'
       )
     })
   })

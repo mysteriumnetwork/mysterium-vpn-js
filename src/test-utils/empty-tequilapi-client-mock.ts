@@ -17,19 +17,21 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { AccessPolicy } from '../access-policy/access-policy'
 import { ConnectionIP } from '../connection/ip'
 import { ConnectionRequest } from '../connection/request'
 import { ConnectionSession } from '../connection/session'
 import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionStatusResponse } from '../connection/status'
-import { TequilapiClient } from '../tequilapi-client'
-import { AccessPolicy } from '../access-policy/access-policy'
 import { ConsumerLocation } from '../consumer/location'
-import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
 import { NodeHealthcheck } from '../daemon/healthcheck'
+import { Identity } from '../identity/identity'
+import { IdentityPayout } from '../identity/payout'
+import { IdentityRegistration } from '../identity/registration'
+import { NatStatusDTO } from '../nat'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
-import { NatStatusDTO } from '../nat'
+import { TequilapiClient } from '../tequilapi-client'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -63,15 +65,15 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identitiesList(): Promise<IdentityDTO[]> {
+  public identityList(): Promise<Identity[]> {
     throw Error('Not implemented')
   }
 
-  public identityCreate(passphrase: string): Promise<IdentityDTO> {
+  public identityCreate(passphrase: string): Promise<Identity> {
     throw Error('Not implemented')
   }
 
-  public identityRegistration(id: string): Promise<IdentityRegistrationDTO> {
+  public identityRegistration(id: string): Promise<IdentityRegistration> {
     throw Error('Not implemented')
   }
 
@@ -83,7 +85,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityPayout(id: string): Promise<IdentityPayoutDTO> {
+  public identityPayout(id: string): Promise<IdentityPayout> {
     throw Error('Not implemented')
   }
 

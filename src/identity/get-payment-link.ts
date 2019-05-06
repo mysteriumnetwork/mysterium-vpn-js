@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IdentityProof } from './identity-proof'
+import { IdentityProof } from './proof'
 
 export const getPaymentLink = (paymentBaseUrl: string, registration: IdentityProof): string => {
   const { publicKey, signature } = registration

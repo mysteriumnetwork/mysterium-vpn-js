@@ -15,18 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IdentityRegistrationDTO, parseIdentityRegistrationDTO } from './identity-registration'
+import { IdentityRegistration, parseIdentityRegistration } from './registration'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseIdentityRegistrationDTO', () => {
-    const checkUndefinedFields = (identity: IdentityRegistrationDTO) => {
+  describe('.parseIdentityRegistration', () => {
+    const checkUndefinedFields = (identity: IdentityRegistration) => {
       expect(identity.registered).toBeUndefined()
       expect(identity.publicKey).toBeUndefined()
       expect(identity.signature).toBeUndefined()
     }
 
     it('sets properties', () => {
-      const identity = parseIdentityRegistrationDTO({
+      const identity = parseIdentityRegistration({
         registered: false,
         publicKey: {
           part1: '0xfb22c62ed2ddc65eb2994a8af5b1094b239aacc04a6505fd2bc581f55547175a',
@@ -54,12 +54,12 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('sets empty properties', () => {
-      const identity = parseIdentityRegistrationDTO({})
+      const identity = parseIdentityRegistration({})
       checkUndefinedFields(identity)
     })
 
     it('sets wrong properties', () => {
-      const identity = parseIdentityRegistrationDTO('I am wrong')
+      const identity = parseIdentityRegistration('I am wrong')
       checkUndefinedFields(identity)
     })
   })

@@ -17,11 +17,25 @@
 
 import { validate } from '../fmt/validation'
 
-export interface IdentityDTO {
+export interface Identity {
   id: string
 }
 
-export function parseIdentityDTO(data: any): IdentityDTO {
-  validate('IdentityDTO', data, { name: 'id', type: 'string' })
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseIdentity(data: any): Identity {
+  validate('Identity', data, { name: 'id', type: 'string' })
   return { id: data.id }
+}
+
+export interface IdentityList {
+  identities: Identity[]
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseIdentityList(responseData: any): IdentityList {
+  if (!(responseData && Array.isArray(responseData.identities))) {
+    return { identities: [] }
+  }
+
+  return { identities: responseData.identities.map(parseIdentity) }
 }

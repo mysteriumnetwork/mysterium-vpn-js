@@ -15,19 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentityPayoutDTO } from './identity-payout'
+import { parseIdentityPayout } from './payout'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseIdentityPayoutDTO', () => {
+  describe('.parseIdentityPayout', () => {
     it('sets properties', async () => {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      const identity = parseIdentityPayoutDTO({ eth_address: '0xF000FACE' })
+      const identity = parseIdentityPayout({ eth_address: '0xF000FACE' })
 
       expect(identity.ethAddress).toEqual('0xF000FACE')
     })
 
     it('throws when eth address is missing', async () => {
-      expect(() => parseIdentityPayoutDTO({})).toThrow()
+      expect(() => parseIdentityPayout({})).toThrow()
     })
   })
 })
