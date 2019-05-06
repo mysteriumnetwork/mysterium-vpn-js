@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TequilapiClient } from '../http-tequilapi-client'
-import { ServiceSessionDTO } from '../provider'
-import { FunctionLooper } from '../func'
-import { Publisher } from './publisher'
+import { TequilapiClient } from '../tequilapi-client'
+import { ServiceSession } from '../provider/service-session'
+import { FunctionLooper } from '../func/function-looper'
+import { Publisher } from '../func/publisher'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CountSubscriber = (count: number) => any
@@ -49,7 +49,7 @@ export class ProviderSessions {
     this.processSessionCount(sessions)
   }
 
-  private processSessionCount(sessions: ServiceSessionDTO[]): void {
+  private processSessionCount(sessions: ServiceSession[]): void {
     if (sessions.length !== this.countLast) {
       this.countPublisher.publish(sessions.length)
     }

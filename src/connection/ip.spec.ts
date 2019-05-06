@@ -15,27 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../fmt/validation'
+import { ConnectionIp, parseConnectionIp } from './ip'
 
-export interface Identity {
-  id: string
-}
+describe('TequilapiClient DTO', () => {
+  describe('.parseConnectionIp', () => {
+    it('sets properties', async () => {
+      const model: ConnectionIp = parseConnectionIp({ ip: 'mock ip' })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
-  return data
-}
+      expect(model.ip).toEqual('mock ip')
+    })
 
-export interface IdentityList {
-  identities: Identity[]
-}
+    it('sets empty properties', async () => {
+      const model: ConnectionIp = parseConnectionIp({})
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
-  }
-
-  return { identities: responseData.identities.map(parseIdentity) }
-}
+      expect(model.ip).toBeUndefined()
+    })
+  })
+})

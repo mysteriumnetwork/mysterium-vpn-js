@@ -17,7 +17,7 @@
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
 import { nextTick } from '../test-utils/utils'
-import { sleep } from './utils'
+import { sleep } from './sleep'
 import { FunctionLooper } from './function-looper'
 
 describe('FunctionLooper', () => {

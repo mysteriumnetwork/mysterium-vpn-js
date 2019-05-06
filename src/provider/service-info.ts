@@ -15,22 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validateMultiple } from '../fmt/validation'
-import { parseProposalDTO, ProposalDTO } from '../proposal'
+import { validateArray, validateMultiple } from '../fmt/validation'
+import { parseProposal, Proposal } from '../proposal/proposal'
 import { ServiceStatus } from './service-status'
 
-export interface ServiceInfoDTO {
+export interface ServiceInfo {
   id: string
   providerId: string
   type: string
   options?: { [key: string]: any }
   status: ServiceStatus
-  proposal: ProposalDTO
+  proposal: Proposal
 }
 
-export function parseServiceInfoDTO(data: any): ServiceInfoDTO {
+export function parseServiceInfo(data: any): ServiceInfo {
   // TODO: validate that status has value from ServiceStatus enum
-  validateMultiple('ServiceInfoDTO', data, [
+  validateMultiple('ServiceInfo', data, [
     { name: 'id', type: 'string' },
     { name: 'providerId', type: 'string' },
     { name: 'type', type: 'string' },
@@ -40,11 +40,12 @@ export function parseServiceInfoDTO(data: any): ServiceInfoDTO {
   ])
 
   return {
-    id: data.id,
-    providerId: data.providerId,
-    type: data.type,
-    options: data.options,
-    status: data.status,
-    proposal: parseProposalDTO(data.proposal),
+    ...data,
+    proposal: parseProposal(data.proposal),
   }
+}
+
+export function parseServiceInfoList(responseData: any): ServiceInfo[] {
+  validateArray('ServiceInfo[]', responseData)
+  return responseData.map(parseServiceInfo)
 }

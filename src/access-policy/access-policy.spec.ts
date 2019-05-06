@@ -15,45 +15,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceInfo, parseServiceInfoList } from './service-info'
+import { parseAccessPolicyList, parseAccessPolicy } from './access-policy'
 
-describe('.parseServiceInfoList', () => {
-  const proposalObject = {
-    id: 1,
-    providerId: '0x1',
-    serviceType: 'openvpn',
-    serviceDefinition: {},
-  }
-  const serviceObject = {
-    id: 'service1',
-    providerId: '0x1',
-    type: 'openvpn',
-    options: { foo: 'bar' },
-    status: 'Running',
-    proposal: proposalObject,
+describe('.parseAccessPolicyList', () => {
+  const accessPolicy = {
+    id: 'mysterium',
+    title: 'mysterium verified',
+    description: 'mysterium access list',
+    allow: [
+      {
+        type: 'identity',
+        value: '0x2',
+      },
+    ],
   }
 
   it('sets properties with full structure', async () => {
-    const services = parseServiceInfoList([serviceObject])
+    const services = parseAccessPolicyList({ entries: [accessPolicy] })
 
     expect(services).toHaveLength(1)
-    expect(services[0]).toEqual(parseServiceInfo(serviceObject))
+    expect(services[0]).toEqual(parseAccessPolicy(accessPolicy))
   })
 
   it('sets properties with an empty structure', async () => {
-    const services = parseServiceInfoList([])
+    const services = parseAccessPolicyList({ entries: [] })
     expect(services).toEqual([])
   })
 
   it('throws an error if services in array does not validate', async () => {
     expect(() => {
-      parseServiceInfoList([{}])
-    }).toThrowError('ServiceInfo: id is not provided')
+      parseAccessPolicyList({ entries: [{}] })
+    }).toThrowError('AccessPolicy: id is not provided')
+  })
+
+  it('throws an error if access policy list in not an object', async () => {
+    expect(() => {
+      parseAccessPolicyList({})
+    }).toThrowError('AccessPolicy[]: entries is not provided')
   })
 
   it('throws an error if service list in not an array', async () => {
     expect(() => {
-      parseServiceInfoList({})
-    }).toThrowError('ServiceInfo[]: should be "array"')
+      parseAccessPolicyList({ entries: {} })
+    }).toThrowError('AccessPolicy[]: entries should be "array"')
   })
 })

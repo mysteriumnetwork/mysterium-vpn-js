@@ -15,27 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../fmt/validation'
+import { parseConnectionStatistics } from './statistics'
 
-export interface Identity {
-  id: string
-}
+describe('TequilapiClient DTO', () => {
+  describe('.parseConnectionStatistics', () => {
+    it('sets properties', async () => {
+      const stats = parseConnectionStatistics({
+        duration: 13325,
+        bytesReceived: 1232133, // 1.17505 MB
+        bytesSent: 123321, // 0.117608 MB
+      })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
-  return data
-}
+      expect(stats.duration).toEqual(13325)
+      expect(stats.bytesReceived).toEqual(1232133)
+      expect(stats.bytesSent).toEqual(123321)
+    })
 
-export interface IdentityList {
-  identities: Identity[]
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
-  }
-
-  return { identities: responseData.identities.map(parseIdentity) }
-}
+    it('throws error without required fields', async () => {
+      expect(() => parseConnectionStatistics({})).toThrow()
+      expect(() => parseConnectionStatistics('I am wrong')).toThrow()
+    })
+  })
+})

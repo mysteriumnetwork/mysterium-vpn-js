@@ -1,9 +1,9 @@
-# Library "mysterium-vpn-js"
+# mysterium-vpn-js
 
 [![npm version](https://badge.fury.io/js/mysterium-vpn-js.svg)](https://badge.fury.io/js/mysterium-vpn-js)
 [![Build Status](https://travis-ci.com/mysteriumnetwork/mysterium-vpn-js.svg?branch=master)](https://travis-ci.com/mysteriumnetwork/mysterium-vpn-js)
 
-Javascript SDK for  [mysteriumnetwork/node](https://github.com/mysteriumnetwork/node)  
+Javascript SDK for [mysteriumnetwork/node](https://github.com/mysteriumnetwork/node)  
 
 * [API documentation](http://tequilapi.mysterium.network)
 
@@ -21,7 +21,7 @@ npm i mysterium-tequilapi
 import TequilapiClientFactory, { TEQUILAPI_URL } from 'mysterium-vpn-js'
 const factory = new TequilapiClientFactory(TEQUILAPI_URL)
 const client = factory.build(factory.buildAdapter())
-client.identitiesList().then((identities) => {
+client.identityList().then((identities) => {
   console.log(identities)
 })
 ```
@@ -59,31 +59,30 @@ Output:
 ```
 
 Client object fulfills the following interface:
-```javascript
+```typescript
 interface TequilapiClient {
-  healthCheck (timeout: ?number): Promise<NodeHealthcheckDTO>,
+  healthCheck (timeout: ?number): Promise<NodeHealthcheck>,
   stop (): Promise<void>,
 
-  identitiesList (): Promise<Array<IdentityDTO>>,
-  identityCreate (passphrase: string): Promise<IdentityDTO>,
+  identityList (): Promise<Array<Identity>>,
+  identityCreate (passphrase: string): Promise<Identity>,
   identityUnlock (id: string, passphrase: string): Promise<void>,
-  identityRegistration (id: string): Promise<IdentityRegistrationDTO>,
+  identityRegistration (id: string): Promise<IdentityRegistration>,
 
-  findProposals (query: ?ProposalsQuery): Promise<Array<ProposalDTO>>,
+  findProposals (query: ?ProposalQuery): Promise<Array<Proposal>>,
 
-  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusDTO>,
-  connectionStatus (): Promise<ConnectionStatusDTO>,
+  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusResponse>,
+  connectionStatus (): Promise<ConnectionStatusResponse>,
   connectionCancel (): Promise<void>,
-  connectionIP (timeout: ?number): Promise<ConnectionIPDTO>,
-  connectionStatistics (): Promise<ConnectionStatisticsDTO>,
-  location (timeout: ?number): Promise<ConsumerLocationDTO>
+  connectionIp (timeout: ?number): Promise<ConnectionIp>,
+  connectionStatistics (): Promise<ConnectionStatistics>,
+  location (timeout: ?number): Promise<ConsumerLocation>
 }
 ```
 
 ## Contributing
 
-* Run CI build: `npm run ci`
-* Check in updated/new typescript and flow definitions in `lib/`
+* Run CI build: `yarn ci`
 
 ## Authors
 * **Andrej Novikov** - [shroomist](https://github.com/shroomist)

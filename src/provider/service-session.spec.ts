@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceSessionDTO, parseServiceSessionListDTO } from './service-session'
+import { parseServiceSession, parseServiceSessionList } from './service-session'
 
 describe('TequilapiClient DTO', () => {
   const sessionData = {
@@ -23,8 +23,8 @@ describe('TequilapiClient DTO', () => {
     consumerId: '0x1',
   }
 
-  describe('.parseServiceInfoDTO', () => {
-    const sessionObject = parseServiceSessionDTO(sessionData)
+  describe('.parseServiceInfo', () => {
+    const sessionObject = parseServiceSession(sessionData)
 
     it('sets properties', async () => {
       expect(sessionObject.id).toEqual('id1')
@@ -32,27 +32,25 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('throws error with null data', () => {
-      expect(() => parseServiceSessionDTO(null)).toThrowError()
+      expect(() => parseServiceSession(null)).toThrowError()
     })
 
     it('throws error with missing id', () => {
       const object = { ...sessionData, id: undefined }
-      expect(() => parseServiceSessionDTO(object)).toThrowError(
-        'ServiceSessionDTO: id is not provided'
-      )
+      expect(() => parseServiceSession(object)).toThrowError('ServiceSession: id is not provided')
     })
 
     it('throws error with missing consumerId', () => {
       const object = { ...sessionData, consumerId: undefined }
-      expect(() => parseServiceSessionDTO(object)).toThrowError(
-        'ServiceSessionDTO: consumerId is not provided'
+      expect(() => parseServiceSession(object)).toThrowError(
+        'ServiceSession: consumerId is not provided'
       )
     })
   })
 
-  describe('.parseServiceSessionListDTO', () => {
+  describe('.parseServiceSessionList', () => {
     it('sets properties with full structure', async () => {
-      const sessions = parseServiceSessionListDTO({
+      const sessions = parseServiceSessionList({
         sessions: [sessionData],
       })
 
@@ -63,16 +61,16 @@ describe('TequilapiClient DTO', () => {
 
     it('throws error when invoked with an empty object', async () => {
       expect(() => {
-        parseServiceSessionListDTO({})
-      }).toThrowError('ServiceSessionDTO[]: sessions is not provided')
+        parseServiceSessionList({})
+      }).toThrowError('ServiceSession[]: sessions is not provided')
     })
 
     it('throws an error if proposal in array does not validate', async () => {
       expect(() => {
-        parseServiceSessionListDTO({
+        parseServiceSessionList({
           sessions: [{}],
         })
-      }).toThrowError('ServiceSessionDTO: id is not provided')
+      }).toThrowError('ServiceSession: id is not provided')
     })
   })
 })

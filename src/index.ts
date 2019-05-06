@@ -15,20 +15,58 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Logger } from './logger'
-import TequilapiClientFactory, { TEQUILAPI_URL } from './tequilapi-client-factory'
+export { AccessPolicy, AccessRule } from './access-policy/access-policy'
 
-export * from './access-policy'
-export * from './connection'
-export * from './consumer'
-export * from './daemon'
-export * from './fmt'
-export * from './func'
-export * from './http'
-export * from './identity'
-export * from './metric'
-export * from './nat'
-export * from './proposal'
-export * from './provider'
+export { ConnectionCount } from './connection/count'
+export { ConnectionIp } from './connection/ip'
+export { ConnectionRequest } from './connection/request'
+export { ConnectionSession } from './connection/session'
+export { ConnectionStatus } from './connection/status'
 
-export { Logger, TequilapiClientFactory, TEQUILAPI_URL }
+export { ConsumerLocation } from './consumer/location'
+
+export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
+
+export { BytesFormatter } from './fmt/bytes-formatter'
+export { DurationFormatter } from './fmt/duration-formatter'
+export { TimeFormatter } from './fmt/time-formatter'
+
+export { FunctionLooper } from './func/function-looper'
+export { ThresholdExecutor } from './func/threshold-executor'
+export { sleep } from './func/sleep'
+export { Publisher } from './func/publisher'
+
+export { AxiosAdapter } from './http/axios-adapter'
+export { HttpInterface, HttpQuery } from './http/interface'
+
+export { getPaymentLink } from './identity/get-payment-link'
+export { Identity } from './identity/identity'
+export { IdentityProof } from './identity/proof'
+export { IdentityPayout } from './identity/payout'
+export { PublicKey } from './identity/public-key'
+export { IdentityRegistration } from './identity/registration'
+export { Signature } from './identity/signature'
+
+export { Metrics } from './metric/metrics'
+
+export { NatStatus, NatStatusResponse } from './nat/status'
+
+export { Proposal, ProposalQuery } from './proposal/proposal'
+
+export { Location } from './provider/location'
+export { ProviderService } from './provider/provider-service'
+export { ProviderSessions } from './provider/provider-sessions'
+export { QualityLevel, QualityCalculator } from './provider/quality'
+export { ServiceDefinition } from './provider/service-definition'
+export { ServiceInfo } from './provider/service-info'
+export { ServiceRequest } from './provider/service-request'
+export { ServiceSession } from './provider/service-session'
+export { ServiceStatus } from './provider/service-status'
+
+export { logger, Logger } from './logger'
+export {
+  TequilapiClientFactory,
+  TEQUILAPI_URL,
+  TequilapiClient,
+  HttpTequilapiClient,
+} from './tequilapi-client'

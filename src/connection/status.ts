@@ -17,25 +17,21 @@
 
 import { validate } from '../fmt/validation'
 
-export interface Identity {
-  id: string
+export enum ConnectionStatus {
+  CONNECTED = 'Connected',
+  NOT_CONNECTED = 'NotConnected',
+  DISCONNECTING = 'Disconnecting',
+  CONNECTING = 'Connecting',
+}
+
+export interface ConnectionStatusResponse {
+  status: ConnectionStatus
+  sessionId?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
+export function parseConnectionStatusResponse(data: any): ConnectionStatusResponse {
+  // TODO: validate that status has value from ConnectionStatus enum
+  validate('ConnectionStatusResponse', data, { name: 'status', type: 'string' })
   return data
-}
-
-export interface IdentityList {
-  identities: Identity[]
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
-  }
-
-  return { identities: responseData.identities.map(parseIdentity) }
 }

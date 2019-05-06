@@ -15,27 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../fmt/validation'
+import { ConnectionStatus, parseConnectionStatusResponse } from './status'
 
-export interface Identity {
-  id: string
-}
+describe('TequilapiClient DTO', () => {
+  describe('.parseConnectionStatusResponse', () => {
+    // TODO: fix
+    xit('sets properties', async () => {
+      const connection = parseConnectionStatusResponse({
+        status: 'Connected',
+        sessionId: 'My-super-session',
+      })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
-  return data
-}
+      expect(connection.status).toEqual(ConnectionStatus.CONNECTED)
+      expect(connection.sessionId).toEqual('My-super-session')
+    })
 
-export interface IdentityList {
-  identities: Identity[]
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
-  }
-
-  return { identities: responseData.identities.map(parseIdentity) }
-}
+    it('fails when status is missing', () => {
+      expect(() => parseConnectionStatusResponse({ sessionId: 'My-super-session' })).toThrow()
+    })
+  })
+})

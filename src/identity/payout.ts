@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,14 @@
 
 import { validate } from '../fmt/validation'
 
-export interface Identity {
-  id: string
+export interface IdentityPayout {
+  ethAddress: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
-  return data
-}
-
-export interface IdentityList {
-  identities: Identity[]
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
+export function parseIdentityPayout(data: any): IdentityPayout {
+  validate('IdentityPayout', data, { name: 'eth_address', type: 'string' })
+  return {
+    ethAddress: data.eth_address,
   }
-
-  return { identities: responseData.identities.map(parseIdentity) }
 }

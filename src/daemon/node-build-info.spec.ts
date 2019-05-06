@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseNodeBuildInfoDTO } from './node-build-info'
+import { parseNodeBuildInfo } from './healthcheck'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseNodeBuildInfoDTO', () => {
+  describe('.parseNodeBuildInfo', () => {
     const data = {
       commit: '0bcccc',
       branch: 'master',
@@ -26,7 +26,7 @@ describe('TequilapiClient DTO', () => {
     }
 
     it('sets properties', async () => {
-      const version = parseNodeBuildInfoDTO(data)
+      const version = parseNodeBuildInfo(data)
 
       expect(version.commit).toEqual('0bcccc')
       expect(version.branch).toEqual('master')
@@ -34,9 +34,9 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('throws without required properties', async () => {
-      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ commit: undefined } })).toThrow()
-      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ branch: undefined } })).toThrow()
-      expect(() => parseNodeBuildInfoDTO({ ...data, ...{ buildNumber: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfo({ ...data, ...{ commit: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfo({ ...data, ...{ branch: undefined } })).toThrow()
+      expect(() => parseNodeBuildInfo({ ...data, ...{ buildNumber: undefined } })).toThrow()
     })
   })
 })

@@ -16,7 +16,7 @@
  */
 
 import { getPaymentLink } from './get-payment-link'
-import { IdentityProof } from './identity-proof'
+import { IdentityProof } from './proof'
 
 describe('.getPaymentLink', () => {
   it('generates valid payment link', () => {

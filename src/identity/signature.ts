@@ -15,16 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export interface SignatureDTO {
+export interface Signature {
   r: string
   s: string
   v: string
-}
-
-export function parseSignatureDTO(data: any): SignatureDTO {
-  return {
-    r: data.r,
-    s: data.s,
-    v: data.v,
-  }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,18 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentity } from './identity'
+import { ConnectionCount, parseConnectionCount } from './count'
 
-describe('TequilapiClient DTO', () => {
-  describe('.parseIdentity', () => {
-    it('sets properties', async () => {
-      const identity = parseIdentity({ id: '0xF000FACE' })
+describe('.parseConnectionCount', () => {
+  it('returns ConnectionCountDTO', () => {
+    const dto: ConnectionCount = parseConnectionCount({ success: 1, fail: 2, timeout: 3 })
+    expect(dto).toBeDefined()
+  })
 
-      expect(identity.id).toEqual('0xF000FACE')
-    })
-
-    it('throws when id is missing', async () => {
-      expect(() => parseIdentity({})).toThrow()
-    })
+  it('throws error for invalid data', () => {
+    expect(() => parseConnectionCount({ success: 1, timeout: 3 })).toThrow(
+      'ConnectCount: fail is not provided'
+    )
+    expect(() => parseConnectionCount({ success: '1', fail: 2, timeout: 3 })).toThrow(
+      'ConnectCount: success should be "number"'
+    )
   })
 })

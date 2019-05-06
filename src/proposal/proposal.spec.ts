@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseProposalDTO } from './proposal'
+import { parseProposal } from './proposal'
 
-describe('.parseProposalDTO', () => {
+describe('.parseProposal', () => {
   const proposalObject = {
     id: 1,
     providerId: '0x1',
@@ -26,7 +26,7 @@ describe('.parseProposalDTO', () => {
   }
 
   it('sets properties with full structure', () => {
-    const proposal = parseProposalDTO(proposalObject)
+    const proposal = parseProposal(proposalObject)
 
     expect(proposal.id).toEqual(1)
     expect(proposal.providerId).toEqual('0x1')
@@ -36,36 +36,36 @@ describe('.parseProposalDTO', () => {
   })
 
   it('throws error with null data', () => {
-    expect(() => parseProposalDTO(null)).toThrowError()
+    expect(() => parseProposal(null)).toThrowError()
   })
 
   it('throws error with missing id', () => {
     const object = { ...proposalObject, id: undefined }
-    expect(() => parseProposalDTO(object)).toThrowError('ProposalDTO: id is not provided')
+    expect(() => parseProposal(object)).toThrowError('Proposal: id is not provided')
   })
 
   it('throws error with wrong id type', () => {
     const object = { ...proposalObject, id: 'string id' }
-    expect(() => parseProposalDTO(object)).toThrowError('ProposalDTO: id should be "number"')
+    expect(() => parseProposal(object)).toThrowError('Proposal: id should be "number"')
   })
 
   it('throws error with missing providerId', () => {
     const object = { ...proposalObject, providerId: undefined }
-    expect(() => parseProposalDTO(object)).toThrowError('ProposalDTO: providerId is not provided')
+    expect(() => parseProposal(object)).toThrowError('Proposal: providerId is not provided')
   })
 
   it('throws error with wrong providerId type', () => {
     const object = { ...proposalObject, providerId: 2 }
-    expect(() => parseProposalDTO(object)).toThrowError()
+    expect(() => parseProposal(object)).toThrowError()
   })
 
   it('throws error with no serviceType', () => {
     const object = { ...proposalObject, serviceType: undefined }
-    expect(() => parseProposalDTO(object)).toThrowError()
+    expect(() => parseProposal(object)).toThrowError()
   })
 
   it('throws error with invalid serviceDefinition', () => {
     const object = { ...proposalObject, serviceDefinition: '2' }
-    expect(() => parseProposalDTO(object)).toThrowError()
+    expect(() => parseProposal(object)).toThrowError()
   })
 })

@@ -15,27 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../fmt/validation'
+import { validateMultiple } from '../fmt/validation'
 
-export interface Identity {
-  id: string
+export interface ConnectionStatistics {
+  duration: number
+  bytesReceived: number
+  bytesSent: number
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
+export function parseConnectionStatistics(data: any): ConnectionStatistics {
+  validateMultiple('ConnectionStatistics', data, [
+    { name: 'duration', type: 'number' },
+    { name: 'bytesReceived', type: 'number' },
+    { name: 'bytesSent', type: 'number' },
+  ])
   return data
-}
-
-export interface IdentityList {
-  identities: Identity[]
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
-  }
-
-  return { identities: responseData.identities.map(parseIdentity) }
 }

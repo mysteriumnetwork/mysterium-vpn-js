@@ -17,7 +17,7 @@
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import AxiosAdapter from './axios-adapter'
+import { AxiosAdapter } from './axios-adapter'
 import TequilapiError from '../tequilapi-error'
 
 describe('TequilapiClient AxiosAdapter', () => {

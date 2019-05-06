@@ -15,18 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceInfoDTO } from './service-info'
+import { parseServiceInfo } from './service-info'
 import { ServiceStatus } from './service-status'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseServiceInfoDTO', () => {
+  describe('.parseServiceInfo', () => {
     const proposalObject = {
       id: 1,
       providerId: '0x1',
       serviceType: 'openvpn',
       serviceDefinition: {},
     }
-    const serviceObject = parseServiceInfoDTO({
+    const serviceObject = parseServiceInfo({
       id: 'service1',
       providerId: '0x1',
       type: 'openvpn',
@@ -45,33 +45,27 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('throws error with null data', () => {
-      expect(() => parseServiceInfoDTO(null)).toThrowError()
+      expect(() => parseServiceInfo(null)).toThrowError()
     })
 
     it('throws error with missing id', () => {
       const object = { ...serviceObject, id: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError('ServiceInfoDTO: id is not provided')
+      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: id is not provided')
     })
 
     it('throws error with missing status', () => {
       const object = { ...serviceObject, status: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError(
-        'ServiceInfoDTO: status is not provided'
-      )
+      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: status is not provided')
     })
 
     it('throws error with missing provider', () => {
       const object = { ...serviceObject, proposal: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError(
-        'ServiceInfoDTO: proposal is not provided'
-      )
+      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: proposal is not provided')
     })
 
     it('throws error with missing options', () => {
       const object = { ...serviceObject, options: undefined }
-      expect(() => parseServiceInfoDTO(object)).toThrowError(
-        'ServiceInfoDTO: options is not provided'
-      )
+      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: options is not provided')
     })
   })
 })

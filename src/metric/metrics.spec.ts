@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,18 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseIdentity } from './identity'
+import { parseMetrics } from './metrics'
 
-describe('TequilapiClient DTO', () => {
-  describe('.parseIdentity', () => {
-    it('sets properties', async () => {
-      const identity = parseIdentity({ id: '0xF000FACE' })
-
-      expect(identity.id).toEqual('0xF000FACE')
-    })
-
-    it('throws when id is missing', async () => {
-      expect(() => parseIdentity({})).toThrow()
+describe('Metrics', () => {
+  describe('.parseMetrics', () => {
+    it('returns empty metrics if they are empty', () => {
+      const dto = parseMetrics({})
+      expect(dto).toEqual({ connectCount: undefined })
     })
   })
 })

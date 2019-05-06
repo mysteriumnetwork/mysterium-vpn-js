@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseProposalsResponseDTO } from './proposals-response'
+import { parseProposalList } from './proposal'
 
-describe('.parseProposalsResponseDTO', () => {
+describe('.parseProposalList', () => {
   it('sets properties with full structure', async () => {
-    const response = parseProposalsResponseDTO({
+    const response = parseProposalList({
       proposals: [{ id: 100, providerId: 'id', serviceType: 'type', serviceDefinition: {} }],
     })
 
@@ -28,14 +28,12 @@ describe('.parseProposalsResponseDTO', () => {
   })
 
   it('throws error when invoked with an empty object', async () => {
-    expect(() => parseProposalsResponseDTO({})).toThrowError(
-      'ProposalsResponseDTO: proposals is not provided'
-    )
+    expect(() => parseProposalList({})).toThrowError('ProposalList: proposals is not provided')
   })
 
   it('throws an error if proposal in array does not validate', async () => {
-    expect(() => parseProposalsResponseDTO({ proposals: [{}] })).toThrowError(
-      'ProposalDTO: id is not provided'
+    expect(() => parseProposalList({ proposals: [{}] })).toThrowError(
+      'Proposal: id is not provided'
     )
   })
 })

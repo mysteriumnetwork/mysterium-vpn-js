@@ -18,7 +18,7 @@
 import { AxiosInstance } from 'axios'
 import TequilapiError from '../tequilapi-error'
 import { TIMEOUT_DEFAULT } from './timeouts'
-import { HttpInterface, HttpQueryParams } from './interface'
+import { HttpInterface, HttpQuery } from './interface'
 
 async function decorateResponse(promise: Promise<any>, path: string): Promise<any> {
   let response
@@ -30,7 +30,7 @@ async function decorateResponse(promise: Promise<any>, path: string): Promise<an
   return response.data
 }
 
-export default class AxiosAdapter implements HttpInterface {
+export class AxiosAdapter implements HttpInterface {
   public _axios: AxiosInstance
   public _timeout: number
 
@@ -39,7 +39,7 @@ export default class AxiosAdapter implements HttpInterface {
     this._timeout = defaultTimeout
   }
 
-  public get(path: string, query?: HttpQueryParams, timeout?: number): Promise<any> {
+  public get(path: string, query?: HttpQuery, timeout?: number): Promise<any> {
     const options = this._decorateOptions(timeout)
     options.params = query
 

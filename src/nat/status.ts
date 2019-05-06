@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,21 @@
 
 import { validate } from '../fmt/validation'
 
-export interface Identity {
-  id: string
+export enum NatStatus {
+  NOT_FINISHED = 'not_finished',
+  FAILED = 'failure',
+  SUCCESSFUL = 'successful',
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
-  return data
+export interface NatStatusResponse {
+  status: string
+  error?: string
 }
 
-export interface IdentityList {
-  identities: Identity[]
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityList(responseData: any): IdentityList {
-  if (!(responseData && Array.isArray(responseData.identities))) {
-    return { identities: [] }
+export function parseNatStatusResponse(data: any): NatStatusResponse {
+  validate('NatStatusResponse', data, { name: 'status', type: 'string' })
+  if (data.error) {
+    validate('NatStatusResponse', data, { name: 'error', type: 'string' })
   }
-
-  return { identities: responseData.identities.map(parseIdentity) }
+  return data
 }

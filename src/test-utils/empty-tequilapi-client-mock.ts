@@ -17,21 +17,23 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { TequilapiClient } from '../http-tequilapi-client'
-import { AccessPolicyDTO } from '../access-policy'
-import {
-  ConnectionIPDTO,
-  ConnectionSessionDTO,
-  ConnectionStatisticsDTO,
-  ConnectionStatusDTO,
-  ConnectionRequest,
-} from '../connection'
-import { ConsumerLocationDTO } from '../consumer'
-import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
-import { NodeHealthcheckDTO } from '../daemon'
-import { ProposalDTO, ProposalQueryOptions } from '../proposal'
-import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
-import { NatStatusDTO } from '../nat'
+import { AccessPolicy } from '../access-policy/access-policy'
+import { ConnectionIp } from '../connection/ip'
+import { ConnectionRequest } from '../connection/request'
+import { ConnectionSession } from '../connection/session'
+import { ConnectionStatistics } from '../connection/statistics'
+import { ConnectionStatusResponse } from '../connection/status'
+import { ConsumerLocation } from '../consumer/location'
+import { NodeHealthcheck } from '../daemon/healthcheck'
+import { Identity } from '../identity/identity'
+import { IdentityPayout } from '../identity/payout'
+import { IdentityRegistration } from '../identity/registration'
+import { NatStatusResponse } from '../nat/status'
+import { Proposal, ProposalQuery } from '../proposal/proposal'
+import { ServiceInfo } from '../provider/service-info'
+import { ServiceRequest } from '../provider/service-request'
+import { ServiceSession } from '../provider/service-session'
+import { TequilapiClient } from '../tequilapi-client'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -41,39 +43,39 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCreate(
     request: ConnectionRequest,
     timeout?: number
-  ): Promise<ConnectionStatusDTO> {
+  ): Promise<ConnectionStatusResponse> {
     throw Error('Not implemented')
   }
 
-  public connectionIP(timeout?: number): Promise<ConnectionIPDTO> {
+  public connectionIp(timeout?: number): Promise<ConnectionIp> {
     throw Error('Not implemented')
   }
 
-  public connectionStatistics(): Promise<ConnectionStatisticsDTO> {
+  public connectionStatistics(): Promise<ConnectionStatistics> {
     throw Error('Not implemented')
   }
 
-  public connectionStatus(): Promise<ConnectionStatusDTO> {
+  public connectionStatus(): Promise<ConnectionStatusResponse> {
     throw Error('Not implemented')
   }
 
-  public findProposals(options?: ProposalQueryOptions): Promise<ProposalDTO[]> {
+  public findProposals(options?: ProposalQuery): Promise<Proposal[]> {
     throw Error('Not implemented')
   }
 
-  public healthCheck(timeout?: number): Promise<NodeHealthcheckDTO> {
+  public healthCheck(timeout?: number): Promise<NodeHealthcheck> {
     throw Error('Not implemented')
   }
 
-  public identitiesList(): Promise<IdentityDTO[]> {
+  public identityList(): Promise<Identity[]> {
     throw Error('Not implemented')
   }
 
-  public identityCreate(passphrase: string): Promise<IdentityDTO> {
+  public identityCreate(passphrase: string): Promise<Identity> {
     throw Error('Not implemented')
   }
 
-  public identityRegistration(id: string): Promise<IdentityRegistrationDTO> {
+  public identityRegistration(id: string): Promise<IdentityRegistration> {
     throw Error('Not implemented')
   }
 
@@ -85,27 +87,27 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityPayout(id: string): Promise<IdentityPayoutDTO> {
+  public identityPayout(id: string): Promise<IdentityPayout> {
     throw Error('Not implemented')
   }
 
-  public location(timeout?: number): Promise<ConsumerLocationDTO> {
+  public location(timeout?: number): Promise<ConsumerLocation> {
     throw Error('Not implemented')
   }
 
-  public natStatus(): Promise<NatStatusDTO> {
+  public natStatus(): Promise<NatStatusResponse> {
     throw new Error('Not implemented')
   }
 
-  public serviceGet(serviceId: string): Promise<ServiceInfoDTO> {
+  public serviceGet(serviceId: string): Promise<ServiceInfo> {
     throw Error('Not implemented')
   }
 
-  public serviceList(): Promise<ServiceInfoDTO[]> {
+  public serviceList(): Promise<ServiceInfo[]> {
     throw Error('Not implemented')
   }
 
-  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
+  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo> {
     throw Error('Not implemented')
   }
 
@@ -113,11 +115,11 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionSessions(): Promise<ConnectionSessionDTO[]> {
+  public connectionSessions(): Promise<ConnectionSession[]> {
     throw Error('Not implemented')
   }
 
-  public serviceSessions(): Promise<ServiceSessionDTO[]> {
+  public serviceSessions(): Promise<ServiceSession[]> {
     throw Error('Not implemented')
   }
 
@@ -125,7 +127,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public accessPolicies(): Promise<AccessPolicyDTO[]> {
+  public accessPolicies(): Promise<AccessPolicy[]> {
     throw Error('Not implemented')
   }
 }
