@@ -17,7 +17,7 @@
 
 import { validateMultiple } from '../fmt/validation'
 
-export interface ConnectionSessionDTO {
+export interface ConnectionSession {
   sessionId: string
   providerId: string
   providerCountry: string
@@ -27,8 +27,9 @@ export interface ConnectionSessionDTO {
   duration: number
 }
 
-export function validateSession(data: any): ConnectionSessionDTO {
-  validateMultiple('ConnectionSessionDTO', data, [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function validateSession(data: any): ConnectionSession {
+  validateMultiple('ConnectionSession', data, [
     { name: 'sessionId', type: 'string' },
     { name: 'providerId', type: 'string' },
     { name: 'providerCountry', type: 'string' },

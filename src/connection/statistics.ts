@@ -17,14 +17,15 @@
 
 import { validateMultiple } from '../fmt/validation'
 
-export interface ConnectionStatisticsDTO {
+export interface ConnectionStatistics {
   duration: number
   bytesReceived: number
   bytesSent: number
 }
 
-export function parseConnectionStatisticsDTO(data: any): ConnectionStatisticsDTO {
-  validateMultiple('ConnectionStatisticsDTO', data, [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseConnectionStatistics(data: any): ConnectionStatistics {
+  validateMultiple('ConnectionStatistics', data, [
     { name: 'duration', type: 'number' },
     { name: 'bytesReceived', type: 'number' },
     { name: 'bytesSent', type: 'number' },

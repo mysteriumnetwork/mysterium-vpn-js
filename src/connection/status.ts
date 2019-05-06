@@ -16,16 +16,23 @@
  */
 
 import { validate } from '../fmt/validation'
-import { ConnectionStatus } from './connection-status'
 
-export interface ConnectionStatusDTO {
+export enum ConnectionStatus {
+  CONNECTED = 'Connected',
+  NOT_CONNECTED = 'NotConnected',
+  DISCONNECTING = 'Disconnecting',
+  CONNECTING = 'Connecting',
+}
+
+export interface ConnectionStatusResponse {
   status: ConnectionStatus
   sessionId?: string
 }
 
-export function parseConnectionStatusDTO(data: any): ConnectionStatusDTO {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseConnectionStatusResponse(data: any): ConnectionStatusResponse {
   // TODO: validate that status has value from ConnectionStatus enum
-  validate('ConnectionStatusDTO', data, { name: 'status', type: 'string' })
+  validate('ConnectionStatusResponse', data, { name: 'status', type: 'string' })
   return {
     status: data.status,
     sessionId: data.sessionId,

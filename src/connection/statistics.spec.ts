@@ -15,24 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectionStatus } from './connection-status'
-import { parseConnectionStatusDTO } from './connection-status-dto'
+import { parseConnectionStatistics } from './statistics'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseConnectionStatusDTO', () => {
-    // TODO: fix
-    xit('sets properties', async () => {
-      const connection = parseConnectionStatusDTO({
-        status: 'Connected',
-        sessionId: 'My-super-session',
+  describe('.parseConnectionStatistics', () => {
+    it('sets properties', async () => {
+      const stats = parseConnectionStatistics({
+        duration: 13325,
+        bytesReceived: 1232133, // 1.17505 MB
+        bytesSent: 123321, // 0.117608 MB
       })
 
-      expect(connection.status).toEqual(ConnectionStatus.CONNECTED)
-      expect(connection.sessionId).toEqual('My-super-session')
+      expect(stats.duration).toEqual(13325)
+      expect(stats.bytesReceived).toEqual(1232133)
+      expect(stats.bytesSent).toEqual(123321)
     })
 
-    it('fails when status is missing', () => {
-      expect(() => parseConnectionStatusDTO({ sessionId: 'My-super-session' })).toThrow()
+    it('throws error without required fields', async () => {
+      expect(() => parseConnectionStatistics({})).toThrow()
+      expect(() => parseConnectionStatistics('I am wrong')).toThrow()
     })
   })
 })

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The "mysteriumnetwork/mysterium-vpn-js" Authors.
+ * Copyright (C) 2017 The "mysteriumnetwork/mysterium-vpn-js" Authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export * from './connect-count-dto'
-export * from './connection-ip'
-export * from './connection-request'
-export * from './connection-session'
-export * from './connection-statistics'
-export * from './connection-status'
-export * from './connection-status-dto'
+import { ConnectionIP, parseConnectionIP } from './ip'
+
+describe('TequilapiClient DTO', () => {
+  describe('.parseConnectionIP', () => {
+    it('sets properties', async () => {
+      const model: ConnectionIP = parseConnectionIP({ ip: 'mock ip' })
+
+      expect(model.ip).toEqual('mock ip')
+    })
+
+    it('sets empty properties', async () => {
+      const model: ConnectionIP = parseConnectionIP({})
+
+      expect(model.ip).toBeUndefined()
+    })
+  })
+})

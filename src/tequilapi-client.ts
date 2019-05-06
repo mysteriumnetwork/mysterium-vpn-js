@@ -17,17 +17,11 @@
 
 import axios from 'axios'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
-import {
-  ConnectionIPDTO,
-  ConnectionRequest,
-  ConnectionSessionDTO,
-  ConnectionStatisticsDTO,
-  ConnectionStatusDTO,
-  parseConnectionIPDTO,
-  parseConnectionStatisticsDTO,
-  parseConnectionStatusDTO,
-  validateSession,
-} from './connection'
+import { ConnectionRequest } from './connection/request'
+import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
+import { ConnectionIP, parseConnectionIP } from './connection/ip'
+import { ConnectionSession, validateSession } from './connection/session'
+import { parseConnectionStatistics, ConnectionStatistics } from './connection/statistics'
 import { ConsumerLocationDTO, parseConsumerLocationDTO } from './consumer'
 import { NodeHealthcheckDTO, parseHealthcheckResponse } from './daemon'
 import { HttpInterface, TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http'
@@ -69,12 +63,12 @@ export interface TequilapiClient {
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
 
-  connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusDTO>
-  connectionStatus(): Promise<ConnectionStatusDTO>
+  connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusResponse>
+  connectionStatus(): Promise<ConnectionStatusResponse>
   connectionCancel(): Promise<void>
-  connectionIP(timeout?: number): Promise<ConnectionIPDTO>
-  connectionStatistics(): Promise<ConnectionStatisticsDTO>
-  connectionSessions(): Promise<ConnectionSessionDTO[]>
+  connectionIP(timeout?: number): Promise<ConnectionIP>
+  connectionStatistics(): Promise<ConnectionStatistics>
+  connectionSessions(): Promise<ConnectionSession[]>
 
   serviceList(): Promise<ServiceInfoDTO[]>
   serviceGet(serviceId: string): Promise<ServiceInfoDTO>
@@ -170,7 +164,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async connectionCreate(
     request: ConnectionRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
-  ): Promise<ConnectionStatusDTO> {
+  ): Promise<ConnectionStatusResponse> {
     const response = await this.http.put(
       'connection',
       {
@@ -183,38 +177,38 @@ export class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }
-    return parseConnectionStatusDTO(response)
+    return parseConnectionStatusResponse(response)
   }
 
-  public async connectionStatus(): Promise<ConnectionStatusDTO> {
+  public async connectionStatus(): Promise<ConnectionStatusResponse> {
     const response = await this.http.get('connection')
     if (!response) {
       throw new Error('Connection status response body is missing')
     }
-    return parseConnectionStatusDTO(response)
+    return parseConnectionStatusResponse(response)
   }
 
   public async connectionCancel(): Promise<void> {
     await this.http.delete('connection')
   }
 
-  public async connectionIP(timeout?: number): Promise<ConnectionIPDTO> {
+  public async connectionIP(timeout?: number): Promise<ConnectionIP> {
     const response = await this.http.get('connection/ip', undefined, timeout)
     if (!response) {
       throw new Error('Connection IP response body is missing')
     }
-    return parseConnectionIPDTO(response)
+    return parseConnectionIP(response)
   }
 
-  public async connectionStatistics(): Promise<ConnectionStatisticsDTO> {
+  public async connectionStatistics(): Promise<ConnectionStatistics> {
     const response = await this.http.get('connection/statistics')
     if (!response) {
       throw new Error('Connection statistics response body is missing')
     }
-    return parseConnectionStatisticsDTO(response)
+    return parseConnectionStatistics(response)
   }
 
-  public async connectionSessions(): Promise<ConnectionSessionDTO[]> {
+  public async connectionSessions(): Promise<ConnectionSession[]> {
     const response = await this.http.get('connection-sessions')
     if (!response) {
       throw new Error('Connection sessions response body is missing')

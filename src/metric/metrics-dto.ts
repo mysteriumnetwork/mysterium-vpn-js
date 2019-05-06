@@ -15,15 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ConnectCountDTO, parseConnectionCountDTO } from '../connection/connect-count-dto'
+import { ConnectionCount, parseConnectionCount } from '../connection/count'
 
 export interface MetricsDTO {
-  connectCount?: ConnectCountDTO
+  connectCount?: ConnectionCount
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseMetricsDTO(data: any): MetricsDTO {
   try {
-    return { connectCount: parseConnectionCountDTO(data.connectCount) }
+    return { connectCount: parseConnectionCount(data.connectCount) }
   } catch (err) {
     return { connectCount: undefined }
   }

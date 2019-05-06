@@ -59,7 +59,7 @@ Output:
 ```
 
 Client object fulfills the following interface:
-```javascript
+```typescript
 interface TequilapiClient {
   healthCheck (timeout: ?number): Promise<NodeHealthcheckDTO>,
   stop (): Promise<void>,
@@ -71,11 +71,11 @@ interface TequilapiClient {
 
   findProposals (query: ?ProposalQuery): Promise<Array<Proposal>>,
 
-  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusDTO>,
-  connectionStatus (): Promise<ConnectionStatusDTO>,
+  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusResponse>,
+  connectionStatus (): Promise<ConnectionStatusResponse>,
   connectionCancel (): Promise<void>,
-  connectionIP (timeout: ?number): Promise<ConnectionIPDTO>,
-  connectionStatistics (): Promise<ConnectionStatisticsDTO>,
+  connectionIP (timeout: ?number): Promise<ConnectionIP>,
+  connectionStatistics (): Promise<ConnectionStatistics>,
   location (timeout: ?number): Promise<ConsumerLocationDTO>
 }
 ```

@@ -17,15 +17,13 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { ConnectionIP } from '../connection/ip'
+import { ConnectionRequest } from '../connection/request'
+import { ConnectionSession } from '../connection/session'
+import { ConnectionStatistics } from '../connection/statistics'
+import { ConnectionStatusResponse } from '../connection/status'
 import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicy } from '../access-policy/access-policy'
-import {
-  ConnectionIPDTO,
-  ConnectionSessionDTO,
-  ConnectionStatisticsDTO,
-  ConnectionStatusDTO,
-  ConnectionRequest,
-} from '../connection'
 import { ConsumerLocationDTO } from '../consumer'
 import { IdentityDTO, IdentityPayoutDTO, IdentityRegistrationDTO } from '../identity'
 import { NodeHealthcheckDTO } from '../daemon'
@@ -41,19 +39,19 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCreate(
     request: ConnectionRequest,
     timeout?: number
-  ): Promise<ConnectionStatusDTO> {
+  ): Promise<ConnectionStatusResponse> {
     throw Error('Not implemented')
   }
 
-  public connectionIP(timeout?: number): Promise<ConnectionIPDTO> {
+  public connectionIP(timeout?: number): Promise<ConnectionIP> {
     throw Error('Not implemented')
   }
 
-  public connectionStatistics(): Promise<ConnectionStatisticsDTO> {
+  public connectionStatistics(): Promise<ConnectionStatistics> {
     throw Error('Not implemented')
   }
 
-  public connectionStatus(): Promise<ConnectionStatusDTO> {
+  public connectionStatus(): Promise<ConnectionStatusResponse> {
     throw Error('Not implemented')
   }
 
@@ -113,7 +111,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionSessions(): Promise<ConnectionSessionDTO[]> {
+  public connectionSessions(): Promise<ConnectionSession[]> {
     throw Error('Not implemented')
   }
 
