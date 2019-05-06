@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseLocationDTO } from './location'
+import { parseLocation } from './location'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseLocationDTO', () => {
+  describe('.parseLocation', () => {
     it('sets properties with full structure', async () => {
-      const location = parseLocationDTO({
+      const location = parseLocation({
         asn: '',
         country: 'LT',
       })

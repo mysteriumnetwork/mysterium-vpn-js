@@ -32,14 +32,9 @@ import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import { IdentityRegistration, parseIdentityRegistration } from './identity/registration'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
-import {
-  parseServiceInfoDTO,
-  parseServiceListDTO,
-  parseServiceSessionListDTO,
-  ServiceInfoDTO,
-  ServiceRequest,
-  ServiceSessionDTO,
-} from './provider'
+import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
+import { ServiceRequest } from './provider/service-request'
+import { parseServiceSessionList, ServiceSession } from './provider/service-session'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
@@ -65,11 +60,11 @@ export interface TequilapiClient {
   connectionStatistics(): Promise<ConnectionStatistics>
   connectionSessions(): Promise<ConnectionSession[]>
 
-  serviceList(): Promise<ServiceInfoDTO[]>
-  serviceGet(serviceId: string): Promise<ServiceInfoDTO>
-  serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO>
+  serviceList(): Promise<ServiceInfo[]>
+  serviceGet(serviceId: string): Promise<ServiceInfo>
+  serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
-  serviceSessions(): Promise<ServiceSessionDTO[]>
+  serviceSessions(): Promise<ServiceSession[]>
 
   accessPolicies(): Promise<AccessPolicy[]>
 }
@@ -211,28 +206,28 @@ export class HttpTequilapiClient implements TequilapiClient {
     return response.sessions.map(validateSession)
   }
 
-  public async serviceList(): Promise<ServiceInfoDTO[]> {
+  public async serviceList(): Promise<ServiceInfo[]> {
     const response = await this.http.get('services')
     if (!response) {
       throw new Error('Service list response body is missing')
     }
 
-    return parseServiceListDTO(response)
+    return parseServiceInfoList(response)
   }
 
-  public async serviceGet(id: string): Promise<ServiceInfoDTO> {
+  public async serviceGet(id: string): Promise<ServiceInfo> {
     const response = await this.http.get('services/' + id)
     if (!response) {
       throw new Error('Service response body is missing')
     }
 
-    return parseServiceInfoDTO(response)
+    return parseServiceInfo(response)
   }
 
   public async serviceStart(
     request: ServiceRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
-  ): Promise<ServiceInfoDTO> {
+  ): Promise<ServiceInfo> {
     const response = await this.http.post(
       'services',
       {
@@ -246,19 +241,19 @@ export class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Service creation response body is missing')
     }
-    return parseServiceInfoDTO(response)
+    return parseServiceInfo(response)
   }
 
   public async serviceStop(serviceId: string): Promise<void> {
     await this.http.delete('services/' + serviceId)
   }
 
-  public async serviceSessions(): Promise<ServiceSessionDTO[]> {
+  public async serviceSessions(): Promise<ServiceSession[]> {
     const response = await this.http.get('service-sessions')
     if (!response) {
       throw new Error('Service sessions response body is missing')
     }
-    return parseServiceSessionListDTO(response)
+    return parseServiceSessionList(response)
   }
 
   public async accessPolicies(): Promise<AccessPolicy[]> {

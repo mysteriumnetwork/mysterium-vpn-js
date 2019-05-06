@@ -16,9 +16,9 @@
  */
 
 import { TequilapiClient } from '../tequilapi-client'
-import { ServiceSessionDTO } from '../provider'
+import { ServiceSession } from '../provider/service-session'
 import { FunctionLooper } from '../func/function-looper'
-import { Publisher } from './publisher'
+import { Publisher } from '../func/publisher'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CountSubscriber = (count: number) => any
@@ -49,7 +49,7 @@ export class ProviderSessions {
     this.processSessionCount(sessions)
   }
 
-  private processSessionCount(sessions: ServiceSessionDTO[]): void {
+  private processSessionCount(sessions: ServiceSession[]): void {
     if (sessions.length !== this.countLast) {
       this.countPublisher.publish(sessions.length)
     }

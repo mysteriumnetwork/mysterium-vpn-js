@@ -17,13 +17,13 @@
 
 import { validate, validateMultiple } from '../fmt/validation'
 import { Metrics } from '../metric/metrics'
-import { parseServiceDefinitionDTO, ServiceDefinitionDTO } from '../provider'
+import { parseServiceDefinition, ServiceDefinition } from '../provider/service-definition'
 
 export interface Proposal {
   id: number
   providerId: string
   serviceType: string
-  serviceDefinition: ServiceDefinitionDTO
+  serviceDefinition: ServiceDefinition
   metrics?: Metrics
 }
 
@@ -40,7 +40,7 @@ export function parseProposal(data: any): Proposal {
     id: data.id,
     providerId: data.providerId,
     serviceType: data.serviceType,
-    serviceDefinition: parseServiceDefinitionDTO(data.serviceDefinition),
+    serviceDefinition: parseServiceDefinition(data.serviceDefinition),
     metrics: data.metrics,
   }
 }

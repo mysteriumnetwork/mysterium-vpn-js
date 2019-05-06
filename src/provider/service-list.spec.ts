@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceInfoDTO } from './service-info'
-import { parseServiceListDTO } from './service-list'
+import { parseServiceInfo, parseServiceInfoList } from './service-info'
 
-describe('.parseServiceListDTO', () => {
+describe('.parseServiceInfoList', () => {
   const proposalObject = {
     id: 1,
     providerId: '0x1',
@@ -35,26 +34,26 @@ describe('.parseServiceListDTO', () => {
   }
 
   it('sets properties with full structure', async () => {
-    const services = parseServiceListDTO([serviceObject])
+    const services = parseServiceInfoList([serviceObject])
 
     expect(services).toHaveLength(1)
-    expect(services[0]).toEqual(parseServiceInfoDTO(serviceObject))
+    expect(services[0]).toEqual(parseServiceInfo(serviceObject))
   })
 
   it('sets properties with an empty structure', async () => {
-    const services = parseServiceListDTO([])
+    const services = parseServiceInfoList([])
     expect(services).toEqual([])
   })
 
   it('throws an error if services in array does not validate', async () => {
     expect(() => {
-      parseServiceListDTO([{}])
-    }).toThrowError('ServiceInfoDTO: id is not provided')
+      parseServiceInfoList([{}])
+    }).toThrowError('ServiceInfo: id is not provided')
   })
 
   it('throws an error if service list in not an array', async () => {
     expect(() => {
-      parseServiceListDTO({})
-    }).toThrowError('ServiceInfoDTO[]: should be "array"')
+      parseServiceInfoList({})
+    }).toThrowError('ServiceInfo[]: should be "array"')
   })
 })

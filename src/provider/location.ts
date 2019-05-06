@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export interface LocationDTO {
+export interface Location {
   country?: string
 }
 
-export function parseLocationDTO(data: any): LocationDTO {
+export function parseLocation(data: any): Location {
   return { country: data.country }
 }

@@ -17,19 +17,20 @@
 
 import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicy } from '../access-policy/access-policy'
-import { ServiceInfoDTO, ServiceRequest, ServiceStatus as ServiceStatusDTO } from '../provider'
+import { ServiceStatus } from '../provider/service-status'
 import TequilapiError from '../tequilapi-error'
 import { FunctionLooper } from '../func/function-looper'
 import { logger } from '../logger'
-import { Publisher } from './publisher'
-import { ServiceStatus } from './service-status'
+import { Publisher } from '../func/publisher'
+import { ServiceInfo } from './service-info'
+import { ServiceRequest } from './service-request'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StatusSubscriber = (newStatus: ServiceStatus) => any
 
 export class ProviderService {
   // Currently running service instance
-  private serviceInstance?: ServiceInfoDTO
+  private serviceInstance?: ServiceInfo
 
   private statusPublisher: Publisher<ServiceStatus> = new Publisher()
   private statusFetcher?: FunctionLooper
@@ -61,7 +62,7 @@ export class ProviderService {
     return false
   }
 
-  public async findRunningService(): Promise<ServiceInfoDTO | undefined> {
+  public async findRunningService(): Promise<ServiceInfo | undefined> {
     try {
       const services = await this.tequilapiClient.serviceList()
       return services.pop()
@@ -129,7 +130,7 @@ export class ProviderService {
     this.statusPublisher.removeSubscriber(subscriber)
   }
 
-  private handleStartedService(service: ServiceInfoDTO): void {
+  private handleStartedService(service: ServiceInfo): void {
     this.serviceInstance = service
     this.processNewServiceInfo(service)
     this.startFetchingStatus()
@@ -172,9 +173,8 @@ export class ProviderService {
     }
   }
 
-  private processNewServiceInfo(info: ServiceInfoDTO): void {
-    const status = ProviderService.serviceStatusDTOToModel(info.status)
-    this.processStatus(status)
+  private processNewServiceInfo(info: ServiceInfo): void {
+    this.processStatus(info.status)
   }
 
   private processStatus(status: ServiceStatus): void {
@@ -184,18 +184,5 @@ export class ProviderService {
 
     this.statusPublisher.publish(status)
     this.lastStatus = status
-  }
-
-  private static serviceStatusDTOToModel(status: ServiceStatusDTO): ServiceStatus {
-    if (status === ServiceStatusDTO.NOT_RUNNING) {
-      return ServiceStatus.NOT_RUNNING
-    }
-    if (status === ServiceStatusDTO.STARTING) {
-      return ServiceStatus.STARTING
-    }
-    if (status === ServiceStatusDTO.RUNNING) {
-      return ServiceStatus.RUNNING
-    }
-    throw new Error(`Unknown status: ${status}`)
   }
 }

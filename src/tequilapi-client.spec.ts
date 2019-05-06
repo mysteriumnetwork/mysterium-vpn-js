@@ -23,7 +23,7 @@ import { parseConsumerLocation } from './consumer/location'
 import { parseIdentity } from './identity/identity'
 import { parseHealthcheckResponse } from './daemon/healthcheck'
 import { parseProposal } from './proposal/proposal'
-import { parseServiceInfoDTO, parseServiceListDTO } from './provider'
+import { parseServiceInfo, parseServiceInfoList } from './provider/service-info'
 
 describe('HttpTequilapiClient', () => {
   let api: TequilapiClient
@@ -566,7 +566,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('services').reply(200, response)
 
       const services = await api.serviceList()
-      expect(services).toEqual(parseServiceListDTO(response))
+      expect(services).toEqual(parseServiceInfoList(response))
     })
 
     it('handles error', () => {
@@ -584,7 +584,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('services/service1').reply(200, serviceObject)
 
       const service = await api.serviceGet('service1')
-      expect(service).toEqual(parseServiceInfoDTO(serviceObject))
+      expect(service).toEqual(parseServiceInfo(serviceObject))
     })
 
     it('handles error', () => {

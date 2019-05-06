@@ -15,16 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { LocationDTO, parseLocationDTO } from './location'
+import { Location, parseLocation } from './location'
 
-export interface ServiceDefinitionDTO {
-  locationOriginate?: LocationDTO
+export interface ServiceDefinition {
+  locationOriginate?: Location
 }
 
-export function parseServiceDefinitionDTO(data: any): ServiceDefinitionDTO {
-  let locationOriginate: LocationDTO | undefined
+export function parseServiceDefinition(data: any): ServiceDefinition {
+  let locationOriginate: Location | undefined
   if (data.locationOriginate) {
-    locationOriginate = parseLocationDTO(data.locationOriginate)
+    locationOriginate = parseLocation(data.locationOriginate)
   }
   return { locationOriginate }
 }

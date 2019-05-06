@@ -34,6 +34,7 @@ export { TimeFormatter } from './fmt/time-formatter'
 export { FunctionLooper } from './func/function-looper'
 export { ThresholdExecutor } from './func/threshold-executor'
 export { sleep } from './func/sleep'
+export { Publisher } from './func/publisher'
 
 export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
@@ -51,7 +52,16 @@ export { Metrics } from './metric/metrics'
 export { NatStatus, NatStatusResponse } from './nat/status'
 
 export { Proposal, ProposalQuery } from './proposal/proposal'
-export * from './provider'
+
+export { Location } from './provider/location'
+export { ProviderService } from './provider/provider-service'
+export { ProviderSessions } from './provider/provider-sessions'
+export { QualityLevel, QualityCalculator } from './provider/quality'
+export { ServiceDefinition } from './provider/service-definition'
+export { ServiceInfo } from './provider/service-info'
+export { ServiceRequest } from './provider/service-request'
+export { ServiceSession } from './provider/service-session'
+export { ServiceStatus } from './provider/service-status'
 
 export { logger, Logger } from './logger'
 export {

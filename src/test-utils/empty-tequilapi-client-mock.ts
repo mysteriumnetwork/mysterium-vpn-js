@@ -30,7 +30,9 @@ import { IdentityPayout } from '../identity/payout'
 import { IdentityRegistration } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
-import { ServiceInfoDTO, ServiceRequest, ServiceSessionDTO } from '../provider'
+import { ServiceInfo } from '../provider/service-info'
+import { ServiceRequest } from '../provider/service-request'
+import { ServiceSession } from '../provider/service-session'
 import { TequilapiClient } from '../tequilapi-client'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
@@ -97,15 +99,15 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw new Error('Not implemented')
   }
 
-  public serviceGet(serviceId: string): Promise<ServiceInfoDTO> {
+  public serviceGet(serviceId: string): Promise<ServiceInfo> {
     throw Error('Not implemented')
   }
 
-  public serviceList(): Promise<ServiceInfoDTO[]> {
+  public serviceList(): Promise<ServiceInfo[]> {
     throw Error('Not implemented')
   }
 
-  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
+  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo> {
     throw Error('Not implemented')
   }
 
@@ -117,7 +119,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public serviceSessions(): Promise<ServiceSessionDTO[]> {
+  public serviceSessions(): Promise<ServiceSession[]> {
     throw Error('Not implemented')
   }
 

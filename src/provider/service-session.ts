@@ -17,13 +17,13 @@
 
 import { validate, validateMultiple } from '../fmt/validation'
 
-export interface ServiceSessionDTO {
+export interface ServiceSession {
   id: string
   consumerId: string
 }
 
-export function parseServiceSessionDTO(data: any): ServiceSessionDTO {
-  validateMultiple('ServiceSessionDTO', data, [
+export function parseServiceSession(data: any): ServiceSession {
+  validateMultiple('ServiceSession', data, [
     { name: 'id', type: 'string' },
     { name: 'consumerId', type: 'string' },
   ])
@@ -33,8 +33,8 @@ export function parseServiceSessionDTO(data: any): ServiceSessionDTO {
   }
 }
 
-export function parseServiceSessionListDTO(responseData: any): ServiceSessionDTO[] {
-  validate('ServiceSessionDTO[]', responseData, { name: 'sessions', type: 'array' })
+export function parseServiceSessionList(responseData: any): ServiceSession[] {
+  validate('ServiceSession[]', responseData, { name: 'sessions', type: 'array' })
 
-  return responseData.sessions.map(parseServiceSessionDTO)
+  return responseData.sessions.map(parseServiceSession)
 }

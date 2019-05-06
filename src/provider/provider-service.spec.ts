@@ -16,28 +16,27 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { ServiceInfoDTO } from './service-info'
+import { ServiceInfo } from './service-info'
 import { ServiceRequest } from './service-request'
-import { ServiceStatus as ServiceStatusDTO } from './service-status'
+import { ServiceStatus } from './service-status'
 import TequilapiError from '../tequilapi-error'
 import { EmptyTequilapiClientMock } from '../test-utils/empty-tequilapi-client-mock'
 import { nextTick } from '../test-utils/utils'
 import { ProviderService } from './provider-service'
-import { ServiceStatus } from './service-status'
 
 class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
   public serviceStarted?: ServiceRequest
   public serviceStopped?: string
   public serviceGetInvoked = 0
 
-  private serviceInfoMocks: Map<string, ServiceInfoDTO> = new Map<string, ServiceInfoDTO>()
+  private serviceInfoMocks: Map<string, ServiceInfo> = new Map<string, ServiceInfo>()
   private servicesCreated: number = 0
 
-  public async serviceList(): Promise<ServiceInfoDTO[]> {
+  public async serviceList(): Promise<ServiceInfo[]> {
     return Array.from(this.serviceInfoMocks.values())
   }
 
-  public async serviceGet(serviceId: string): Promise<ServiceInfoDTO> {
+  public async serviceGet(serviceId: string): Promise<ServiceInfo> {
     this.serviceGetInvoked++
 
     const info = this.serviceInfoMocks.get(serviceId)
@@ -48,7 +47,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfoDTO> {
+  public async serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo> {
     this.serviceStarted = request
 
     const options: { [key: string]: any } = {}
@@ -65,7 +64,7 @@ class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
       options,
       proposal,
       providerId: request.providerId,
-      status: ServiceStatusDTO.STARTING,
+      status: ServiceStatus.STARTING,
       type: request.type,
     }
 

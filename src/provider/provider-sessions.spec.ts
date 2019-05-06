@@ -16,15 +16,15 @@
  */
 
 import lolex, { InstalledClock, NodeClock } from 'lolex'
-import { ServiceSessionDTO } from './service-session'
+import { ServiceSession } from './service-session'
 import { EmptyTequilapiClientMock } from '../test-utils/empty-tequilapi-client-mock'
 import { nextTick } from '../test-utils/utils'
 import { ProviderSessions } from './provider-sessions'
 
 class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
-  public serviceSessionsMock: ServiceSessionDTO[] = [{ id: 'id1', consumerId: '0x1' }]
+  public serviceSessionsMock: ServiceSession[] = [{ id: 'id1', consumerId: '0x1' }]
 
-  public async serviceSessions(): Promise<ServiceSessionDTO[]> {
+  public async serviceSessions(): Promise<ServiceSession[]> {
     return Promise.resolve(this.serviceSessionsMock)
   }
 }

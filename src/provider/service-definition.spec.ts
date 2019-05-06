@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseServiceDefinitionDTO } from './service-definition'
+import { parseServiceDefinition } from './service-definition'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseServiceDefinitionDTO', () => {
+  describe('.parseServiceDefinition', () => {
     it('sets properties with full structure', async () => {
-      const service = parseServiceDefinitionDTO({
+      const service = parseServiceDefinition({
         locationOriginate: {
           country: 'lt',
         },
@@ -30,7 +30,7 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('sets empty properties structure', async () => {
-      const service = parseServiceDefinitionDTO({})
+      const service = parseServiceDefinition({})
 
       expect(service.locationOriginate).toBeUndefined()
     })

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Publisher } from '../provider'
+import { Publisher } from './publisher'
 import { ThresholdExecutor } from './threshold-executor'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

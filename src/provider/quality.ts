@@ -15,11 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Metrics } from './metrics'
-import { QualityLevel } from './quality-level'
+import { Metrics } from '../metric/metrics'
 
 const MEDIUM_QUALITY = 0.2
 const HIGH_QUALITY = 0.5
+
+/**
+ * Indicates proposal level of quality.
+ */
+export enum QualityLevel {
+  LOW,
+  MEDIUM,
+  HIGH,
+  UNKNOWN,
+}
 
 export class QualityCalculator {
   /**
@@ -28,7 +37,7 @@ export class QualityCalculator {
    * @return number between 0 and 1. If metrics are empty, null is returned.
    */
   public calculateValue(metrics: Metrics): number | null {
-    const counts = metrics.connectCount
+    const counts = metrics.connectCount || { success: 0, fail: 0, timeout: 0 }
     const total = counts.success + counts.fail + counts.timeout
 
     if (total === 0) {

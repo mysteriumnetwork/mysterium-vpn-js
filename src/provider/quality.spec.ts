@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Metrics } from './metrics'
-import { QualityCalculator } from './quality-calculator'
-import { QualityLevel } from './quality-level'
+import { Metrics } from '../metric/metrics'
+import { QualityLevel } from './quality'
+import { QualityCalculator } from './quality'
 
 describe('QualityCalculator', () => {
   let qualityCalculator: QualityCalculator
