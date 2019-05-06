@@ -18,7 +18,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { TequilapiClient } from '../tequilapi-client'
-import { AccessPolicyDTO } from '../access-policy'
+import { AccessPolicy } from '../access-policy/access-policy'
 import {
   ConnectionIPDTO,
   ConnectionSessionDTO,
@@ -125,7 +125,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public accessPolicies(): Promise<AccessPolicyDTO[]> {
+  public accessPolicies(): Promise<AccessPolicy[]> {
     throw Error('Not implemented')
   }
 }

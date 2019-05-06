@@ -16,7 +16,7 @@
  */
 
 import { TequilapiClient } from '../tequilapi-client'
-import { AccessPolicyDTO } from '../access-policy'
+import { AccessPolicy } from '../access-policy/access-policy'
 import { ServiceInfoDTO, ServiceRequest, ServiceStatus as ServiceStatusDTO } from '../provider'
 import TequilapiError from '../tequilapi-error'
 import { FunctionLooper } from '../func'
@@ -70,7 +70,7 @@ export class ProviderService {
     }
   }
 
-  public async getFirstAccessPolicy(): Promise<AccessPolicyDTO | null> {
+  public async getFirstAccessPolicy(): Promise<AccessPolicy | null> {
     try {
       const accessPolicies = await this.tequilapiClient.accessPolicies()
 

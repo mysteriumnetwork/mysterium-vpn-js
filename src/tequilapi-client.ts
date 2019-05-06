@@ -16,7 +16,7 @@
  */
 
 import axios from 'axios'
-import { AccessPolicyDTO, parseAccessPoliciesDTO } from './access-policy'
+import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import {
   ConnectionIPDTO,
   ConnectionRequest,
@@ -82,7 +82,7 @@ export interface TequilapiClient {
   serviceStop(serviceId: string): Promise<void>
   serviceSessions(): Promise<ServiceSessionDTO[]>
 
-  accessPolicies(): Promise<AccessPolicyDTO[]>
+  accessPolicies(): Promise<AccessPolicy[]>
 }
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -272,13 +272,13 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseServiceSessionListDTO(response)
   }
 
-  public async accessPolicies(): Promise<AccessPolicyDTO[]> {
+  public async accessPolicies(): Promise<AccessPolicy[]> {
     const response = await this.http.get('access-policies')
     if (!response) {
       throw new Error('Access policies response body is missing')
     }
 
-    return parseAccessPoliciesDTO(response)
+    return parseAccessPolicyList(response)
   }
 }
 

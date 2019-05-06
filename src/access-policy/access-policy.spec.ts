@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { parseAccessPoliciesDTO, parseAccessPolicyDTO } from './access-policies'
+import { parseAccessPolicyList, parseAccessPolicy } from './access-policy'
 
-describe('.parseAccessPoliciesDTO', () => {
+describe('.parseAccessPolicyList', () => {
   const accessPolicy = {
     id: 'mysterium',
     title: 'mysterium verified',
@@ -31,32 +31,32 @@ describe('.parseAccessPoliciesDTO', () => {
   }
 
   it('sets properties with full structure', async () => {
-    const services = parseAccessPoliciesDTO({ entries: [accessPolicy] })
+    const services = parseAccessPolicyList({ entries: [accessPolicy] })
 
     expect(services).toHaveLength(1)
-    expect(services[0]).toEqual(parseAccessPolicyDTO(accessPolicy))
+    expect(services[0]).toEqual(parseAccessPolicy(accessPolicy))
   })
 
   it('sets properties with an empty structure', async () => {
-    const services = parseAccessPoliciesDTO({ entries: [] })
+    const services = parseAccessPolicyList({ entries: [] })
     expect(services).toEqual([])
   })
 
   it('throws an error if services in array does not validate', async () => {
     expect(() => {
-      parseAccessPoliciesDTO({ entries: [{}] })
-    }).toThrowError('AccessPolicyDTO: id is not provided')
+      parseAccessPolicyList({ entries: [{}] })
+    }).toThrowError('AccessPolicy: id is not provided')
   })
 
   it('throws an error if access policy list in not an object', async () => {
     expect(() => {
-      parseAccessPoliciesDTO({})
-    }).toThrowError('AccessPolicyDTO[]: entries is not provided')
+      parseAccessPolicyList({})
+    }).toThrowError('AccessPolicy[]: entries is not provided')
   })
 
   it('throws an error if service list in not an array', async () => {
     expect(() => {
-      parseAccessPoliciesDTO({ entries: {} })
-    }).toThrowError('AccessPolicyDTO[]: entries should be "array"')
+      parseAccessPolicyList({ entries: {} })
+    }).toThrowError('AccessPolicy[]: entries should be "array"')
   })
 })

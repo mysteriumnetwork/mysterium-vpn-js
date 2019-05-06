@@ -15,16 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Logger } from './logger'
-import {
-  TequilapiClientFactory,
-  TEQUILAPI_URL,
-  TequilapiClient,
-  HttpTequilapiClient,
-} from './tequilapi-client'
-import { Proposal, ProposalQuery } from './proposal/proposal'
-
-export * from './access-policy'
+export { AccessPolicy, AccessRule } from './access-policy/access-policy'
 export * from './connection'
 export * from './consumer'
 export * from './daemon'
@@ -34,14 +25,13 @@ export * from './http'
 export * from './identity'
 export * from './metric'
 export * from './nat'
+export { Proposal, ProposalQuery } from './proposal/proposal'
 export * from './provider'
 
+export { logger, Logger } from './logger'
 export {
-  Logger,
   TequilapiClientFactory,
   TEQUILAPI_URL,
   TequilapiClient,
   HttpTequilapiClient,
-  Proposal,
-  ProposalQuery,
-}
+} from './tequilapi-client'

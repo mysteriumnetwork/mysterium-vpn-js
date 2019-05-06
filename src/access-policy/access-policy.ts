@@ -17,18 +17,19 @@
 
 import { validate, validateMultiple } from '../fmt/validation'
 
-interface AccessRule {
+export interface AccessRule {
   type: string
   value?: string
 }
 
-export interface AccessPolicyDTO {
+export interface AccessPolicy {
   id: string
   title: string
   description: string
   allow: AccessRule[]
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseAccessRule(responseData: any): AccessRule {
   validateMultiple('AccessRule', responseData, [{ name: 'type', type: 'string' }])
 
@@ -42,8 +43,9 @@ function parseAccessRule(responseData: any): AccessRule {
   }
 }
 
-export function parseAccessPolicyDTO(responseData: any): AccessPolicyDTO {
-  validateMultiple('AccessPolicyDTO', responseData, [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseAccessPolicy(responseData: any): AccessPolicy {
+  validateMultiple('AccessPolicy', responseData, [
     { name: 'id', type: 'string' },
     { name: 'title', type: 'string' },
     { name: 'description', type: 'string' },
@@ -58,8 +60,8 @@ export function parseAccessPolicyDTO(responseData: any): AccessPolicyDTO {
   }
 }
 
-export function parseAccessPoliciesDTO(responseData: any): AccessPolicyDTO[] {
-  validate('AccessPolicyDTO[]', responseData, { name: 'entries', type: 'array' })
-
-  return responseData.entries.map(parseAccessPolicyDTO)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseAccessPolicyList(responseData: any): AccessPolicy[] {
+  validate('AccessPolicy[]', responseData, { name: 'entries', type: 'array' })
+  return responseData.entries.map(parseAccessPolicy)
 }
