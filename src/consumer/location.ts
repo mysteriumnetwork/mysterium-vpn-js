@@ -17,7 +17,7 @@
 
 export interface ConsumerLocation {
   ip?: string
-  asn: any
+  asn: number
   isp?: string
   continent?: string
   country?: string
