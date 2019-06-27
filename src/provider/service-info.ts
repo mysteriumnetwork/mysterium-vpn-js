@@ -19,11 +19,18 @@ import { validateArray, validateMultiple } from '../fmt/validation'
 import { parseProposal, Proposal } from '../proposal/proposal'
 import { ServiceStatus } from './service-status'
 
+export interface ServiceOptions {
+  port?: number
+  protocol?: string
+
+  [key: string]: any
+}
+
 export interface ServiceInfo {
   id: string
   providerId: string
   type: string
-  options?: { [key: string]: any }
+  options?: ServiceOptions
   status: ServiceStatus
   proposal: Proposal
 }

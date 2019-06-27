@@ -130,4 +130,12 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   public accessPolicies(): Promise<AccessPolicy[]> {
     throw Error('Not implemented')
   }
+
+  public identityCurrent(passphrase: string): Promise<Identity> {
+    throw Error('Not implemented')
+  }
+
+  public updateReferralCode(id: string, referralCode: string): Promise<void> {
+    throw Error('Not implemented')
+  }
 }

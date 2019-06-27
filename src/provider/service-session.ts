@@ -20,12 +20,18 @@ import { validate, validateMultiple } from '../fmt/validation'
 export interface ServiceSession {
   id: string
   consumerId: string
+  createdAt: string
+  bytesIn: number
+  bytesOut: number
 }
 
 export function parseServiceSession(data: any): ServiceSession {
   validateMultiple('ServiceSession', data, [
     { name: 'id', type: 'string' },
     { name: 'consumerId', type: 'string' },
+    { name: 'createdAt', type: 'string' },
+    { name: 'bytesIn', type: 'number' },
+    { name: 'bytesOut', type: 'number' },
   ])
   return data
 }

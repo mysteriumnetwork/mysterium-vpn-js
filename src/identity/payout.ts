@@ -15,16 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { validate } from '../fmt/validation'
+import { validateMultiple } from '../fmt/validation'
 
 export interface IdentityPayout {
   ethAddress: string
+  referralCode: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseIdentityPayout(data: any): IdentityPayout {
-  validate('IdentityPayout', data, { name: 'eth_address', type: 'string' })
-  return {
-    ethAddress: data.eth_address,
-  }
+  validateMultiple('IdentityPayout', data, [
+    { name: 'ethAddress', type: 'string' },
+    { name: 'referralCode', type: 'string' },
+  ])
+  return data
 }
