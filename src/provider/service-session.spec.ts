@@ -21,6 +21,9 @@ describe('TequilapiClient DTO', () => {
   const sessionData = {
     id: 'id1',
     consumerId: '0x1',
+    createdAt: '2019-01-01',
+    bytesIn: 10,
+    bytesOut: 11,
   }
 
   describe('.parseServiceInfo', () => {

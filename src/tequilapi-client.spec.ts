@@ -288,6 +288,25 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
+  describe('identityCurrent()', () => {
+    it('returns current identity DTO', async () => {
+      const response = { id: '0x0000bEEF' }
+      mock.onPut('identities/current', { passphrase: 'test' }).reply(200, response)
+
+      const identity = await api.identityCurrent('test')
+      expect(identity).toEqual(parseIdentity(response))
+    })
+
+    it('handles error', () => {
+      mock.onPut('identities/current').reply(500)
+
+      expect(api.identityCurrent('test')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities/current")'
+      )
+    })
+  })
+
   describe('identityCreate()', () => {
     it('create identity', async () => {
       const response = { id: '0x0000bEEF' }
@@ -362,10 +381,16 @@ describe('HttpTequilapiClient', () => {
 
   describe('identityPayout()', () => {
     it('returns identity payout info', async () => {
-      const response = { eth_address: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca' }
+      const response = {
+        ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca',
+        referralCode: 'ABC1234',
+      }
       mock.onGet('identities/test-id/payout').reply(200, response)
       const info = await api.identityPayout('test-id')
-      expect(info).toEqual({ ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca' })
+      expect(info).toEqual({
+        ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca',
+        referralCode: 'ABC1234',
+      })
     })
 
     it('returns error when api does not return body', async () => {
@@ -377,10 +402,18 @@ describe('HttpTequilapiClient', () => {
     })
 
     it('returns error when eth address is missing', async () => {
-      mock.onGet('identities/test-id/payout').reply(200, {})
+      mock.onGet('identities/test-id/payout').reply(200, { referralCode: 'test' })
       expect(api.identityPayout('test-id')).rejects.toHaveProperty(
         'message',
-        'IdentityPayout: eth_address is not provided'
+        'IdentityPayout: ethAddress is not provided'
+      )
+    })
+
+    it('returns error when referral code is missing', async () => {
+      mock.onGet('identities/test-id/payout').reply(200, { ethAddress: '0x0' })
+      expect(api.identityPayout('test-id')).rejects.toHaveProperty(
+        'message',
+        'IdentityPayout: referralCode is not provided'
       )
     })
   })
@@ -389,6 +422,13 @@ describe('HttpTequilapiClient', () => {
     it('succeeds', async () => {
       mock.onPut('identities/test-id/payout', { ethAddress: 'my eth address' }).reply(200)
       await api.updateIdentityPayout('test-id', 'my eth address')
+    })
+  })
+
+  describe('updateReferralCode()', () => {
+    it('succeeds', async () => {
+      mock.onPut('identities/test-id/referral', { referralCode: 'ABC1234' }).reply(200)
+      await api.updateReferralCode('test-id', 'ABC1234')
     })
   })
 
@@ -652,10 +692,16 @@ describe('HttpTequilapiClient', () => {
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
             consumerId: '0x1000FACE',
+            createdAt: '2019-01-01 00:00:00',
+            bytesIn: 1000,
+            bytesOut: 100,
           },
           {
             id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
             consumerId: '0x2000FACE',
+            createdAt: '2019-01-02 00:00:00',
+            bytesIn: 1100,
+            bytesOut: 101,
           },
         ],
       }

@@ -21,9 +21,10 @@ describe('TequilapiClient DTO', () => {
   describe('.parseIdentityPayout', () => {
     it('sets properties', async () => {
       // eslint-disable-next-line @typescript-eslint/camelcase
-      const identity = parseIdentityPayout({ eth_address: '0xF000FACE' })
+      const identity = parseIdentityPayout({ ethAddress: '0xF000FACE', referralCode: 'ABC1234' })
 
       expect(identity.ethAddress).toEqual('0xF000FACE')
+      expect(identity.referralCode).toEqual('ABC1234')
     })
 
     it('throws when eth address is missing', async () => {

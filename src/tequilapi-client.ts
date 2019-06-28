@@ -45,11 +45,13 @@ export interface TequilapiClient {
   location(timeout?: number): Promise<ConsumerLocation>
 
   identityList(): Promise<Identity[]>
+  identityCurrent(passphrase: string): Promise<Identity>
   identityCreate(passphrase: string): Promise<Identity>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegistration(id: string): Promise<IdentityRegistration>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
+  updateReferralCode(id: string, referralCode: string): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
 
@@ -111,6 +113,16 @@ export class HttpTequilapiClient implements TequilapiClient {
     return responseDto.identities
   }
 
+  public async identityCurrent(passphrase: string): Promise<Identity> {
+    const response = await this.http.put('identities/current', { passphrase })
+
+    if (!response) {
+      throw new Error('Identity response body is missing')
+    }
+
+    return parseIdentity(response)
+  }
+
   public async identityCreate(passphrase: string): Promise<Identity> {
     const response = await this.http.post('identities', { passphrase })
     if (!response) {
@@ -141,6 +153,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async updateIdentityPayout(id: string, ethAddress: string): Promise<void> {
     await this.http.put(`identities/${id}/payout`, { ethAddress })
+  }
+
+  public async updateReferralCode(id: string, referralCode: string): Promise<void> {
+    await this.http.put(`identities/${id}/referral`, { referralCode: referralCode })
   }
 
   public async findProposals(query?: ProposalQuery): Promise<Proposal[]> {
