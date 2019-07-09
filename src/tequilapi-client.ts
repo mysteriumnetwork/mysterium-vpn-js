@@ -169,7 +169,9 @@ export class HttpTequilapiClient implements TequilapiClient {
   ): Promise<void> {
     return this.http.put(`auth/password`, {
       username,
+      // eslint-disable-next-line @typescript-eslint/camelcase
       old_password: oldPassword,
+      // eslint-disable-next-line @typescript-eslint/camelcase
       new_password: newPassword,
     })
   }
