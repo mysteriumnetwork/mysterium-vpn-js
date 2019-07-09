@@ -117,6 +117,17 @@ describe('TequilapiError', () => {
     })
   })
 
+  describe('.isUnauthorizedError', () => {
+    it('returns false for simple error', () => {
+      expect(simpleTequilapiError.isNotFoundError).toBe(false)
+    })
+
+    it('returns true for errors with request closed status', () => {
+      const tequilapiError = createTequilapiErrorWithResponseStatus(401)
+      expect(tequilapiError.isUnauthorizedError).toBe(true)
+    })
+  })
+
   describe('.toString', () => {
     it('returns error message with class name', () => {
       expect(simpleTequilapiError.toString()).toEqual(

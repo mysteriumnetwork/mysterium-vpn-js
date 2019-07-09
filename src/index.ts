@@ -70,3 +70,5 @@ export {
   TequilapiClient,
   HttpTequilapiClient,
 } from './tequilapi-client'
+
+export * from './tequilapi-error'

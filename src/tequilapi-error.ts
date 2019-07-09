@@ -29,6 +29,7 @@ const httpResponseCodes = {
   CLIENT_CLOSED_REQUEST: 499,
   SERVICE_UNAVAILABLE: 503,
   NOT_FOUND: 404,
+  UNAUTHORIZED: 401,
 }
 
 export default class TequilapiError extends Error {
@@ -80,6 +81,10 @@ export default class TequilapiError extends Error {
 
   public get isNotFoundError(): boolean {
     return this._hasHttpStatus(httpResponseCodes.NOT_FOUND)
+  }
+
+  public get isUnauthorizedError(): boolean {
+    return this._hasHttpStatus(httpResponseCodes.UNAUTHORIZED)
   }
 
   public _hasHttpStatus(expectedStatus: number): boolean {

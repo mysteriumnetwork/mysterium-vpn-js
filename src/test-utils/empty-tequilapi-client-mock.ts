@@ -138,4 +138,16 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   public updateReferralCode(id: string, referralCode: string): Promise<void> {
     throw Error('Not implemented')
   }
+
+  public authChangePassword(
+    username: string,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public authLogin(username: string, password: string): Promise<void> {
+    throw Error('Not implemented')
+  }
 }

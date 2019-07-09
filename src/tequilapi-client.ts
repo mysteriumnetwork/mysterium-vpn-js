@@ -21,13 +21,13 @@ import { ConnectionRequest } from './connection/request'
 import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
 import { ConnectionIp, parseConnectionIp } from './connection/ip'
 import { ConnectionSession, validateSession } from './connection/session'
-import { parseConnectionStatistics, ConnectionStatistics } from './connection/statistics'
+import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { AxiosAdapter } from './http/axios-adapter'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
-import { Identity, parseIdentityList, parseIdentity } from './identity/identity'
+import { Identity, parseIdentity, parseIdentityList } from './identity/identity'
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import { IdentityRegistration, parseIdentityRegistration } from './identity/registration'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
@@ -52,6 +52,9 @@ export interface TequilapiClient {
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
   updateReferralCode(id: string, referralCode: string): Promise<void>
+
+  authChangePassword(username: string, oldPassword: string, newPassword: string): Promise<void>
+  authLogin(username: string, password: string): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
 
@@ -157,6 +160,22 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async updateReferralCode(id: string, referralCode: string): Promise<void> {
     await this.http.put(`identities/${id}/referral`, { referralCode: referralCode })
+  }
+
+  public async authChangePassword(
+    username: string,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<void> {
+    return this.http.put(`auth/password`, {
+      username,
+      old_password: oldPassword,
+      new_password: newPassword,
+    })
+  }
+
+  public async authLogin(username: string, password: string): Promise<void> {
+    return this.http.post(`auth/login`, { username, password })
   }
 
   public async findProposals(query?: ProposalQuery): Promise<Proposal[]> {
