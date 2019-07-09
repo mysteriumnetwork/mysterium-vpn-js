@@ -432,6 +432,31 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
+  describe('authChangePassword()', () => {
+    it('succeeds', async () => {
+      mock
+        .onPut('auth/password', {
+          username: 'username',
+          old_password: 'pass1234',
+          new_password: 'pass5678',
+        })
+        .reply(200)
+      await api.authChangePassword('username', 'pass1234', 'pass5678')
+    })
+  })
+
+  describe('authLogin()', () => {
+    it('succeeds', async () => {
+      mock
+        .onPost('auth/login', {
+          username: 'username',
+          password: 'password',
+        })
+        .reply(200)
+      await api.authLogin('username', 'password')
+    })
+  })
+
   describe('connectionCreate()', () => {
     it('returns response', async () => {
       const expectedRequest = {
