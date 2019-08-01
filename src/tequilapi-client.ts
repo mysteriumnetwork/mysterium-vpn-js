@@ -51,6 +51,7 @@ export interface TequilapiClient {
   identityRegistration(id: string): Promise<IdentityRegistration>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
+  updateEmail(id: string, email: string): Promise<void>
   updateReferralCode(id: string, referralCode: string): Promise<void>
 
   authChangePassword(username: string, oldPassword: string, newPassword: string): Promise<void>
@@ -160,6 +161,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async updateReferralCode(id: string, referralCode: string): Promise<void> {
     await this.http.put(`identities/${id}/referral`, { referralCode: referralCode })
+  }
+
+  public async updateEmail(id: string, email: string): Promise<void> {
+    await this.http.put(`identities/${id}/email`, { email })
   }
 
   public async authChangePassword(

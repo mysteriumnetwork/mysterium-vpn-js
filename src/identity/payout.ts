@@ -20,6 +20,7 @@ import { validateMultiple } from '../fmt/validation'
 export interface IdentityPayout {
   ethAddress: string
   referralCode: string
+  email: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +28,7 @@ export function parseIdentityPayout(data: any): IdentityPayout {
   validateMultiple('IdentityPayout', data, [
     { name: 'ethAddress', type: 'string' },
     { name: 'referralCode', type: 'string' },
+    { name: 'email', type: 'string' },
   ])
   return data
 }

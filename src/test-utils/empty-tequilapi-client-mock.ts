@@ -139,6 +139,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
+  public updateEmail(id: string, email: string): Promise<void> {
+    throw Error('Not implemented')
+  }
+
   public authChangePassword(
     username: string,
     oldPassword: string,

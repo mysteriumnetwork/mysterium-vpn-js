@@ -384,12 +384,14 @@ describe('HttpTequilapiClient', () => {
       const response = {
         ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca',
         referralCode: 'ABC1234',
+        email: '',
       }
       mock.onGet('identities/test-id/payout').reply(200, response)
       const info = await api.identityPayout('test-id')
       expect(info).toEqual({
         ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca',
         referralCode: 'ABC1234',
+        email: '',
       })
     })
 
