@@ -17,6 +17,8 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { Issue, IssueId } from '../feedback/issue'
+import { Config } from '../config/config'
 import { AccessPolicy } from '../access-policy/access-policy'
 import { ConnectionIp } from '../connection/ip'
 import { ConnectionRequest } from '../connection/request'
@@ -152,6 +154,18 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public authLogin(username: string, password: string): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public updateUserConfig(config: Config): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public userConfig(): Promise<Config> {
+    throw Error('Not implemented')
+  }
+
+  public reportIssue(issue: Issue): Promise<IssueId> {
     throw Error('Not implemented')
   }
 }

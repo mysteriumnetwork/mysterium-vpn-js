@@ -16,6 +16,8 @@
  */
 
 import axios from 'axios'
+import { Issue, IssueId } from './feedback/issue'
+import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionRequest } from './connection/request'
 import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
@@ -44,6 +46,9 @@ export interface TequilapiClient {
   stop(): Promise<void>
   location(timeout?: number): Promise<ConsumerLocation>
 
+  userConfig(): Promise<Config>
+  updateUserConfig(config: Config): Promise<void>
+
   identityList(): Promise<Identity[]>
   identityCurrent(passphrase: string): Promise<Identity>
   identityCreate(passphrase: string): Promise<Identity>
@@ -58,6 +63,8 @@ export interface TequilapiClient {
   authLogin(username: string, password: string): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
+
+  reportIssue(issue: Issue): Promise<IssueId>
 
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusResponse>
   connectionStatus(): Promise<ConnectionStatusResponse>
@@ -170,7 +177,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async authChangePassword(
     username: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     return this.http.put(`auth/password`, {
       username,
@@ -195,7 +202,7 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async connectionCreate(
     request: ConnectionRequest,
-    timeout: number | undefined = TIMEOUT_DISABLED
+    timeout: number | undefined = TIMEOUT_DISABLED,
   ): Promise<ConnectionStatusResponse> {
     const response = await this.http.put(
       'connection',
@@ -204,7 +211,7 @@ export class HttpTequilapiClient implements TequilapiClient {
         providerId: request.providerId,
         serviceType: request.serviceType,
       },
-      timeout
+      timeout,
     )
     if (!response) {
       throw new Error('Connection creation response body is missing')
@@ -268,7 +275,7 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async serviceStart(
     request: ServiceRequest,
-    timeout: number | undefined = TIMEOUT_DISABLED
+    timeout: number | undefined = TIMEOUT_DISABLED,
   ): Promise<ServiceInfo> {
     const response = await this.http.post(
       'services',
@@ -278,7 +285,7 @@ export class HttpTequilapiClient implements TequilapiClient {
         accessPolicies: request.accessPolicies,
         options: request.options,
       },
-      timeout
+      timeout,
     )
     if (!response) {
       throw new Error('Service creation response body is missing')
@@ -305,6 +312,23 @@ export class HttpTequilapiClient implements TequilapiClient {
     }
 
     return parseAccessPolicyList(response)
+  }
+
+  public async userConfig(): Promise<Config> {
+    const response = await this.http.get('config/user')
+    if (!response) {
+      throw new Error('User config body is missing')
+    }
+
+    return response
+  }
+
+  public async updateUserConfig(config: Config): Promise<void> {
+    return this.http.post(`auth/login`, config)
+  }
+
+  public async reportIssue(issue: Issue): Promise<IssueId> {
+    return this.http.post(`/feedback/issue`, issue)
   }
 }
 
