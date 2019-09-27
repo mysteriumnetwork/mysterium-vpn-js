@@ -324,11 +324,11 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async updateUserConfig(config: Config): Promise<void> {
-    return this.http.post(`auth/login`, config)
+    return this.http.post(`config/user`, config)
   }
 
   public async reportIssue(issue: Issue): Promise<IssueId> {
-    return this.http.post(`/feedback/issue`, issue)
+    return this.http.post(`feedback/issue`, issue)
   }
 }
 
