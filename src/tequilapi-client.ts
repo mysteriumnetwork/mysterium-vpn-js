@@ -177,7 +177,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async authChangePassword(
     username: string,
     oldPassword: string,
-    newPassword: string,
+    newPassword: string
   ): Promise<void> {
     return this.http.put(`auth/password`, {
       username,
@@ -202,7 +202,7 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async connectionCreate(
     request: ConnectionRequest,
-    timeout: number | undefined = TIMEOUT_DISABLED,
+    timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ConnectionStatusResponse> {
     const response = await this.http.put(
       'connection',
@@ -211,7 +211,7 @@ export class HttpTequilapiClient implements TequilapiClient {
         providerId: request.providerId,
         serviceType: request.serviceType,
       },
-      timeout,
+      timeout
     )
     if (!response) {
       throw new Error('Connection creation response body is missing')
@@ -275,7 +275,7 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async serviceStart(
     request: ServiceRequest,
-    timeout: number | undefined = TIMEOUT_DISABLED,
+    timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ServiceInfo> {
     const response = await this.http.post(
       'services',
@@ -285,7 +285,7 @@ export class HttpTequilapiClient implements TequilapiClient {
         accessPolicies: request.accessPolicies,
         options: request.options,
       },
-      timeout,
+      timeout
     )
     if (!response) {
       throw new Error('Service creation response body is missing')
