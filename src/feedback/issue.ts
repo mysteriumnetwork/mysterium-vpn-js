@@ -16,8 +16,8 @@
  */
 
 export interface Issue {
-  email: string
-  message: string
+  email?: string
+  description: string
 }
 
 export interface IssueId {
