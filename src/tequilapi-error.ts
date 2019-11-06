@@ -32,8 +32,8 @@ const httpResponseCodes = {
   UNAUTHORIZED: 401,
 }
 
-export default class TequilapiError extends Error {
-  public name: string = 'TequilapiError'
+export class TequilapiError extends Error {
+  public name = 'TequilapiError'
 
   public _originalError: AxiosError
 
@@ -52,6 +52,7 @@ export default class TequilapiError extends Error {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(this, actualProto)
     } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       this.__proto__ = actualProto
     }

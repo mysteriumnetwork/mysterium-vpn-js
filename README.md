@@ -5,20 +5,25 @@
 
 Javascript SDK for [mysteriumnetwork/node](https://github.com/mysteriumnetwork/node)  
 
-* [API documentation](http://tequilapi.mysterium.network)
-
 ## Installation
 
+NPM:
 ```bash
-npm i mysterium-tequilapi
+npm i mysterium-vpn-js
 ```
+
+Yarn:
+```bash
+yarn add mysterium-vpn-js
+```
+
 
 ## Usage
 
 ### ES6 module
 
 ```js
-import TequilapiClientFactory, { TEQUILAPI_URL } from 'mysterium-vpn-js'
+import { TequilapiClientFactory, TEQUILAPI_URL } from 'mysterium-vpn-js'
 const factory = new TequilapiClientFactory(TEQUILAPI_URL)
 const client = factory.build(factory.buildAdapter())
 client.identityList().then((identities) => {
@@ -28,7 +33,7 @@ client.identityList().then((identities) => {
 
 Output:
 
-```js
+```json
 {"identities":[{"id":"0xf2732f2100d19d74b1b5484037ebf6c13736d1bc"}]}
 ```
 
@@ -46,7 +51,7 @@ client.healthCheck().then((res) => {
 
 Output:
 
-```js
+```json
 { "uptime":"75h23m14.658120675s",
   "process":19857,
   "version":"0.2.3",
@@ -58,27 +63,11 @@ Output:
 }
 ```
 
-Client object fulfills the following interface:
-```typescript
-interface TequilapiClient {
-  healthCheck (timeout: ?number): Promise<NodeHealthcheck>,
-  stop (): Promise<void>,
+## Tequilapi Client API
 
-  identityList (): Promise<Array<Identity>>,
-  identityCreate (passphrase: string): Promise<Identity>,
-  identityUnlock (id: string, passphrase: string): Promise<void>,
-  identityRegistration (id: string): Promise<IdentityRegistration>,
+See [src/tequilapi-client.ts](https://github.com/mysteriumnetwork/mysterium-vpn-js/blob/master/src/tequilapi-client.ts) for all available Tequilapi operations.
 
-  findProposals (query: ?ProposalQuery): Promise<Array<Proposal>>,
-
-  connectionCreate (request: ConnectionRequest, timeout: ?number): Promise<ConnectionStatusResponse>,
-  connectionStatus (): Promise<ConnectionStatusResponse>,
-  connectionCancel (): Promise<void>,
-  connectionIp (timeout: ?number): Promise<ConnectionIp>,
-  connectionStatistics (): Promise<ConnectionStatistics>,
-  location (timeout: ?number): Promise<ConsumerLocation>
-}
-```
+You may also check out Tequilapi [REST API documentation](http://tequilapi.mysterium.network).
 
 ## Contributing
 
