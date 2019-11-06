@@ -22,7 +22,7 @@ import { ThresholdExecutor } from './threshold-executor'
 type LoopFn = () => Promise<any>
 
 export class FunctionLooper {
-  private running: boolean = false
+  private running = false
   private errorPublisher: Publisher<Error> = new Publisher()
   private currentExecutor?: ThresholdExecutor
   private currentPromise?: Promise<void>

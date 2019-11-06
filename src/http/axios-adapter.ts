@@ -16,7 +16,7 @@
  */
 
 import { AxiosInstance } from 'axios'
-import TequilapiError from '../tequilapi-error'
+import { TequilapiError } from '../tequilapi-error'
 import { TIMEOUT_DEFAULT } from './timeouts'
 import { HttpInterface, HttpQuery } from './interface'
 

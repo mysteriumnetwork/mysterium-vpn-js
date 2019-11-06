@@ -18,7 +18,7 @@
 import { TequilapiClient } from '../tequilapi-client'
 import { AccessPolicy } from '../access-policy/access-policy'
 import { ServiceStatus } from '../provider/service-status'
-import TequilapiError from '../tequilapi-error'
+import { TequilapiError } from '../tequilapi-error'
 import { FunctionLooper } from '../func/function-looper'
 import { logger } from '../logger'
 import { Publisher } from '../func/publisher'
