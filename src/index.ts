@@ -21,7 +21,8 @@ export { ConnectionCount } from './connection/count'
 export { ConnectionIp } from './connection/ip'
 export { ConnectionRequest } from './connection/request'
 export { ConnectionSession } from './connection/session'
-export { ConnectionStatus } from './connection/status'
+export { ConnectionStatus, ConnectionStatusResponse } from './connection/status'
+export { ConnectionStatistics } from './connection/statistics'
 
 export { ConsumerLocation } from './consumer/location'
 
@@ -38,6 +39,7 @@ export { Publisher } from './func/publisher'
 
 export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
+export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
 export { getPaymentLink } from './identity/get-payment-link'
 export { Identity } from './identity/identity'
@@ -51,7 +53,7 @@ export { Metrics } from './metric/metrics'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
-export { Proposal, ProposalQuery } from './proposal/proposal'
+export { Proposal, ProposalQuery, parseProposal } from './proposal/proposal'
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
@@ -71,4 +73,4 @@ export {
   HttpTequilapiClient,
 } from './tequilapi-client'
 
-export * from './tequilapi-error'
+export { TequilapiError, AxiosError } from './tequilapi-error'

@@ -32,7 +32,7 @@ const httpResponseCodes = {
   UNAUTHORIZED: 401,
 }
 
-export default class TequilapiError extends Error {
+export class TequilapiError extends Error {
   public name: string = 'TequilapiError'
 
   public _originalError: AxiosError
