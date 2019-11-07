@@ -17,4 +17,9 @@
 
 export interface Location {
   country?: string
+  continent?: string
+  city?: string
+  asn?: number
+  isp?: string
+  node_type?: string
 }

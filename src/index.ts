@@ -53,7 +53,13 @@ export { Metrics } from './metric/metrics'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
-export { Proposal, ProposalQuery, parseProposal } from './proposal/proposal'
+export {
+  Proposal,
+  ProposalQuery,
+  AccessPolicyRef,
+  parseProposal,
+  parseProposalList,
+} from './proposal/proposal'
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
