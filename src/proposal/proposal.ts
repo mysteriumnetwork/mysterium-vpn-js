@@ -19,12 +19,18 @@ import { validate, validateMultiple } from '../fmt/validation'
 import { Metrics } from '../metric/metrics'
 import { ServiceDefinition } from '../provider/service-definition'
 
+export interface AccessPolicyRef {
+  id: string
+  source: string
+}
+
 export interface Proposal {
   id: number
   providerId: string
   serviceType: string
   serviceDefinition: ServiceDefinition
   metrics?: Metrics
+  accessPolicies?: AccessPolicyRef[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
