@@ -149,7 +149,7 @@ export class ProviderService {
 
   private async fetchStatus(service: ServiceInfo): Promise<void> {
     try {
-      await this.tequilapiClient.serviceGet(service.id)
+      service = await this.tequilapiClient.serviceGet(service.id)
       this.processNewServiceInfo(service)
     } catch (err) {
       if (err.name === TequilapiError.name && (err as TequilapiError).isNotFoundError) {
