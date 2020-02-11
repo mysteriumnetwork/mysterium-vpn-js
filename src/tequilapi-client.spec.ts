@@ -722,6 +722,7 @@ describe('HttpTequilapiClient', () => {
             createdAt: '2019-01-01 00:00:00',
             bytesIn: 1000,
             bytesOut: 100,
+            tokensEarned: 1000,
           },
           {
             id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
@@ -729,6 +730,7 @@ describe('HttpTequilapiClient', () => {
             createdAt: '2019-01-02 00:00:00',
             bytesIn: 1100,
             bytesOut: 101,
+            tokensEarned: 1000,
           },
         ],
       }
