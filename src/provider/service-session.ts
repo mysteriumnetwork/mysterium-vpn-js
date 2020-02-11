@@ -23,6 +23,7 @@ export interface ServiceSession {
   createdAt: string
   bytesIn: number
   bytesOut: number
+  tokensEarned: number
 }
 
 export function parseServiceSession(data: any): ServiceSession {
@@ -32,6 +33,7 @@ export function parseServiceSession(data: any): ServiceSession {
     { name: 'createdAt', type: 'string' },
     { name: 'bytesIn', type: 'number' },
     { name: 'bytesOut', type: 'number' },
+    { name: 'tokensEarned', type: 'number' },
   ])
   return data
 }

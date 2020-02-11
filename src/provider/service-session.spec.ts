@@ -24,6 +24,7 @@ describe('TequilapiClient DTO', () => {
     createdAt: '2019-01-01',
     bytesIn: 10,
     bytesOut: 11,
+    tokensEarned: 4_000,
   }
 
   describe('.parseServiceInfo', () => {

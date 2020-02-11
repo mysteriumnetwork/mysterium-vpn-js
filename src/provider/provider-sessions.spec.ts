@@ -23,7 +23,14 @@ import { ProviderSessions } from './provider-sessions'
 
 class ProviderServiceTequilapiClientMock extends EmptyTequilapiClientMock {
   public serviceSessionsMock: ServiceSession[] = [
-    { id: 'id1', consumerId: '0x1', createdAt: '2019-01-01', bytesIn: 10, bytesOut: 11 },
+    {
+      id: 'id1',
+      consumerId: '0x1',
+      createdAt: '2019-01-01',
+      bytesIn: 10,
+      bytesOut: 11,
+      tokensEarned: 1000,
+    },
   ]
 
   public async serviceSessions(): Promise<ServiceSession[]> {
