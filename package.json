@@ -1,6 +1,6 @@
 {
   "name": "mysterium-vpn-js",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Javascript SDK for Mysterium node",
   "repository": "github:mysteriumnetwork/mysterium-vpn-js",
   "main": "lib/index.js",
