@@ -37,6 +37,7 @@ import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
 import { ServiceRequest } from './provider/service-request'
 import { parseServiceSessionList, ServiceSession } from './provider/service-session'
+import { TopUpRequest } from './payment/topup'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
@@ -80,6 +81,8 @@ export interface TequilapiClient {
   serviceSessions(): Promise<ServiceSession[]>
 
   accessPolicies(): Promise<AccessPolicy[]>
+
+  topUp(request: TopUpRequest): Promise<void>
 }
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -329,6 +332,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async reportIssue(issue: Issue): Promise<IssueId> {
     return this.http.post(`feedback/issue`, issue)
+  }
+
+  public async topUp(request: TopUpRequest): Promise<void> {
+    return this.http.post(`transactor/topup`, request)
   }
 }
 
