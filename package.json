@@ -10,8 +10,7 @@
     "test": "jest",
     "copyright": "./utils/check-headers.sh",
     "build:typescript": "yarn tsc -p tsconfig.build.json",
-    "build:flow": "./utils/generate_flow_definitions.sh",
-    "build": "yarn build:typescript && yarn build:flow",
+    "build": "yarn tsc -p tsconfig.build.json",
     "tsc-check": "yarn tsc --noEmit",
     "ci": "yarn tsc-check && yarn lint && yarn test && yarn copyright && yarn build"
   },
@@ -32,12 +31,11 @@
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "flowgen": "^1.8.2",
     "jest": "^24.9.0",
     "lolex": "^5.1.1",
     "prettier": "^1.17.0",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.4.5"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "axios": "^0.19.0",
