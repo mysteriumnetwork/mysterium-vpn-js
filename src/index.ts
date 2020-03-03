@@ -71,6 +71,15 @@ export { ServiceRequest } from './provider/service-request'
 export { ServiceSession } from './provider/service-session'
 export { ServiceStatus } from './provider/service-status'
 
+export {
+  PaymentMethodType,
+  Money,
+  PaymentMethod,
+  pricePerMinute,
+  pricePerGiB,
+} from './payment/method'
+export { mystDisplay, MYST } from './payment/myst'
+
 export { logger, Logger } from './logger'
 export {
   TequilapiClientFactory,

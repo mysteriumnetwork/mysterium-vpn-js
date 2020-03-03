@@ -18,6 +18,7 @@
 import { validate, validateMultiple } from '../fmt/validation'
 import { Metrics } from '../metric/metrics'
 import { ServiceDefinition } from '../provider/service-definition'
+import { PaymentMethod } from '../payment/method'
 
 export interface AccessPolicyRef {
   id: string
@@ -31,6 +32,7 @@ export interface Proposal {
   serviceDefinition: ServiceDefinition
   metrics?: Metrics
   accessPolicies?: AccessPolicyRef[]
+  paymentMethod?: PaymentMethod
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
