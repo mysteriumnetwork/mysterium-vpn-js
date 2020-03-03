@@ -19,9 +19,9 @@ import { Money } from './method'
 
 export const MYST = 'MYST'
 
-export const mystDisplay = (m: Money): string | undefined => {
+export const mystDisplay = (m: Money): number | undefined => {
   if (m.currency == MYST) {
-    return (m.amount / 100000000).toFixed(6)
+    return Number((m.amount / 100000000).toFixed(6))
   }
   return undefined
 }
