@@ -73,6 +73,7 @@ export interface TequilapiClient {
   connectionIp(timeout?: number): Promise<ConnectionIp>
   connectionStatistics(): Promise<ConnectionStatistics>
   connectionSessions(): Promise<ConnectionSession[]>
+  connectionLocation(): Promise<ConsumerLocation>
 
   serviceList(): Promise<ServiceInfo[]>
   serviceGet(serviceId: string): Promise<ServiceInfo>
@@ -240,6 +241,10 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Connection IP response body is missing')
     }
     return parseConnectionIp(response)
+  }
+
+  public async connectionLocation(): Promise<ConsumerLocation> {
+    return await this.http.get('connection/location')
   }
 
   public async connectionStatistics(): Promise<ConnectionStatistics> {

@@ -54,6 +54,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
+  public connectionLocation(): Promise<ConsumerLocation> {
+    throw Error('Not implemented')
+  }
+
   public connectionStatistics(): Promise<ConnectionStatistics> {
     throw Error('Not implemented')
   }
