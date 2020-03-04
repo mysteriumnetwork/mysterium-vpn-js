@@ -2,7 +2,10 @@
   "name": "mysterium-vpn-js",
   "version": "1.0.14",
   "description": "Javascript SDK for Mysterium node",
-  "repository": "github:mysteriumnetwork/mysterium-vpn-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mysteriumnetwork/mysterium-vpn-js.git"
+  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -14,7 +17,11 @@
     "tsc-check": "yarn tsc --noEmit",
     "ci": "yarn tsc-check && yarn lint && yarn test && yarn copyright && yarn build"
   },
-  "author": "Mysterium Network <team@netsys.technology>",
+  "author": {
+    "name": "Mysterium Network",
+    "email": "team@netsys.technology",
+    "url": "https://mysterium.network"
+  },
   "license": "GPL-3.0",
   "private": false,
   "engines": {
