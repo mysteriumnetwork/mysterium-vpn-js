@@ -1,7 +1,7 @@
 # mysterium-vpn-js
 
 [![npm version](https://badge.fury.io/js/mysterium-vpn-js.svg)](https://badge.fury.io/js/mysterium-vpn-js)
-[![Build Status](https://travis-ci.com/mysteriumnetwork/mysterium-vpn-js.svg?branch=master)](https://travis-ci.com/mysteriumnetwork/mysterium-vpn-js)
+[![pipeline status](https://gitlab.com/mysteriumnetwork/node/badges/master/pipeline.svg)](https://gitlab.com/mysteriumnetwork/node/pipelines)
 
 Javascript SDK for [mysteriumnetwork/node](https://github.com/mysteriumnetwork/node)  
 
