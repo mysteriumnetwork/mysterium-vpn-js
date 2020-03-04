@@ -2,6 +2,9 @@ stages:
   - build
   - deploy
 
+image:
+  name: node:lts-alpine
+
 build:
   stage: build
   tags: [docker]
@@ -17,8 +20,6 @@ publish-npm:
   tags: [docker]
   variables:
     GIT_CLONE_PATH: ""
-  image:
-    name: node:lts-alpine
   script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_PUBLISH_TOKEN}'>.npmrc
     - npm publish --access public
