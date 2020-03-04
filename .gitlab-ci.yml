@@ -4,6 +4,8 @@ stages:
 
 image:
   name: node:lts-alpine
+before_script:
+  - yarn
 
 build:
   stage: build
