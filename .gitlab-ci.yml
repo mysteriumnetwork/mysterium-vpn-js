@@ -1,6 +1,6 @@
 stages:
   - build
-  - deploy
+  - publish
 
 image:
   name: node:lts-alpine
