@@ -1,0 +1,24 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags: [docker]
+  script: yarn ci
+  artifacts:
+    paths:
+      - lib/
+
+publish-npm:
+  stage: publish
+  only:
+    - tags
+  tags: [docker]
+  variables:
+    GIT_CLONE_PATH: ""
+  image:
+    name: node:lts-alpine
+  script:
+    - echo '//registry.npmjs.org/:_authToken=${NPM_PUBLISH_TOKEN}'>.npmrc
+    - npm publish --access public
