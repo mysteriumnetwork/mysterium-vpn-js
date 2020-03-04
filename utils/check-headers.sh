@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Checks whether all source files have valid license header
 
