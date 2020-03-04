@@ -22,6 +22,12 @@
     "email": "team@netsys.technology",
     "url": "https://mysterium.network"
   },
+  "keywords": [
+    "mysterium",
+    "vpn",
+    "dvpn",
+    "sdk"
+  ],
   "license": "GPL-3.0",
   "private": false,
   "engines": {
