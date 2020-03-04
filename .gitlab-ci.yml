@@ -20,8 +20,6 @@ publish-npm:
   only:
     - tags
   tags: [docker]
-  variables:
-    GIT_CLONE_PATH: ""
   script:
-    - echo '//registry.npmjs.org/:_authToken=${NPM_PUBLISH_TOKEN}'>.npmrc
+    - npm config set '//registry.npmjs.org/:_authToken' "${NPM_PUBLISH_TOKEN}"
     - npm publish --access public
