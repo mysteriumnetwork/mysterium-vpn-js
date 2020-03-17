@@ -3,7 +3,7 @@
 # Checks whether all source files have valid license header
 
 DIRS='src'
-COPYRIGHT="Copyright (C) [0-9]\{4\} The \"mysteriumnetwork/mysterium-vpn-js\" Authors."
+COPYRIGHT="Copyright (c) [0-9]\{4\} BlockDev AG"
 
 # Colorful output
 

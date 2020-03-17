@@ -1,10 +1,21 @@
 {
   "name": "mysterium-vpn-js",
-  "version": "1.0.16",
+  "version": "1.1.0",
   "description": "Javascript SDK for Mysterium node",
+  "keywords": ["mysterium", "vpn", "dvpn", "sdk"],
   "repository": {
     "type": "git",
     "url": "https://github.com/mysteriumnetwork/mysterium-vpn-js.git"
+  },
+  "author": {
+    "name": "Mysterium Network",
+    "email": "team@netsys.technology",
+    "url": "https://mysterium.network"
+  },
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=10"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,22 +30,6 @@
     "build": "yarn tsc -p tsconfig.build.json",
     "tsc-check": "yarn tsc --noEmit",
     "ci": "yarn tsc-check && yarn lint && yarn test && yarn copyright && yarn build"
-  },
-  "author": {
-    "name": "Mysterium Network",
-    "email": "team@netsys.technology",
-    "url": "https://mysterium.network"
-  },
-  "keywords": [
-    "mysterium",
-    "vpn",
-    "dvpn",
-    "sdk"
-  ],
-  "license": "GPL-3.0",
-  "private": false,
-  "engines": {
-    "node": ">=10"
   },
   "devDependencies": {
     "@types/filesize": "^5.0.0",
