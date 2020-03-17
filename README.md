@@ -72,11 +72,3 @@ You may also check out Tequilapi [REST API documentation](http://tequilapi.myste
 ## Contributing
 
 * Run CI build: `yarn ci`
-
-## Authors
-* **Andrej Novikov** - [shroomist](https://github.com/shroomist)
-* **Donatas Kučinskas** - [donce](https://github.com/donce)
-* **Ignas Bernotas** - [ignasbernotas](https://github.com/ignasbernotas)
-* **Valdas Petrulis** - [Waldz](https://github.com/Waldz)
-* **Miroslav Popugajev** - [mipo47](https://github.com/mipo47)
-* **Paulius Mozuras** - [interro](https://github.com/interro)
