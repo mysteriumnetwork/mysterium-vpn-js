@@ -36,6 +36,7 @@ export { Identity } from './identity/identity'
 export { IdentityProof } from './identity/proof'
 export { IdentityPayout } from './identity/payout'
 export { PublicKey } from './identity/public-key'
+export { IdentityStatus } from './identity/status'
 export { IdentityRegistration } from './identity/registration'
 export { Signature } from './identity/signature'
 
