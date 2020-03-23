@@ -31,14 +31,10 @@ export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
-export { getPaymentLink } from './identity/get-payment-link'
 export { Identity } from './identity/identity'
-export { IdentityProof } from './identity/proof'
 export { IdentityPayout } from './identity/payout'
-export { PublicKey } from './identity/public-key'
 export { IdentityStatus } from './identity/status'
 export { IdentityRegistration } from './identity/registration'
-export { Signature } from './identity/signature'
 
 export { Metrics } from './metric/metrics'
 

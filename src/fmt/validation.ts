@@ -7,7 +7,7 @@
 
 interface Property {
   name: string
-  type: 'number' | 'string' | 'object' | 'array'
+  type: 'number' | 'string' | 'object' | 'array' | 'boolean'
 }
 
 function getTypeString(value: any): string {
