@@ -28,6 +28,7 @@ import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/
 import { ServiceRequest } from './provider/service-request'
 import { parseServiceSessionList, ServiceSession } from './provider/service-session'
 import { TopUpRequest } from './payment/topup'
+import { IdentityStatus, parseIdentityStatus } from './identity/status'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
@@ -44,6 +45,7 @@ export interface TequilapiClient {
   identityCurrent(passphrase: string): Promise<Identity>
   identityCreate(passphrase: string): Promise<Identity>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
+  identityStatus(id: string): Promise<IdentityStatus>
   identityRegistration(id: string): Promise<IdentityRegistration>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
@@ -111,7 +113,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async identityList(): Promise<Identity[]> {
     const response = await this.http.get('identities')
     if (!response) {
-      throw new Error('Identities response body is missing')
+      throw new Error('Identity list response body is missing')
     }
     const responseDto = parseIdentityList(response)
 
@@ -131,7 +133,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async identityCreate(passphrase: string): Promise<Identity> {
     const response = await this.http.post('identities', { passphrase })
     if (!response) {
-      throw new Error('Identities creation response body is missing')
+      throw new Error('Identity creation response body is missing')
     }
     return parseIdentity(response)
   }
@@ -140,10 +142,18 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.put('identities/' + id + '/unlock', { passphrase }, timeout)
   }
 
+  public async identityStatus(id: string): Promise<IdentityStatus> {
+    const response = await this.http.get(`identities/${id}/status`)
+    if (!response) {
+      throw new Error('Identity status response body is missing')
+    }
+    return parseIdentityStatus(response)
+  }
+
   public async identityRegistration(id: string): Promise<IdentityRegistration> {
     const response = await this.http.get(`identities/${id}/registration`)
     if (!response) {
-      throw new Error('Identities registration response body is missing')
+      throw new Error('Identity registration response body is missing')
     }
     return parseIdentityRegistration(response)
   }

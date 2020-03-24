@@ -5,16 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { PublicKey } from './public-key'
-import { Signature } from './signature'
+import { validateMultiple } from '../fmt/validation'
 
 export interface IdentityRegistration {
+  status: string
   registered: boolean
-  publicKey?: PublicKey
-  signature?: Signature
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseIdentityRegistration(data: any): IdentityRegistration {
+  validateMultiple('IdentityRegistration', data, [
+    { name: 'status', type: 'string' },
+    { name: 'registered', type: 'boolean' },
+  ])
   return data
 }
