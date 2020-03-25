@@ -20,7 +20,7 @@ import { NodeHealthcheck } from '../daemon/healthcheck'
 import { Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
 import { IdentityStatus } from '../identity/status'
-import { IdentityRegistration } from '../identity/registration'
+import { IdentityRegisterRequest, IdentityRegistration } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfo } from '../provider/service-info'
@@ -70,6 +70,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public identityCreate(passphrase: string): Promise<Identity> {
+    throw Error('Not implemented')
+  }
+
+  public identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void> {
     throw Error('Not implemented')
   }
 

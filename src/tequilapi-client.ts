@@ -21,7 +21,11 @@ import { HttpInterface } from './http/interface'
 import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 import { Identity, parseIdentity, parseIdentityList } from './identity/identity'
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
-import { IdentityRegistration, parseIdentityRegistration } from './identity/registration'
+import {
+  IdentityRegisterRequest,
+  IdentityRegistration,
+  parseIdentityRegistration,
+} from './identity/registration'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
@@ -45,6 +49,7 @@ export interface TequilapiClient {
   identityCurrent(passphrase: string): Promise<Identity>
   identityCreate(passphrase: string): Promise<Identity>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
+  identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
   identityStatus(id: string): Promise<IdentityStatus>
   identityRegistration(id: string): Promise<IdentityRegistration>
   identityPayout(id: string): Promise<IdentityPayout>
@@ -140,6 +145,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void> {
     await this.http.put('identities/' + id + '/unlock', { passphrase }, timeout)
+  }
+
+  public async identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void> {
+    return await this.http.post(`identities/${id}/register`, request ?? {})
   }
 
   public async identityStatus(id: string): Promise<IdentityStatus> {

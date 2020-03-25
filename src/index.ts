@@ -34,7 +34,7 @@ export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 export { Identity } from './identity/identity'
 export { IdentityPayout } from './identity/payout'
 export { IdentityStatus } from './identity/status'
-export { IdentityRegistration } from './identity/registration'
+export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
 
 export { Metrics } from './metric/metrics'
 

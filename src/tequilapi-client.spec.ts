@@ -339,6 +339,22 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
+  describe('identityRegister()', () => {
+    it('registers', async () => {
+      mock.onPost('identities/0x0000bEEF/register').reply(202)
+      await api.identityRegister('0x0000bEEF')
+    })
+
+    it('handles error', () => {
+      mock.onPost('identities/0x0000bEEF/register').reply(500)
+
+      expect(api.identityRegister('0x0000bEEF')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities/0x0000bEEF/register")'
+      )
+    })
+  })
+
   describe('identityRegistration()', () => {
     it('returns response', async () => {
       const response = {

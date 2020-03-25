@@ -7,6 +7,12 @@
 
 import { validateMultiple } from '../fmt/validation'
 
+export interface IdentityRegisterRequest {
+  stake?: number
+  beneficiary?: string
+  fee?: number
+}
+
 export interface IdentityRegistration {
   status: string
   registered: boolean
