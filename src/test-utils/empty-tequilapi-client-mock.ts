@@ -28,6 +28,7 @@ import { ServiceRequest } from '../provider/service-request'
 import { ServiceSession } from '../provider/service-session'
 import { TequilapiClient } from '../tequilapi-client'
 import { TopUpRequest } from '../payment/topup'
+import { TransactorFeesResponse } from '../payment/fees'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -170,6 +171,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public reportIssue(issue: Issue): Promise<IssueId> {
+    throw Error('Not implemented')
+  }
+
+  public transactorFees(): Promise<TransactorFeesResponse> {
     throw Error('Not implemented')
   }
 

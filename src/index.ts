@@ -66,6 +66,7 @@ export {
   pricePerGiB,
 } from './payment/method'
 export { mystDisplay, MYST } from './payment/myst'
+export { TransactorFeesResponse } from './payment/fees'
 
 export { logger, Logger } from './logger'
 export {
