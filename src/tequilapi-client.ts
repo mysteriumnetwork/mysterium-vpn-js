@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import axios from 'axios'
 import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
@@ -16,9 +15,8 @@ import { ConnectionSession, validateSession } from './connection/session'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
-import { AxiosAdapter } from './http/axios-adapter'
 import { HttpInterface } from './http/interface'
-import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
+import { TIMEOUT_DISABLED } from './http/timeouts'
 import { Identity, parseIdentity, parseIdentityList } from './identity/identity'
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import {
@@ -197,9 +195,9 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.put(`auth/password`, {
       username,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      old_password: oldPassword,
+      oldPassword: oldPassword,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      new_password: newPassword,
+      newPassword: newPassword,
     })
   }
 
@@ -356,29 +354,5 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async topUp(request: TopUpRequest): Promise<void> {
     return this.http.post(`transactor/topup`, request)
-  }
-}
-
-export class TequilapiClientFactory {
-  public _baseUrl: string
-  public _defaultTimeout: number
-
-  public constructor(baseUrl: string = TEQUILAPI_URL, defaultTimeout: number = TIMEOUT_DEFAULT) {
-    this._baseUrl = baseUrl
-    this._defaultTimeout = defaultTimeout
-  }
-
-  public build(adapter: HttpInterface): TequilapiClient {
-    return new HttpTequilapiClient(adapter)
-  }
-
-  public buildAdapter(): HttpInterface {
-    const axiosInstance = axios.create({
-      baseURL: this._baseUrl,
-      headers: {
-        'Cache-Control': 'no-cache, no-store',
-      },
-    })
-    return new AxiosAdapter(axiosInstance, this._defaultTimeout)
   }
 }

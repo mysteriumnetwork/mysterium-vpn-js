@@ -4,6 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { tequilapi } from './tequilapi-client-factory'
 
 export { AccessPolicy, AccessRule } from './access-policy/access-policy'
 
@@ -69,11 +70,8 @@ export { mystDisplay, MYST } from './payment/myst'
 export { TransactorFeesResponse } from './payment/fees'
 
 export { logger, Logger } from './logger'
-export {
-  TequilapiClientFactory,
-  TEQUILAPI_URL,
-  TequilapiClient,
-  HttpTequilapiClient,
-} from './tequilapi-client'
-
+export { TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
+export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
+
+export default tequilapi

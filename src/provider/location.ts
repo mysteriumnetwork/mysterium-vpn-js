@@ -11,5 +11,5 @@ export interface Location {
   city?: string
   asn?: number
   isp?: string
-  node_type?: string
+  nodeType?: string
 }
