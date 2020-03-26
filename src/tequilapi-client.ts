@@ -291,16 +291,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     request: ServiceRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ServiceInfo> {
-    const response = await this.http.post(
-      'services',
-      {
-        providerId: request.providerId,
-        type: request.type,
-        accessPolicies: request.accessPolicies,
-        options: request.options,
-      },
-      timeout
-    )
+    const response = await this.http.post('services', request, timeout)
     if (!response) {
       throw new Error('Service creation response body is missing')
     }
