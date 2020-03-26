@@ -32,7 +32,7 @@ describe('ThresholdExecutor', () => {
   }
 
   const asyncFunc = (duration: number) => async () => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         funcDone = true
         resolve()

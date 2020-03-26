@@ -38,7 +38,7 @@ export class TequilapiClientFactory {
     const convertOptions = {
       deep: true,
     }
-    ax.interceptors.request.use(config => {
+    ax.interceptors.request.use((config) => {
       if (config.params) {
         config.params = snakecaseKeys(config.params, convertOptions)
       }
@@ -47,7 +47,7 @@ export class TequilapiClientFactory {
       }
       return config
     })
-    ax.interceptors.response.use(config => {
+    ax.interceptors.response.use((config) => {
       if (config.data) {
         config.data = camelcaseKeys(config.data, convertOptions)
       }

@@ -157,7 +157,7 @@ describe('FunctionLooper', () => {
 
       const looper = new FunctionLooper(throwError, 1000)
       let error = null
-      looper.onFunctionError(err => {
+      looper.onFunctionError((err) => {
         error = err
       })
       expect(counter).toEqual(0)
@@ -182,10 +182,10 @@ describe('FunctionLooper', () => {
       const looper = new FunctionLooper(throwError, 1000)
       let error1 = null
       let error2 = null
-      looper.onFunctionError(err => {
+      looper.onFunctionError((err) => {
         error1 = err
       })
-      looper.onFunctionError(err => {
+      looper.onFunctionError((err) => {
         error2 = err
       })
 

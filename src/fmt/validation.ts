@@ -29,7 +29,7 @@ function validate(typeName: string, obj: any, property: Property): void {
 }
 
 function validateMultiple(typeName: string, obj: any, properties: Property[]): void {
-  properties.forEach(property => validate(typeName, obj, property))
+  properties.forEach((property) => validate(typeName, obj, property))
 }
 
 function validateArray(typeName: string, arr: any): void {
