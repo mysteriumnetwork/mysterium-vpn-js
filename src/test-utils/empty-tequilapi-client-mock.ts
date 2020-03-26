@@ -17,9 +17,8 @@ import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionStatusResponse } from '../connection/status'
 import { ConsumerLocation } from '../consumer/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
-import { Identity } from '../identity/identity'
+import { IdentityRef, Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
-import { IdentityStatus } from '../identity/status'
 import { IdentityRegisterRequest, IdentityRegistration } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
@@ -66,19 +65,19 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityList(): Promise<Identity[]> {
+  public identityList(): Promise<IdentityRef[]> {
     throw Error('Not implemented')
   }
 
-  public identityCreate(passphrase: string): Promise<Identity> {
+  public identity(id: string): Promise<Identity> {
+    throw Error('Not implemented')
+  }
+
+  public identityCreate(passphrase: string): Promise<IdentityRef> {
     throw Error('Not implemented')
   }
 
   public identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void> {
-    throw Error('Not implemented')
-  }
-
-  public identityStatus(id: string): Promise<IdentityStatus> {
     throw Error('Not implemented')
   }
 
@@ -138,7 +137,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityCurrent(passphrase: string): Promise<Identity> {
+  public identityCurrent(passphrase: string): Promise<IdentityRef> {
     throw Error('Not implemented')
   }
 

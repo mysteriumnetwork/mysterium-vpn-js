@@ -9,7 +9,7 @@
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http/axios-adapter'
 import { HttpTequilapiClient, TequilapiClient } from './tequilapi-client'
-import { parseIdentity } from './identity/identity'
+import { parseIdentityRef } from './identity/identity'
 import { parseServiceInfo, parseServiceInfoList } from './provider/service-info'
 import { TequilapiClientFactory } from './tequilapi-client-factory'
 
@@ -286,8 +286,8 @@ describe('HttpTequilapiClient', () => {
 
       const identities = await api.identityList()
       expect(identities).toHaveLength(2)
-      expect(identities[0]).toEqual(parseIdentity(response.identities[0]))
-      expect(identities[1]).toEqual(parseIdentity(response.identities[1]))
+      expect(identities[0]).toEqual(parseIdentityRef(response.identities[0]))
+      expect(identities[1]).toEqual(parseIdentityRef(response.identities[1]))
     })
 
     it('handles error', () => {
@@ -306,7 +306,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPut('identities/current', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCurrent('test')
-      expect(identity).toEqual(parseIdentity(response))
+      expect(identity).toEqual(parseIdentityRef(response))
     })
 
     it('handles error', () => {
@@ -325,7 +325,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('identities', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCreate('test')
-      expect(identity).toEqual(parseIdentity(response))
+      expect(identity).toEqual(parseIdentityRef(response))
     })
 
     it('handles error', () => {

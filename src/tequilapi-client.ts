@@ -17,7 +17,13 @@ import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
-import { Identity, parseIdentity, parseIdentityList } from './identity/identity'
+import {
+  Identity,
+  IdentityRef,
+  parseIdentity,
+  parseIdentityList,
+  parseIdentityRef,
+} from './identity/identity'
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import {
   IdentityRegisterRequest,
@@ -30,7 +36,6 @@ import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/
 import { ServiceRequest } from './provider/service-request'
 import { parseServiceSessionList, ServiceSession } from './provider/service-session'
 import { TopUpRequest } from './payment/topup'
-import { IdentityStatus, parseIdentityStatus } from './identity/status'
 import { TransactorFeesResponse } from './payment/fees'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -44,12 +49,12 @@ export interface TequilapiClient {
   userConfig(): Promise<Config>
   updateUserConfig(config: Config): Promise<void>
 
-  identityList(): Promise<Identity[]>
-  identityCurrent(passphrase: string): Promise<Identity>
-  identityCreate(passphrase: string): Promise<Identity>
+  identityList(): Promise<IdentityRef[]>
+  identityCurrent(passphrase: string): Promise<IdentityRef>
+  identityCreate(passphrase: string): Promise<IdentityRef>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
-  identityStatus(id: string): Promise<IdentityStatus>
+  identity(id: string): Promise<Identity>
   identityRegistration(id: string): Promise<IdentityRegistration>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
@@ -115,7 +120,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseConsumerLocation(response)
   }
 
-  public async identityList(): Promise<Identity[]> {
+  public async identityList(): Promise<IdentityRef[]> {
     const response = await this.http.get('identities')
     if (!response) {
       throw new Error('Identity list response body is missing')
@@ -125,22 +130,30 @@ export class HttpTequilapiClient implements TequilapiClient {
     return responseDto.identities
   }
 
-  public async identityCurrent(passphrase: string): Promise<Identity> {
+  public async identity(id: string): Promise<Identity> {
+    const response = await this.http.get(`identities/${id}/status`)
+    if (!response) {
+      throw new Error('Identity response body is missing')
+    }
+    return parseIdentity(response)
+  }
+
+  public async identityCurrent(passphrase: string): Promise<IdentityRef> {
     const response = await this.http.put('identities/current', { passphrase })
 
     if (!response) {
       throw new Error('Identity response body is missing')
     }
 
-    return parseIdentity(response)
+    return parseIdentityRef(response)
   }
 
-  public async identityCreate(passphrase: string): Promise<Identity> {
+  public async identityCreate(passphrase: string): Promise<IdentityRef> {
     const response = await this.http.post('identities', { passphrase })
     if (!response) {
       throw new Error('Identity creation response body is missing')
     }
-    return parseIdentity(response)
+    return parseIdentityRef(response)
   }
 
   public async identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void> {
@@ -149,14 +162,6 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void> {
     return await this.http.post(`identities/${id}/register`, request ?? {})
-  }
-
-  public async identityStatus(id: string): Promise<IdentityStatus> {
-    const response = await this.http.get(`identities/${id}/status`)
-    if (!response) {
-      throw new Error('Identity status response body is missing')
-    }
-    return parseIdentityStatus(response)
   }
 
   public async identityRegistration(id: string): Promise<IdentityRegistration> {

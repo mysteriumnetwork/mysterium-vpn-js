@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { validate } from '../fmt/validation'
+import { validate, validateMultiple } from '../fmt/validation'
 
-export interface Identity {
+export interface IdentityRef {
   id: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentity(data: any): Identity {
-  validate('Identity', data, { name: 'id', type: 'string' })
+export function parseIdentityRef(data: any): IdentityRef {
+  validate('IdentityRef', data, { name: 'id', type: 'string' })
   return data
 }
 
 export interface IdentityList {
-  identities: Identity[]
+  identities: IdentityRef[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,5 +27,26 @@ export function parseIdentityList(responseData: any): IdentityList {
     return { identities: [] }
   }
 
-  return { identities: responseData.identities.map(parseIdentity) }
+  return { identities: responseData.identities.map(parseIdentityRef) }
+}
+
+export interface Identity {
+  id: string
+  registrationStatus: string
+  channelAddress: string
+  balance: number
+  earnings: number
+  earningsTotal: number
+}
+
+export function parseIdentity(data: any): Identity {
+  validateMultiple('Identity', data, [
+    { name: 'id', type: 'string' },
+    { name: 'registrationStatus', type: 'string' },
+    { name: 'channelAddress', type: 'string' },
+    { name: 'balance', type: 'number' },
+    { name: 'earnings', type: 'number' },
+    { name: 'earningsTotal', type: 'number' },
+  ])
+  return data
 }
