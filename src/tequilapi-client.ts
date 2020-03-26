@@ -222,15 +222,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     request: ConnectionRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ConnectionStatusResponse> {
-    const response = await this.http.put(
-      'connection',
-      {
-        consumerId: request.consumerId,
-        providerId: request.providerId,
-        serviceType: request.serviceType,
-      },
-      timeout
-    )
+    const response = await this.http.put('connection', request, timeout)
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }

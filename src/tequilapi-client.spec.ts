@@ -485,6 +485,7 @@ describe('HttpTequilapiClient', () => {
         .onPut('connection', {
           consumer_id: '0x1000FACE',
           provider_id: '0x2000FACE',
+          accountant_id: '0x3000BEEF',
           service_type: 'openvpn',
         })
         .reply(200, {
@@ -492,9 +493,13 @@ describe('HttpTequilapiClient', () => {
           session_id: 'My-super-session',
         })
 
-      const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
-      const stats = await api.connectionCreate(request)
-      expect(stats).toEqual({
+      const status = await api.connectionCreate({
+        consumerId: '0x1000FACE',
+        providerId: '0x2000FACE',
+        accountantId: '0x3000BEEF',
+        serviceType: 'openvpn',
+      })
+      expect(status).toEqual({
         status: 'Connected',
         sessionId: 'My-super-session',
       })
@@ -502,8 +507,13 @@ describe('HttpTequilapiClient', () => {
 
     it('handles error', () => {
       mock.onPut('connection').reply(500)
-      const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
-      expect(api.connectionCreate(request)).rejects.toHaveProperty(
+      const status = api.connectionCreate({
+        consumerId: '0x1000FACE',
+        providerId: '0x2000FACE',
+        accountantId: '0x3000BEEF',
+        serviceType: 'openvpn',
+      })
+      expect(status).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="connection")'
       )

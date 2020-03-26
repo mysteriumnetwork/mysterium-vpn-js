@@ -7,6 +7,7 @@
 
 export interface ConnectionRequest {
   consumerId: string
+  accountantId: string
   providerId: string
   serviceType: string
 }
