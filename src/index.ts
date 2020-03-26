@@ -32,7 +32,7 @@ export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
-export { IdentityRef, Identity } from './identity/identity'
+export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
 export { IdentityPayout } from './identity/payout'
 export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
 

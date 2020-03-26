@@ -30,9 +30,18 @@ export function parseIdentityList(responseData: any): IdentityList {
   return { identities: responseData.identities.map(parseIdentityRef) }
 }
 
+export enum IdentityRegistrationStatus {
+  Unregistered = 'Unregistered',
+  InProgress = 'InProgress',
+  RegisteredConsumer = 'RegisteredConsumer',
+  RegisteredProvider = 'RegisteredProvider',
+  Promoting = 'Promoting',
+  RegistrationError = 'RegistrationError',
+}
+
 export interface Identity {
   id: string
-  registrationStatus: string
+  registrationStatus: IdentityRegistrationStatus
   channelAddress: string
   balance: number
   earnings: number
