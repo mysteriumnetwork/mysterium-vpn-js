@@ -7,9 +7,9 @@
 
 import { validate, validateMultiple } from '../fmt/validation'
 
-export interface AccessRule {
-  type: string
-  value?: string
+export interface AccessPolicyRef {
+  id: string
+  source: string
 }
 
 export interface AccessPolicy {
@@ -17,6 +17,11 @@ export interface AccessPolicy {
   title: string
   description: string
   allow: AccessRule[]
+}
+
+export interface AccessRule {
+  type: string
+  value?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

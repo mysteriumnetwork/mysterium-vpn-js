@@ -9,11 +9,7 @@ import { validate, validateMultiple } from '../fmt/validation'
 import { Metrics } from '../metric/metrics'
 import { ServiceDefinition } from '../provider/service-definition'
 import { PaymentMethod } from '../payment/method'
-
-export interface AccessPolicyRef {
-  id: string
-  source: string
-}
+import { AccessPolicyRef } from '../access-policy/access-policy'
 
 export interface Proposal {
   id: number

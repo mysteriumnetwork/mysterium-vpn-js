@@ -12,7 +12,7 @@ export interface ConsumerLocation {
   continent?: string
   country?: string
   city?: string
-  node_type?: string
+  nodeType?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

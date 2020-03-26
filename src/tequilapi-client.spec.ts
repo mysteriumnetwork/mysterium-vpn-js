@@ -6,45 +6,48 @@
  */
 /* eslint-disable @typescript-eslint/camelcase */
 
-import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http/axios-adapter'
-import { TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
-import { parseConsumerLocation } from './consumer/location'
-import { parseIdentity } from './identity/identity'
-import { parseHealthcheckResponse } from './daemon/healthcheck'
-import { parseProposal } from './proposal/proposal'
+import { HttpTequilapiClient, TequilapiClient } from './tequilapi-client'
+import { parseIdentityRef } from './identity/identity'
 import { parseServiceInfo, parseServiceInfoList } from './provider/service-info'
+import { TequilapiClientFactory } from './tequilapi-client-factory'
 
 describe('HttpTequilapiClient', () => {
   let api: TequilapiClient
   let mock: MockAdapter
 
   beforeEach(() => {
-    const axioInstance = axios.create()
-    api = new HttpTequilapiClient(new AxiosAdapter(axioInstance))
-    mock = new MockAdapter(axioInstance)
+    const clientFactory = new TequilapiClientFactory()
+    const axios = clientFactory.axiosInstance()
+    api = new HttpTequilapiClient(new AxiosAdapter(axios))
+    mock = new MockAdapter(axios)
   })
 
   describe('healthcheck()', () => {
     it('returns response', async () => {
-      const buildInfo = {
-        commit: '0bcccc',
-        branch: 'master',
-        buildNumber: '001',
-      }
-      const response = {
+      mock.onGet('healthcheck').reply(200, {
         uptime: '1h10m',
         process: 1111,
         version: '0.0.6',
-        buildInfo,
-      }
-      mock.onGet('healthcheck').reply(200, response)
+        build_info: {
+          commit: '0bcccc',
+          branch: 'master',
+          build_number: '001',
+        },
+      })
 
       const healthcheck = await api.healthCheck()
-      expect(healthcheck).toEqual(parseHealthcheckResponse(response))
-      expect(healthcheck.version).toEqual('0.0.6')
-      expect(healthcheck.buildInfo).toEqual(buildInfo)
+      expect(healthcheck).toEqual({
+        uptime: '1h10m',
+        process: 1111,
+        version: '0.0.6',
+        buildInfo: {
+          commit: '0bcccc',
+          branch: 'master',
+          buildNumber: '001',
+        },
+      })
     })
 
     it('throws error with unexpected response body', () => {
@@ -54,7 +57,7 @@ describe('HttpTequilapiClient', () => {
         version: {
           commit: '0bcccc',
           branch: 'master',
-          buildNumber: '001',
+          build_number: '001',
         },
       }
       mock.onGet('healthcheck').reply(200, response)
@@ -159,16 +162,15 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('location').reply(200, response)
 
       const stats = await api.location()
-
-      const dto = parseConsumerLocation(response)
-      expect(stats.ip).toEqual(dto.ip)
-      expect(stats.asn).toEqual(dto.asn)
-      expect(stats.isp).toEqual(dto.isp)
-      expect(stats.continent).toEqual(dto.continent)
-      expect(stats.country).toEqual(dto.country)
-      expect(stats.city).toEqual(dto.city)
-      expect(stats.node_type).toEqual(dto.node_type)
-      expect(stats).toEqual(dto)
+      expect(stats).toEqual({
+        ip: '0.0.0.0',
+        asn: 8764,
+        isp: 'Telia Lietuva, AB',
+        continent: 'EU',
+        country: 'LT',
+        city: 'Vilnius',
+        nodeType: 'residential',
+      })
     })
 
     it('handles error', () => {
@@ -187,10 +189,10 @@ describe('HttpTequilapiClient', () => {
         proposals: [
           {
             id: 1,
-            providerId: '0x0',
-            serviceType: 'openvpn',
-            serviceDefinition: {
-              locationOriginate: {
+            provider_id: '0x0',
+            service_type: 'openvpn',
+            service_definition: {
+              location_originate: {
                 asn: '',
                 country: 'NL',
               },
@@ -198,10 +200,10 @@ describe('HttpTequilapiClient', () => {
           },
           {
             id: 1,
-            providerId: '0x1',
-            serviceType: 'openvpn',
-            serviceDefinition: {
-              locationOriginate: {
+            provider_id: '0x1',
+            service_type: 'openvpn',
+            service_definition: {
+              location_originate: {
                 asn: '',
                 country: 'LT',
               },
@@ -213,8 +215,28 @@ describe('HttpTequilapiClient', () => {
 
       const proposals = await api.findProposals()
       expect(proposals).toHaveLength(2)
-      expect(proposals[0]).toEqual(parseProposal(response.proposals[0]))
-      expect(proposals[1]).toEqual(parseProposal(response.proposals[1]))
+      expect(proposals[0]).toEqual({
+        id: 1,
+        providerId: '0x0',
+        serviceType: 'openvpn',
+        serviceDefinition: {
+          locationOriginate: {
+            asn: '',
+            country: 'NL',
+          },
+        },
+      })
+      expect(proposals[1]).toEqual({
+        id: 1,
+        providerId: '0x1',
+        serviceType: 'openvpn',
+        serviceDefinition: {
+          locationOriginate: {
+            asn: '',
+            country: 'LT',
+          },
+        },
+      })
     })
 
     it('fetches connect counts when option is given', async () => {
@@ -223,15 +245,15 @@ describe('HttpTequilapiClient', () => {
           {
             id: 1,
             providerId: '0x0',
-            serviceType: 'openvpn',
-            serviceDefinition: {
-              locationOriginate: {
+            service_type: 'openvpn',
+            service_definition: {
+              location_originate: {
                 asn: '',
                 country: 'NL',
               },
             },
             metrics: {
-              connectCount: {
+              connect_count: {
                 success: 1,
                 fail: 1,
                 ping: 1,
@@ -240,7 +262,7 @@ describe('HttpTequilapiClient', () => {
           },
         ],
       }
-      mock.onGet('proposals', { params: { fetchConnectCounts: true } }).reply(200, response)
+      mock.onGet('proposals', { params: { fetch_connect_counts: true } }).reply(200, response)
       const proposals = await api.findProposals({ fetchConnectCounts: true })
       expect(proposals).toHaveLength(1)
     })
@@ -264,8 +286,8 @@ describe('HttpTequilapiClient', () => {
 
       const identities = await api.identityList()
       expect(identities).toHaveLength(2)
-      expect(identities[0]).toEqual(parseIdentity(response.identities[0]))
-      expect(identities[1]).toEqual(parseIdentity(response.identities[1]))
+      expect(identities[0]).toEqual(parseIdentityRef(response.identities[0]))
+      expect(identities[1]).toEqual(parseIdentityRef(response.identities[1]))
     })
 
     it('handles error', () => {
@@ -284,7 +306,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPut('identities/current', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCurrent('test')
-      expect(identity).toEqual(parseIdentity(response))
+      expect(identity).toEqual(parseIdentityRef(response))
     })
 
     it('handles error', () => {
@@ -303,7 +325,7 @@ describe('HttpTequilapiClient', () => {
       mock.onPost('identities', { passphrase: 'test' }).reply(200, response)
 
       const identity = await api.identityCreate('test')
-      expect(identity).toEqual(parseIdentity(response))
+      expect(identity).toEqual(parseIdentityRef(response))
     })
 
     it('handles error', () => {
@@ -420,14 +442,14 @@ describe('HttpTequilapiClient', () => {
 
   describe('updateIdentityPayout()', () => {
     it('succeeds', async () => {
-      mock.onPut('identities/test-id/payout', { ethAddress: 'my eth address' }).reply(200)
+      mock.onPut('identities/test-id/payout', { eth_address: 'my eth address' }).reply(200)
       await api.updateIdentityPayout('test-id', 'my eth address')
     })
   })
 
   describe('updateReferralCode()', () => {
     it('succeeds', async () => {
-      mock.onPut('identities/test-id/referral', { referralCode: 'ABC1234' }).reply(200)
+      mock.onPut('identities/test-id/referral', { referral_code: 'ABC1234' }).reply(200)
       await api.updateReferralCode('test-id', 'ABC1234')
     })
   })
@@ -459,26 +481,39 @@ describe('HttpTequilapiClient', () => {
 
   describe('connectionCreate()', () => {
     it('returns response', async () => {
-      const expectedRequest = {
+      mock
+        .onPut('connection', {
+          consumer_id: '0x1000FACE',
+          provider_id: '0x2000FACE',
+          accountant_id: '0x3000BEEF',
+          service_type: 'openvpn',
+        })
+        .reply(200, {
+          status: 'Connected',
+          session_id: 'My-super-session',
+        })
+
+      const status = await api.connectionCreate({
         consumerId: '0x1000FACE',
         providerId: '0x2000FACE',
+        accountantId: '0x3000BEEF',
         serviceType: 'openvpn',
-      }
-      const response = {
+      })
+      expect(status).toEqual({
         status: 'Connected',
         sessionId: 'My-super-session',
-      }
-      mock.onPut('connection', expectedRequest).reply(200, response)
-
-      const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
-      const stats = await api.connectionCreate(request)
-      expect(stats).toEqual(response)
+      })
     })
 
     it('handles error', () => {
       mock.onPut('connection').reply(500)
-      const request = { consumerId: '0x1000FACE', providerId: '0x2000FACE', serviceType: 'openvpn' }
-      expect(api.connectionCreate(request)).rejects.toHaveProperty(
+      const status = api.connectionCreate({
+        consumerId: '0x1000FACE',
+        providerId: '0x2000FACE',
+        accountantId: '0x3000BEEF',
+        serviceType: 'openvpn',
+      })
+      expect(status).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="connection")'
       )
@@ -571,22 +606,22 @@ describe('HttpTequilapiClient', () => {
       const response = {
         sessions: [
           {
-            sessionId: '30f610a0-c096-11e8-b371-ebde26989839',
-            providerId: '0x3b03a513fba4bd4868edd340f77da0c920150f3e',
-            providerCountry: 'lt',
-            dateStarted: '2019-02-14T11:04:15Z',
+            session_id: '30f610a0-c096-11e8-b371-ebde26989839',
+            provider_id: '0x3b03a513fba4bd4868edd340f77da0c920150f3e',
+            provider_country: 'lt',
+            date_started: '2019-02-14T11:04:15Z',
             duration: 35 * 60,
-            bytesSent: 1024,
-            bytesReceived: 6000,
+            bytes_sent: 1024,
+            bytes_received: 6000,
           },
           {
-            sessionId: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
-            providerId: '0x1b03b513fba4bd4868edd340f77da0c920150f0a',
-            providerCountry: 'us',
-            dateStarted: '2019-02-14T11:04:15Z',
+            session_id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
+            provider_id: '0x1b03b513fba4bd4868edd340f77da0c920150f0a',
+            provider_country: 'us',
+            date_started: '2019-02-14T11:04:15Z',
             duration: 35 * 60,
-            bytesSent: 1024,
-            bytesReceived: 6000,
+            bytes_sent: 1024,
+            bytes_received: 6000,
           },
         ],
       }
@@ -624,13 +659,29 @@ describe('HttpTequilapiClient', () => {
       },
     },
   }
+  const serviceResponse = {
+    id: 'service1',
+    provider_id: '0x1',
+    type: 'openvpn',
+    options: {},
+    status: 'Starting',
+    proposal: {
+      id: 1,
+      provider_id: '0x1',
+      service_type: 'openvpn',
+      service_definition: {
+        location_originate: {
+          country: 'NL',
+        },
+      },
+    },
+  }
   describe('serviceList()', () => {
     it('returns response', async () => {
-      const response = [serviceObject]
-      mock.onGet('services').reply(200, response)
+      mock.onGet('services').reply(200, [serviceResponse])
 
       const services = await api.serviceList()
-      expect(services).toEqual(parseServiceInfoList(response))
+      expect(services).toEqual(parseServiceInfoList([serviceObject]))
     })
 
     it('handles error', () => {
@@ -645,7 +696,7 @@ describe('HttpTequilapiClient', () => {
 
   describe('serviceGet()', () => {
     it('returns response', async () => {
-      mock.onGet('services/service1').reply(200, serviceObject)
+      mock.onGet('services/service1').reply(200, serviceResponse)
 
       const service = await api.serviceGet('service1')
       expect(service).toEqual(parseServiceInfo(serviceObject))
@@ -663,14 +714,15 @@ describe('HttpTequilapiClient', () => {
 
   describe('serviceStart()', () => {
     it('returns response', async () => {
-      const expectedRequest = {
-        providerId: '0x2000FACE',
-        type: 'openvpn',
-        accessPolicies: {
-          ids: ['mysterium-verified'],
-        },
-      }
-      mock.onPost('services', expectedRequest).reply(200, serviceObject)
+      mock
+        .onPost('services', {
+          provider_id: '0x2000FACE',
+          type: 'openvpn',
+          access_policies: {
+            ids: ['mysterium-verified'],
+          },
+        })
+        .reply(200, serviceResponse)
 
       const request = {
         providerId: '0x2000FACE',
@@ -716,19 +768,19 @@ describe('HttpTequilapiClient', () => {
         sessions: [
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
-            consumerId: '0x1000FACE',
-            createdAt: '2019-01-01 00:00:00',
-            bytesIn: 1000,
-            bytesOut: 100,
-            tokensEarned: 1000,
+            consumer_id: '0x1000FACE',
+            created_at: '2019-01-01 00:00:00',
+            bytes_in: 1000,
+            bytes_out: 100,
+            tokens_earned: 1000,
           },
           {
             id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
-            consumerId: '0x2000FACE',
-            createdAt: '2019-01-02 00:00:00',
-            bytesIn: 1100,
-            bytesOut: 101,
-            tokensEarned: 1000,
+            consumer_id: '0x2000FACE',
+            created_at: '2019-01-02 00:00:00',
+            bytes_in: 1100,
+            bytes_out: 101,
+            tokens_earned: 1000,
           },
         ],
       }
@@ -737,6 +789,7 @@ describe('HttpTequilapiClient', () => {
       const sessions = await api.serviceSessions()
       expect(sessions).toHaveLength(2)
       expect(sessions[0].id).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
+      expect(sessions[0].tokensEarned).toEqual(1000)
     })
 
     it('handles error', () => {

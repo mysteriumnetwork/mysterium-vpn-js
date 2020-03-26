@@ -6,7 +6,7 @@
  */
 
 export function nextTick(): Promise<void> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     process.nextTick(() => {
       resolve()
     })

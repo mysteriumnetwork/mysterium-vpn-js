@@ -4,8 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { tequilapi } from './tequilapi-client-factory'
 
-export { AccessPolicy, AccessRule } from './access-policy/access-policy'
+export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { ConnectionCount } from './connection/count'
 export { ConnectionIp } from './connection/ip'
@@ -31,22 +32,15 @@ export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
-export { Identity } from './identity/identity'
+export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
 export { IdentityPayout } from './identity/payout'
-export { IdentityStatus } from './identity/status'
 export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
 
 export { Metrics } from './metric/metrics'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
-export {
-  Proposal,
-  ProposalQuery,
-  AccessPolicyRef,
-  parseProposal,
-  parseProposalList,
-} from './proposal/proposal'
+export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
@@ -68,12 +62,11 @@ export {
 export { mystDisplay, MYST } from './payment/myst'
 export { TransactorFeesResponse } from './payment/fees'
 
-export { logger, Logger } from './logger'
-export {
-  TequilapiClientFactory,
-  TEQUILAPI_URL,
-  TequilapiClient,
-  HttpTequilapiClient,
-} from './tequilapi-client'
+export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
 
+export { logger, Logger } from './logger'
+export { TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
+export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
+
+export default tequilapi

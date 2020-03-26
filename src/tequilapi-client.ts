@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import axios from 'axios'
 import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
@@ -16,10 +15,15 @@ import { ConnectionSession, validateSession } from './connection/session'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
-import { AxiosAdapter } from './http/axios-adapter'
 import { HttpInterface } from './http/interface'
-import { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
-import { Identity, parseIdentity, parseIdentityList } from './identity/identity'
+import { TIMEOUT_DISABLED } from './http/timeouts'
+import {
+  Identity,
+  IdentityRef,
+  parseIdentity,
+  parseIdentityList,
+  parseIdentityRef,
+} from './identity/identity'
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import {
   IdentityRegisterRequest,
@@ -32,7 +36,6 @@ import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/
 import { ServiceRequest } from './provider/service-request'
 import { parseServiceSessionList, ServiceSession } from './provider/service-session'
 import { TopUpRequest } from './payment/topup'
-import { IdentityStatus, parseIdentityStatus } from './identity/status'
 import { TransactorFeesResponse } from './payment/fees'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -46,12 +49,12 @@ export interface TequilapiClient {
   userConfig(): Promise<Config>
   updateUserConfig(config: Config): Promise<void>
 
-  identityList(): Promise<Identity[]>
-  identityCurrent(passphrase: string): Promise<Identity>
-  identityCreate(passphrase: string): Promise<Identity>
+  identityList(): Promise<IdentityRef[]>
+  identityCurrent(passphrase: string): Promise<IdentityRef>
+  identityCreate(passphrase: string): Promise<IdentityRef>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
-  identityStatus(id: string): Promise<IdentityStatus>
+  identity(id: string): Promise<Identity>
   identityRegistration(id: string): Promise<IdentityRegistration>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
@@ -117,7 +120,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseConsumerLocation(response)
   }
 
-  public async identityList(): Promise<Identity[]> {
+  public async identityList(): Promise<IdentityRef[]> {
     const response = await this.http.get('identities')
     if (!response) {
       throw new Error('Identity list response body is missing')
@@ -127,22 +130,30 @@ export class HttpTequilapiClient implements TequilapiClient {
     return responseDto.identities
   }
 
-  public async identityCurrent(passphrase: string): Promise<Identity> {
+  public async identity(id: string): Promise<Identity> {
+    const response = await this.http.get(`identities/${id}/status`)
+    if (!response) {
+      throw new Error('Identity response body is missing')
+    }
+    return parseIdentity(response)
+  }
+
+  public async identityCurrent(passphrase: string): Promise<IdentityRef> {
     const response = await this.http.put('identities/current', { passphrase })
 
     if (!response) {
       throw new Error('Identity response body is missing')
     }
 
-    return parseIdentity(response)
+    return parseIdentityRef(response)
   }
 
-  public async identityCreate(passphrase: string): Promise<Identity> {
+  public async identityCreate(passphrase: string): Promise<IdentityRef> {
     const response = await this.http.post('identities', { passphrase })
     if (!response) {
       throw new Error('Identity creation response body is missing')
     }
-    return parseIdentity(response)
+    return parseIdentityRef(response)
   }
 
   public async identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void> {
@@ -151,14 +162,6 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void> {
     return await this.http.post(`identities/${id}/register`, request ?? {})
-  }
-
-  public async identityStatus(id: string): Promise<IdentityStatus> {
-    const response = await this.http.get(`identities/${id}/status`)
-    if (!response) {
-      throw new Error('Identity status response body is missing')
-    }
-    return parseIdentityStatus(response)
   }
 
   public async identityRegistration(id: string): Promise<IdentityRegistration> {
@@ -197,9 +200,9 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.put(`auth/password`, {
       username,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      old_password: oldPassword,
+      oldPassword: oldPassword,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      new_password: newPassword,
+      newPassword: newPassword,
     })
   }
 
@@ -219,15 +222,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     request: ConnectionRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ConnectionStatusResponse> {
-    const response = await this.http.put(
-      'connection',
-      {
-        consumerId: request.consumerId,
-        providerId: request.providerId,
-        serviceType: request.serviceType,
-      },
-      timeout
-    )
+    const response = await this.http.put('connection', request, timeout)
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }
@@ -296,16 +291,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     request: ServiceRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ServiceInfo> {
-    const response = await this.http.post(
-      'services',
-      {
-        providerId: request.providerId,
-        type: request.type,
-        accessPolicies: request.accessPolicies,
-        options: request.options,
-      },
-      timeout
-    )
+    const response = await this.http.post('services', request, timeout)
     if (!response) {
       throw new Error('Service creation response body is missing')
     }
@@ -356,29 +342,5 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async topUp(request: TopUpRequest): Promise<void> {
     return this.http.post(`transactor/topup`, request)
-  }
-}
-
-export class TequilapiClientFactory {
-  public _baseUrl: string
-  public _defaultTimeout: number
-
-  public constructor(baseUrl: string = TEQUILAPI_URL, defaultTimeout: number = TIMEOUT_DEFAULT) {
-    this._baseUrl = baseUrl
-    this._defaultTimeout = defaultTimeout
-  }
-
-  public build(adapter: HttpInterface): TequilapiClient {
-    return new HttpTequilapiClient(adapter)
-  }
-
-  public buildAdapter(): HttpInterface {
-    const axiosInstance = axios.create({
-      baseURL: this._baseUrl,
-      headers: {
-        'Cache-Control': 'no-cache, no-store',
-      },
-    })
-    return new AxiosAdapter(axiosInstance, this._defaultTimeout)
   }
 }
