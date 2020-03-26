@@ -6,7 +6,7 @@
  */
 import { tequilapi } from './tequilapi-client-factory'
 
-export { AccessPolicy, AccessRule } from './access-policy/access-policy'
+export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { ConnectionCount } from './connection/count'
 export { ConnectionIp } from './connection/ip'
@@ -40,13 +40,7 @@ export { Metrics } from './metric/metrics'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
-export {
-  Proposal,
-  ProposalQuery,
-  AccessPolicyRef,
-  parseProposal,
-  parseProposalList,
-} from './proposal/proposal'
+export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
@@ -67,6 +61,8 @@ export {
 } from './payment/method'
 export { mystDisplay, MYST } from './payment/myst'
 export { TransactorFeesResponse } from './payment/fees'
+
+export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
 
 export { logger, Logger } from './logger'
 export { TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
