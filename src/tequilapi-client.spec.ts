@@ -307,14 +307,14 @@ describe('HttpTequilapiClient', () => {
         .onPut('identities/current', { id: '0x0000bEEF', passphrase: 'test' })
         .reply(200, response)
 
-      const identity = await api.identityCurrent('0x0000bEEF', 'test')
+      const identity = await api.identityCurrent({ id: '0x0000bEEF', passphrase: 'test' })
       expect(identity).toEqual(parseIdentityRef(response))
     })
 
     it('handles error', () => {
       mock.onPut('identities/current').reply(500)
 
-      expect(api.identityCurrent('', '')).rejects.toHaveProperty(
+      expect(api.identityCurrent({ passphrase: '' })).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="identities/current")'
       )
