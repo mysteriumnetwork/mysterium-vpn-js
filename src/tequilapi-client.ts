@@ -50,7 +50,7 @@ export interface TequilapiClient {
   updateUserConfig(config: Config): Promise<void>
 
   identityList(): Promise<IdentityRef[]>
-  identityCurrent(passphrase: string): Promise<IdentityRef>
+  identityCurrent(id: string, passphrase: string): Promise<IdentityRef>
   identityCreate(passphrase: string): Promise<IdentityRef>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
@@ -131,15 +131,15 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async identity(id: string): Promise<Identity> {
-    const response = await this.http.get(`identities/${id}/status`)
+    const response = await this.http.get(`identities/${id}`)
     if (!response) {
       throw new Error('Identity response body is missing')
     }
     return parseIdentity(response)
   }
 
-  public async identityCurrent(passphrase: string): Promise<IdentityRef> {
-    const response = await this.http.put('identities/current', { passphrase })
+  public async identityCurrent(id: string, passphrase: string): Promise<IdentityRef> {
+    const response = await this.http.put('identities/current', { id, passphrase })
 
     if (!response) {
       throw new Error('Identity response body is missing')
