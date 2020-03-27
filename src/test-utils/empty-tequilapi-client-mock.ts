@@ -137,7 +137,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityCurrent(passphrase: string): Promise<IdentityRef> {
+  public identityCurrent(id: string, passphrase: string): Promise<IdentityRef> {
     throw Error('Not implemented')
   }
 
