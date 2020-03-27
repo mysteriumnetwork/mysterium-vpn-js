@@ -28,6 +28,7 @@ import { ServiceSession } from '../provider/service-session'
 import { TequilapiClient } from '../tequilapi-client'
 import { TopUpRequest } from '../payment/topup'
 import { TransactorFeesResponse } from '../payment/fees'
+import { IdentityCurrentRequest } from '../identity/selection'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -137,7 +138,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityCurrent(id: string, passphrase: string): Promise<IdentityRef> {
+  public identityCurrent(request: IdentityCurrentRequest): Promise<IdentityRef> {
     throw Error('Not implemented')
   }
 

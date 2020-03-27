@@ -37,6 +37,7 @@ import { ServiceRequest } from './provider/service-request'
 import { parseServiceSessionList, ServiceSession } from './provider/service-session'
 import { TopUpRequest } from './payment/topup'
 import { TransactorFeesResponse } from './payment/fees'
+import { IdentityCurrentRequest } from './identity/selection'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
@@ -50,7 +51,7 @@ export interface TequilapiClient {
   updateUserConfig(config: Config): Promise<void>
 
   identityList(): Promise<IdentityRef[]>
-  identityCurrent(id: string, passphrase: string): Promise<IdentityRef>
+  identityCurrent(request: IdentityCurrentRequest): Promise<IdentityRef>
   identityCreate(passphrase: string): Promise<IdentityRef>
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
@@ -138,8 +139,8 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseIdentity(response)
   }
 
-  public async identityCurrent(id: string, passphrase: string): Promise<IdentityRef> {
-    const response = await this.http.put('identities/current', { id, passphrase })
+  public async identityCurrent(request: IdentityCurrentRequest): Promise<IdentityRef> {
+    const response = await this.http.put('identities/current', request)
 
     if (!response) {
       throw new Error('Identity response body is missing')
