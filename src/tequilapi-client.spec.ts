@@ -303,7 +303,9 @@ describe('HttpTequilapiClient', () => {
   describe('identityCurrent()', () => {
     it('returns current identity DTO', async () => {
       const response = { id: '0x0000bEEF' }
-      mock.onPut('identities/current', { id: "0x0000bEEF", passphrase: 'test' }).reply(200, response)
+      mock
+        .onPut('identities/current', { id: '0x0000bEEF', passphrase: 'test' })
+        .reply(200, response)
 
       const identity = await api.identityCurrent('0x0000bEEF', 'test')
       expect(identity).toEqual(parseIdentityRef(response))
