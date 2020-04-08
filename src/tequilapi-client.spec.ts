@@ -586,6 +586,7 @@ describe('HttpTequilapiClient', () => {
         duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
         bytesSent: 123321, // 0.117608 MB
+        tokensSpent: 100,
       }
       mock.onGet('connection/statistics').reply(200, response)
 
