@@ -11,6 +11,7 @@ export interface ConnectionStatistics {
   duration: number
   bytesReceived: number
   bytesSent: number
+  tokensSpent: number
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +20,7 @@ export function parseConnectionStatistics(data: any): ConnectionStatistics {
     { name: 'duration', type: 'number' },
     { name: 'bytesReceived', type: 'number' },
     { name: 'bytesSent', type: 'number' },
+    { name: 'tokensSpent', type: 'number' },
   ])
   return data
 }
