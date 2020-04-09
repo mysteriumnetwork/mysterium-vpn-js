@@ -48,7 +48,7 @@ export interface TequilapiClient {
   location(timeout?: number): Promise<ConsumerLocation>
 
   userConfig(): Promise<Config>
-  updateUserConfig(config: Config): Promise<void>
+  updateUserConfig(config: Config): Promise<Config>
 
   identityList(): Promise<IdentityRef[]>
   identityCurrent(request: IdentityCurrentRequest): Promise<IdentityRef>
@@ -329,7 +329,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return response
   }
 
-  public async updateUserConfig(config: Config): Promise<void> {
+  public async updateUserConfig(config: Config): Promise<Config> {
     return this.http.post(`config/user`, config)
   }
 
