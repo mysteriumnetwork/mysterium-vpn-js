@@ -41,7 +41,7 @@
     "@types/node": "^12.12.6",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
-    "axios-mock-adapter": "^1.16.0",
+    "axios-mock-adapter": "^1.18.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-header": "^3.0.0",
