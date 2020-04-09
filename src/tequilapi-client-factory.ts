@@ -38,7 +38,11 @@ export class TequilapiClientFactory {
     const convertOptions = {
       deep: true,
     }
+    const rawPaths = ['config/user']
     ax.interceptors.request.use((config) => {
+      if (config.url && rawPaths.includes(config.url)) {
+        return config
+      }
       if (config.params) {
         config.params = snakecaseKeys(config.params, convertOptions)
       }
@@ -48,6 +52,9 @@ export class TequilapiClientFactory {
       return config
     })
     ax.interceptors.response.use((config) => {
+      if (config.config.url && rawPaths.includes(config.config.url)) {
+        return config
+      }
       if (config.data) {
         config.data = camelcaseKeys(config.data, convertOptions)
       }

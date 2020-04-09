@@ -162,7 +162,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public updateUserConfig(config: Config): Promise<void> {
+  public updateUserConfig(config: Config): Promise<Config> {
     throw Error('Not implemented')
   }
 

@@ -850,4 +850,44 @@ describe('HttpTequilapiClient', () => {
       )
     })
   })
+
+  describe('userConfig()', () => {
+    it('returns raw response', async () => {
+      mock.onGet('config/user').reply(200, {
+        data: {
+          'access-policy': {
+            list: 'mysterium',
+          },
+          openvpn: {
+            port: 9000,
+          },
+        },
+      })
+
+      const config = await api.userConfig()
+      expect(config.data['access-policy'].list).toEqual('mysterium')
+      expect(config.data.openvpn.port).toEqual(9000)
+    })
+
+    it('sends raw config on save', async () => {
+      mock.onPost('config/user', { data: { 'dashes-and_underscores': true } }).reply(200, {
+        data: {
+          'dashes-and_underscores': true,
+          'access-policy': {
+            list: 'mysterium',
+          },
+          openvpn: {
+            port: 9000,
+          },
+        },
+      })
+
+      const res = await api.updateUserConfig({
+        data: {
+          'dashes-and_underscores': true,
+        },
+      })
+      expect(res.data['dashes-and_underscores']).toEqual(true)
+    })
+  })
 })
