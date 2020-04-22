@@ -64,7 +64,7 @@ export {
   pricePerMinute,
   pricePerGiB,
 } from './payment/method'
-export { mystDisplay, MYST } from './payment/myst'
+export { Currency, displayMoney, DisplayMoneyOptions } from './payment/myst'
 export { TransactorFeesResponse } from './payment/fees'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
