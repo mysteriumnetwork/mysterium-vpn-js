@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ConnectionCount, parseConnectionCount } from './count'
+import { ConnectCount, parseConnectionCount } from './metrics'
 
 describe('.parseConnectionCount', () => {
   it('returns ConnectionCountDTO', () => {
-    const dto: ConnectionCount = parseConnectionCount({ success: 1, fail: 2, timeout: 3 })
+    const dto: ConnectCount = parseConnectionCount({ success: 1, fail: 2, timeout: 3 })
     expect(dto).toBeDefined()
   })
 

@@ -239,7 +239,7 @@ describe('HttpTequilapiClient', () => {
       })
     })
 
-    it('fetches connect counts when option is given', async () => {
+    it('fetches metrics when option is given', async () => {
       const response = {
         proposals: [
           {
@@ -258,6 +258,7 @@ describe('HttpTequilapiClient', () => {
                 fail: 1,
                 ping: 1,
               },
+              monitoring_failed: false,
             },
           },
         ],

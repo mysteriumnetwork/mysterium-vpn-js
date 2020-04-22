@@ -6,7 +6,7 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
-import { Metrics } from '../metric/metrics'
+import { ProposalMetrics } from './metrics'
 import { ServiceDefinition } from '../provider/service-definition'
 import { PaymentMethod } from '../payment/method'
 import { AccessPolicyRef } from '../access-policy/access-policy'
@@ -16,7 +16,7 @@ export interface Proposal {
   providerId: string
   serviceType: string
   serviceDefinition: ServiceDefinition
-  metrics?: Metrics
+  metrics?: ProposalMetrics
   accessPolicies?: AccessPolicyRef[]
   paymentMethod?: PaymentMethod
 }
@@ -36,9 +36,9 @@ export function parseProposal(data: any): Proposal {
 export interface ProposalQuery {
   providerId?: string
   serviceType?: string
-  accessPolicyProtocol?: string
+  accessPolicySource?: string
   accessPolicyId?: string
-  fetchConnectCounts?: boolean
+  fetchMetrics?: boolean
 }
 
 interface ProposalList {
