@@ -21,7 +21,7 @@ export interface AppState {
   sessions?: ServiceSession[]
   consumer?: {
     connection?: {
-      state: ConnectionStatus
+      status: ConnectionStatus
       statistics?: ConnectionStatistics
       proposal?: Proposal
     }

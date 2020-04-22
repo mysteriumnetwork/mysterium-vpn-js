@@ -21,7 +21,7 @@ import { IdentityRef, Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
 import { IdentityRegisterRequest, IdentityRegistration } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
-import { Proposal, ProposalQuery } from '../proposal/proposal'
+import { Proposal, ProposalQuality, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceRequest } from '../provider/service-request'
 import { ServiceSession } from '../provider/service-session'
@@ -59,6 +59,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public findProposals(options?: ProposalQuery): Promise<Proposal[]> {
+    throw Error('Not implemented')
+  }
+
+  public proposalsQuality(): Promise<ProposalQuality[]> {
     throw Error('Not implemented')
   }
 

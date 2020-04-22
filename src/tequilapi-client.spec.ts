@@ -239,7 +239,7 @@ describe('HttpTequilapiClient', () => {
       })
     })
 
-    it('fetches connect counts when option is given', async () => {
+    it('fetches metrics when option is given', async () => {
       const response = {
         proposals: [
           {
@@ -258,12 +258,13 @@ describe('HttpTequilapiClient', () => {
                 fail: 1,
                 ping: 1,
               },
+              monitoring_failed: false,
             },
           },
         ],
       }
-      mock.onGet('proposals', { params: { fetch_connect_counts: true } }).reply(200, response)
-      const proposals = await api.findProposals({ fetchConnectCounts: true })
+      mock.onGet('proposals', { params: { fetch_metrics: true } }).reply(200, response)
+      const proposals = await api.findProposals({ fetchMetrics: true })
       expect(proposals).toHaveLength(1)
     })
 

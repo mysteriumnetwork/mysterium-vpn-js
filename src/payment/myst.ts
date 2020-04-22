@@ -7,11 +7,33 @@
 
 import { Money } from './method'
 
-export const MYST = 'MYST'
+export enum Currency {
+  MYST = 'MYST',
+  MYSTTestToken = 'MYSTT',
+}
 
-export const mystDisplay = (m: Money): number | undefined => {
-  if (m.currency == MYST) {
-    return Number((m.amount / 100000000).toFixed(6))
+export interface DisplayMoneyOptions {
+  showCurrency?: boolean
+  fractionDigits?: number
+  removeInsignificantZeros?: boolean
+}
+
+export const displayMoney = (
+  m: Money,
+  {
+    showCurrency = false,
+    fractionDigits = 6,
+    removeInsignificantZeros = true,
+  }: DisplayMoneyOptions = {}
+): string => {
+  if (m.currency == Currency.MYST || m.currency == Currency.MYSTTestToken) {
+    let amount = m.amount ?? 0
+    amount = amount / 100000000 // adjust
+    let amountStr = amount.toFixed(fractionDigits) // fractions
+    if (removeInsignificantZeros) {
+      amountStr = Number(amountStr).toString()
+    }
+    return `${amountStr}${showCurrency ? m.currency : ''}`
   }
-  return undefined
+  return `${m.amount}${showCurrency ? m.currency : ''}`
 }

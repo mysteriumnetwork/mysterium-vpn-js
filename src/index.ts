@@ -8,7 +8,6 @@ import { tequilapi } from './tequilapi-client-factory'
 
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
-export { ConnectionCount } from './connection/count'
 export { ConnectionIp } from './connection/ip'
 export { ConnectionRequest } from './connection/request'
 export { ConnectionSession } from './connection/session'
@@ -36,11 +35,17 @@ export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/id
 export { IdentityPayout } from './identity/payout'
 export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
 
-export { Metrics } from './metric/metrics'
+export { ProposalMetrics, ConnectCount } from './proposal/metrics'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
-export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
+export {
+  Proposal,
+  ProposalQuery,
+  parseProposal,
+  parseProposalList,
+  ProposalQuality,
+} from './proposal/proposal'
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
@@ -59,7 +64,7 @@ export {
   pricePerMinute,
   pricePerGiB,
 } from './payment/method'
-export { mystDisplay, MYST } from './payment/myst'
+export { Currency, displayMoney, DisplayMoneyOptions } from './payment/myst'
 export { TransactorFeesResponse } from './payment/fees'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
