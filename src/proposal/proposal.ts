@@ -50,3 +50,8 @@ export function parseProposalList(responseData: any): ProposalList {
   validate('ProposalList', responseData, { name: 'proposals', type: 'array' })
   return { proposals: responseData.proposals.map(parseProposal) }
 }
+
+export interface ProposalQuality extends ProposalMetrics {
+  providerId: string
+  serviceType: string
+}

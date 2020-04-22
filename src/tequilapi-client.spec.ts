@@ -263,8 +263,8 @@ describe('HttpTequilapiClient', () => {
           },
         ],
       }
-      mock.onGet('proposals', { params: { fetch_connect_counts: true } }).reply(200, response)
-      const proposals = await api.findProposals({ fetchConnectCounts: true })
+      mock.onGet('proposals', { params: { fetch_metrics: true } }).reply(200, response)
+      const proposals = await api.findProposals({ fetchMetrics: true })
       expect(proposals).toHaveLength(1)
     })
 
