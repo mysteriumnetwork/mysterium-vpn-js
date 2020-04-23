@@ -29,7 +29,7 @@ export const pricePerMinute = (pm: PaymentMethod): Money => {
     return { amount: 0, currency: pm.price.currency }
   }
   return {
-    amount: (60 / pm.rate.perSeconds) * pm.price.amount,
+    amount: Math.round((60 / pm.rate.perSeconds) * pm.price.amount),
     currency: pm.price.currency,
   }
 }
@@ -41,7 +41,7 @@ export const pricePerGiB = (pm: PaymentMethod): Money => {
     return { amount: 0, currency: pm.price.currency }
   }
   return {
-    amount: (bytesInGiB / pm.rate.perBytes) * pm.price.amount,
+    amount: Math.round((bytesInGiB / pm.rate.perBytes) * pm.price.amount),
     currency: pm.price.currency,
   }
 }
