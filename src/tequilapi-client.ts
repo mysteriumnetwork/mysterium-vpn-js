@@ -47,6 +47,7 @@ export interface TequilapiClient {
   stop(): Promise<void>
   location(timeout?: number): Promise<ConsumerLocation>
 
+  defaultConfig(): Promise<Config>
   userConfig(): Promise<Config>
   updateUserConfig(config: Config): Promise<Config>
 
@@ -327,6 +328,15 @@ export class HttpTequilapiClient implements TequilapiClient {
     }
 
     return parseAccessPolicyList(response)
+  }
+
+  public async defaultConfig(): Promise<Config> {
+    const response = await this.http.get('config/default')
+    if (!response) {
+      throw new Error('Default config body is missing')
+    }
+
+    return response
   }
 
   public async userConfig(): Promise<Config> {
