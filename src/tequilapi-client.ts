@@ -69,7 +69,7 @@ export interface TequilapiClient {
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
   proposalsQuality(): Promise<ProposalQuality[]>
 
-  reportIssue(issue: Issue): Promise<IssueId>
+  reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusResponse>
   connectionStatus(): Promise<ConnectionStatusResponse>
@@ -352,8 +352,8 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`config/user`, config)
   }
 
-  public async reportIssue(issue: Issue): Promise<IssueId> {
-    return this.http.post(`feedback/issue`, issue)
+  public async reportIssue(issue: Issue, timeout?: number): Promise<IssueId> {
+    return this.http.post(`feedback/issue`, issue, timeout)
   }
 
   public async transactorFees(): Promise<TransactorFeesResponse> {

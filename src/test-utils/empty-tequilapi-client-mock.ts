@@ -178,7 +178,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public reportIssue(issue: Issue): Promise<IssueId> {
+  public reportIssue(issue: Issue, timeout?: number): Promise<IssueId> {
     throw Error('Not implemented')
   }
 
