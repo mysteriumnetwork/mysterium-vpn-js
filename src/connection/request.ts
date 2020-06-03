@@ -10,4 +10,12 @@ export interface ConnectionRequest {
   accountantId: string
   providerId: string
   serviceType: string
+  connectOptions?: ConnectOptions
 }
+
+export interface ConnectOptions {
+  disableKillSwitch?: boolean
+  dns?: DNSOption
+}
+
+export type DNSOption = 'auto' | 'provider' | 'system' | string
