@@ -9,7 +9,7 @@ import { tequilapi } from './tequilapi-client-factory'
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { ConnectionIp } from './connection/ip'
-export { ConnectionRequest } from './connection/request'
+export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/request'
 export { ConnectionSession } from './connection/session'
 export { ConnectionStatus, ConnectionStatusResponse } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
