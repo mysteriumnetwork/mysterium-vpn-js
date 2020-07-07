@@ -8,8 +8,6 @@
 import { validateArray, validateMultiple } from '../fmt/validation'
 import { parseProposal, Proposal } from '../proposal/proposal'
 import { ServiceStatus } from './service-status'
-import { AccessPolicyRef } from '../access-policy/access-policy'
-import { ServiceSession } from './service-session'
 
 export interface ServiceOptions {
   port?: number
@@ -25,8 +23,6 @@ export interface ServiceInfo {
   options?: ServiceOptions
   status: ServiceStatus
   proposal: Proposal
-  accessPolicies?: AccessPolicyRef[]
-  serviceSession?: ServiceSession[]
   connectionStatistics?: {
     attempted: number
     successful: number

@@ -48,7 +48,6 @@ export {
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
-export { ProviderSessions } from './provider/provider-sessions'
 export { QualityLevel, QualityCalculator } from './provider/quality'
 export { ServiceDefinition } from './provider/service-definition'
 export { ServiceInfo } from './provider/service-info'
