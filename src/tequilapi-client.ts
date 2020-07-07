@@ -11,7 +11,6 @@ import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-poli
 import { ConnectionRequest } from './connection/request'
 import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
 import { ConnectionIp, parseConnectionIp } from './connection/ip'
-import { ConnectionSession, validateSession } from './connection/session'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
@@ -76,7 +75,6 @@ export interface TequilapiClient {
   connectionCancel(): Promise<void>
   connectionIp(timeout?: number): Promise<ConnectionIp>
   connectionStatistics(): Promise<ConnectionStatistics>
-  connectionSessions(): Promise<ConnectionSession[]>
   connectionLocation(): Promise<ConsumerLocation>
 
   serviceList(): Promise<ServiceInfo[]>
@@ -270,14 +268,6 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Connection statistics response body is missing')
     }
     return parseConnectionStatistics(response)
-  }
-
-  public async connectionSessions(): Promise<ConnectionSession[]> {
-    const response = await this.http.get('connection-sessions')
-    if (!response) {
-      throw new Error('Connection sessions response body is missing')
-    }
-    return response.sessions.map(validateSession)
   }
 
   public async serviceList(): Promise<ServiceInfo[]> {

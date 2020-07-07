@@ -12,7 +12,6 @@ import { Config } from '../config/config'
 import { AccessPolicy } from '../access-policy/access-policy'
 import { ConnectionIp } from '../connection/ip'
 import { ConnectionRequest } from '../connection/request'
-import { ConnectionSession } from '../connection/session'
 import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionStatusResponse } from '../connection/status'
 import { ConsumerLocation } from '../consumer/location'
@@ -123,10 +122,6 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public serviceStop(serviceId: string): Promise<void> {
-    throw Error('Not implemented')
-  }
-
-  public connectionSessions(): Promise<ConnectionSession[]> {
     throw Error('Not implemented')
   }
 
