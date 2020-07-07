@@ -725,42 +725,41 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('serviceSessions()', () => {
+  describe('sessions()', () => {
     it('returns response', async () => {
       const response = {
         sessions: [
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
+            direction: 'Provided',
             consumer_id: '0x1000FACE',
+            accountant_id: '',
+            provider_id: '',
+            service_type: '',
+            provider_country: '',
             created_at: '2019-01-01 00:00:00',
-            bytes_in: 1000,
-            bytes_out: 100,
-            tokens_earned: 1000,
-          },
-          {
-            id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
-            consumer_id: '0x2000FACE',
-            created_at: '2019-01-02 00:00:00',
-            bytes_in: 1100,
-            bytes_out: 101,
-            tokens_earned: 1000,
+            duration: 59,
+            bytes_sent: 1000,
+            bytes_received: 100,
+            tokens: 1000,
+            status: 'New',
           },
         ],
       }
-      mock.onGet('service-sessions').reply(200, response)
+      mock.onGet('sessions').reply(200, response)
 
-      const sessions = await api.serviceSessions()
-      expect(sessions).toHaveLength(2)
+      const sessions = await api.sessions()
+      expect(sessions).toHaveLength(1)
       expect(sessions[0].id).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
-      expect(sessions[0].tokensEarned).toEqual(1000)
+      expect(sessions[0].tokens).toEqual(1000)
     })
 
     it('handles error', () => {
-      mock.onGet('service-sessions').reply(500)
+      mock.onGet('sessions').reply(500)
 
-      expect(api.serviceSessions()).rejects.toHaveProperty(
+      expect(api.sessions()).rejects.toHaveProperty(
         'message',
-        'Request failed with status code 500 (path="service-sessions")'
+        'Request failed with status code 500 (path="sessions")'
       )
     })
   })

@@ -11,14 +11,14 @@ import { Identity } from '../identity/identity'
 import { NatStatusResponse } from '../nat/status'
 import { ServiceInfo } from '../provider/service-info'
 import camelcaseKeys from 'camelcase-keys'
-import { ServiceSession } from '../provider/service-session'
+import { Session } from '../session/session'
 
 export const TEQUILAPI_SSE_URL = 'http://127.0.0.1:4050/events/state'
 
 export interface AppState {
   natStatus: NatStatusResponse
   services?: ServiceInfo[]
-  sessions?: ServiceSession[]
+  sessions?: Session[]
   consumer?: {
     connection?: {
       status: ConnectionStatus

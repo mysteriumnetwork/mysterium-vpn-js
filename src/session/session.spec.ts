@@ -5,20 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { parseServiceSession, parseServiceSessionList } from './service-session'
+import { parseSession, parseSessionList } from './session'
 
 describe('TequilapiClient DTO', () => {
   const sessionData = {
     id: 'id1',
+    direction: 'Provided',
     consumerId: '0x1',
+    accountantId: '0x2',
+    providerId: '0x3',
+    serviceType: 'openvpn',
+    providerCountry: 'MU',
     createdAt: '2019-01-01',
-    bytesIn: 10,
-    bytesOut: 11,
-    tokensEarned: 4_000,
+    duration: 59,
+    bytesSent: 10,
+    bytesReceived: 11,
+    tokens: 4_000,
+    status: 'New',
   }
 
-  describe('.parseServiceInfo', () => {
-    const sessionObject = parseServiceSession(sessionData)
+  describe('.parseSession', () => {
+    const sessionObject = parseSession(sessionData)
 
     it('sets properties', async () => {
       expect(sessionObject.id).toEqual('id1')
@@ -26,25 +33,23 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('throws error with null data', () => {
-      expect(() => parseServiceSession(null)).toThrowError()
+      expect(() => parseSession(null)).toThrowError()
     })
 
     it('throws error with missing id', () => {
       const object = { ...sessionData, id: undefined }
-      expect(() => parseServiceSession(object)).toThrowError('ServiceSession: id is not provided')
+      expect(() => parseSession(object)).toThrowError('Session: id is not provided')
     })
 
     it('throws error with missing consumerId', () => {
       const object = { ...sessionData, consumerId: undefined }
-      expect(() => parseServiceSession(object)).toThrowError(
-        'ServiceSession: consumerId is not provided'
-      )
+      expect(() => parseSession(object)).toThrowError('Session: consumerId is not provided')
     })
   })
 
-  describe('.parseServiceSessionList', () => {
+  describe('.parseSessionList', () => {
     it('sets properties with full structure', async () => {
-      const sessions = parseServiceSessionList({
+      const sessions = parseSessionList({
         sessions: [sessionData],
       })
 
@@ -55,16 +60,16 @@ describe('TequilapiClient DTO', () => {
 
     it('throws error when invoked with an empty object', async () => {
       expect(() => {
-        parseServiceSessionList({})
-      }).toThrowError('ServiceSession[]: sessions is not provided')
+        parseSessionList({})
+      }).toThrowError('Session[]: sessions is not provided')
     })
 
     it('throws an error if proposal in array does not validate', async () => {
       expect(() => {
-        parseServiceSessionList({
+        parseSessionList({
           sessions: [{}],
         })
-      }).toThrowError('ServiceSession: id is not provided')
+      }).toThrowError('Session: id is not provided')
     })
   })
 })
