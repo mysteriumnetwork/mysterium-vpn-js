@@ -10,7 +10,6 @@ export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/acces
 
 export { ConnectionIp } from './connection/ip'
 export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/request'
-export { ConnectionSession } from './connection/session'
 export { ConnectionStatus, ConnectionStatusResponse } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
 
@@ -49,12 +48,11 @@ export {
 
 export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
-export { ProviderSessions } from './provider/provider-sessions'
 export { QualityLevel, QualityCalculator } from './provider/quality'
 export { ServiceDefinition } from './provider/service-definition'
 export { ServiceInfo } from './provider/service-info'
 export { ServiceRequest } from './provider/service-request'
-export { ServiceSession } from './provider/service-session'
+export { Session, SessionStatus, SessionDirection } from './session/session'
 export { ServiceStatus } from './provider/service-status'
 
 export {

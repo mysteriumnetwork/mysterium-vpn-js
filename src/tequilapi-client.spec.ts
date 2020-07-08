@@ -605,47 +605,6 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('connectionSessions()', () => {
-    it('returns response', async () => {
-      const response = {
-        sessions: [
-          {
-            session_id: '30f610a0-c096-11e8-b371-ebde26989839',
-            provider_id: '0x3b03a513fba4bd4868edd340f77da0c920150f3e',
-            provider_country: 'lt',
-            date_started: '2019-02-14T11:04:15Z',
-            duration: 35 * 60,
-            bytes_sent: 1024,
-            bytes_received: 6000,
-          },
-          {
-            session_id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
-            provider_id: '0x1b03b513fba4bd4868edd340f77da0c920150f0a',
-            provider_country: 'us',
-            date_started: '2019-02-14T11:04:15Z',
-            duration: 35 * 60,
-            bytes_sent: 1024,
-            bytes_received: 6000,
-          },
-        ],
-      }
-      mock.onGet('connection-sessions').reply(200, response)
-
-      const sessions = await api.connectionSessions()
-      expect(sessions).toHaveLength(2)
-      expect(sessions[0].sessionId).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
-    })
-
-    it('handles error', () => {
-      mock.onGet('connection-sessions').reply(500)
-
-      expect(api.connectionSessions()).rejects.toHaveProperty(
-        'message',
-        'Request failed with status code 500 (path="connection-sessions")'
-      )
-    })
-  })
-
   const serviceObject = {
     id: 'service1',
     providerId: '0x1',
@@ -766,42 +725,41 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
-  describe('serviceSessions()', () => {
+  describe('sessions()', () => {
     it('returns response', async () => {
       const response = {
         sessions: [
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
+            direction: 'Provided',
             consumer_id: '0x1000FACE',
+            accountant_id: '',
+            provider_id: '',
+            service_type: '',
+            provider_country: '',
             created_at: '2019-01-01 00:00:00',
-            bytes_in: 1000,
-            bytes_out: 100,
-            tokens_earned: 1000,
-          },
-          {
-            id: '76fca3dc-28d0-4f00-b06e-a7d6050699ae',
-            consumer_id: '0x2000FACE',
-            created_at: '2019-01-02 00:00:00',
-            bytes_in: 1100,
-            bytes_out: 101,
-            tokens_earned: 1000,
+            duration: 59,
+            bytes_sent: 1000,
+            bytes_received: 100,
+            tokens: 1000,
+            status: 'New',
           },
         ],
       }
-      mock.onGet('service-sessions').reply(200, response)
+      mock.onGet('sessions').reply(200, response)
 
-      const sessions = await api.serviceSessions()
-      expect(sessions).toHaveLength(2)
+      const sessions = await api.sessions()
+      expect(sessions).toHaveLength(1)
       expect(sessions[0].id).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
-      expect(sessions[0].tokensEarned).toEqual(1000)
+      expect(sessions[0].tokens).toEqual(1000)
     })
 
     it('handles error', () => {
-      mock.onGet('service-sessions').reply(500)
+      mock.onGet('sessions').reply(500)
 
-      expect(api.serviceSessions()).rejects.toHaveProperty(
+      expect(api.sessions()).rejects.toHaveProperty(
         'message',
-        'Request failed with status code 500 (path="service-sessions")'
+        'Request failed with status code 500 (path="sessions")'
       )
     })
   })

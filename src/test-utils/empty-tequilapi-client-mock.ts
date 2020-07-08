@@ -12,7 +12,6 @@ import { Config } from '../config/config'
 import { AccessPolicy } from '../access-policy/access-policy'
 import { ConnectionIp } from '../connection/ip'
 import { ConnectionRequest } from '../connection/request'
-import { ConnectionSession } from '../connection/session'
 import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionStatusResponse } from '../connection/status'
 import { ConsumerLocation } from '../consumer/location'
@@ -24,7 +23,7 @@ import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuality, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceRequest } from '../provider/service-request'
-import { ServiceSession } from '../provider/service-session'
+import { Session } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { TopUpRequest } from '../payment/topup'
 import { TransactorFeesResponse } from '../payment/fees'
@@ -126,11 +125,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionSessions(): Promise<ConnectionSession[]> {
-    throw Error('Not implemented')
-  }
-
-  public serviceSessions(): Promise<ServiceSession[]> {
+  public sessions(): Promise<Session[]> {
     throw Error('Not implemented')
   }
 
