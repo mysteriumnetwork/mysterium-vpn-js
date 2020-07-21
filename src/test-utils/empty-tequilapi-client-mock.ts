@@ -7,6 +7,7 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { MMNApiKeyResponse } from '../mmn/mmn'
 import { Issue, IssueId } from '../feedback/issue'
 import { Config } from '../config/config'
 import { AccessPolicy } from '../access-policy/access-policy'
@@ -182,6 +183,22 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public topUp(request: TopUpRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public async getMMNNodeReport(): Promise<any> {
+    throw Error('Not implemented')
+  }
+
+  public async setMMNApiKey(apiKey: string): Promise<any> {
+    throw Error('Not implemented')
+  }
+
+  public async getMMNApiKey(): Promise<MMNApiKeyResponse> {
+    throw Error('Not implemented')
+  }
+
+  public async clearMMNApiKey(): Promise<void> {
     throw Error('Not implemented')
   }
 }

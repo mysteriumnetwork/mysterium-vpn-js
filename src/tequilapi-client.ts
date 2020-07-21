@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { MMNApiKeyResponse } from './mmn/mmn'
 import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
@@ -87,6 +88,11 @@ export interface TequilapiClient {
 
   transactorFees(): Promise<TransactorFeesResponse>
   topUp(request: TopUpRequest): Promise<void>
+
+  getMMNNodeReport(): Promise<any>
+  setMMNApiKey(apiKey: string): Promise<void>
+  getMMNApiKey(): Promise<MMNApiKeyResponse>
+  clearMMNApiKey(): Promise<void>
 }
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -352,5 +358,21 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async topUp(request: TopUpRequest): Promise<void> {
     return this.http.post(`transactor/topup`, request)
+  }
+
+  public async getMMNNodeReport(): Promise<any> {
+    return this.http.get(`mmn/report`)
+  }
+
+  public async setMMNApiKey(apiKey: string): Promise<any> {
+    return this.http.post(`mmn/api-key`, apiKey)
+  }
+
+  public async getMMNApiKey(): Promise<MMNApiKeyResponse> {
+    return this.http.get(`mmn/api-key`)
+  }
+
+  public async clearMMNApiKey(): Promise<void> {
+    return this.http.delete(`mmn/api-key`)
   }
 }
