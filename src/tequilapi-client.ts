@@ -365,7 +365,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async setMMNApiKey(apiKey: string): Promise<any> {
-    return this.http.post(`mmn/api-key`, apiKey)
+    return this.http.post(`mmn/api-key`, { apiKey: apiKey })
   }
 
   public async getMMNApiKey(): Promise<MMNApiKeyResponse> {
