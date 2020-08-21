@@ -39,9 +39,16 @@ export enum IdentityRegistrationStatus {
   RegistrationError = 'RegistrationError',
 }
 
+export enum IdentityRegistrationStatusV3 {
+  Unregistered = 'Unregistered',
+  InProgress = 'InProgress',
+  Registered = 'Registered',
+  RegistrationError = 'RegistrationError',
+}
+
 export interface Identity {
   id: string
-  registrationStatus: IdentityRegistrationStatus
+  registrationStatus: IdentityRegistrationStatus | IdentityRegistrationStatusV3
   channelAddress: string
   balance: number
   earnings: number

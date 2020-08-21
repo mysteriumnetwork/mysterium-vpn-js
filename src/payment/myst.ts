@@ -16,7 +16,11 @@ export interface DisplayMoneyOptions {
   showCurrency?: boolean
   fractionDigits?: number
   removeInsignificantZeros?: boolean
+  decimalPart?: number
 }
+
+export const DECIMAL_PART = 100_000_000
+export const DECIMAL_PART_V3 = 1_000_000_000_000_000_000
 
 export const displayMoney = (
   m: Money,
@@ -24,11 +28,12 @@ export const displayMoney = (
     showCurrency = false,
     fractionDigits = 6,
     removeInsignificantZeros = true,
+    decimalPart = DECIMAL_PART,
   }: DisplayMoneyOptions = {}
 ): string => {
   if (m.currency == Currency.MYST || m.currency == Currency.MYSTTestToken) {
     let amount = m.amount ?? 0
-    amount = amount / 100000000 // adjust
+    amount = amount / decimalPart // adjust
     let amountStr = amount.toFixed(fractionDigits) // fractions
     if (removeInsignificantZeros) {
       amountStr = Number(amountStr).toString()
