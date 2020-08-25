@@ -21,7 +21,7 @@ export interface Session {
   id: string
   direction: SessionDirection
   consumerId: string
-  accountantId: string
+  hermesId: string
   providerId: string
   serviceType: string
   providerCountry: string
@@ -38,7 +38,7 @@ export function parseSession(data: any): Session {
     { name: 'id', type: 'string' },
     { name: 'direction', type: 'string' },
     { name: 'consumerId', type: 'string' },
-    { name: 'accountantId', type: 'string' },
+    { name: 'hermesId', type: 'string' },
     { name: 'providerId', type: 'string' },
     { name: 'serviceType', type: 'string' },
     { name: 'providerCountry', type: 'string' },
