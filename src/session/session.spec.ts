@@ -12,7 +12,7 @@ describe('TequilapiClient DTO', () => {
     id: 'id1',
     direction: 'Provided',
     consumerId: '0x1',
-    accountantId: '0x2',
+    hermesId: '0x2',
     providerId: '0x3',
     serviceType: 'openvpn',
     providerCountry: 'MU',
