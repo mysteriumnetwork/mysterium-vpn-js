@@ -733,7 +733,7 @@ describe('HttpTequilapiClient', () => {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
             direction: 'Provided',
             consumer_id: '0x1000FACE',
-            hermes_id: '',
+            accountant_id: '',
             provider_id: '',
             service_type: '',
             provider_country: '',
