@@ -35,21 +35,21 @@
     "ci": "yarn tsc-check && yarn lint && yarn test && yarn build"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
+    "@types/jest": "^26.0.10",
     "@types/lolex": "^3.1.1",
     "@types/node": "^12.12.6",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
     "axios-mock-adapter": "^1.18.1",
     "eslint": "^7.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-prettier": "^3.1.3",
-    "jest": "^25.4.0",
+    "jest": "^26.4.2",
     "lolex": "^5.1.1",
     "prettier": "^2.0.5",
-    "ts-jest": "^25.4.0",
-    "typescript": "^3.9.3"
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
   },
   "dependencies": {
     "axios": "^0.19.2",
