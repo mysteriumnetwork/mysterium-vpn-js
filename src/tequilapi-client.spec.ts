@@ -488,7 +488,6 @@ describe('HttpTequilapiClient', () => {
         .onPut('connection', {
           consumer_id: '0x1000FACE',
           provider_id: '0x2000FACE',
-          accountant_id: '0x3000BEEF',
           service_type: 'openvpn',
         })
         .reply(200, {
@@ -499,7 +498,6 @@ describe('HttpTequilapiClient', () => {
       const status = await api.connectionCreate({
         consumerId: '0x1000FACE',
         providerId: '0x2000FACE',
-        accountantId: '0x3000BEEF',
         serviceType: 'openvpn',
       })
       expect(status).toEqual({
@@ -513,7 +511,6 @@ describe('HttpTequilapiClient', () => {
       const status = api.connectionCreate({
         consumerId: '0x1000FACE',
         providerId: '0x2000FACE',
-        accountantId: '0x3000BEEF',
         serviceType: 'openvpn',
       })
       expect(status).rejects.toHaveProperty(
