@@ -57,7 +57,14 @@ export { QualityLevel, QualityCalculator } from './provider/quality'
 export { ServiceDefinition } from './provider/service-definition'
 export { ServiceInfo } from './provider/service-info'
 export { ServiceRequest } from './provider/service-request'
-export { Session, SessionStatus, SessionDirection } from './session/session'
+export {
+  Session,
+  SessionStatus,
+  SessionDirection,
+  SessionResponse,
+  Stats,
+  Pagination,
+} from './session/session'
 export { ServiceStatus } from './provider/service-status'
 
 export {

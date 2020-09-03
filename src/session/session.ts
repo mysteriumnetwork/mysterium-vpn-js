@@ -33,6 +33,32 @@ export interface Session {
   status: SessionStatus
 }
 
+export interface Stats {
+  count: number
+  countConsumers: number
+  sumBytesReceived: number
+  sumBytesSent: number
+  sumDuration: number
+  sumTokens: number
+}
+
+export interface Pagination {
+  totalItems: number
+  totalPages: number
+  currentPage: number
+  previousPage: number
+  nextPage: number
+}
+
+export interface SessionResponse {
+  sessions: Session[]
+  stats: Stats
+  statsDaily: {
+    [date: string]: Stats
+  }
+  paging: Pagination
+}
+
 export function parseSession(data: any): Session {
   validateMultiple('Session', data, [
     { name: 'id', type: 'string' },
@@ -52,7 +78,52 @@ export function parseSession(data: any): Session {
   return data
 }
 
-export function parseSessionList(responseData: any): Session[] {
+export function parseSessionResponse(responseData: any): SessionResponse {
   validate('Session[]', responseData, { name: 'sessions', type: 'array' })
-  return responseData.sessions.map(parseSession)
+  validate('Pagination', responseData, { name: 'paging', type: 'object' })
+  validate('Stats', responseData, { name: 'stats', type: 'object' })
+  validate('[date: string]: Stats', responseData, { name: 'statsDaily', type: 'object' })
+
+  validateMultiple('Stats', responseData.stats, [
+    { name: 'count', type: 'number' },
+    { name: 'countConsumers', type: 'number' },
+    { name: 'sumBytesReceived', type: 'number' },
+    { name: 'sumBytesSent', type: 'number' },
+    { name: 'sumDuration', type: 'number' },
+    { name: 'sumTokens', type: 'number' },
+  ])
+
+  Object.keys(responseData.statsDaily).forEach((key) => {
+    validateMultiple('[date: string]: Stats', responseData.statsDaily, [
+      { name: key, type: 'object' },
+    ])
+    validateMultiple('statsDaily entry', responseData.statsDaily[key], [
+      { name: 'count', type: 'number' },
+      { name: 'countConsumers', type: 'number' },
+      { name: 'sumBytesReceived', type: 'number' },
+      { name: 'sumBytesSent', type: 'number' },
+      { name: 'sumDuration', type: 'number' },
+      { name: 'sumTokens', type: 'number' },
+    ])
+  })
+
+  validateMultiple('Paging', responseData.paging, [
+    { name: 'totalItems', type: 'number' },
+    { name: 'totalPages', type: 'number' },
+    { name: 'currentPage', type: 'number' },
+  ])
+
+  if (responseData.paging.previousPage) {
+    validate('number', responseData.paging.previousPage, { name: 'previousPage', type: 'number' });
+  }
+  if (responseData.paging.nextPage) {
+    validate('number', responseData.paging.nextPage, { name: 'nextPage', type: 'number' });
+  }
+
+  return {
+    sessions: responseData.sessions.map(parseSession),
+    stats: responseData.stats,
+    statsDaily: responseData.statsDaily,
+    paging: responseData.paging,
+  }
 }
