@@ -17,7 +17,7 @@ export const TEQUILAPI_SSE_URL = 'http://127.0.0.1:4050/events/state'
 
 export interface AppState {
   natStatus: NatStatusResponse
-  services?: ServiceInfo[]
+  serviceInfo?: ServiceInfo[]
   sessions?: Session[]
   sessionsStats?: Stats
   consumer?: {
