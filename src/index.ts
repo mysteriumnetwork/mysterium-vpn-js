@@ -90,4 +90,5 @@ export { TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient } from './tequilapi
 export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
 
+export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 export default tequilapi
