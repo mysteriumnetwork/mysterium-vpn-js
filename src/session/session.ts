@@ -25,6 +25,7 @@ export interface Session {
   providerId: string
   serviceType: string
   providerCountry: string
+  consumerCountry: string
   createdAt: string
   duration: number
   bytesReceived: number

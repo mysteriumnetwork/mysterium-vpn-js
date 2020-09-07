@@ -734,6 +734,7 @@ describe('HttpTequilapiClient', () => {
             provider_id: '',
             service_type: '',
             provider_country: '',
+            consumer_country: '',
             created_at: '2019-01-01 00:00:00',
             duration: 59,
             bytes_sent: 1000,
@@ -742,10 +743,35 @@ describe('HttpTequilapiClient', () => {
             status: 'New',
           },
         ],
+        paging: {
+          totalItems: 1,
+          totalPages: 1,
+          currentPage: 1,
+          previousPage: null,
+          nextPage: null,
+        },
+        stats: {
+          count: 1,
+          countConsumers: 2,
+          sumBytesReceived: 3,
+          sumBytesSent: 4,
+          sumDuration: 5,
+          sumTokens: 6,
+        },
+        statsDaily: {
+          ['2020-09-02']: {
+            count: 1,
+            countConsumers: 2,
+            sumBytesReceived: 3,
+            sumBytesSent: 4,
+            sumDuration: 5,
+            sumTokens: 6,
+          },
+        }
       }
       mock.onGet('sessions').reply(200, response)
 
-      const sessions = await api.sessions()
+      const sessions = (await api.sessions()).sessions
       expect(sessions).toHaveLength(1)
       expect(sessions[0].id).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
       expect(sessions[0].tokens).toEqual(1000)
