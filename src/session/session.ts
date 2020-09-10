@@ -60,6 +60,16 @@ export interface SessionResponse {
   paging: Pagination
 }
 
+export interface SessionQuery {
+  dateFrom?: string
+  dateTo?: string
+  direction?: string
+  serviceType?: string
+  status?: string
+  page?: number
+  pageSize?: number
+}
+
 export function parseSession(data: any): Session {
   validateMultiple('Session', data, [
     { name: 'id', type: 'string' },
@@ -113,13 +123,6 @@ export function parseSessionResponse(responseData: any): SessionResponse {
     { name: 'totalPages', type: 'number' },
     { name: 'currentPage', type: 'number' },
   ])
-
-  if (responseData.paging.previousPage) {
-    validate('number', responseData.paging.previousPage, { name: 'previousPage', type: 'number' });
-  }
-  if (responseData.paging.nextPage) {
-    validate('number', responseData.paging.nextPage, { name: 'nextPage', type: 'number' });
-  }
 
   return {
     sessions: responseData.sessions.map(parseSession),
