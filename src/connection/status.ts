@@ -7,6 +7,7 @@
 
 import { validate } from '../fmt/validation'
 import { Proposal } from '../proposal/proposal'
+import { ConnectionStatistics } from './statistics'
 
 export enum ConnectionStatus {
   CONNECTED = 'Connected',
@@ -21,6 +22,10 @@ export interface ConnectionInfo {
   hermesId?: string
   proposal?: Proposal
   sessionId?: string
+}
+
+export type Connection = ConnectionInfo & {
+  statistics: ConnectionStatistics
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

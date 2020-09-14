@@ -4,9 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { ConnectionStatus } from '../connection/status'
-import { ConnectionStatistics } from '../connection/statistics'
-import { Proposal } from '../proposal/proposal'
+import { Connection } from '../connection/status'
 import { Identity } from '../identity/identity'
 import { NatStatusResponse } from '../nat/status'
 import { ServiceInfo } from '../provider/service-info'
@@ -21,11 +19,7 @@ export interface AppState {
   sessions?: Session[]
   sessionsStats?: SessionStats
   consumer?: {
-    connection?: {
-      status: ConnectionStatus
-      statistics?: ConnectionStatistics
-      proposal?: Proposal
-    }
+    connection?: Connection
   }
   identities?: Identity[]
 }
