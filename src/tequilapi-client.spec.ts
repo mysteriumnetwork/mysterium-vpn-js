@@ -767,7 +767,7 @@ describe('HttpTequilapiClient', () => {
             sumDuration: 5,
             sumTokens: 6,
           },
-        }
+        },
       }
       mock.onGet('sessions').reply(200, response)
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MMNApiKeyResponse, MMNReportResponse} from './mmn/mmn'
+import { MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
@@ -34,7 +34,7 @@ import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuality, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
 import { ServiceRequest } from './provider/service-request'
-import {parseSessionResponse, SessionQuery, SessionResponse} from './session/session'
+import { parseSessionResponse, SessionQuery, SessionResponse } from './session/session'
 import { TopUpRequest } from './payment/topup'
 import { TransactorFeesResponse } from './payment/fees'
 import { IdentityCurrentRequest } from './identity/selection'

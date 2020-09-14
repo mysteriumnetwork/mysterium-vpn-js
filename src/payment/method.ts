@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Currency} from "./myst";
+import { Currency } from './myst'
 
 export enum PaymentMethodType {
   BytesWithTime = 'BYTES_TRANSFERRED_WITH_TIME',
