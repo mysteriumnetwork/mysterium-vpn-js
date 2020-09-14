@@ -20,12 +20,12 @@ export interface AppState {
   services?: ServiceInfo[]
   sessions?: Session[],
   sessionsStats?: {
-    count: number;
-    countConsumers: number;
-    sumBytesReceived: number;
-    sumBytesSent: number;
-    sumDuration: number;
-    sumTokens: number;
+    count: number
+    countConsumers: number
+    sumBytesReceived: number
+    sumBytesSent: number
+    sumDuration: number
+    sumTokens: number
   },
   consumer?: {
     connection?: {
