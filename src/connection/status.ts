@@ -14,14 +14,14 @@ export enum ConnectionStatus {
   CONNECTING = 'Connecting',
 }
 
-export interface ConnectionStatusResponse {
+export interface ConnectionInfo {
   status: ConnectionStatus
   sessionId?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseConnectionStatusResponse(data: any): ConnectionStatusResponse {
+export function parseConnectionInfo(data: any): ConnectionInfo {
   // TODO: validate that status has value from ConnectionStatus enum
-  validate('ConnectionStatusResponse', data, { name: 'status', type: 'string' })
+  validate('ConnectionInfo', data, { name: 'status', type: 'string' })
   return data
 }

@@ -14,7 +14,7 @@ import { AccessPolicy } from '../access-policy/access-policy'
 import { ConnectionIp } from '../connection/ip'
 import { ConnectionRequest } from '../connection/request'
 import { ConnectionStatistics } from '../connection/statistics'
-import { ConnectionStatusResponse } from '../connection/status'
+import { ConnectionInfo } from '../connection/status'
 import { ConsumerLocation } from '../consumer/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
 import { IdentityRef, Identity } from '../identity/identity'
@@ -35,10 +35,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionCreate(
-    request: ConnectionRequest,
-    timeout?: number
-  ): Promise<ConnectionStatusResponse> {
+  public connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo> {
     throw Error('Not implemented')
   }
 
@@ -54,7 +51,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionStatus(): Promise<ConnectionStatusResponse> {
+  public connectionStatus(): Promise<ConnectionInfo> {
     throw Error('Not implemented')
   }
 

@@ -10,7 +10,7 @@ import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionRequest } from './connection/request'
-import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
+import { ConnectionInfo, parseConnectionInfo } from './connection/status'
 import { ConnectionIp, parseConnectionIp } from './connection/ip'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
 import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
@@ -71,8 +71,8 @@ export interface TequilapiClient {
 
   reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
-  connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusResponse>
-  connectionStatus(): Promise<ConnectionStatusResponse>
+  connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo>
+  connectionStatus(): Promise<ConnectionInfo>
   connectionCancel(): Promise<void>
   connectionIp(timeout?: number): Promise<ConnectionIp>
   connectionStatistics(): Promise<ConnectionStatistics>
@@ -236,20 +236,20 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async connectionCreate(
     request: ConnectionRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
-  ): Promise<ConnectionStatusResponse> {
+  ): Promise<ConnectionInfo> {
     const response = await this.http.put('connection', request, timeout)
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }
-    return parseConnectionStatusResponse(response)
+    return parseConnectionInfo(response)
   }
 
-  public async connectionStatus(): Promise<ConnectionStatusResponse> {
+  public async connectionStatus(): Promise<ConnectionInfo> {
     const response = await this.http.get('connection')
     if (!response) {
       throw new Error('Connection status response body is missing')
     }
-    return parseConnectionStatusResponse(response)
+    return parseConnectionInfo(response)
   }
 
   public async connectionCancel(): Promise<void> {
