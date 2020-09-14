@@ -581,9 +581,11 @@ describe('HttpTequilapiClient', () => {
   describe('connectionStatistics()', () => {
     it('returns response', async () => {
       const response = {
-        duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
         bytesSent: 123321, // 0.117608 MB
+        throughputSent: 1024, // 1 Mbps
+        throughputReceived: 1024, // 1 Mbps
+        duration: 13325,
         tokensSpent: 100,
       }
       mock.onGet('connection/statistics').reply(200, response)

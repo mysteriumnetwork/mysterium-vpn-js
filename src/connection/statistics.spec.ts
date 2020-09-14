@@ -11,15 +11,19 @@ describe('TequilapiClient DTO', () => {
   describe('.parseConnectionStatistics', () => {
     it('sets properties', async () => {
       const stats = parseConnectionStatistics({
-        duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
         bytesSent: 123321, // 0.117608 MB
+        throughputSent: 1024, // 1 Mbps
+        throughputReceived: 1024, // 1 Mbps
+        duration: 13325,
         tokensSpent: 100,
       })
 
-      expect(stats.duration).toEqual(13325)
       expect(stats.bytesReceived).toEqual(1232133)
       expect(stats.bytesSent).toEqual(123321)
+      expect(stats.throughputSent).toEqual(1024)
+      expect(stats.throughputReceived).toEqual(1024)
+      expect(stats.duration).toEqual(13325)
       expect(stats.tokensSpent).toEqual(100)
     })
 

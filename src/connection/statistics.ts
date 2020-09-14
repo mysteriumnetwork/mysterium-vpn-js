@@ -8,18 +8,22 @@
 import { validateMultiple } from '../fmt/validation'
 
 export interface ConnectionStatistics {
-  duration: number
   bytesReceived: number
   bytesSent: number
+  throughputSent: number
+  throughputReceived: number
+  duration: number
   tokensSpent: number
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseConnectionStatistics(data: any): ConnectionStatistics {
   validateMultiple('ConnectionStatistics', data, [
-    { name: 'duration', type: 'number' },
     { name: 'bytesReceived', type: 'number' },
     { name: 'bytesSent', type: 'number' },
+    { name: 'throughputSent', type: 'number' },
+    { name: 'throughputReceived', type: 'number' },
+    { name: 'duration', type: 'number' },
     { name: 'tokensSpent', type: 'number' },
   ])
   return data

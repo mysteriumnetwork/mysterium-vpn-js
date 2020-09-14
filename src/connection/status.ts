@@ -6,6 +6,7 @@
  */
 
 import { validate } from '../fmt/validation'
+import { Proposal } from '../proposal/proposal'
 
 export enum ConnectionStatus {
   CONNECTED = 'Connected',
@@ -16,6 +17,9 @@ export enum ConnectionStatus {
 
 export interface ConnectionInfo {
   status: ConnectionStatus
+  consumerId?: string
+  hermesId?: string
+  proposal?: Proposal
   sessionId?: string
 }
 
