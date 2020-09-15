@@ -28,17 +28,19 @@ describe('TequilapiClient DTO', () => {
         id: '0x111',
         registrationStatus: 'Promoting',
         channelAddress: '0xCe93E5A58B20bF3204f8400918C9dd8D28471C8F',
-        balance: 12376699336,
+        balance: 3888150908128711894,
         earnings: 0,
         earningsTotal: 2557762453645780,
+        stake: 12000000000000000000,
       })
 
       expect(identity.id).toEqual('0x111')
       expect(identity.registrationStatus).toEqual('Promoting')
       expect(identity.channelAddress).toEqual('0xCe93E5A58B20bF3204f8400918C9dd8D28471C8F')
-      expect(identity.balance).toEqual(12376699336)
+      expect(identity.balance).toEqual(3888150908128711894)
       expect(identity.earnings).toEqual(0)
       expect(identity.earningsTotal).toEqual(2557762453645780)
+      expect(identity.stake).toEqual(12000000000000000000)
     })
 
     it('sets wrong properties', async () => {

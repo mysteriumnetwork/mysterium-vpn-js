@@ -44,6 +44,7 @@ export interface Identity {
   balance: number
   earnings: number
   earningsTotal: number
+  stake: number
 }
 
 export function parseIdentity(data: any): Identity {
@@ -54,6 +55,7 @@ export function parseIdentity(data: any): Identity {
     { name: 'balance', type: 'number' },
     { name: 'earnings', type: 'number' },
     { name: 'earningsTotal', type: 'number' },
+    { name: 'stake', type: 'number' },
   ])
   return data
 }
