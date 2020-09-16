@@ -44,6 +44,7 @@ import { Fees } from './transactor/fees'
 import {
   SettleRequest,
   SettleWithBeneficiaryRequest,
+  DecreaseStakeRequest,
   SettlementListQuery,
   SettlementListResponse,
 } from './transactor/settlement'
@@ -103,6 +104,7 @@ export interface TequilapiClient {
   settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
   settleIntoStakeSync(request: SettleRequest): Promise<void>
   settleIntoStakeAsync(request: SettleRequest): Promise<void>
+  decreaseStake(request: DecreaseStakeRequest): Promise<void>
   settlementHistory(request: SettlementListQuery): Promise<SettlementListResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
@@ -398,6 +400,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async settleIntoStakeAsync(request: SettleRequest): Promise<void> {
     return this.http.post(`transactor/stake/increase/async`, request)
+  }
+
+  public async decreaseStake(request: DecreaseStakeRequest): Promise<void> {
+    return this.http.post(`transactor/stake/decrease`, request)
   }
 
   public async settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {

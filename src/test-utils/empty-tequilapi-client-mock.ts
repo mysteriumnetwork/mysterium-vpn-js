@@ -31,6 +31,7 @@ import { Fees } from '../transactor/fees'
 import {
   SettleRequest,
   SettleWithBeneficiaryRequest,
+  DecreaseStakeRequest,
   SettlementListQuery,
   SettlementListResponse,
 } from '../transactor/settlement'
@@ -207,6 +208,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public settleIntoStakeAsync(request: SettleRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public decreaseStake(request: DecreaseStakeRequest): Promise<void> {
     throw Error('Not implemented')
   }
 

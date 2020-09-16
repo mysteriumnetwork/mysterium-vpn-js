@@ -15,6 +15,12 @@ export interface SettleWithBeneficiaryRequest extends SettleRequest {
   beneficiary: string
 }
 
+export interface DecreaseStakeRequest {
+  id?: string
+  amount?: number
+  transactorFee?: number
+}
+
 export interface Settlement {
   txHash: string
   providerId: string
