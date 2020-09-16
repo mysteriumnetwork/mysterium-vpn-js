@@ -40,7 +40,6 @@ import { ProposalMetrics } from './proposal/metrics'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
 import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
-import { TopUpRequest } from './transactor/topup'
 import { Fees } from './transactor/fees'
 import { IdentityCurrentRequest } from './identity/selection'
 
@@ -93,7 +92,6 @@ export interface TequilapiClient {
   accessPolicies(): Promise<AccessPolicy[]>
 
   transactorFees(): Promise<Fees>
-  topUp(request: TopUpRequest): Promise<void>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -368,10 +366,6 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async transactorFees(): Promise<Fees> {
     return this.http.get(`transactor/fees`)
-  }
-
-  public async topUp(request: TopUpRequest): Promise<void> {
-    return this.http.post(`transactor/topup`, request)
   }
 
   public async getMMNNodeReport(): Promise<MMNReportResponse> {
