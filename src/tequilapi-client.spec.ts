@@ -743,7 +743,7 @@ describe('HttpTequilapiClient', () => {
             status: 'New',
           },
         ],
-        paging: {
+        pagination: {
           totalItems: 1,
           totalPages: 1,
           currentPage: 1,

@@ -53,11 +53,11 @@ export interface Pagination {
 
 export interface SessionListResponse {
   sessions: Session[]
+  pagination: Pagination
   stats: Stats
   statsDaily: {
     [date: string]: Stats
   }
-  paging: Pagination
 }
 
 export interface SessionQuery {
@@ -91,7 +91,7 @@ export function parseSession(data: any): Session {
 
 export function parseSessionListResponse(responseData: any): SessionListResponse {
   validate('Session[]', responseData, { name: 'sessions', type: 'array' })
-  validate('Pagination', responseData, { name: 'paging', type: 'object' })
+  validate('Pagination', responseData, { name: 'pagination', type: 'object' })
   validate('Stats', responseData, { name: 'stats', type: 'object' })
   validate('[date: string]: Stats', responseData, { name: 'statsDaily', type: 'object' })
 
@@ -105,10 +105,10 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
   ])
 
   Object.keys(responseData.statsDaily).forEach((key) => {
-    validateMultiple('[date: string]: Stats', responseData.statsDaily, [
+    validateMultiple('[date: string]: StatsDaily', responseData.statsDaily, [
       { name: key, type: 'object' },
     ])
-    validateMultiple('statsDaily entry', responseData.statsDaily[key], [
+    validateMultiple('StatsDaily', responseData.statsDaily[key], [
       { name: 'count', type: 'number' },
       { name: 'countConsumers', type: 'number' },
       { name: 'sumBytesReceived', type: 'number' },
@@ -118,7 +118,7 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
     ])
   })
 
-  validateMultiple('Paging', responseData.paging, [
+  validateMultiple('Pagination', responseData.pagination, [
     { name: 'totalItems', type: 'number' },
     { name: 'totalPages', type: 'number' },
     { name: 'currentPage', type: 'number' },
@@ -126,8 +126,8 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
 
   return {
     sessions: responseData.sessions.map(parseSession),
+    pagination: responseData.pagination,
     stats: responseData.stats,
     statsDaily: responseData.statsDaily,
-    paging: responseData.paging,
   }
 }

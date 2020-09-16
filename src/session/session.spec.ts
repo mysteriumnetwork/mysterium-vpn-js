@@ -79,7 +79,7 @@ describe('TequilapiClient DTO', () => {
     it('sets properties with full structure', async () => {
       const response = parseSessionListResponse({
         sessions: [sessionData],
-        paging: pagination,
+        pagination: pagination,
         stats: stats,
         statsDaily: statDaily,
       })
@@ -106,11 +106,11 @@ describe('TequilapiClient DTO', () => {
       expect(dailyStat.sumDuration).toEqual(5)
       expect(dailyStat.sumTokens).toEqual(6)
 
-      expect(response.paging.totalItems).toEqual(1)
-      expect(response.paging.totalPages).toEqual(1)
-      expect(response.paging.currentPage).toEqual(1)
-      expect(response.paging.previousPage).toBeNull()
-      expect(response.paging.nextPage).toBeNull()
+      expect(response.pagination.totalItems).toEqual(1)
+      expect(response.pagination.totalPages).toEqual(1)
+      expect(response.pagination.currentPage).toEqual(1)
+      expect(response.pagination.previousPage).toBeNull()
+      expect(response.pagination.nextPage).toBeNull()
     })
 
     it('throws error when invoked with an empty object', async () => {
@@ -123,7 +123,7 @@ describe('TequilapiClient DTO', () => {
       expect(() => {
         parseSessionListResponse({
           sessions: [{}],
-          paging: pagination,
+          pagination: pagination,
           stats: stats,
           statsDaily: statDaily,
         })
