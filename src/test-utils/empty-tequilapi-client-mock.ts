@@ -30,6 +30,7 @@ import { TequilapiClient } from '../tequilapi-client'
 import { Fees } from '../transactor/fees'
 import {
   SettleRequest,
+  SettleWithBeneficiaryRequest,
   SettlementListQuery,
   SettlementListResponse,
 } from '../transactor/settlement'
@@ -193,7 +194,11 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public settleAsync(request: SettleRequest): Promise<void> {
+  public settleAsync(request: SettleWithBeneficiaryRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
     throw Error('Not implemented')
   }
 

@@ -11,6 +11,10 @@ export interface SettleRequest {
   providerId: string
 }
 
+export interface SettleWithBeneficiaryRequest extends SettleRequest {
+  beneficiary: string
+}
+
 export interface Settlement {
   txHash: string
   providerId: string

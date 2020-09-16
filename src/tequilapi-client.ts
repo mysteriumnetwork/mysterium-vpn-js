@@ -41,7 +41,12 @@ import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provi
 import { ServiceStartRequest } from './provider/service-request'
 import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
 import { Fees } from './transactor/fees'
-import { SettleRequest, SettlementListQuery, SettlementListResponse } from './transactor/settlement'
+import {
+  SettleRequest,
+  SettleWithBeneficiaryRequest,
+  SettlementListQuery,
+  SettlementListResponse,
+} from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -95,6 +100,7 @@ export interface TequilapiClient {
   transactorFees(): Promise<Fees>
   settleSync(request: SettleRequest): Promise<void>
   settleAsync(request: SettleRequest): Promise<void>
+  settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
   settlementHistory(request: SettlementListQuery): Promise<SettlementListResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
@@ -378,6 +384,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async settleAsync(request: SettleRequest): Promise<void> {
     return this.http.post(`transactor/settle/async`, request)
+  }
+
+  public async settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
+    return this.http.post(`identities/${request.providerId}/beneficiary`, request)
   }
 
   public async settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {
