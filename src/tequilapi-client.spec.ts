@@ -402,6 +402,27 @@ describe('HttpTequilapiClient', () => {
     })
   })
 
+  describe('identityBeneficiary()', () => {
+    it('returns response', async () => {
+      const response = {
+        beneficiary: '0x1',
+      }
+      mock.onGet('identities/0x1/beneficiary').reply(200, response)
+
+      const beneficiary = await api.identityBeneficiary('0x1')
+      expect(beneficiary).toEqual(response)
+    })
+
+    it('handles error', () => {
+      mock.onGet('identities/0x1/beneficiary').reply(500)
+
+      expect(api.identityBeneficiary('0x1')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities/0x1/beneficiary")'
+      )
+    })
+  })
+
   describe('identityPayout()', () => {
     it('returns identity payout info', async () => {
       const response = {

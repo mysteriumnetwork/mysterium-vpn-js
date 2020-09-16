@@ -29,6 +29,7 @@ import { TequilapiClient } from '../tequilapi-client'
 import { TopUpRequest } from '../payment/topup'
 import { TransactorFeesResponse } from '../payment/fees'
 import { IdentityCurrentRequest } from '../identity/selection'
+import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -84,6 +85,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public identityRegistration(id: string): Promise<IdentityRegistrationResponse> {
+    throw Error('Not implemented')
+  }
+
+  public identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse> {
     throw Error('Not implemented')
   }
 
