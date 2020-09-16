@@ -58,7 +58,6 @@ export {
   SessionDirection,
   SessionListResponse,
   SessionStats,
-  Pagination,
 } from './session/session'
 export { ServiceStatus } from './provider/service-status'
 
@@ -80,4 +79,6 @@ export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
 
 export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
+export { Pagination } from './common/pagination'
+
 export default tequilapi

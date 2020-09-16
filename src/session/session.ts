@@ -6,6 +6,7 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
+import { Pagination, parsePagination } from '../common/pagination'
 
 export enum SessionStatus {
   NEW = 'New',
@@ -41,14 +42,6 @@ export interface SessionStats {
   sumBytesSent: number
   sumDuration: number
   sumTokens: number
-}
-
-export interface Pagination {
-  totalItems: number
-  totalPages: number
-  currentPage: number
-  previousPage: number
-  nextPage: number
 }
 
 export interface SessionListResponse {
@@ -118,15 +111,9 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
     ])
   })
 
-  validateMultiple('Pagination', responseData.pagination, [
-    { name: 'totalItems', type: 'number' },
-    { name: 'totalPages', type: 'number' },
-    { name: 'currentPage', type: 'number' },
-  ])
-
   return {
     sessions: responseData.sessions.map(parseSession),
-    pagination: responseData.pagination,
+    pagination: parsePagination(responseData.pagination),
     stats: responseData.stats,
     statsDaily: responseData.statsDaily,
   }
