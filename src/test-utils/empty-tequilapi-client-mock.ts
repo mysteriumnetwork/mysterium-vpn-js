@@ -19,7 +19,7 @@ import { ConsumerLocation } from '../consumer/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
 import { IdentityRef, Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
-import { IdentityRegisterRequest, IdentityRegistration } from '../identity/registration'
+import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuality, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfo } from '../provider/service-info'
@@ -83,7 +83,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityRegistration(id: string): Promise<IdentityRegistration> {
+  public identityRegistration(id: string): Promise<IdentityRegistrationResponse> {
     throw Error('Not implemented')
   }
 

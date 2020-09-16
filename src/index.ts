@@ -32,7 +32,7 @@ export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
 export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
 export { IdentityPayout } from './identity/payout'
-export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
+export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identity/registration'
 
 export { ProposalMetrics, ConnectCount } from './proposal/metrics'
 

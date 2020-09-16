@@ -27,8 +27,8 @@ import {
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import {
   IdentityRegisterRequest,
-  IdentityRegistration,
-  parseIdentityRegistration,
+  IdentityRegistrationResponse,
+  parseIdentityRegistrationResponse,
 } from './identity/registration'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuality, ProposalQuery } from './proposal/proposal'
@@ -57,7 +57,7 @@ export interface TequilapiClient {
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
   identity(id: string): Promise<Identity>
-  identityRegistration(id: string): Promise<IdentityRegistration>
+  identityRegistration(id: string): Promise<IdentityRegistrationResponse>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
   updateEmail(id: string, email: string): Promise<void>
@@ -171,12 +171,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     return await this.http.post(`identities/${id}/register`, request ?? {})
   }
 
-  public async identityRegistration(id: string): Promise<IdentityRegistration> {
+  public async identityRegistration(id: string): Promise<IdentityRegistrationResponse> {
     const response = await this.http.get(`identities/${id}/registration`)
     if (!response) {
       throw new Error('Identity registration response body is missing')
     }
-    return parseIdentityRegistration(response)
+    return parseIdentityRegistrationResponse(response)
   }
 
   public async identityPayout(id: string): Promise<IdentityPayout> {

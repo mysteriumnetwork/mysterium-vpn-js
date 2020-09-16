@@ -13,14 +13,14 @@ export interface IdentityRegisterRequest {
   fee?: number
 }
 
-export interface IdentityRegistration {
+export interface IdentityRegistrationResponse {
   status: string
   registered: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseIdentityRegistration(data: any): IdentityRegistration {
-  validateMultiple('IdentityRegistration', data, [
+export function parseIdentityRegistrationResponse(data: any): IdentityRegistrationResponse {
+  validateMultiple('IdentityRegistrationResponse', data, [
     { name: 'status', type: 'string' },
     { name: 'registered', type: 'boolean' },
   ])
