@@ -5,7 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Currency } from './myst'
+export interface PaymentMethod {
+  type: PaymentMethodType
+  price: Money
+  rate: {
+    perSeconds: number
+    perBytes: number
+  }
+}
 
 export enum PaymentMethodType {
   BytesWithTime = 'BYTES_TRANSFERRED_WITH_TIME',
@@ -17,13 +24,9 @@ export interface Money {
   currency: string
 }
 
-export interface PaymentMethod {
-  type: PaymentMethodType
-  price: Money
-  rate: {
-    perSeconds: number
-    perBytes: number
-  }
+export enum Currency {
+  MYST = 'MYST',
+  MYSTTestToken = 'MYSTT',
 }
 
 export const pricePerMinute = (pm?: PaymentMethod): Money => {

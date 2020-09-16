@@ -7,22 +7,27 @@
 
 import { validateMultiple } from '../fmt/validation'
 
-export interface ConnectCount {
+export interface ProposalMetrics extends QualityMetrics {
+  providerId: string
+  serviceType: string
+}
+
+export interface QualityMetrics {
+  connectCount: QualityMetricConnects
+  monitoringFailed: boolean
+}
+
+export interface QualityMetricConnects {
   success: number
   fail: number
   timeout: number
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseConnectionCount(data: any): ConnectCount {
-  validateMultiple('ConnectCount', data, [
+export function parseQualityMetricConnects(data: any): QualityMetricConnects {
+  validateMultiple('QualityMetricConnects', data, [
     { name: 'success', type: 'number' },
     { name: 'fail', type: 'number' },
   ])
   return data
-}
-
-export interface ProposalMetrics {
-  connectCount?: ConnectCount
-  monitoringFailed?: boolean
 }

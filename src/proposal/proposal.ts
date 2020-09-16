@@ -6,9 +6,9 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
-import { ProposalMetrics } from './metrics'
-import { ServiceDefinition } from '../provider/service-definition'
-import { PaymentMethod } from '../payment/method'
+import { QualityMetrics } from './metrics'
+import { ServiceDefinition } from './service-definition'
+import { PaymentMethod } from './payment-method'
 import { AccessPolicyRef } from '../access-policy/access-policy'
 
 export interface Proposal {
@@ -16,9 +16,9 @@ export interface Proposal {
   providerId: string
   serviceType: string
   serviceDefinition: ServiceDefinition
-  metrics?: ProposalMetrics
+  metrics?: QualityMetrics
   accessPolicies?: AccessPolicyRef[]
-  paymentMethod?: PaymentMethod
+  paymentMethod: PaymentMethod
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +28,7 @@ export function parseProposal(data: any): Proposal {
     { name: 'providerId', type: 'string' },
     { name: 'serviceType', type: 'string' },
     { name: 'serviceDefinition', type: 'object' },
+    { name: 'paymentMethod', type: 'object' },
   ])
 
   return data
@@ -49,9 +50,4 @@ interface ProposalList {
 export function parseProposalList(responseData: any): ProposalList {
   validate('ProposalList', responseData, { name: 'proposals', type: 'array' })
   return { proposals: responseData.proposals.map(parseProposal) }
-}
-
-export interface ProposalQuality extends ProposalMetrics {
-  providerId: string
-  serviceType: string
 }

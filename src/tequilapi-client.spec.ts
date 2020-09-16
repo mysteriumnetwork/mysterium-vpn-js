@@ -197,6 +197,9 @@ describe('HttpTequilapiClient', () => {
                 country: 'NL',
               },
             },
+            payment_method: {
+              type: 'BYTES_TRANSFERRED_WITH_TIME',
+            },
           },
           {
             id: 1,
@@ -207,6 +210,9 @@ describe('HttpTequilapiClient', () => {
                 asn: '',
                 country: 'LT',
               },
+            },
+            payment_method: {
+              type: 'BYTES_TRANSFERRED_WITH_TIME',
             },
           },
         ],
@@ -225,6 +231,9 @@ describe('HttpTequilapiClient', () => {
             country: 'NL',
           },
         },
+        paymentMethod: {
+          type: 'BYTES_TRANSFERRED_WITH_TIME',
+        },
       })
       expect(proposals[1]).toEqual({
         id: 1,
@@ -235,6 +244,9 @@ describe('HttpTequilapiClient', () => {
             asn: '',
             country: 'LT',
           },
+        },
+        paymentMethod: {
+          type: 'BYTES_TRANSFERRED_WITH_TIME',
         },
       })
     })
@@ -251,6 +263,9 @@ describe('HttpTequilapiClient', () => {
                 asn: '',
                 country: 'NL',
               },
+            },
+            payment_method: {
+              type: 'BYTES_TRANSFERRED_WITH_TIME',
             },
             metrics: {
               connect_count: {
@@ -640,6 +655,9 @@ describe('HttpTequilapiClient', () => {
           country: 'NL',
         },
       },
+      paymentMethod: {
+        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      },
     },
   }
   const serviceResponse = {
@@ -656,6 +674,9 @@ describe('HttpTequilapiClient', () => {
         location_originate: {
           country: 'NL',
         },
+      },
+      payment_method: {
+        type: 'BYTES_TRANSFERRED_WITH_TIME',
       },
     },
   }
