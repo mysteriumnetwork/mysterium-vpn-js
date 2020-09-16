@@ -28,6 +28,7 @@ import { ServiceStartRequest } from '../provider/service-request'
 import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { Fees } from '../transactor/fees'
+import { SettleRequest } from '../transactor/settlement'
 import { IdentityCurrentRequest } from '../identity/selection'
 import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 
@@ -184,19 +185,27 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public async getMMNNodeReport(): Promise<any> {
+  public settleSync(request: SettleRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public async setMMNApiKey(apiKey: string): Promise<any> {
+  public settleAsync(request: SettleRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public async getMMNApiKey(): Promise<MMNApiKeyResponse> {
+  public getMMNNodeReport(): Promise<any> {
     throw Error('Not implemented')
   }
 
-  public async clearMMNApiKey(): Promise<void> {
+  public setMMNApiKey(apiKey: string): Promise<any> {
+    throw Error('Not implemented')
+  }
+
+  public getMMNApiKey(): Promise<MMNApiKeyResponse> {
+    throw Error('Not implemented')
+  }
+
+  public clearMMNApiKey(): Promise<void> {
     throw Error('Not implemented')
   }
 }
