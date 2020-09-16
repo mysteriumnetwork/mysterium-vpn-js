@@ -5,11 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export interface ConnectionIp {
-  ip?: string
+export interface Location {
+  ip: string
+  asn: number
+  isp: string
+  continent: string
+  country: string
+  city: string
+  userType: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseConnectionIp(data: any): ConnectionIp {
+export function parseLocation(data: any): Location {
   return data
 }

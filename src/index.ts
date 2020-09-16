@@ -8,12 +8,12 @@ import { tequilapi } from './tequilapi-client-factory'
 
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
-export { ConnectionIp } from './connection/ip'
+export { IP } from './location/ip'
 export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/request'
 export { ConnectionStatus, ConnectionInfo } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
 
-export { ConsumerLocation } from './consumer/location'
+export { Location } from './location/location'
 
 export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
 
@@ -46,10 +46,10 @@ export {
   ProposalQuality,
 } from './proposal/proposal'
 
-export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
 export { QualityLevel, QualityCalculator } from './provider/quality'
 export { ServiceDefinition } from './provider/service-definition'
+export { ServiceLocation } from './provider/service-location'
 export { ServiceInfo } from './provider/service-info'
 export { ServiceRequest } from './provider/service-request'
 export {

@@ -11,11 +11,11 @@ import { MMNApiKeyResponse } from '../mmn/mmn'
 import { Issue, IssueId } from '../feedback/issue'
 import { Config } from '../config/config'
 import { AccessPolicy } from '../access-policy/access-policy'
-import { ConnectionIp } from '../connection/ip'
+import { IP } from '../location/ip'
 import { ConnectionRequest } from '../connection/request'
 import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionInfo } from '../connection/status'
-import { ConsumerLocation } from '../consumer/location'
+import { Location } from '../location/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
 import { IdentityRef, Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
@@ -40,11 +40,11 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionIp(timeout?: number): Promise<ConnectionIp> {
+  public connectionIp(timeout?: number): Promise<IP> {
     throw Error('Not implemented')
   }
 
-  public connectionLocation(): Promise<ConsumerLocation> {
+  public connectionLocation(): Promise<Location> {
     throw Error('Not implemented')
   }
 
@@ -104,7 +104,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public location(timeout?: number): Promise<ConsumerLocation> {
+  public location(timeout?: number): Promise<Location> {
     throw Error('Not implemented')
   }
 

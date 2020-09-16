@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ConnectionIp, parseConnectionIp } from './ip'
+import { IP, parseIP } from './ip'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseConnectionIp', () => {
+  describe('.parseIP', () => {
     it('sets properties', async () => {
-      const model: ConnectionIp = parseConnectionIp({ ip: 'mock ip' })
+      const model: IP = parseIP({ ip: 'mock ip' })
 
       expect(model.ip).toEqual('mock ip')
     })
 
     it('sets empty properties', async () => {
-      const model: ConnectionIp = parseConnectionIp({})
+      const model: IP = parseIP({})
 
       expect(model.ip).toBeUndefined()
     })

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Location } from './location'
+import { ServiceLocation } from './service-location'
 
 export interface ServiceDefinition {
-  locationOriginate?: Location
+  locationOriginate?: ServiceLocation
 }

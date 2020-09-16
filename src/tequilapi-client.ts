@@ -11,9 +11,9 @@ import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionRequest } from './connection/request'
 import { ConnectionInfo, parseConnectionInfo } from './connection/status'
-import { ConnectionIp, parseConnectionIp } from './connection/ip'
+import { IP, parseIP } from './location/ip'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
-import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
+import { Location, parseLocation } from './location/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
@@ -49,7 +49,7 @@ export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusResponse>
   stop(): Promise<void>
-  location(timeout?: number): Promise<ConsumerLocation>
+  location(timeout?: number): Promise<Location>
 
   defaultConfig(): Promise<Config>
   userConfig(): Promise<Config>
@@ -79,9 +79,9 @@ export interface TequilapiClient {
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo>
   connectionStatus(): Promise<ConnectionInfo>
   connectionCancel(): Promise<void>
-  connectionIp(timeout?: number): Promise<ConnectionIp>
+  connectionIp(timeout?: number): Promise<IP>
   connectionStatistics(): Promise<ConnectionStatistics>
-  connectionLocation(): Promise<ConsumerLocation>
+  connectionLocation(): Promise<Location>
 
   serviceList(): Promise<ServiceInfo[]>
   serviceGet(serviceId: string): Promise<ServiceInfo>
@@ -124,12 +124,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.post('stop')
   }
 
-  public async location(timeout?: number): Promise<ConsumerLocation> {
+  public async location(timeout?: number): Promise<Location> {
     const response = await this.http.get('location', undefined, timeout)
     if (!response) {
-      throw new Error('Location response body is missing')
+      throw new Error('ServiceLocation response body is missing')
     }
-    return parseConsumerLocation(response)
+    return parseLocation(response)
   }
 
   public async identityList(): Promise<IdentityRef[]> {
@@ -269,15 +269,15 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.delete('connection')
   }
 
-  public async connectionIp(timeout?: number): Promise<ConnectionIp> {
+  public async connectionIp(timeout?: number): Promise<IP> {
     const response = await this.http.get('connection/ip', undefined, timeout)
     if (!response) {
       throw new Error('Connection IP response body is missing')
     }
-    return parseConnectionIp(response)
+    return parseIP(response)
   }
 
-  public async connectionLocation(): Promise<ConsumerLocation> {
+  public async connectionLocation(): Promise<Location> {
     return await this.http.get('connection/location')
   }
 

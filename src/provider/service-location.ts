@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export interface Location {
-  country?: string
-  continent?: string
-  city?: string
-  asn?: number
-  isp?: string
-  nodeType?: string
+export interface ServiceLocation {
+  country: string
+  continent: string
+  city: string
+  asn: number
+  isp: string
+  userType: string
 }
