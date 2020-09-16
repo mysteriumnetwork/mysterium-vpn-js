@@ -62,7 +62,7 @@ export {
   SessionStatus,
   SessionDirection,
   SessionListResponse,
-  Stats,
+  SessionStats,
   Pagination,
 } from './session/session'
 export { ServiceStatus } from './provider/service-status'

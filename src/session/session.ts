@@ -34,7 +34,7 @@ export interface Session {
   status: SessionStatus
 }
 
-export interface Stats {
+export interface SessionStats {
   count: number
   countConsumers: number
   sumBytesReceived: number
@@ -54,9 +54,9 @@ export interface Pagination {
 export interface SessionListResponse {
   sessions: Session[]
   pagination: Pagination
-  stats: Stats
+  stats: SessionStats
   statsDaily: {
-    [date: string]: Stats
+    [date: string]: SessionStats
   }
 }
 
@@ -92,10 +92,10 @@ export function parseSession(data: any): Session {
 export function parseSessionListResponse(responseData: any): SessionListResponse {
   validate('Session[]', responseData, { name: 'sessions', type: 'array' })
   validate('Pagination', responseData, { name: 'pagination', type: 'object' })
-  validate('Stats', responseData, { name: 'stats', type: 'object' })
-  validate('[date: string]: Stats', responseData, { name: 'statsDaily', type: 'object' })
+  validate('SessionStats', responseData, { name: 'stats', type: 'object' })
+  validate('[date: string]: StatsDaily', responseData, { name: 'statsDaily', type: 'object' })
 
-  validateMultiple('Stats', responseData.stats, [
+  validateMultiple('SessionStats', responseData.stats, [
     { name: 'count', type: 'number' },
     { name: 'countConsumers', type: 'number' },
     { name: 'sumBytesReceived', type: 'number' },
