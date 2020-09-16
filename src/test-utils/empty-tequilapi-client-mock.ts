@@ -28,7 +28,11 @@ import { ServiceStartRequest } from '../provider/service-request'
 import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { Fees } from '../transactor/fees'
-import { SettleRequest } from '../transactor/settlement'
+import {
+  SettleRequest,
+  SettlementListQuery,
+  SettlementListResponse,
+} from '../transactor/settlement'
 import { IdentityCurrentRequest } from '../identity/selection'
 import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 
@@ -190,6 +194,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public settleAsync(request: SettleRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {
     throw Error('Not implemented')
   }
 

@@ -41,7 +41,7 @@ import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provi
 import { ServiceStartRequest } from './provider/service-request'
 import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
 import { Fees } from './transactor/fees'
-import { SettleRequest } from './transactor/settlement'
+import { SettleRequest, SettlementListQuery, SettlementListResponse } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -95,6 +95,7 @@ export interface TequilapiClient {
   transactorFees(): Promise<Fees>
   settleSync(request: SettleRequest): Promise<void>
   settleAsync(request: SettleRequest): Promise<void>
+  settlementHistory(request: SettlementListQuery): Promise<SettlementListResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -327,7 +328,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async sessions(query?: SessionListQuery): Promise<SessionListResponse> {
     const response = await this.http.get('sessions', query)
     if (!response) {
-      throw new Error('Service sessions response body is missing')
+      throw new Error('Sessions history response body is missing')
     }
     return parseSessionListResponse(response)
   }
@@ -377,6 +378,14 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async settleAsync(request: SettleRequest): Promise<void> {
     return this.http.post(`transactor/settle/async`, request)
+  }
+
+  public async settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {
+    const response = await this.http.get('transactor/settle/history', query)
+    if (!response) {
+      throw new Error('Settlement history response body is missing')
+    }
+    return response
   }
 
   public async getMMNNodeReport(): Promise<MMNReportResponse> {
