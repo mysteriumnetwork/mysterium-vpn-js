@@ -61,7 +61,7 @@ export {
   Session,
   SessionStatus,
   SessionDirection,
-  SessionResponse,
+  SessionListResponse,
   Stats,
   Pagination,
 } from './session/session'

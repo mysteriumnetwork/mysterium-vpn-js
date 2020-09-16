@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { parseSession, parseSessionResponse } from './session'
+import { parseSession, parseSessionListResponse } from './session'
 
 describe('TequilapiClient DTO', () => {
   const sessionData = {
@@ -75,9 +75,9 @@ describe('TequilapiClient DTO', () => {
     })
   })
 
-  describe('.parseSessionList', () => {
+  describe('.parseSessionListResponse', () => {
     it('sets properties with full structure', async () => {
-      const response = parseSessionResponse({
+      const response = parseSessionListResponse({
         sessions: [sessionData],
         paging: pagination,
         stats: stats,
@@ -115,13 +115,13 @@ describe('TequilapiClient DTO', () => {
 
     it('throws error when invoked with an empty object', async () => {
       expect(() => {
-        parseSessionResponse({})
+        parseSessionListResponse({})
       }).toThrowError('Session[]: sessions is not provided')
     })
 
     it('throws an error if proposal in array does not validate', async () => {
       expect(() => {
-        parseSessionResponse({
+        parseSessionListResponse({
           sessions: [{}],
           paging: pagination,
           stats: stats,

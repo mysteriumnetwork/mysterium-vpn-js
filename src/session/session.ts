@@ -51,7 +51,7 @@ export interface Pagination {
   nextPage: number
 }
 
-export interface SessionResponse {
+export interface SessionListResponse {
   sessions: Session[]
   stats: Stats
   statsDaily: {
@@ -89,7 +89,7 @@ export function parseSession(data: any): Session {
   return data
 }
 
-export function parseSessionResponse(responseData: any): SessionResponse {
+export function parseSessionListResponse(responseData: any): SessionListResponse {
   validate('Session[]', responseData, { name: 'sessions', type: 'array' })
   validate('Pagination', responseData, { name: 'paging', type: 'object' })
   validate('Stats', responseData, { name: 'stats', type: 'object' })
