@@ -64,7 +64,7 @@ export {
   SessionStats,
 } from './session/session'
 
-export { TransactorFeesResponse } from './payment/fees'
+export { Fees } from './transactor/fees'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
 

@@ -27,8 +27,8 @@ import { ServiceInfo } from '../provider/service-info'
 import { ServiceStartRequest } from '../provider/service-request'
 import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
-import { TopUpRequest } from '../payment/topup'
-import { TransactorFeesResponse } from '../payment/fees'
+import { TopUpRequest } from '../transactor/topup'
+import { Fees } from '../transactor/fees'
 import { IdentityCurrentRequest } from '../identity/selection'
 import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 
@@ -181,7 +181,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public transactorFees(): Promise<TransactorFeesResponse> {
+  public transactorFees(): Promise<Fees> {
     throw Error('Not implemented')
   }
 

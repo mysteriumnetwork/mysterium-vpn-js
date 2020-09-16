@@ -40,8 +40,8 @@ import { ProposalMetrics } from './proposal/metrics'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
 import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
-import { TopUpRequest } from './payment/topup'
-import { TransactorFeesResponse } from './payment/fees'
+import { TopUpRequest } from './transactor/topup'
+import { Fees } from './transactor/fees'
 import { IdentityCurrentRequest } from './identity/selection'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -92,7 +92,7 @@ export interface TequilapiClient {
   sessions(query?: SessionListQuery): Promise<SessionListResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
-  transactorFees(): Promise<TransactorFeesResponse>
+  transactorFees(): Promise<Fees>
   topUp(request: TopUpRequest): Promise<void>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
@@ -366,7 +366,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`feedback/issue`, issue, timeout)
   }
 
-  public async transactorFees(): Promise<TransactorFeesResponse> {
+  public async transactorFees(): Promise<Fees> {
     return this.http.get(`transactor/fees`)
   }
 
