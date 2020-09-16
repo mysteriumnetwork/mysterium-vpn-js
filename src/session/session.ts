@@ -25,12 +25,49 @@ export interface Session {
   providerId: string
   serviceType: string
   providerCountry: string
+  consumerCountry: string
   createdAt: string
   duration: number
   bytesReceived: number
   bytesSent: number
   tokens: number
   status: SessionStatus
+}
+
+export interface SessionStats {
+  count: number
+  countConsumers: number
+  sumBytesReceived: number
+  sumBytesSent: number
+  sumDuration: number
+  sumTokens: number
+}
+
+export interface Pagination {
+  totalItems: number
+  totalPages: number
+  currentPage: number
+  previousPage: number
+  nextPage: number
+}
+
+export interface SessionListResponse {
+  sessions: Session[]
+  pagination: Pagination
+  stats: SessionStats
+  statsDaily: {
+    [date: string]: SessionStats
+  }
+}
+
+export interface SessionListQuery {
+  dateFrom?: string
+  dateTo?: string
+  direction?: string
+  serviceType?: string
+  status?: string
+  page?: number
+  pageSize?: number
 }
 
 export function parseSession(data: any): Session {
@@ -52,7 +89,45 @@ export function parseSession(data: any): Session {
   return data
 }
 
-export function parseSessionList(responseData: any): Session[] {
+export function parseSessionListResponse(responseData: any): SessionListResponse {
   validate('Session[]', responseData, { name: 'sessions', type: 'array' })
-  return responseData.sessions.map(parseSession)
+  validate('Pagination', responseData, { name: 'pagination', type: 'object' })
+  validate('SessionStats', responseData, { name: 'stats', type: 'object' })
+  validate('[date: string]: StatsDaily', responseData, { name: 'statsDaily', type: 'object' })
+
+  validateMultiple('SessionStats', responseData.stats, [
+    { name: 'count', type: 'number' },
+    { name: 'countConsumers', type: 'number' },
+    { name: 'sumBytesReceived', type: 'number' },
+    { name: 'sumBytesSent', type: 'number' },
+    { name: 'sumDuration', type: 'number' },
+    { name: 'sumTokens', type: 'number' },
+  ])
+
+  Object.keys(responseData.statsDaily).forEach((key) => {
+    validateMultiple('[date: string]: StatsDaily', responseData.statsDaily, [
+      { name: key, type: 'object' },
+    ])
+    validateMultiple('StatsDaily', responseData.statsDaily[key], [
+      { name: 'count', type: 'number' },
+      { name: 'countConsumers', type: 'number' },
+      { name: 'sumBytesReceived', type: 'number' },
+      { name: 'sumBytesSent', type: 'number' },
+      { name: 'sumDuration', type: 'number' },
+      { name: 'sumTokens', type: 'number' },
+    ])
+  })
+
+  validateMultiple('Pagination', responseData.pagination, [
+    { name: 'totalItems', type: 'number' },
+    { name: 'totalPages', type: 'number' },
+    { name: 'currentPage', type: 'number' },
+  ])
+
+  return {
+    sessions: responseData.sessions.map(parseSession),
+    pagination: responseData.pagination,
+    stats: responseData.stats,
+    statsDaily: responseData.statsDaily,
+  }
 }

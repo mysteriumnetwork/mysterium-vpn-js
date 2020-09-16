@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Currency } from './myst'
+
 export enum PaymentMethodType {
   BytesWithTime = 'BYTES_TRANSFERRED_WITH_TIME',
   Unsupported = 'UNSUPPORTED',
@@ -26,8 +28,7 @@ export interface PaymentMethod {
 
 export const pricePerMinute = (pm?: PaymentMethod): Money => {
   if (!pm || !pm.rate.perSeconds) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return { amount: 0, currency: pm!.price.currency }
+    return { amount: 0, currency: pm?.price?.currency || Currency.MYST }
   }
   return {
     amount: Math.round((60 / pm.rate.perSeconds) * pm.price.amount),
@@ -39,8 +40,7 @@ const bytesInGiB = 1024 * 1024 * 1024
 
 export const pricePerGiB = (pm?: PaymentMethod): Money => {
   if (!pm || !pm.rate.perBytes) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return { amount: 0, currency: pm!.price.currency }
+    return { amount: 0, currency: pm?.price?.currency || Currency.MYST }
   }
   return {
     amount: Math.round((bytesInGiB / pm.rate.perBytes) * pm.price.amount),

@@ -7,3 +7,20 @@
 export interface MMNApiKeyResponse {
   api_key: string
 }
+
+export interface MMNReportResponse {
+  country?: string
+  identity: string
+  name?: string
+  report?: MMNReport
+  whitelisted: boolean
+}
+
+export interface MMNReport {
+  balanceTokens: number
+  balanceUsd: number
+  earningTokens: number
+  earningUsd: number
+  position: number
+  positionPerCountry: number
+}

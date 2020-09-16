@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { MMNApiKeyResponse } from './mmn/mmn'
+import { MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
@@ -34,7 +34,7 @@ import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuality, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
 import { ServiceRequest } from './provider/service-request'
-import { parseSessionList, Session } from './session/session'
+import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
 import { TopUpRequest } from './payment/topup'
 import { TransactorFeesResponse } from './payment/fees'
 import { IdentityCurrentRequest } from './identity/selection'
@@ -83,13 +83,13 @@ export interface TequilapiClient {
   serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
 
-  sessions(): Promise<Session[]>
+  sessions(query?: SessionListQuery): Promise<SessionListResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
   transactorFees(): Promise<TransactorFeesResponse>
   topUp(request: TopUpRequest): Promise<void>
 
-  getMMNNodeReport(): Promise<any>
+  getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
   getMMNApiKey(): Promise<MMNApiKeyResponse>
   clearMMNApiKey(): Promise<void>
@@ -309,12 +309,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.delete('services/' + serviceId)
   }
 
-  public async sessions(): Promise<Session[]> {
-    const response = await this.http.get('sessions')
+  public async sessions(query?: SessionListQuery): Promise<SessionListResponse> {
+    const response = await this.http.get('sessions', query)
     if (!response) {
       throw new Error('Service sessions response body is missing')
     }
-    return parseSessionList(response)
+    return parseSessionListResponse(response)
   }
 
   public async accessPolicies(): Promise<AccessPolicy[]> {
@@ -360,11 +360,11 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`transactor/topup`, request)
   }
 
-  public async getMMNNodeReport(): Promise<any> {
+  public async getMMNNodeReport(): Promise<MMNReportResponse> {
     return this.http.get(`mmn/report`)
   }
 
-  public async setMMNApiKey(apiKey: string): Promise<any> {
+  public async setMMNApiKey(apiKey: string): Promise<void> {
     return this.http.post(`mmn/api-key`, { apiKey: apiKey })
   }
 

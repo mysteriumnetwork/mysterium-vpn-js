@@ -24,7 +24,7 @@ import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuality, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceRequest } from '../provider/service-request'
-import { Session } from '../session/session'
+import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { TopUpRequest } from '../payment/topup'
 import { TransactorFeesResponse } from '../payment/fees'
@@ -126,7 +126,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public sessions(): Promise<Session[]> {
+  public sessions(query?: SessionListQuery): Promise<SessionListResponse> {
     throw Error('Not implemented')
   }
 
