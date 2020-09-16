@@ -37,8 +37,8 @@ import {
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { ProposalMetrics } from './proposal/metrics'
-import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
-import { ServiceRequest } from './provider/service-request'
+import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
+import { ServiceStartRequest } from './provider/service-request'
 import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
 import { TopUpRequest } from './payment/topup'
 import { TransactorFeesResponse } from './payment/fees'
@@ -86,7 +86,7 @@ export interface TequilapiClient {
 
   serviceList(): Promise<ServiceInfo[]>
   serviceGet(serviceId: string): Promise<ServiceInfo>
-  serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo>
+  serviceStart(request: ServiceStartRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
 
   sessions(query?: SessionListQuery): Promise<SessionListResponse>
@@ -296,7 +296,7 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Service list response body is missing')
     }
 
-    return parseServiceInfoList(response)
+    return parseServiceListResponse(response)
   }
 
   public async serviceGet(id: string): Promise<ServiceInfo> {
@@ -309,7 +309,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async serviceStart(
-    request: ServiceRequest,
+    request: ServiceStartRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ServiceInfo> {
     const response = await this.http.post('services', request, timeout)

@@ -53,7 +53,9 @@ export {
 export { ProviderService } from './provider/provider-service'
 export { QualityLevel, QualityCalculator } from './provider/quality'
 export { ServiceInfo } from './provider/service-info'
-export { ServiceRequest } from './provider/service-request'
+export { ServiceStartRequest } from './provider/service-request'
+export { ServiceStatus } from './provider/service-status'
+
 export {
   Session,
   SessionStatus,
@@ -61,7 +63,6 @@ export {
   SessionListResponse,
   SessionStats,
 } from './session/session'
-export { ServiceStatus } from './provider/service-status'
 
 export { TransactorFeesResponse } from './payment/fees'
 

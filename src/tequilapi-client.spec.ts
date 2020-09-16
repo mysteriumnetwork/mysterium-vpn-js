@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http/axios-adapter'
 import { HttpTequilapiClient, TequilapiClient } from './tequilapi-client'
 import { parseIdentityRef } from './identity/identity'
-import { parseServiceInfo, parseServiceInfoList } from './provider/service-info'
+import { parseServiceInfo, parseServiceListResponse } from './provider/service-info'
 import { TequilapiClientFactory } from './tequilapi-client-factory'
 
 describe('HttpTequilapiClient', () => {
@@ -685,7 +685,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('services').reply(200, [serviceResponse])
 
       const services = await api.serviceList()
-      expect(services).toEqual(parseServiceInfoList([serviceObject]))
+      expect(services).toEqual(parseServiceListResponse([serviceObject]))
     })
 
     it('handles error', () => {

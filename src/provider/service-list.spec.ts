@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { parseServiceInfo, parseServiceInfoList } from './service-info'
+import { parseServiceInfo, parseServiceListResponse } from './service-info'
 
-describe('.parseServiceInfoList', () => {
+describe('.parseServiceListResponse', () => {
   const proposalObject = {
     id: 1,
     providerId: '0x1',
@@ -27,26 +27,26 @@ describe('.parseServiceInfoList', () => {
   }
 
   it('sets properties with full structure', async () => {
-    const services = parseServiceInfoList([serviceObject])
+    const services = parseServiceListResponse([serviceObject])
 
     expect(services).toHaveLength(1)
     expect(services[0]).toEqual(parseServiceInfo(serviceObject))
   })
 
   it('sets properties with an empty structure', async () => {
-    const services = parseServiceInfoList([])
+    const services = parseServiceListResponse([])
     expect(services).toEqual([])
   })
 
   it('throws an error if services in array does not validate', async () => {
     expect(() => {
-      parseServiceInfoList([{}])
+      parseServiceListResponse([{}])
     }).toThrowError('ServiceInfo: id is not provided')
   })
 
   it('throws an error if service list in not an array', async () => {
     expect(() => {
-      parseServiceInfoList({})
+      parseServiceListResponse({})
     }).toThrowError('ServiceInfo[]: should be "array"')
   })
 })

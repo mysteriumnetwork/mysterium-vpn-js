@@ -24,7 +24,7 @@ import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ProposalMetrics } from '../proposal/metrics'
 import { ServiceInfo } from '../provider/service-info'
-import { ServiceRequest } from '../provider/service-request'
+import { ServiceStartRequest } from '../provider/service-request'
 import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { TopUpRequest } from '../payment/topup'
@@ -121,7 +121,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo> {
+  public serviceStart(request: ServiceStartRequest, timeout?: number): Promise<ServiceInfo> {
     throw Error('Not implemented')
   }
 

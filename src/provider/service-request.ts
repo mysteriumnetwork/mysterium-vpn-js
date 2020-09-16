@@ -5,11 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export interface ServiceRequest {
+export interface ServiceStartRequest {
   providerId: string
   type: string
+  options?: { [key: string]: any }
+  paymentMethod?: ServicePaymentMethod
   accessPolicies?: {
     ids: string[]
   }
-  options?: { [key: string]: any }
+}
+
+export interface ServicePaymentMethod {
+  priceGb?: number
+  priceMinute?: number
 }
