@@ -101,6 +101,8 @@ export interface TequilapiClient {
   settleSync(request: SettleRequest): Promise<void>
   settleAsync(request: SettleRequest): Promise<void>
   settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
+  settleIntoStakeSync(request: SettleRequest): Promise<void>
+  settleIntoStakeAsync(request: SettleRequest): Promise<void>
   settlementHistory(request: SettlementListQuery): Promise<SettlementListResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
@@ -388,6 +390,14 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
     return this.http.post(`identities/${request.providerId}/beneficiary`, request)
+  }
+
+  public async settleIntoStakeSync(request: SettleRequest): Promise<void> {
+    return this.http.post(`transactor/stake/increase/sync`, request)
+  }
+
+  public async settleIntoStakeAsync(request: SettleRequest): Promise<void> {
+    return this.http.post(`transactor/stake/increase/async`, request)
   }
 
   public async settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {
