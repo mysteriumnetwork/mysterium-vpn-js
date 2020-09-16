@@ -34,7 +34,7 @@ import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuality, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
 import { ServiceRequest } from './provider/service-request'
-import { parseSessionListResponse, SessionQuery, SessionListResponse } from './session/session'
+import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
 import { TopUpRequest } from './payment/topup'
 import { TransactorFeesResponse } from './payment/fees'
 import { IdentityCurrentRequest } from './identity/selection'
@@ -83,7 +83,7 @@ export interface TequilapiClient {
   serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
 
-  sessions(query?: SessionQuery): Promise<SessionListResponse>
+  sessions(query?: SessionListQuery): Promise<SessionListResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
   transactorFees(): Promise<TransactorFeesResponse>
@@ -309,7 +309,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.delete('services/' + serviceId)
   }
 
-  public async sessions(query?: SessionQuery): Promise<SessionListResponse> {
+  public async sessions(query?: SessionListQuery): Promise<SessionListResponse> {
     const response = await this.http.get('sessions', query)
     if (!response) {
       throw new Error('Service sessions response body is missing')

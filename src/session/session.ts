@@ -60,7 +60,7 @@ export interface SessionListResponse {
   }
 }
 
-export interface SessionQuery {
+export interface SessionListQuery {
   dateFrom?: string
   dateTo?: string
   direction?: string
