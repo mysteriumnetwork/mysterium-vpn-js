@@ -19,8 +19,7 @@ export interface DisplayMoneyOptions {
   decimalPart?: number
 }
 
-export const DECIMAL_PART = 100_000_000
-export const DECIMAL_PART_V3 = 1_000_000_000_000_000_000
+export const DECIMAL_PART = 1_000_000_000_000_000_000
 
 export const displayMoney = (
   m: Money,

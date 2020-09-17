@@ -33,22 +33,13 @@ export function parseIdentityList(responseData: any): IdentityList {
 export enum IdentityRegistrationStatus {
   Unregistered = 'Unregistered',
   InProgress = 'InProgress',
-  RegisteredConsumer = 'RegisteredConsumer',
-  RegisteredProvider = 'RegisteredProvider',
-  Promoting = 'Promoting',
-  RegistrationError = 'RegistrationError',
-}
-
-export enum IdentityRegistrationStatusV3 {
-  Unregistered = 'Unregistered',
-  InProgress = 'InProgress',
   Registered = 'Registered',
   RegistrationError = 'RegistrationError',
 }
 
 export interface Identity {
   id: string
-  registrationStatus: IdentityRegistrationStatus | IdentityRegistrationStatusV3
+  registrationStatus: IdentityRegistrationStatus
   channelAddress: string
   balance: number
   earnings: number
