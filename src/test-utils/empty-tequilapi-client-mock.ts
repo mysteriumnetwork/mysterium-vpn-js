@@ -215,7 +215,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {
+  public settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse> {
     throw Error('Not implemented')
   }
 

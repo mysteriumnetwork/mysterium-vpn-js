@@ -107,7 +107,7 @@ export interface TequilapiClient {
   settleIntoStakeSync(request: SettleRequest): Promise<void>
   settleIntoStakeAsync(request: SettleRequest): Promise<void>
   decreaseStake(request: DecreaseStakeRequest): Promise<void>
-  settlementHistory(request: SettlementListQuery): Promise<SettlementListResponse>
+  settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -408,7 +408,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`transactor/stake/decrease`, request)
   }
 
-  public async settlementHistory(query: SettlementListQuery): Promise<SettlementListResponse> {
+  public async settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse> {
     const response = await this.http.get('transactor/settle/history', query)
     if (!response) {
       throw new Error('Settlement history response body is missing')
