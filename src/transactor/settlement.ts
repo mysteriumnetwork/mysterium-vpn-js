@@ -4,7 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Pagination } from '../common/pagination'
+
+import { Pageable } from '../common/pageable'
 
 export interface SettleRequest {
   hermesId: string
@@ -40,7 +41,6 @@ export interface SettlementListQuery {
   pageSize?: number
 }
 
-export interface SettlementListResponse {
-  settlements: Settlement[]
-  pagination: Pagination
+export interface SettlementListResponse extends Pageable {
+  items: Settlement[]
 }

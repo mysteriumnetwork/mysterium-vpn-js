@@ -74,6 +74,6 @@ export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
 
 export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
-export { Pagination } from './common/pagination'
+export { Pageable } from './common/pageable'
 
 export default tequilapi

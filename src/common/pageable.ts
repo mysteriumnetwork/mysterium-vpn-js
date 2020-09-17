@@ -7,15 +7,17 @@
 
 import { validateMultiple } from '../fmt/validation'
 
-export interface Pagination {
+export interface Pageable {
+  items: any[]
   page: number
   pageSize: number
   totalItems: number
   totalPages: number
 }
 
-export function parsePagination(data: any): Pagination {
-  validateMultiple('Pagination', data, [
+export function parsePageable(data: any): Pageable {
+  validateMultiple('Pageable', data, [
+    { name: 'items', type: 'array' },
     { name: 'page', type: 'number' },
     { name: 'pageSize', type: 'number' },
     { name: 'totalItems', type: 'number' },

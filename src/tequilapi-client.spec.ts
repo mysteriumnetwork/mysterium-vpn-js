@@ -769,7 +769,7 @@ describe('HttpTequilapiClient', () => {
   describe('sessions()', () => {
     it('returns response', async () => {
       const response = {
-        sessions: [
+        items: [
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
             direction: 'Provided',
@@ -787,12 +787,10 @@ describe('HttpTequilapiClient', () => {
             status: 'New',
           },
         ],
-        pagination: {
-          page: 1,
-          pageSize: 50,
-          totalItems: 1,
-          totalPages: 1,
-        },
+        page: 1,
+        pageSize: 50,
+        totalItems: 1,
+        totalPages: 1,
         stats: {
           count: 1,
           countConsumers: 2,
@@ -814,7 +812,7 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onGet('sessions').reply(200, response)
 
-      const sessions = (await api.sessions()).sessions
+      const sessions = (await api.sessions()).items
       expect(sessions).toHaveLength(1)
       expect(sessions[0].id).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
       expect(sessions[0].tokens).toEqual(1000)

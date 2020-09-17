@@ -17,6 +17,7 @@ import { Location, parseLocation } from './location/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
+import { parsePageable } from './common/pageable'
 import {
   Identity,
   IdentityRef,
@@ -411,7 +412,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Settlement history response body is missing')
     }
-    return response
+    return parsePageable(response)
   }
 
   public async getMMNNodeReport(): Promise<MMNReportResponse> {
