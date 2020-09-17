@@ -788,11 +788,10 @@ describe('HttpTequilapiClient', () => {
           },
         ],
         pagination: {
+          page: 1,
+          pageSize: 50,
           totalItems: 1,
           totalPages: 1,
-          currentPage: 1,
-          previousPage: null,
-          nextPage: null,
         },
         stats: {
           count: 1,

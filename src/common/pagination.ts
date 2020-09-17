@@ -8,18 +8,18 @@
 import { validateMultiple } from '../fmt/validation'
 
 export interface Pagination {
+  page: number
+  pageSize: number
   totalItems: number
   totalPages: number
-  currentPage: number
-  previousPage: number
-  nextPage: number
 }
 
 export function parsePagination(data: any): Pagination {
   validateMultiple('Pagination', data, [
+    { name: 'page', type: 'number' },
+    { name: 'pageSize', type: 'number' },
     { name: 'totalItems', type: 'number' },
     { name: 'totalPages', type: 'number' },
-    { name: 'currentPage', type: 'number' },
   ])
   return data
 }

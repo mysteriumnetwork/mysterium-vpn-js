@@ -25,11 +25,10 @@ describe('TequilapiClient DTO', () => {
   }
 
   const pagination = {
+    page: 1,
+    pageSize: 50,
     totalItems: 1,
     totalPages: 1,
-    currentPage: 1,
-    previousPage: null,
-    nextPage: null,
   }
 
   const stats = {
@@ -106,11 +105,10 @@ describe('TequilapiClient DTO', () => {
       expect(dailyStat.sumDuration).toEqual(5)
       expect(dailyStat.sumTokens).toEqual(6)
 
+      expect(response.pagination.page).toEqual(1)
+      expect(response.pagination.pageSize).toEqual(50)
       expect(response.pagination.totalItems).toEqual(1)
       expect(response.pagination.totalPages).toEqual(1)
-      expect(response.pagination.currentPage).toEqual(1)
-      expect(response.pagination.previousPage).toBeNull()
-      expect(response.pagination.nextPage).toBeNull()
     })
 
     it('throws error when invoked with an empty object', async () => {
