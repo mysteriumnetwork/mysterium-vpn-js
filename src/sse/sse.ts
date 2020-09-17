@@ -10,18 +10,20 @@ import { NatStatusResponse } from '../nat/status'
 import { ServiceInfo } from '../provider/service-info'
 import camelcaseKeys from 'camelcase-keys'
 import { Session, SessionStats } from '../session/session'
+import { PaymentChannel } from '../transactor/channel'
 
 export const TEQUILAPI_SSE_URL = 'http://127.0.0.1:4050/events/state'
 
 export interface AppState {
   natStatus: NatStatusResponse
-  serviceInfo?: ServiceInfo[]
-  sessions?: Session[]
-  sessionsStats?: SessionStats
-  consumer?: {
-    connection?: Connection
+  serviceInfo: ServiceInfo[]
+  sessions: Session[]
+  sessionsStats: SessionStats
+  consumer: {
+    connection: Connection
   }
-  identities?: Identity[]
+  identities: Identity[]
+  channels: PaymentChannel[]
 }
 
 export enum SSEEventType {
