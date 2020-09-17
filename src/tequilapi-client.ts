@@ -48,6 +48,7 @@ import {
   DecreaseStakeRequest,
   SettlementListQuery,
   SettlementListResponse,
+  Settlement,
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 
@@ -412,7 +413,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Settlement history response body is missing')
     }
-    return parsePageable(response)
+    return parsePageable<Settlement>(response)
   }
 
   public async getMMNNodeReport(): Promise<MMNReportResponse> {

@@ -44,8 +44,7 @@ export interface SessionStats {
   sumTokens: number
 }
 
-export interface SessionListResponse extends Pageable {
-  items: Session[]
+export interface SessionListResponse extends Pageable<Session> {
   stats: SessionStats
   statsDaily: {
     [date: string]: SessionStats
@@ -109,9 +108,7 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
     ])
   })
 
-  const pageable = parsePageable(responseData)
-
-  const response = pageable as SessionListResponse
+  const response = parsePageable<Session>(responseData) as SessionListResponse
   response.items = responseData.items.map(parseSession)
   response.stats = responseData.stats
   response.statsDaily = responseData.statsDaily

@@ -41,6 +41,4 @@ export interface SettlementListQuery {
   pageSize?: number
 }
 
-export interface SettlementListResponse extends Pageable {
-  items: Settlement[]
-}
+export type SettlementListResponse = Pageable<Settlement>

@@ -7,15 +7,15 @@
 
 import { validateMultiple } from '../fmt/validation'
 
-export interface Pageable {
-  items: any[]
+export interface Pageable<T> {
+  items: T[]
   page: number
   pageSize: number
   totalItems: number
   totalPages: number
 }
 
-export function parsePageable(data: any): Pageable {
+export function parsePageable<T>(data: any): Pageable<T> {
   validateMultiple('Pageable', data, [
     { name: 'items', type: 'array' },
     { name: 'page', type: 'number' },
