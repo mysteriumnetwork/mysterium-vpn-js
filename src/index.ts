@@ -30,12 +30,7 @@ export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
-export {
-  IdentityRef,
-  Identity,
-  IdentityRegistrationStatus,
-  IdentityRegistrationStatusV3,
-} from './identity/identity'
+export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
 export { IdentityPayout } from './identity/payout'
 export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
 
@@ -74,13 +69,7 @@ export {
   pricePerMinute,
   pricePerGiB,
 } from './payment/method'
-export {
-  Currency,
-  DECIMAL_PART,
-  DECIMAL_PART_V3,
-  displayMoney,
-  DisplayMoneyOptions,
-} from './payment/myst'
+export { Currency, DECIMAL_PART, displayMoney, DisplayMoneyOptions } from './payment/myst'
 export { TransactorFeesResponse } from './payment/fees'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
