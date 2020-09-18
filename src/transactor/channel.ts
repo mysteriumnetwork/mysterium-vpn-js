@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Location } from './location'
-
-export interface ServiceDefinition {
-  locationOriginate?: Location
+export interface PaymentChannel {
+  id: string
+  ownerId: string
+  hermesId: string
+  earnings: string
+  earningsTotal: string
 }

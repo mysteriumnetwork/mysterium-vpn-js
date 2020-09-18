@@ -15,6 +15,9 @@ describe('TequilapiClient DTO', () => {
       providerId: '0x1',
       serviceType: 'openvpn',
       serviceDefinition: {},
+      paymentMethod: {
+        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      },
     }
     const serviceObject = parseServiceInfo({
       id: 'service1',

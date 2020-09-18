@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ProposalMetrics } from '../proposal/metrics'
+import { QualityMetrics } from '../proposal/metrics'
 import { QualityLevel } from './quality'
 import { QualityCalculator } from './quality'
 
@@ -18,20 +18,32 @@ describe('QualityCalculator', () => {
 
   describe('.calculateValue', () => {
     it('returns 1 for successful metrics', () => {
-      const metrics: ProposalMetrics = { connectCount: { success: 1, fail: 0, timeout: 0 } }
+      const metrics: QualityMetrics = {
+        connectCount: { success: 1, fail: 0, timeout: 0 },
+        monitoringFailed: false,
+      }
       expect(qualityCalculator.calculateValue(metrics)).toEqual(1)
     })
 
     it('returns 0 for failure metrics', () => {
-      const metrics1: ProposalMetrics = { connectCount: { success: 0, fail: 1, timeout: 0 } }
+      const metrics1: QualityMetrics = {
+        connectCount: { success: 0, fail: 1, timeout: 0 },
+        monitoringFailed: false,
+      }
       expect(qualityCalculator.calculateValue(metrics1)).toEqual(0)
 
-      const metrics2: ProposalMetrics = { connectCount: { success: 0, fail: 0, timeout: 1 } }
+      const metrics2: QualityMetrics = {
+        connectCount: { success: 0, fail: 0, timeout: 1 },
+        monitoringFailed: false,
+      }
       expect(qualityCalculator.calculateValue(metrics2)).toEqual(0)
     })
 
     it('returns null when all metrics are zero', () => {
-      const metrics1: ProposalMetrics = { connectCount: { success: 0, fail: 0, timeout: 0 } }
+      const metrics1: QualityMetrics = {
+        connectCount: { success: 0, fail: 0, timeout: 0 },
+        monitoringFailed: false,
+      }
       expect(qualityCalculator.calculateValue(metrics1)).toBeNull()
     })
   })

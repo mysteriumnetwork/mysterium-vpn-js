@@ -5,17 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export interface ConsumerLocation {
-  ip?: string
-  asn: number
-  isp?: string
-  continent?: string
-  country?: string
-  city?: string
-  nodeType?: string
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+export interface IP {
+  ip: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseConsumerLocation(data: any): ConsumerLocation {
+export function parseIP(data: any): IP {
   return data
 }

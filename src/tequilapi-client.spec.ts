@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http/axios-adapter'
 import { HttpTequilapiClient, TequilapiClient } from './tequilapi-client'
 import { parseIdentityRef } from './identity/identity'
-import { parseServiceInfo, parseServiceInfoList } from './provider/service-info'
+import { parseServiceInfo, parseServiceListResponse } from './provider/service-info'
 import { TequilapiClientFactory } from './tequilapi-client-factory'
 
 describe('HttpTequilapiClient', () => {
@@ -197,6 +197,9 @@ describe('HttpTequilapiClient', () => {
                 country: 'NL',
               },
             },
+            payment_method: {
+              type: 'BYTES_TRANSFERRED_WITH_TIME',
+            },
           },
           {
             id: 1,
@@ -207,6 +210,9 @@ describe('HttpTequilapiClient', () => {
                 asn: '',
                 country: 'LT',
               },
+            },
+            payment_method: {
+              type: 'BYTES_TRANSFERRED_WITH_TIME',
             },
           },
         ],
@@ -225,6 +231,9 @@ describe('HttpTequilapiClient', () => {
             country: 'NL',
           },
         },
+        paymentMethod: {
+          type: 'BYTES_TRANSFERRED_WITH_TIME',
+        },
       })
       expect(proposals[1]).toEqual({
         id: 1,
@@ -235,6 +244,9 @@ describe('HttpTequilapiClient', () => {
             asn: '',
             country: 'LT',
           },
+        },
+        paymentMethod: {
+          type: 'BYTES_TRANSFERRED_WITH_TIME',
         },
       })
     })
@@ -251,6 +263,9 @@ describe('HttpTequilapiClient', () => {
                 asn: '',
                 country: 'NL',
               },
+            },
+            payment_method: {
+              type: 'BYTES_TRANSFERRED_WITH_TIME',
             },
             metrics: {
               connect_count: {
@@ -398,6 +413,27 @@ describe('HttpTequilapiClient', () => {
       expect(api.identityRegistration('0x0000bEEF')).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="identities/0x0000bEEF/registration")'
+      )
+    })
+  })
+
+  describe('identityBeneficiary()', () => {
+    it('returns response', async () => {
+      const response = {
+        beneficiary: '0x1',
+      }
+      mock.onGet('identities/0x1/beneficiary').reply(200, response)
+
+      const beneficiary = await api.identityBeneficiary('0x1')
+      expect(beneficiary).toEqual(response)
+    })
+
+    it('handles error', () => {
+      mock.onGet('identities/0x1/beneficiary').reply(500)
+
+      expect(api.identityBeneficiary('0x1')).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="identities/0x1/beneficiary")'
       )
     })
   })
@@ -581,9 +617,11 @@ describe('HttpTequilapiClient', () => {
   describe('connectionStatistics()', () => {
     it('returns response', async () => {
       const response = {
-        duration: 13325,
         bytesReceived: 1232133, // 1.17505 MB
         bytesSent: 123321, // 0.117608 MB
+        throughputSent: 1024, // 1 Mbps
+        throughputReceived: 1024, // 1 Mbps
+        duration: 13325,
         tokensSpent: 100,
       }
       mock.onGet('connection/statistics').reply(200, response)
@@ -617,6 +655,9 @@ describe('HttpTequilapiClient', () => {
           country: 'NL',
         },
       },
+      paymentMethod: {
+        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      },
     },
   }
   const serviceResponse = {
@@ -634,6 +675,9 @@ describe('HttpTequilapiClient', () => {
           country: 'NL',
         },
       },
+      payment_method: {
+        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      },
     },
   }
   describe('serviceList()', () => {
@@ -641,7 +685,7 @@ describe('HttpTequilapiClient', () => {
       mock.onGet('services').reply(200, [serviceResponse])
 
       const services = await api.serviceList()
-      expect(services).toEqual(parseServiceInfoList([serviceObject]))
+      expect(services).toEqual(parseServiceListResponse([serviceObject]))
     })
 
     it('handles error', () => {
@@ -725,7 +769,7 @@ describe('HttpTequilapiClient', () => {
   describe('sessions()', () => {
     it('returns response', async () => {
       const response = {
-        sessions: [
+        items: [
           {
             id: '30f610a0-c096-11e8-b371-ebde26989839',
             direction: 'Provided',
@@ -743,13 +787,10 @@ describe('HttpTequilapiClient', () => {
             status: 'New',
           },
         ],
-        pagination: {
-          totalItems: 1,
-          totalPages: 1,
-          currentPage: 1,
-          previousPage: null,
-          nextPage: null,
-        },
+        page: 1,
+        pageSize: 50,
+        totalItems: 1,
+        totalPages: 1,
         stats: {
           count: 1,
           countConsumers: 2,
@@ -771,7 +812,7 @@ describe('HttpTequilapiClient', () => {
       }
       mock.onGet('sessions').reply(200, response)
 
-      const sessions = (await api.sessions()).sessions
+      const sessions = (await api.sessions()).items
       expect(sessions).toHaveLength(1)
       expect(sessions[0].id).toEqual('30f610a0-c096-11e8-b371-ebde26989839')
       expect(sessions[0].tokens).toEqual(1000)

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ProposalMetrics } from '../proposal/metrics'
+import { QualityMetrics } from '../proposal/metrics'
 
 const MEDIUM_QUALITY = 0.2
 const HIGH_QUALITY = 0.5
@@ -26,7 +26,7 @@ export class QualityCalculator {
    *
    * @return number between 0 and 1. If metrics are empty, null is returned.
    */
-  public calculateValue(metrics: ProposalMetrics): number | null {
+  public calculateValue(metrics: QualityMetrics): number | null {
     const counts = metrics.connectCount || { success: 0, fail: 0, timeout: 0 }
     const total = counts.success + counts.fail + counts.timeout
 

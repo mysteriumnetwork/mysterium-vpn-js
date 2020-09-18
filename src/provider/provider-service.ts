@@ -13,7 +13,7 @@ import { FunctionLooper } from '../func/function-looper'
 import { logger } from '../logger'
 import { Publisher } from '../func/publisher'
 import { ServiceInfo } from './service-info'
-import { ServiceRequest } from './service-request'
+import { ServiceStartRequest } from './service-request'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StatusSubscriber = (newStatus: ServiceStatus) => any
@@ -81,7 +81,7 @@ export class ProviderService {
       [key: string]: any
     }
   ): Promise<void> {
-    const request: ServiceRequest = {
+    const request: ServiceStartRequest = {
       options,
       providerId,
       type: serviceType,

@@ -46,7 +46,7 @@ export function parseServiceInfo(data: any): ServiceInfo {
   }
 }
 
-export function parseServiceInfoList(responseData: any): ServiceInfo[] {
+export function parseServiceListResponse(responseData: any): ServiceInfo[] {
   validateArray('ServiceInfo[]', responseData)
   return responseData.map(parseServiceInfo)
 }

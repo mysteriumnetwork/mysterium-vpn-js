@@ -24,14 +24,6 @@ describe('TequilapiClient DTO', () => {
     status: 'New',
   }
 
-  const pagination = {
-    totalItems: 1,
-    totalPages: 1,
-    currentPage: 1,
-    previousPage: null,
-    nextPage: null,
-  }
-
   const stats = {
     count: 1,
     countConsumers: 2,
@@ -78,15 +70,23 @@ describe('TequilapiClient DTO', () => {
   describe('.parseSessionListResponse', () => {
     it('sets properties with full structure', async () => {
       const response = parseSessionListResponse({
-        sessions: [sessionData],
-        pagination: pagination,
+        items: [sessionData],
+        page: 1,
+        pageSize: 50,
+        totalItems: 1,
+        totalPages: 1,
         stats: stats,
         statsDaily: statDaily,
       })
 
-      expect(response.sessions).toHaveLength(1)
-      expect(response.sessions[0].id).toEqual('id1')
-      expect(response.sessions[0].consumerId).toEqual('0x1')
+      expect(response.items).toHaveLength(1)
+      expect(response.items[0].id).toEqual('id1')
+      expect(response.items[0].consumerId).toEqual('0x1')
+
+      expect(response.page).toEqual(1)
+      expect(response.pageSize).toEqual(50)
+      expect(response.totalItems).toEqual(1)
+      expect(response.totalPages).toEqual(1)
 
       expect(response.stats.count).toEqual(1)
       expect(response.stats.countConsumers).toEqual(2)
@@ -105,25 +105,22 @@ describe('TequilapiClient DTO', () => {
       expect(dailyStat.sumBytesSent).toEqual(4)
       expect(dailyStat.sumDuration).toEqual(5)
       expect(dailyStat.sumTokens).toEqual(6)
-
-      expect(response.pagination.totalItems).toEqual(1)
-      expect(response.pagination.totalPages).toEqual(1)
-      expect(response.pagination.currentPage).toEqual(1)
-      expect(response.pagination.previousPage).toBeNull()
-      expect(response.pagination.nextPage).toBeNull()
     })
 
     it('throws error when invoked with an empty object', async () => {
       expect(() => {
         parseSessionListResponse({})
-      }).toThrowError('Session[]: sessions is not provided')
+      }).toThrowError('Session[]: items is not provided')
     })
 
     it('throws an error if proposal in array does not validate', async () => {
       expect(() => {
         parseSessionListResponse({
-          sessions: [{}],
-          pagination: pagination,
+          items: [{}],
+          page: 1,
+          pageSize: 50,
+          totalItems: 1,
+          totalPages: 1,
           stats: stats,
           statsDaily: statDaily,
         })

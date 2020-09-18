@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ConnectionStatus, parseConnectionStatusResponse } from './status'
+import { ConnectionStatus, parseConnectionInfo } from './status'
 
 describe('TequilapiClient DTO', () => {
-  describe('.parseConnectionStatusResponse', () => {
+  describe('.parseConnectionInfo', () => {
     // TODO: fix
     xit('sets properties', async () => {
-      const connection = parseConnectionStatusResponse({
+      const connection = parseConnectionInfo({
         status: 'Connected',
         sessionId: 'My-super-session',
       })
@@ -21,7 +21,7 @@ describe('TequilapiClient DTO', () => {
     })
 
     it('fails when status is missing', () => {
-      expect(() => parseConnectionStatusResponse({ sessionId: 'My-super-session' })).toThrow()
+      expect(() => parseConnectionInfo({ sessionId: 'My-super-session' })).toThrow()
     })
   })
 })

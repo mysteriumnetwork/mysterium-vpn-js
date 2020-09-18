@@ -8,9 +8,19 @@
 import { parseProposalList } from './proposal'
 
 describe('.parseProposalList', () => {
+  const proposalObject = {
+    id: 100,
+    providerId: 'id',
+    serviceType: 'type',
+    serviceDefinition: {},
+    paymentMethod: {
+      type: 'BYTES_TRANSFERRED_WITH_TIME',
+    },
+  }
+
   it('sets properties with full structure', async () => {
     const response = parseProposalList({
-      proposals: [{ id: 100, providerId: 'id', serviceType: 'type', serviceDefinition: {} }],
+      proposals: [proposalObject],
     })
 
     expect(response.proposals).toHaveLength(1)

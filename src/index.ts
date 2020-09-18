@@ -8,18 +8,19 @@ import { tequilapi } from './tequilapi-client-factory'
 
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
-export { ConnectionIp } from './connection/ip'
+export { IP } from './location/ip'
 export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/request'
-export { ConnectionStatus, ConnectionStatusResponse } from './connection/status'
+export { ConnectionStatus, ConnectionInfo } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
 
-export { ConsumerLocation } from './consumer/location'
+export { Location } from './location/location'
 
 export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
 
 export { BytesFormatter } from './fmt/bytes-formatter'
 export { DurationFormatter } from './fmt/duration-formatter'
 export { TimeFormatter } from './fmt/time-formatter'
+export { DECIMAL_PART, displayMoney, DisplayMoneyOptions } from './fmt/money-formater'
 
 export { FunctionLooper } from './func/function-looper'
 export { ThresholdExecutor } from './func/threshold-executor'
@@ -32,45 +33,38 @@ export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
 export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
 export { IdentityPayout } from './identity/payout'
-export { IdentityRegistration, IdentityRegisterRequest } from './identity/registration'
-
-export { ProposalMetrics, ConnectCount } from './proposal/metrics'
+export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identity/registration'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
+export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
+export { ProposalMetrics, QualityMetrics, QualityMetricConnects } from './proposal/metrics'
+export { ServiceDefinition } from './proposal/service-definition'
+export { ServiceLocation } from './proposal/service-location'
 export {
-  Proposal,
-  ProposalQuery,
-  parseProposal,
-  parseProposalList,
-  ProposalQuality,
-} from './proposal/proposal'
+  PaymentMethod,
+  PaymentMethodType,
+  Money,
+  Currency,
+  pricePerMinute,
+  pricePerGiB,
+} from './proposal/payment-method'
 
-export { Location } from './provider/location'
 export { ProviderService } from './provider/provider-service'
 export { QualityLevel, QualityCalculator } from './provider/quality'
-export { ServiceDefinition } from './provider/service-definition'
 export { ServiceInfo } from './provider/service-info'
-export { ServiceRequest } from './provider/service-request'
+export { ServiceStartRequest } from './provider/service-request'
+export { ServiceStatus } from './provider/service-status'
+
 export {
   Session,
   SessionStatus,
   SessionDirection,
   SessionListResponse,
   SessionStats,
-  Pagination,
 } from './session/session'
-export { ServiceStatus } from './provider/service-status'
 
-export {
-  PaymentMethodType,
-  Money,
-  PaymentMethod,
-  pricePerMinute,
-  pricePerGiB,
-} from './payment/method'
-export { Currency, DECIMAL_PART, displayMoney, DisplayMoneyOptions } from './payment/myst'
-export { TransactorFeesResponse } from './payment/fees'
+export { Fees } from './transactor/fees'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
 
@@ -80,4 +74,6 @@ export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
 
 export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
+export { Pageable } from './common/pageable'
+
 export default tequilapi

@@ -5,20 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ConnectCount, parseConnectionCount } from './metrics'
+import { QualityMetricConnects, parseQualityMetricConnects } from './metrics'
 
-describe('.parseConnectionCount', () => {
-  it('returns ConnectionCountDTO', () => {
-    const dto: ConnectCount = parseConnectionCount({ success: 1, fail: 2, timeout: 3 })
+describe('.parseQualityMetricConnects', () => {
+  it('returns QualityMetricConnects', () => {
+    const dto: QualityMetricConnects = parseQualityMetricConnects({
+      success: 1,
+      fail: 2,
+      timeout: 3,
+    })
     expect(dto).toBeDefined()
   })
 
   it('throws error for invalid data', () => {
-    expect(() => parseConnectionCount({ success: 1, timeout: 3 })).toThrow(
-      'ConnectCount: fail is not provided'
+    expect(() => parseQualityMetricConnects({ success: 1, timeout: 3 })).toThrow(
+      'QualityMetricConnects: fail is not provided'
     )
-    expect(() => parseConnectionCount({ success: '1', fail: 2, timeout: 3 })).toThrow(
-      'ConnectCount: success should be "number"'
+    expect(() => parseQualityMetricConnects({ success: '1', fail: 2, timeout: 3 })).toThrow(
+      'QualityMetricConnects: success should be "number"'
     )
   })
 })

@@ -11,42 +11,47 @@ import { MMNApiKeyResponse } from '../mmn/mmn'
 import { Issue, IssueId } from '../feedback/issue'
 import { Config } from '../config/config'
 import { AccessPolicy } from '../access-policy/access-policy'
-import { ConnectionIp } from '../connection/ip'
+import { IP } from '../location/ip'
 import { ConnectionRequest } from '../connection/request'
 import { ConnectionStatistics } from '../connection/statistics'
-import { ConnectionStatusResponse } from '../connection/status'
-import { ConsumerLocation } from '../consumer/location'
+import { ConnectionInfo } from '../connection/status'
+import { Location } from '../location/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
 import { IdentityRef, Identity } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
-import { IdentityRegisterRequest, IdentityRegistration } from '../identity/registration'
+import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
-import { Proposal, ProposalQuality, ProposalQuery } from '../proposal/proposal'
+import { Proposal, ProposalQuery } from '../proposal/proposal'
+import { ProposalMetrics } from '../proposal/metrics'
 import { ServiceInfo } from '../provider/service-info'
-import { ServiceRequest } from '../provider/service-request'
+import { ServiceStartRequest } from '../provider/service-request'
 import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
-import { TopUpRequest } from '../payment/topup'
-import { TransactorFeesResponse } from '../payment/fees'
+import { Fees } from '../transactor/fees'
+import {
+  SettleRequest,
+  SettleWithBeneficiaryRequest,
+  DecreaseStakeRequest,
+  SettlementListQuery,
+  SettlementListResponse,
+} from '../transactor/settlement'
 import { IdentityCurrentRequest } from '../identity/selection'
+import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public connectionCreate(
-    request: ConnectionRequest,
-    timeout?: number
-  ): Promise<ConnectionStatusResponse> {
+  public connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo> {
     throw Error('Not implemented')
   }
 
-  public connectionIp(timeout?: number): Promise<ConnectionIp> {
+  public connectionIp(timeout?: number): Promise<IP> {
     throw Error('Not implemented')
   }
 
-  public connectionLocation(): Promise<ConsumerLocation> {
+  public connectionLocation(): Promise<Location> {
     throw Error('Not implemented')
   }
 
@@ -54,7 +59,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public connectionStatus(): Promise<ConnectionStatusResponse> {
+  public connectionStatus(): Promise<ConnectionInfo> {
     throw Error('Not implemented')
   }
 
@@ -62,7 +67,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public proposalsQuality(): Promise<ProposalQuality[]> {
+  public proposalsQuality(): Promise<ProposalMetrics[]> {
     throw Error('Not implemented')
   }
 
@@ -86,7 +91,11 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public identityRegistration(id: string): Promise<IdentityRegistration> {
+  public identityRegistration(id: string): Promise<IdentityRegistrationResponse> {
+    throw Error('Not implemented')
+  }
+
+  public identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse> {
     throw Error('Not implemented')
   }
 
@@ -102,7 +111,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public location(timeout?: number): Promise<ConsumerLocation> {
+  public location(timeout?: number): Promise<Location> {
     throw Error('Not implemented')
   }
 
@@ -118,7 +127,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo> {
+  public serviceStart(request: ServiceStartRequest, timeout?: number): Promise<ServiceInfo> {
     throw Error('Not implemented')
   }
 
@@ -178,27 +187,51 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public transactorFees(): Promise<TransactorFeesResponse> {
+  public transactorFees(): Promise<Fees> {
     throw Error('Not implemented')
   }
 
-  public topUp(request: TopUpRequest): Promise<void> {
+  public settleSync(request: SettleRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public async getMMNNodeReport(): Promise<any> {
+  public settleAsync(request: SettleWithBeneficiaryRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public async setMMNApiKey(apiKey: string): Promise<any> {
+  public settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public async getMMNApiKey(): Promise<MMNApiKeyResponse> {
+  public settleIntoStakeSync(request: SettleRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
-  public async clearMMNApiKey(): Promise<void> {
+  public settleIntoStakeAsync(request: SettleRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public decreaseStake(request: DecreaseStakeRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse> {
+    throw Error('Not implemented')
+  }
+
+  public getMMNNodeReport(): Promise<any> {
+    throw Error('Not implemented')
+  }
+
+  public setMMNApiKey(apiKey: string): Promise<any> {
+    throw Error('Not implemented')
+  }
+
+  public getMMNApiKey(): Promise<MMNApiKeyResponse> {
+    throw Error('Not implemented')
+  }
+
+  public clearMMNApiKey(): Promise<void> {
     throw Error('Not implemented')
   }
 }

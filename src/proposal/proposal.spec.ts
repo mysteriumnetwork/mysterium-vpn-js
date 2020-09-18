@@ -13,6 +13,9 @@ describe('.parseProposal', () => {
     providerId: '0x1',
     serviceType: 'openvpn',
     serviceDefinition: {},
+    paymentMethod: {
+      type: 'BYTES_TRANSFERRED_WITH_TIME',
+    },
   }
 
   it('sets properties with full structure', () => {
@@ -22,6 +25,7 @@ describe('.parseProposal', () => {
     expect(proposal.providerId).toEqual('0x1')
     expect(proposal.serviceType).toEqual('openvpn')
     expect(proposal.serviceDefinition).toEqual({ locationOriginate: undefined })
+    expect(proposal.paymentMethod).toEqual({ type: 'BYTES_TRANSFERRED_WITH_TIME' })
     expect(proposal.metrics).toBeUndefined()
   })
 

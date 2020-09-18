@@ -6,6 +6,8 @@
  */
 
 import { validate } from '../fmt/validation'
+import { Proposal } from '../proposal/proposal'
+import { ConnectionStatistics } from './statistics'
 
 export enum ConnectionStatus {
   CONNECTED = 'Connected',
@@ -14,14 +16,21 @@ export enum ConnectionStatus {
   CONNECTING = 'Connecting',
 }
 
-export interface ConnectionStatusResponse {
+export interface ConnectionInfo {
   status: ConnectionStatus
+  consumerId?: string
+  hermesId?: string
+  proposal?: Proposal
   sessionId?: string
 }
 
+export type Connection = ConnectionInfo & {
+  statistics: ConnectionStatistics
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function parseConnectionStatusResponse(data: any): ConnectionStatusResponse {
+export function parseConnectionInfo(data: any): ConnectionInfo {
   // TODO: validate that status has value from ConnectionStatus enum
-  validate('ConnectionStatusResponse', data, { name: 'status', type: 'string' })
+  validate('ConnectionInfo', data, { name: 'status', type: 'string' })
   return data
 }

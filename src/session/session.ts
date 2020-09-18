@@ -6,6 +6,7 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
+import { Pageable, parsePageable } from '../common/pageable'
 
 export enum SessionStatus {
   NEW = 'New',
@@ -43,17 +44,7 @@ export interface SessionStats {
   sumTokens: number
 }
 
-export interface Pagination {
-  totalItems: number
-  totalPages: number
-  currentPage: number
-  previousPage: number
-  nextPage: number
-}
-
-export interface SessionListResponse {
-  sessions: Session[]
-  pagination: Pagination
+export interface SessionListResponse extends Pageable<Session> {
   stats: SessionStats
   statsDaily: {
     [date: string]: SessionStats
@@ -90,8 +81,7 @@ export function parseSession(data: any): Session {
 }
 
 export function parseSessionListResponse(responseData: any): SessionListResponse {
-  validate('Session[]', responseData, { name: 'sessions', type: 'array' })
-  validate('Pagination', responseData, { name: 'pagination', type: 'object' })
+  validate('Session[]', responseData, { name: 'items', type: 'array' })
   validate('SessionStats', responseData, { name: 'stats', type: 'object' })
   validate('[date: string]: StatsDaily', responseData, { name: 'statsDaily', type: 'object' })
 
@@ -118,16 +108,9 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
     ])
   })
 
-  validateMultiple('Pagination', responseData.pagination, [
-    { name: 'totalItems', type: 'number' },
-    { name: 'totalPages', type: 'number' },
-    { name: 'currentPage', type: 'number' },
-  ])
-
-  return {
-    sessions: responseData.sessions.map(parseSession),
-    pagination: responseData.pagination,
-    stats: responseData.stats,
-    statsDaily: responseData.statsDaily,
-  }
+  const response = parsePageable<Session>(responseData) as SessionListResponse
+  response.items = responseData.items.map(parseSession)
+  response.stats = responseData.stats
+  response.statsDaily = responseData.statsDaily
+  return response
 }

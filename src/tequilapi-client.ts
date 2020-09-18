@@ -10,13 +10,14 @@ import { Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionRequest } from './connection/request'
-import { ConnectionStatusResponse, parseConnectionStatusResponse } from './connection/status'
-import { ConnectionIp, parseConnectionIp } from './connection/ip'
+import { ConnectionInfo, parseConnectionInfo } from './connection/status'
+import { IP, parseIP } from './location/ip'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
-import { ConsumerLocation, parseConsumerLocation } from './consumer/location'
+import { Location, parseLocation } from './location/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
+import { parsePageable } from './common/pageable'
 import {
   Identity,
   IdentityRef,
@@ -27,16 +28,28 @@ import {
 import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import {
   IdentityRegisterRequest,
-  IdentityRegistration,
-  parseIdentityRegistration,
+  IdentityRegistrationResponse,
+  parseIdentityRegistrationResponse,
 } from './identity/registration'
+import {
+  IdentityBeneficiaryResponse,
+  parseIdentityBeneficiaryResponse,
+} from './identity/beneficiary'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
-import { parseProposalList, Proposal, ProposalQuality, ProposalQuery } from './proposal/proposal'
-import { parseServiceInfo, parseServiceInfoList, ServiceInfo } from './provider/service-info'
-import { ServiceRequest } from './provider/service-request'
+import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
+import { ProposalMetrics } from './proposal/metrics'
+import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
+import { ServiceStartRequest } from './provider/service-request'
 import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
-import { TopUpRequest } from './payment/topup'
-import { TransactorFeesResponse } from './payment/fees'
+import { Fees } from './transactor/fees'
+import {
+  SettleRequest,
+  SettleWithBeneficiaryRequest,
+  DecreaseStakeRequest,
+  SettlementListQuery,
+  SettlementListResponse,
+  Settlement,
+} from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -45,7 +58,7 @@ export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusResponse>
   stop(): Promise<void>
-  location(timeout?: number): Promise<ConsumerLocation>
+  location(timeout?: number): Promise<Location>
 
   defaultConfig(): Promise<Config>
   userConfig(): Promise<Config>
@@ -57,7 +70,8 @@ export interface TequilapiClient {
   identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void>
   identityRegister(id: string, request?: IdentityRegisterRequest): Promise<void>
   identity(id: string): Promise<Identity>
-  identityRegistration(id: string): Promise<IdentityRegistration>
+  identityRegistration(id: string): Promise<IdentityRegistrationResponse>
+  identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse>
   identityPayout(id: string): Promise<IdentityPayout>
   updateIdentityPayout(id: string, ethAddress: string): Promise<void>
   updateEmail(id: string, email: string): Promise<void>
@@ -67,27 +81,33 @@ export interface TequilapiClient {
   authLogin(username: string, password: string): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
-  proposalsQuality(): Promise<ProposalQuality[]>
+  proposalsQuality(): Promise<ProposalMetrics[]>
 
   reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
-  connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionStatusResponse>
-  connectionStatus(): Promise<ConnectionStatusResponse>
+  connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo>
+  connectionStatus(): Promise<ConnectionInfo>
   connectionCancel(): Promise<void>
-  connectionIp(timeout?: number): Promise<ConnectionIp>
+  connectionIp(timeout?: number): Promise<IP>
   connectionStatistics(): Promise<ConnectionStatistics>
-  connectionLocation(): Promise<ConsumerLocation>
+  connectionLocation(): Promise<Location>
 
   serviceList(): Promise<ServiceInfo[]>
   serviceGet(serviceId: string): Promise<ServiceInfo>
-  serviceStart(request: ServiceRequest, timeout?: number): Promise<ServiceInfo>
+  serviceStart(request: ServiceStartRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
 
   sessions(query?: SessionListQuery): Promise<SessionListResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
-  transactorFees(): Promise<TransactorFeesResponse>
-  topUp(request: TopUpRequest): Promise<void>
+  transactorFees(): Promise<Fees>
+  settleSync(request: SettleRequest): Promise<void>
+  settleAsync(request: SettleRequest): Promise<void>
+  settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
+  settleIntoStakeSync(request: SettleRequest): Promise<void>
+  settleIntoStakeAsync(request: SettleRequest): Promise<void>
+  decreaseStake(request: DecreaseStakeRequest): Promise<void>
+  settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -119,12 +139,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.post('stop')
   }
 
-  public async location(timeout?: number): Promise<ConsumerLocation> {
+  public async location(timeout?: number): Promise<Location> {
     const response = await this.http.get('location', undefined, timeout)
     if (!response) {
-      throw new Error('Location response body is missing')
+      throw new Error('ServiceLocation response body is missing')
     }
-    return parseConsumerLocation(response)
+    return parseLocation(response)
   }
 
   public async identityList(): Promise<IdentityRef[]> {
@@ -171,12 +191,20 @@ export class HttpTequilapiClient implements TequilapiClient {
     return await this.http.post(`identities/${id}/register`, request ?? {})
   }
 
-  public async identityRegistration(id: string): Promise<IdentityRegistration> {
+  public async identityRegistration(id: string): Promise<IdentityRegistrationResponse> {
     const response = await this.http.get(`identities/${id}/registration`)
     if (!response) {
       throw new Error('Identity registration response body is missing')
     }
-    return parseIdentityRegistration(response)
+    return parseIdentityRegistrationResponse(response)
+  }
+
+  public async identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse> {
+    const response = await this.http.get(`identities/${id}/beneficiary`)
+    if (!response) {
+      throw new Error('Identity registration response body is missing')
+    }
+    return parseIdentityBeneficiaryResponse(response)
   }
 
   public async identityPayout(id: string): Promise<IdentityPayout> {
@@ -225,7 +253,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseProposalList(response).proposals || []
   }
 
-  public async proposalsQuality(): Promise<ProposalQuality[]> {
+  public async proposalsQuality(): Promise<ProposalMetrics[]> {
     const response = await this.http.get('proposals/quality')
     if (!response) {
       throw new Error('Proposals response body is missing')
@@ -236,35 +264,35 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async connectionCreate(
     request: ConnectionRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
-  ): Promise<ConnectionStatusResponse> {
+  ): Promise<ConnectionInfo> {
     const response = await this.http.put('connection', request, timeout)
     if (!response) {
       throw new Error('Connection creation response body is missing')
     }
-    return parseConnectionStatusResponse(response)
+    return parseConnectionInfo(response)
   }
 
-  public async connectionStatus(): Promise<ConnectionStatusResponse> {
+  public async connectionStatus(): Promise<ConnectionInfo> {
     const response = await this.http.get('connection')
     if (!response) {
       throw new Error('Connection status response body is missing')
     }
-    return parseConnectionStatusResponse(response)
+    return parseConnectionInfo(response)
   }
 
   public async connectionCancel(): Promise<void> {
     await this.http.delete('connection')
   }
 
-  public async connectionIp(timeout?: number): Promise<ConnectionIp> {
+  public async connectionIp(timeout?: number): Promise<IP> {
     const response = await this.http.get('connection/ip', undefined, timeout)
     if (!response) {
       throw new Error('Connection IP response body is missing')
     }
-    return parseConnectionIp(response)
+    return parseIP(response)
   }
 
-  public async connectionLocation(): Promise<ConsumerLocation> {
+  public async connectionLocation(): Promise<Location> {
     return await this.http.get('connection/location')
   }
 
@@ -282,7 +310,7 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Service list response body is missing')
     }
 
-    return parseServiceInfoList(response)
+    return parseServiceListResponse(response)
   }
 
   public async serviceGet(id: string): Promise<ServiceInfo> {
@@ -295,7 +323,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async serviceStart(
-    request: ServiceRequest,
+    request: ServiceStartRequest,
     timeout: number | undefined = TIMEOUT_DISABLED
   ): Promise<ServiceInfo> {
     const response = await this.http.post('services', request, timeout)
@@ -312,7 +340,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async sessions(query?: SessionListQuery): Promise<SessionListResponse> {
     const response = await this.http.get('sessions', query)
     if (!response) {
-      throw new Error('Service sessions response body is missing')
+      throw new Error('Sessions history response body is missing')
     }
     return parseSessionListResponse(response)
   }
@@ -352,12 +380,40 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`feedback/issue`, issue, timeout)
   }
 
-  public async transactorFees(): Promise<TransactorFeesResponse> {
+  public async transactorFees(): Promise<Fees> {
     return this.http.get(`transactor/fees`)
   }
 
-  public async topUp(request: TopUpRequest): Promise<void> {
-    return this.http.post(`transactor/topup`, request)
+  public async settleSync(request: SettleRequest): Promise<void> {
+    return this.http.post(`transactor/settle/sync`, request)
+  }
+
+  public async settleAsync(request: SettleRequest): Promise<void> {
+    return this.http.post(`transactor/settle/async`, request)
+  }
+
+  public async settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
+    return this.http.post(`identities/${request.providerId}/beneficiary`, request)
+  }
+
+  public async settleIntoStakeSync(request: SettleRequest): Promise<void> {
+    return this.http.post(`transactor/stake/increase/sync`, request)
+  }
+
+  public async settleIntoStakeAsync(request: SettleRequest): Promise<void> {
+    return this.http.post(`transactor/stake/increase/async`, request)
+  }
+
+  public async decreaseStake(request: DecreaseStakeRequest): Promise<void> {
+    return this.http.post(`transactor/stake/decrease`, request)
+  }
+
+  public async settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse> {
+    const response = await this.http.get('transactor/settle/history', query)
+    if (!response) {
+      throw new Error('Settlement history response body is missing')
+    }
+    return parsePageable<Settlement>(response)
   }
 
   public async getMMNNodeReport(): Promise<MMNReportResponse> {

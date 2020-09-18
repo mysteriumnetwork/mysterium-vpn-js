@@ -5,12 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Money } from './method'
-
-export enum Currency {
-  MYST = 'MYST',
-  MYSTTestToken = 'MYSTT',
-}
+import { Money, Currency } from '../proposal/payment-method'
 
 export interface DisplayMoneyOptions {
   showCurrency?: boolean
