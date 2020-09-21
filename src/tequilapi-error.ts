@@ -7,7 +7,10 @@
 
 export interface AxiosError {
   message: string
-  response?: { status: number }
+  response?: {
+    status: number
+    data?: any
+  }
   code?: string
 }
 
@@ -76,6 +79,10 @@ export class TequilapiError extends Error {
 
   public get isUnauthorizedError(): boolean {
     return this._hasHttpStatus(httpResponseCodes.UNAUTHORIZED)
+  }
+
+  public get originalResponseData(): any | undefined {
+    return this._originalError.response?.data
   }
 
   public _hasHttpStatus(expectedStatus: number): boolean {
