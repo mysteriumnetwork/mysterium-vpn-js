@@ -14,7 +14,7 @@ describe('TimeFormatter', () => {
     formatter = new TimeFormatter(-120)
   })
 
-  describe('.getCurrentgetCurrentISODateTimegetCurrentISODateTimeDateTime', () => {
+  describe('.getCurrentISODateTime', () => {
     it('returns a string representing current time', () => {
       const current = formatter.getCurrentISODateTime()
 

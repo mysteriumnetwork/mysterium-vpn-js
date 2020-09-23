@@ -14,7 +14,7 @@ export enum NatStatus {
 }
 
 export interface NatStatusResponse {
-  status: string
+  status: NatStatus
   error?: string
 }
 

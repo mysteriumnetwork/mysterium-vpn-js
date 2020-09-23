@@ -16,6 +16,10 @@ export interface DisplayMoneyOptions {
 
 export const DECIMAL_PART = 1_000_000_000_000_000_000
 
+const displayedCurrency = (currency: string, showCurrency?: boolean): string => {
+  return showCurrency ? ` ${currency}` : ''
+}
+
 export const displayMoney = (
   m: Money,
   {
@@ -32,7 +36,7 @@ export const displayMoney = (
     if (removeInsignificantZeros) {
       amountStr = Number(amountStr).toString()
     }
-    return `${amountStr}${showCurrency ? m.currency : ''}`
+    return `${amountStr}${displayedCurrency(m.currency, showCurrency)}`
   }
-  return `${m.amount}${showCurrency ? m.currency : ''}`
+  return `${m.amount}${displayedCurrency(m.currency, showCurrency)}`
 }
