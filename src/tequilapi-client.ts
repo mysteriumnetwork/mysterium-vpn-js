@@ -77,8 +77,9 @@ export interface TequilapiClient {
   updateEmail(id: string, email: string): Promise<void>
   updateReferralCode(id: string, referralCode: string): Promise<void>
 
-  authChangePassword(username: string, oldPassword: string, newPassword: string): Promise<void>
   authLogin(username: string, password: string): Promise<void>
+  authLogout(): Promise<void>
+  authChangePassword(username: string, oldPassword: string, newPassword: string): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
   proposalsQuality(): Promise<ProposalMetrics[]>
@@ -227,6 +228,14 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.put(`identities/${id}/email`, { email })
   }
 
+  public async authLogin(username: string, password: string): Promise<void> {
+    return this.http.post(`auth/login`, { username, password })
+  }
+
+  public async authLogout(): Promise<void> {
+    return this.http.delete(`auth/logout`)
+  }
+
   public async authChangePassword(
     username: string,
     oldPassword: string,
@@ -239,10 +248,6 @@ export class HttpTequilapiClient implements TequilapiClient {
       // eslint-disable-next-line @typescript-eslint/camelcase
       newPassword: newPassword,
     })
-  }
-
-  public async authLogin(username: string, password: string): Promise<void> {
-    return this.http.post(`auth/login`, { username, password })
   }
 
   public async findProposals(query?: ProposalQuery): Promise<Proposal[]> {
