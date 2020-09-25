@@ -78,6 +78,7 @@ export interface TequilapiClient {
   updateEmail(id: string, email: string): Promise<void>
   updateReferralCode(id: string, referralCode: string): Promise<void>
 
+  authAuthenticate(request: AuthRequest): Promise<AuthResponse>
   authLogin(request: AuthRequest): Promise<AuthResponse>
   authLogout(): Promise<void>
   authChangePassword(request: ChangePasswordRequest): Promise<void>
@@ -227,6 +228,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async updateEmail(id: string, email: string): Promise<void> {
     await this.http.put(`identities/${id}/email`, { email })
+  }
+
+  public async authAuthenticate(request: AuthRequest): Promise<AuthResponse> {
+    return this.http.post(`auth/authenticate`, request)
   }
 
   public async authLogin(request: AuthRequest): Promise<AuthResponse> {
