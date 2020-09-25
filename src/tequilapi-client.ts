@@ -78,6 +78,7 @@ export interface TequilapiClient {
   updateEmail(id: string, email: string): Promise<void>
   updateReferralCode(id: string, referralCode: string): Promise<void>
 
+  authSetToken(token: string): void
   authAuthenticate(request: AuthRequest): Promise<AuthResponse>
   authLogin(request: AuthRequest): Promise<AuthResponse>
   authLogout(): Promise<void>
@@ -228,6 +229,12 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async updateEmail(id: string, email: string): Promise<void> {
     await this.http.put(`identities/${id}/email`, { email })
+  }
+
+  public authSetToken(token: string): void {
+    this.http.setHeaders({
+      Authorization: 'Bearer ' + token,
+    })
   }
 
   public async authAuthenticate(request: AuthRequest): Promise<AuthResponse> {
