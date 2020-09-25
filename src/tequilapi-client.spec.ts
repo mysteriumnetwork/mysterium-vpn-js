@@ -502,7 +502,11 @@ describe('HttpTequilapiClient', () => {
           new_password: 'pass5678',
         })
         .reply(200)
-      await api.authChangePassword('username', 'pass1234', 'pass5678')
+      await api.authChangePassword({
+        username: 'username',
+        oldPassword: 'pass1234',
+        newPassword: 'pass5678',
+      })
     })
   })
 
@@ -514,7 +518,10 @@ describe('HttpTequilapiClient', () => {
           password: 'password',
         })
         .reply(200)
-      await api.authLogin('username', 'password')
+      await api.authLogin({
+        username: 'username',
+        password: 'password',
+      })
     })
   })
 

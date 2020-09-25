@@ -5,41 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Pageable } from '../common/pageable'
-
 export interface AuthRequest {
   username: string
   password: string
 }
 
-export interface AuthRequest {
+export interface AuthResponse {
+  token: string
+  expiresAt: string
+}
+
+export interface ChangePasswordRequest {
   username: string
-  password: string
+  oldPassword: string
+  newPassword: string
 }
-
-export interface DecreaseStakeRequest {
-  id?: string
-  amount?: number
-  transactorFee?: number
-}
-
-export interface Auth {
-  txHash: string
-  providerId: string
-  hermesId: string
-  channelAddress: string
-  beneficiary: string
-  amount: string
-  settledAt: string
-}
-
-export interface SettlementListQuery {
-  settledAtFrom?: string
-  settledAtTo?: string
-  providerId?: string
-  hermesId?: string
-  page?: number
-  pageSize?: number
-}
-
-export type SettlementListResponse = Pageable<Auth>

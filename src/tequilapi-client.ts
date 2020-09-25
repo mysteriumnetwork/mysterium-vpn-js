@@ -51,6 +51,7 @@ import {
   Settlement,
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
+import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 
@@ -77,9 +78,9 @@ export interface TequilapiClient {
   updateEmail(id: string, email: string): Promise<void>
   updateReferralCode(id: string, referralCode: string): Promise<void>
 
-  authLogin(username: string, password: string): Promise<void>
+  authLogin(request: AuthRequest): Promise<AuthResponse>
   authLogout(): Promise<void>
-  authChangePassword(username: string, oldPassword: string, newPassword: string): Promise<void>
+  authChangePassword(request: ChangePasswordRequest): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
   proposalsQuality(): Promise<ProposalMetrics[]>
@@ -228,26 +229,16 @@ export class HttpTequilapiClient implements TequilapiClient {
     await this.http.put(`identities/${id}/email`, { email })
   }
 
-  public async authLogin(username: string, password: string): Promise<void> {
-    return this.http.post(`auth/login`, { username, password })
+  public async authLogin(request: AuthRequest): Promise<AuthResponse> {
+    return this.http.post(`auth/login`, request)
   }
 
   public async authLogout(): Promise<void> {
     return this.http.delete(`auth/logout`)
   }
 
-  public async authChangePassword(
-    username: string,
-    oldPassword: string,
-    newPassword: string
-  ): Promise<void> {
-    return this.http.put(`auth/password`, {
-      username,
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      oldPassword: oldPassword,
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      newPassword: newPassword,
-    })
+  public async authChangePassword(request: ChangePasswordRequest): Promise<void> {
+    return this.http.put(`auth/password`, request)
   }
 
   public async findProposals(query?: ProposalQuery): Promise<Proposal[]> {
