@@ -171,7 +171,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public updateUserConfig(config: Config): Promise<Config> {
+  public config(): Promise<Config> {
     throw Error('Not implemented')
   }
 
@@ -180,6 +180,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public userConfig(): Promise<Config> {
+    throw Error('Not implemented')
+  }
+
+  public updateUserConfig(config: Config): Promise<Config> {
     throw Error('Not implemented')
   }
 
