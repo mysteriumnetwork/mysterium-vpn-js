@@ -164,7 +164,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public authAuthenticate(request: AuthRequest): Promise<AuthResponse> {
+  public authAuthenticate(request: AuthRequest, useToken = true): Promise<AuthResponse> {
     throw Error('Not implemented')
   }
 

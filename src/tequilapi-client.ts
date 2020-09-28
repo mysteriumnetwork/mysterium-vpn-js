@@ -79,7 +79,7 @@ export interface TequilapiClient {
   updateReferralCode(id: string, referralCode: string): Promise<void>
 
   authSetToken(token: string): void
-  authAuthenticate(request: AuthRequest): Promise<AuthResponse>
+  authAuthenticate(request: AuthRequest, useToken: true): Promise<AuthResponse>
   authLogin(request: AuthRequest): Promise<AuthResponse>
   authLogout(): Promise<void>
   authChangePassword(request: ChangePasswordRequest): Promise<void>
@@ -237,8 +237,12 @@ export class HttpTequilapiClient implements TequilapiClient {
     })
   }
 
-  public async authAuthenticate(request: AuthRequest): Promise<AuthResponse> {
-    return this.http.post(`auth/authenticate`, request)
+  public async authAuthenticate(request: AuthRequest, useToken = true): Promise<AuthResponse> {
+    const response: AuthResponse = await this.http.post(`auth/authenticate`, request)
+    if (useToken) {
+      this.authSetToken(response.token)
+    }
+    return response
   }
 
   public async authLogin(request: AuthRequest): Promise<AuthResponse> {
