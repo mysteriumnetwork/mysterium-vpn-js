@@ -57,11 +57,13 @@ export { ServiceStartRequest } from './provider/service-request'
 export { ServiceStatus } from './provider/service-status'
 
 export {
-  Session,
   SessionStatus,
   SessionDirection,
-  SessionListResponse,
+  Session,
   SessionStats,
+  SessionListResponse,
+  SessionStatsAggregatedResponse,
+  SessionStatsDailyResponse,
 } from './session/session'
 
 export { Fees } from './transactor/fees'

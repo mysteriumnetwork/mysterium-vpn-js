@@ -35,30 +35,6 @@ export interface Session {
   status: SessionStatus
 }
 
-export interface SessionStats {
-  count: number
-  countConsumers: number
-  sumBytesReceived: number
-  sumBytesSent: number
-  sumDuration: number
-  sumTokens: number
-}
-
-export interface SessionListResponse extends Pageable<Session> {
-  stats: SessionStats
-  statsDaily: {
-    [date: string]: SessionStats
-  }
-}
-
-export interface SessionListQuery extends PaginationQuery {
-  dateFrom?: string
-  dateTo?: string
-  direction?: string
-  serviceType?: string
-  status?: string
-}
-
 export function parseSession(data: any): Session {
   validateMultiple('Session', data, [
     { name: 'id', type: 'string' },
@@ -78,12 +54,17 @@ export function parseSession(data: any): Session {
   return data
 }
 
-export function parseSessionListResponse(responseData: any): SessionListResponse {
-  validate('Session[]', responseData, { name: 'items', type: 'array' })
-  validate('SessionStats', responseData, { name: 'stats', type: 'object' })
-  validate('[date: string]: StatsDaily', responseData, { name: 'statsDaily', type: 'object' })
+export interface SessionStats {
+  count: number
+  countConsumers: number
+  sumBytesReceived: number
+  sumBytesSent: number
+  sumDuration: number
+  sumTokens: number
+}
 
-  validateMultiple('SessionStats', responseData.stats, [
+export function parseSessionStats(data: any): SessionStats {
+  validateMultiple('SessionStats', data, [
     { name: 'count', type: 'number' },
     { name: 'countConsumers', type: 'number' },
     { name: 'sumBytesReceived', type: 'number' },
@@ -91,24 +72,61 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
     { name: 'sumDuration', type: 'number' },
     { name: 'sumTokens', type: 'number' },
   ])
+  return data
+}
 
-  Object.keys(responseData.statsDaily).forEach((key) => {
-    validateMultiple('[date: string]: StatsDaily', responseData.statsDaily, [
-      { name: key, type: 'object' },
-    ])
-    validateMultiple('StatsDaily', responseData.statsDaily[key], [
-      { name: 'count', type: 'number' },
-      { name: 'countConsumers', type: 'number' },
-      { name: 'sumBytesReceived', type: 'number' },
-      { name: 'sumBytesSent', type: 'number' },
-      { name: 'sumDuration', type: 'number' },
-      { name: 'sumTokens', type: 'number' },
-    ])
-  })
+export interface SessionQuery {
+  dateFrom?: string
+  dateTo?: string
+  direction?: string
+  consumerId?: string
+  hermesId?: string
+  providerId?: string
+  serviceType?: string
+  status?: string
+}
 
+export interface SessionListQuery extends PaginationQuery, SessionQuery {}
+
+export type SessionListResponse = Pageable<Session>
+
+export function parseSessionListResponse(responseData: any): SessionListResponse {
   const response = parsePageable<Session>(responseData) as SessionListResponse
   response.items = responseData.items.map(parseSession)
-  response.stats = responseData.stats
-  response.statsDaily = responseData.statsDaily
+  return response
+}
+
+export interface SessionStatsAggregatedResponse {
+  stats: SessionStats
+}
+
+export function parseSessionStatsAggregatedResponse(data: any): SessionStatsAggregatedResponse {
+  validate('SessionStatsAggregatedResponse', data, { name: 'stats', type: 'object' })
+
+  return {
+    stats: parseSessionStats(data.stats),
+  }
+}
+
+export interface SessionStatsDailyResponse {
+  items: {
+    [date: string]: SessionStats
+  }
+  stats: SessionStats
+}
+
+export function parseSessionStatsDailyResponse(data: any): SessionStatsDailyResponse {
+  validateMultiple('SessionStatsDailyResponse', data, [
+    { name: 'items', type: 'object' },
+    { name: 'stats', type: 'object' },
+  ])
+
+  const response = data as SessionStatsDailyResponse
+  response.stats = parseSessionStats(data.stats)
+
+  Object.keys(data.items).forEach((key) => {
+    response.items[key] = parseSessionStats(data.items[key])
+  })
+
   return response
 }

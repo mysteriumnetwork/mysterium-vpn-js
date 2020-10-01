@@ -40,7 +40,16 @@ import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { ProposalMetrics } from './proposal/metrics'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
-import { parseSessionListResponse, SessionListQuery, SessionListResponse } from './session/session'
+import {
+  parseSessionListResponse,
+  parseSessionStatsAggregatedResponse,
+  parseSessionStatsDailyResponse,
+  SessionListQuery,
+  SessionListResponse,
+  SessionQuery,
+  SessionStatsAggregatedResponse,
+  SessionStatsDailyResponse,
+} from './session/session'
 import { Fees } from './transactor/fees'
 import {
   SettleRequest,
@@ -106,6 +115,8 @@ export interface TequilapiClient {
   serviceStop(serviceId: string): Promise<void>
 
   sessions(query?: SessionListQuery): Promise<SessionListResponse>
+  sessionStatsAggregated(query?: SessionQuery): Promise<SessionStatsAggregatedResponse>
+  sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
   transactorFees(): Promise<Fees>
@@ -356,9 +367,27 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async sessions(query?: SessionListQuery): Promise<SessionListResponse> {
     const response = await this.http.get('sessions', query)
     if (!response) {
-      throw new Error('Sessions history response body is missing')
+      throw new Error('Sessions list response body is missing')
     }
     return parseSessionListResponse(response)
+  }
+
+  public async sessionStatsAggregated(
+    query?: SessionQuery
+  ): Promise<SessionStatsAggregatedResponse> {
+    const response = await this.http.get('sessions/stats-aggregated', query)
+    if (!response) {
+      throw new Error('Session stats aggregated response body is missing')
+    }
+    return parseSessionStatsAggregatedResponse(response)
+  }
+
+  public async sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse> {
+    const response = await this.http.get('sessions/stats-daily', query)
+    if (!response) {
+      throw new Error('Session stats daily response body is missing')
+    }
+    return parseSessionStatsDailyResponse(response)
   }
 
   public async accessPolicies(): Promise<AccessPolicy[]> {

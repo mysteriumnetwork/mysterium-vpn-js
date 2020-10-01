@@ -12,6 +12,7 @@ import { HttpTequilapiClient, TequilapiClient } from './tequilapi-client'
 import { parseIdentityRef } from './identity/identity'
 import { parseServiceInfo, parseServiceListResponse } from './provider/service-info'
 import { TequilapiClientFactory } from './tequilapi-client-factory'
+import { parseSessionStats } from './session/session'
 
 describe('HttpTequilapiClient', () => {
   let api: TequilapiClient
@@ -798,24 +799,6 @@ describe('HttpTequilapiClient', () => {
         pageSize: 50,
         totalItems: 1,
         totalPages: 1,
-        stats: {
-          count: 1,
-          countConsumers: 2,
-          sumBytesReceived: 3,
-          sumBytesSent: 4,
-          sumDuration: 5,
-          sumTokens: 6,
-        },
-        statsDaily: {
-          ['2020-09-02']: {
-            count: 1,
-            countConsumers: 2,
-            sumBytesReceived: 3,
-            sumBytesSent: 4,
-            sumDuration: 5,
-            sumTokens: 6,
-          },
-        },
       }
       mock.onGet('sessions').reply(200, response)
 
@@ -831,6 +814,75 @@ describe('HttpTequilapiClient', () => {
       expect(api.sessions()).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="sessions")'
+      )
+    })
+  })
+
+  describe('sessionStatsAggregated()', () => {
+    it('returns response', async () => {
+      const responseMock = {
+        stats: {
+          count: 1,
+          countConsumers: 2,
+          sumBytesReceived: 3,
+          sumBytesSent: 4,
+          sumDuration: 5,
+          sumTokens: 6,
+        },
+      }
+      mock.onGet('sessions/stats-aggregated').reply(200, responseMock)
+
+      const response = await api.sessionStatsAggregated()
+      expect(response.stats).toEqual(parseSessionStats(responseMock.stats))
+    })
+
+    it('handles error', () => {
+      mock.onGet('sessions/stats-aggregated').reply(500)
+
+      expect(api.sessionStatsAggregated()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="sessions/stats-aggregated")'
+      )
+    })
+  })
+
+  describe('sessionStatsDaily()', () => {
+    it('returns response', async () => {
+      const responseMock = {
+        items: {
+          ['2020-09-02']: {
+            count: 1,
+            countConsumers: 2,
+            sumBytesReceived: 3,
+            sumBytesSent: 4,
+            sumDuration: 5,
+            sumTokens: 6,
+          },
+        },
+        stats: {
+          count: 1,
+          countConsumers: 2,
+          sumBytesReceived: 3,
+          sumBytesSent: 4,
+          sumDuration: 5,
+          sumTokens: 6,
+        },
+      }
+      mock.onGet('sessions/stats-daily').reply(200, responseMock)
+
+      const response = await api.sessionStatsDaily()
+      expect(response.items).toEqual({
+        '20200902': parseSessionStats(responseMock.items['2020-09-02']),
+      })
+      expect(response.stats).toEqual(parseSessionStats(responseMock.stats))
+    })
+
+    it('handles error', () => {
+      mock.onGet('sessions/stats-daily').reply(500)
+
+      expect(api.sessionStatsDaily()).rejects.toHaveProperty(
+        'message',
+        'Request failed with status code 500 (path="sessions/stats-daily")'
       )
     })
   })
