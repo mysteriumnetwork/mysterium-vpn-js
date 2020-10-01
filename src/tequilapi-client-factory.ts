@@ -9,7 +9,14 @@ import { TIMEOUT_DEFAULT } from './http/timeouts'
 import { HttpInterface } from './http/interface'
 import axios, { AxiosInstance } from 'axios'
 import { AxiosAdapter } from './http/axios-adapter'
-import { HttpTequilapiClient, TEQUILAPI_URL, TequilapiClient } from './tequilapi-client'
+import {
+  HttpTequilapiClient,
+  pathConfig,
+  pathConfigDefault,
+  pathConfigUser,
+  TEQUILAPI_URL,
+  TequilapiClient,
+} from './tequilapi-client'
 import camelcaseKeys from 'camelcase-keys'
 
 export class TequilapiClientFactory {
@@ -38,7 +45,7 @@ export class TequilapiClientFactory {
     const convertOptions = {
       deep: true,
     }
-    const rawPaths = ['config/user']
+    const rawPaths = [pathConfig, pathConfigDefault, pathConfigUser]
     ax.interceptors.request.use((config) => {
       if (config.url && rawPaths.includes(config.url)) {
         return config
