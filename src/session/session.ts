@@ -6,7 +6,7 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
-import { Pageable, parsePageable } from '../common/pageable'
+import { Pageable, PaginationQuery, parsePageable } from '../common/pageable'
 
 export enum SessionStatus {
   NEW = 'New',
@@ -51,14 +51,12 @@ export interface SessionListResponse extends Pageable<Session> {
   }
 }
 
-export interface SessionListQuery {
+export interface SessionListQuery extends PaginationQuery {
   dateFrom?: string
   dateTo?: string
   direction?: string
   serviceType?: string
   status?: string
-  page?: number
-  pageSize?: number
 }
 
 export function parseSession(data: any): Session {
