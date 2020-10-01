@@ -8,6 +8,7 @@
 import { validate, validateMultiple } from '../fmt/validation'
 import { Pageable, PaginationQuery, parsePageable } from '../common/pageable'
 
+
 export enum SessionStatus {
   NEW = 'New',
   COMPLETED = 'Completed',
@@ -78,12 +79,12 @@ export function parseSessionStats(data: any): SessionStats {
 export interface SessionQuery {
   dateFrom?: string
   dateTo?: string
-  direction?: string
+  direction?: SessionDirection
   consumerId?: string
   hermesId?: string
   providerId?: string
   serviceType?: string
-  status?: string
+  status?: SessionStatus
 }
 
 export interface SessionListQuery extends PaginationQuery, SessionQuery {}
