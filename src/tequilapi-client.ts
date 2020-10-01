@@ -53,6 +53,9 @@ import {
 import { IdentityCurrentRequest } from './identity/selection'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
+export const pathConfig = 'config'
+export const pathConfigUser = 'config/user'
+export const pathConfigDefault = 'config/default'
 
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
@@ -356,7 +359,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async config(): Promise<Config> {
-    const response = await this.http.get('config')
+    const response = await this.http.get(pathConfig)
     if (!response) {
       throw new Error('Config body is missing')
     }
@@ -365,7 +368,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async defaultConfig(): Promise<Config> {
-    const response = await this.http.get('config/default')
+    const response = await this.http.get(pathConfigDefault)
     if (!response) {
       throw new Error('Default config body is missing')
     }
@@ -374,7 +377,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async userConfig(): Promise<Config> {
-    const response = await this.http.get('config/user')
+    const response = await this.http.get(pathConfigUser)
     if (!response) {
       throw new Error('User config body is missing')
     }
@@ -383,7 +386,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async updateUserConfig(config: Config): Promise<Config> {
-    return this.http.post(`config/user`, config)
+    return this.http.post(pathConfigUser, config)
   }
 
   public async reportIssue(issue: Issue, timeout?: number): Promise<IssueId> {
