@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Pageable } from '../common/pageable'
+import { Pageable, PaginationQuery } from '../common/pageable'
 
 export interface SettleRequest {
   hermesId: string
@@ -32,13 +32,11 @@ export interface Settlement {
   settledAt: string
 }
 
-export interface SettlementListQuery {
-  settledAtFrom?: string
-  settledAtTo?: string
+export interface SettlementListQuery extends PaginationQuery {
+  dateFrom?: string
+  dateTo?: string
   providerId?: string
   hermesId?: string
-  page?: number
-  pageSize?: number
 }
 
 export type SettlementListResponse = Pageable<Settlement>

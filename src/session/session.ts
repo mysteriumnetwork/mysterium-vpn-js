@@ -8,7 +8,6 @@
 import { validate, validateMultiple } from '../fmt/validation'
 import { Pageable, PaginationQuery, parsePageable } from '../common/pageable'
 
-
 export enum SessionStatus {
   NEW = 'New',
   COMPLETED = 'Completed',
