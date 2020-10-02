@@ -17,7 +17,7 @@ import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionInfo } from '../connection/status'
 import { Location } from '../location/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
-import { IdentityRef, Identity } from '../identity/identity'
+import { Identity, IdentityRef } from '../identity/identity'
 import { IdentityPayout } from '../identity/payout'
 import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
@@ -29,14 +29,15 @@ import { SessionListQuery, SessionListResponse } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { Fees } from '../transactor/fees'
 import {
-  SettleRequest,
-  SettleWithBeneficiaryRequest,
   DecreaseStakeRequest,
   SettlementListQuery,
   SettlementListResponse,
+  SettleRequest,
+  SettleWithBeneficiaryRequest,
 } from '../transactor/settlement'
 import { IdentityCurrentRequest } from '../identity/selection'
 import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
+import { AuthRequest, AuthResponse, ChangePasswordRequest } from '../auth/auth'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -159,15 +160,23 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public authChangePassword(
-    username: string,
-    oldPassword: string,
-    newPassword: string
-  ): Promise<void> {
+  public authSetToken(token: string): void {
     throw Error('Not implemented')
   }
 
-  public authLogin(username: string, password: string): Promise<void> {
+  public authAuthenticate(request: AuthRequest, useToken = true): Promise<AuthResponse> {
+    throw Error('Not implemented')
+  }
+
+  public authLogin(request: AuthRequest): Promise<AuthResponse> {
+    throw Error('Not implemented')
+  }
+
+  public authLogout(): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public authChangePassword(request: ChangePasswordRequest): Promise<void> {
     throw Error('Not implemented')
   }
 

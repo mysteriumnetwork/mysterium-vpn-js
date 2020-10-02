@@ -29,6 +29,10 @@ export class AxiosAdapter implements HttpInterface {
     this._timeout = defaultTimeout
   }
 
+  public setHeaders(headers: any): void {
+    this._axios.defaults.headers &= headers
+  }
+
   public get(path: string, query?: HttpQuery, timeout?: number): Promise<any> {
     const options = this._decorateOptions(timeout)
     options.params = query
