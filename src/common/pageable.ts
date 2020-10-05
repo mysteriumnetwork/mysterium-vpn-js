@@ -7,6 +7,11 @@
 
 import { validateMultiple } from '../fmt/validation'
 
+export interface PaginationQuery {
+  pageSize?: number
+  page?: number
+}
+
 export interface Pageable<T> {
   items: T[]
   page: number

@@ -25,7 +25,13 @@ import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ProposalMetrics } from '../proposal/metrics'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceStartRequest } from '../provider/service-request'
-import { SessionListQuery, SessionListResponse } from '../session/session'
+import {
+  SessionListQuery,
+  SessionListResponse,
+  SessionQuery,
+  SessionStatsAggregatedResponse,
+  SessionStatsDailyResponse,
+} from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
 import { Fees } from '../transactor/fees'
 import {
@@ -137,6 +143,14 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public sessions(query?: SessionListQuery): Promise<SessionListResponse> {
+    throw Error('Not implemented')
+  }
+
+  public sessionStatsAggregated(query?: SessionQuery): Promise<SessionStatsAggregatedResponse> {
+    throw Error('Not implemented')
+  }
+
+  public sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse> {
     throw Error('Not implemented')
   }
 

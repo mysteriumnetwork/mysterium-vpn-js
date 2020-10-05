@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { parseSession, parseSessionListResponse } from './session'
+import {
+  parseSession,
+  parseSessionListResponse,
+  parseSessionStatsAggregatedResponse,
+  parseSessionStatsDailyResponse,
+} from './session'
 
 describe('TequilapiClient DTO', () => {
   const sessionData = {
@@ -87,33 +92,15 @@ describe('TequilapiClient DTO', () => {
       expect(response.pageSize).toEqual(50)
       expect(response.totalItems).toEqual(1)
       expect(response.totalPages).toEqual(1)
-
-      expect(response.stats.count).toEqual(1)
-      expect(response.stats.countConsumers).toEqual(2)
-      expect(response.stats.sumBytesReceived).toEqual(3)
-      expect(response.stats.sumBytesSent).toEqual(4)
-      expect(response.stats.sumDuration).toEqual(5)
-      expect(response.stats.sumTokens).toEqual(6)
-
-      const statsDailyKeys = Object.keys(response.statsDaily)
-      expect(statsDailyKeys).toHaveLength(1)
-
-      const dailyStat = response.statsDaily[statsDailyKeys[0]]
-      expect(dailyStat.count).toEqual(1)
-      expect(dailyStat.countConsumers).toEqual(2)
-      expect(dailyStat.sumBytesReceived).toEqual(3)
-      expect(dailyStat.sumBytesSent).toEqual(4)
-      expect(dailyStat.sumDuration).toEqual(5)
-      expect(dailyStat.sumTokens).toEqual(6)
     })
 
     it('throws error when invoked with an empty object', async () => {
       expect(() => {
         parseSessionListResponse({})
-      }).toThrowError('Session[]: items is not provided')
+      }).toThrowError('Pageable: items is not provided')
     })
 
-    it('throws an error if proposal in array does not validate', async () => {
+    it('throws an error if session in array does not validate', async () => {
       expect(() => {
         parseSessionListResponse({
           items: [{}],
@@ -125,6 +112,68 @@ describe('TequilapiClient DTO', () => {
           statsDaily: statDaily,
         })
       }).toThrowError('Session: id is not provided')
+    })
+  })
+
+  describe('.parseSessionStatsAggregatedResponse', () => {
+    it('sets properties with full structure', async () => {
+      const response = parseSessionStatsAggregatedResponse({
+        stats: stats,
+      })
+
+      expect(response.stats.count).toEqual(1)
+      expect(response.stats.countConsumers).toEqual(2)
+      expect(response.stats.sumBytesReceived).toEqual(3)
+      expect(response.stats.sumBytesSent).toEqual(4)
+      expect(response.stats.sumDuration).toEqual(5)
+      expect(response.stats.sumTokens).toEqual(6)
+    })
+
+    it('throws error when invoked with an empty object', async () => {
+      expect(() => {
+        parseSessionStatsAggregatedResponse({})
+      }).toThrowError('SessionStatsAggregatedResponse: stats is not provided')
+    })
+  })
+
+  describe('.parseSessionStatsDailyResponse', () => {
+    it('sets properties with full structure', async () => {
+      const response = parseSessionStatsDailyResponse({
+        items: statDaily,
+        stats: stats,
+      })
+
+      const statsDailyKeys = Object.keys(response.items)
+      expect(statsDailyKeys).toHaveLength(1)
+
+      const dailyStat = response.items[statsDailyKeys[0]]
+      expect(dailyStat.count).toEqual(1)
+      expect(dailyStat.countConsumers).toEqual(2)
+      expect(dailyStat.sumBytesReceived).toEqual(3)
+      expect(dailyStat.sumBytesSent).toEqual(4)
+      expect(dailyStat.sumDuration).toEqual(5)
+      expect(dailyStat.sumTokens).toEqual(6)
+
+      expect(response.stats.count).toEqual(1)
+      expect(response.stats.countConsumers).toEqual(2)
+      expect(response.stats.sumBytesReceived).toEqual(3)
+      expect(response.stats.sumBytesSent).toEqual(4)
+      expect(response.stats.sumDuration).toEqual(5)
+      expect(response.stats.sumTokens).toEqual(6)
+    })
+
+    it('throws error when invoked with an empty object', async () => {
+      expect(() => {
+        parseSessionStatsDailyResponse({})
+      }).toThrowError('SessionStatsDailyResponse: items is not provided')
+    })
+
+    it('throws an error if items array does not validate', async () => {
+      expect(() => {
+        parseSessionStatsDailyResponse({
+          items: [{}],
+        })
+      }).toThrowError('SessionStatsDailyResponse: items should be "object"')
     })
   })
 })
