@@ -11,6 +11,7 @@ export interface IdentityRegisterRequest {
   stake?: number
   beneficiary?: string
   fee?: number
+  token?: string
 }
 
 export interface IdentityRegistrationResponse {
