@@ -30,6 +30,7 @@ export interface Settlement {
   beneficiary: string
   amount: string
   settledAt: string
+  fees: number
 }
 
 export interface SettlementListQuery extends PaginationQuery {
