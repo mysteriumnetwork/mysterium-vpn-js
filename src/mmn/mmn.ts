@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 export interface MMNApiKeyResponse {
-  api_key: string
+  apiKey: string
 }
 
 export interface MMNReportResponse {

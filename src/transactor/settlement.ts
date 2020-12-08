@@ -28,9 +28,9 @@ export interface Settlement {
   hermesId: string
   channelAddress: string
   beneficiary: string
-  amount: string
-  settledAt: string
+  amount: number
   fees: number
+  settledAt: string
 }
 
 export interface SettlementListQuery extends PaginationQuery {
