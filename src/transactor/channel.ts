@@ -11,4 +11,5 @@ export interface PaymentChannel {
   hermesId: string
   earnings: string
   earningsTotal: string
+  beneficiary: string
 }

@@ -5,22 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 export interface MMNApiKeyResponse {
-  api_key: string
+  apiKey: string
 }
 
 export interface MMNReportResponse {
-  country?: string
+  id: number
   identity: string
   name?: string
+  country?: string
+  whitelisted?: boolean
   report?: MMNReport
-  whitelisted: boolean
 }
 
 export interface MMNReport {
-  balanceTokens: number
-  balanceUsd: number
-  earningTokens: number
-  earningUsd: number
-  position: number
-  positionPerCountry: number
+  positionResidentialEligible: boolean
+  positionResidential: number
+  balanceResidentialTokens: string
+  balanceResidentialUsd: number
+
+  positionGlobalEligible: boolean
+  positionGlobal: number
+  balanceGlobalTokens: string
+  balanceGlobalUsd: number
 }
