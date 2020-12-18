@@ -61,6 +61,7 @@ import {
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
+import { PaymentOrderOptionsResponse, PaymentOrderRequest, PaymentOrderResponse } from './payments'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -132,6 +133,12 @@ export interface TequilapiClient {
   setMMNApiKey(apiKey: string): Promise<void>
   getMMNApiKey(): Promise<MMNApiKeyResponse>
   clearMMNApiKey(): Promise<void>
+
+  createPaymentOrder(identity: string, request: PaymentOrderRequest): Promise<PaymentOrderResponse>
+  getPaymentOrders(identity: string): Promise<PaymentOrderResponse>
+  getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse>
+  getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse>
+  getPaymentOrderCurrencies(): Promise<string[]>
 }
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -484,5 +491,28 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async clearMMNApiKey(): Promise<void> {
     return this.http.delete(`mmn/api-key`)
+  }
+
+  public async createPaymentOrder(
+    identity: string,
+    request: PaymentOrderRequest
+  ): Promise<PaymentOrderResponse> {
+    return this.http.post(`/identities/${identity}/payment-order`, request)
+  }
+
+  public async getPaymentOrders(identity: string): Promise<PaymentOrderResponse> {
+    return this.http.get(`/identities/${identity}/payment-order`)
+  }
+
+  public async getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse> {
+    return this.http.get(`/identities/${identity}/payment-order/${orderId}`)
+  }
+
+  public async getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse> {
+    return this.http.get(`/payment-order-options`)
+  }
+
+  public async getPaymentOrderCurrencies(): Promise<string[]> {
+    return this.http.get(`/payment-order-currencies`)
   }
 }

@@ -44,6 +44,7 @@ import {
 import { IdentityCurrentRequest } from '../identity/selection'
 import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from '../auth/auth'
+import { PaymentOrderOptionsResponse, PaymentOrderRequest, PaymentOrderResponse } from '../payments'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -259,6 +260,28 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public clearMMNApiKey(): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public createPaymentOrder(
+    identity: string,
+    request: PaymentOrderRequest
+  ): Promise<PaymentOrderResponse> {
+    throw Error('Not implemented')
+  }
+
+  public getPaymentOrders(identity: string): Promise<PaymentOrderResponse> {
+    throw Error('Not implemented')
+  }
+
+  public getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse> {
+    throw Error('Not implemented')
+  }
+
+  public getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse> {
+    throw Error('Not implemented')
+  }
+  public getPaymentOrderCurrencies(): Promise<string[]> {
     throw Error('Not implemented')
   }
 }
