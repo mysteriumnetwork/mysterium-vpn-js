@@ -11,5 +11,5 @@ export interface ServiceLocation {
   city: string
   asn: number
   isp: string
-  userType: string
+  nodeType: string
 }
