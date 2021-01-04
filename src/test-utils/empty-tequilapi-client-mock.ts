@@ -270,7 +270,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public getPaymentOrders(identity: string): Promise<PaymentOrderResponse> {
+  public getPaymentOrders(identity: string): Promise<PaymentOrderResponse[]> {
     throw Error('Not implemented')
   }
 

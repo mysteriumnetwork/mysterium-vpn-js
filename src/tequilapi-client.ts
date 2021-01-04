@@ -135,7 +135,7 @@ export interface TequilapiClient {
   clearMMNApiKey(): Promise<void>
 
   createPaymentOrder(identity: string, request: PaymentOrderRequest): Promise<PaymentOrderResponse>
-  getPaymentOrders(identity: string): Promise<PaymentOrderResponse>
+  getPaymentOrders(identity: string): Promise<PaymentOrderResponse[]>
   getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse>
   getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse>
   getPaymentOrderCurrencies(): Promise<string[]>
@@ -500,7 +500,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`/identities/${identity}/payment-order`, request)
   }
 
-  public async getPaymentOrders(identity: string): Promise<PaymentOrderResponse> {
+  public async getPaymentOrders(identity: string): Promise<PaymentOrderResponse[]> {
     return this.http.get(`/identities/${identity}/payment-order`)
   }
 
