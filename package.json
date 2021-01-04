@@ -52,7 +52,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "camelcase-keys": "^6.2.2",
     "filesize": "^6.1.0",
     "snakecase-keys": "^3.2.0"
