@@ -15,6 +15,7 @@ import { IP, parseIP } from './location/ip'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
 import { Location, parseLocation } from './location/location'
 import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
+import { Terms, TermsRequest } from './daemon/terms'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
 import { parsePageable } from './common/pageable'
@@ -73,6 +74,9 @@ export interface TequilapiClient {
   natStatus(): Promise<NatStatusResponse>
   stop(): Promise<void>
   location(timeout?: number): Promise<Location>
+
+  terms(): Promise<Terms>
+  termsUpdate(request: TermsRequest): Promise<void>
 
   config(): Promise<Config>
   defaultConfig(): Promise<Config>
@@ -154,6 +158,19 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Healthcheck response body is missing')
     }
     return parseHealthcheckResponse(response)
+  }
+
+  public async terms(): Promise<Terms> {
+    const response = await this.http.get('terms')
+    if (!response) {
+      throw new Error('Terms response body is missing')
+    }
+
+    return response
+  }
+
+  public async termsUpdate(request: TermsRequest): Promise<void> {
+    await this.http.post('terms')
   }
 
   public async natStatus(): Promise<NatStatusResponse> {

@@ -45,6 +45,7 @@ import { IdentityCurrentRequest } from '../identity/selection'
 import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from '../auth/auth'
 import { PaymentOrderOptionsResponse, PaymentOrderRequest, PaymentOrderResponse } from '../payments'
+import { Terms, TermsRequest } from '../daemon/terms'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -192,6 +193,14 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public authChangePassword(request: ChangePasswordRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public async terms(): Promise<Terms> {
+    throw Error('Not implemented')
+  }
+
+  public async termsUpdate(request: TermsRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
