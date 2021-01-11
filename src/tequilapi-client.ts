@@ -170,7 +170,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public async termsUpdate(request: TermsRequest): Promise<void> {
-    await this.http.post('terms')
+    await this.http.post('terms', request)
   }
 
   public async natStatus(): Promise<NatStatusResponse> {
