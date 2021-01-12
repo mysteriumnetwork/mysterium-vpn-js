@@ -46,6 +46,7 @@ import { IdentityBeneficiaryResponse } from '../identity/beneficiary'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from '../auth/auth'
 import { PaymentOrderOptionsResponse, PaymentOrderRequest, PaymentOrderResponse } from '../payments'
 import { Terms, TermsRequest } from '../daemon/terms'
+import { ReferralTokenResponse } from '../referral'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -291,6 +292,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
   public getPaymentOrderCurrencies(): Promise<string[]> {
+    throw Error('Not implemented')
+  }
+
+  public async getReferralToken(identity: string): Promise<ReferralTokenResponse> {
     throw Error('Not implemented')
   }
 }
