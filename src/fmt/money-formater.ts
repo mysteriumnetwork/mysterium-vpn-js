@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Money, Currency } from '../proposal/payment-method'
+import { Currency } from '../proposal/payment-method'
+import { Money } from '../payment'
 
 export interface DisplayMoneyOptions {
   showCurrency?: boolean

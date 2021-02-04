@@ -4,6 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { Money } from '../payment'
 
 export interface PaymentMethod {
   type: PaymentMethodType
@@ -19,11 +20,6 @@ export enum PaymentMethodType {
   Unsupported = 'UNSUPPORTED',
 }
 
-export interface Money {
-  amount: number
-  currency: string
-}
-
 export enum Currency {
   MYST = 'MYST',
   MYSTTestToken = 'MYSTT',
@@ -36,6 +32,14 @@ export const pricePerMinute = (pm?: PaymentMethod): Money => {
   return {
     amount: Math.round((60 / pm.rate.perSeconds) * pm.price.amount),
     currency: pm.price.currency,
+  }
+}
+
+export const pricePerHour = (p?: PaymentMethod): Money => {
+  const price = pricePerMinute(p)
+  return {
+    currency: price.currency,
+    amount: price.amount * 60,
   }
 }
 

@@ -62,7 +62,12 @@ import {
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
-import { PaymentOrderOptionsResponse, PaymentOrderRequest, PaymentOrderResponse } from './payments'
+import {
+  Money,
+  PaymentOrderOptionsResponse,
+  PaymentOrderRequest,
+  PaymentOrderResponse,
+} from './payment'
 import { ReferralTokenResponse } from './referral'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
@@ -144,6 +149,7 @@ export interface TequilapiClient {
   getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse>
   getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse>
   getPaymentOrderCurrencies(): Promise<string[]>
+  exchangeRate(quoteCurrency?: string): Promise<Money>
 
   getReferralToken(identity: string): Promise<ReferralTokenResponse>
 }
@@ -538,5 +544,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async getReferralToken(identity: string): Promise<ReferralTokenResponse> {
     return this.http.get(`/identities/${identity}/referral`)
+  }
+
+  public async exchangeRate(quoteCurrency = 'usd'): Promise<Money> {
+    const baseCurrency = 'myst'
+    return this.http.get(`/exchange/${baseCurrency}/${quoteCurrency}`)
   }
 }
