@@ -47,6 +47,7 @@ export {
   Money,
   Currency,
   pricePerMinute,
+  pricePerHour,
   pricePerGiB,
 } from './proposal/payment-method'
 

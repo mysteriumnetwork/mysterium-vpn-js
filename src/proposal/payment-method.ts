@@ -39,6 +39,14 @@ export const pricePerMinute = (pm?: PaymentMethod): Money => {
   }
 }
 
+export const pricePerHour = (p?: PaymentMethod): Money => {
+  const price = pricePerMinute(p)
+  return {
+    currency: price.currency,
+    amount: price.amount * 60,
+  }
+}
+
 const bytesInGiB = 1024 * 1024 * 1024
 
 export const pricePerGiB = (pm?: PaymentMethod): Money => {
