@@ -44,7 +44,6 @@ export { ServiceLocation } from './proposal/service-location'
 export {
   PaymentMethod,
   PaymentMethodType,
-  Money,
   Currency,
   pricePerMinute,
   pricePerHour,
@@ -79,7 +78,12 @@ export { TequilapiError, AxiosError } from './tequilapi-error'
 export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 export { Pageable } from './common/pageable'
 
-export { PaymentOrderResponse, PaymentOrderRequest, PaymentOrderOptionsResponse } from './payments'
+export {
+  Money,
+  PaymentOrderResponse,
+  PaymentOrderRequest,
+  PaymentOrderOptionsResponse,
+} from './payment'
 export { ReferralTokenResponse } from './referral'
 
 export default tequilapi

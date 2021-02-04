@@ -30,3 +30,8 @@ export interface PaymentOrderOptionsResponse {
   minimum: number
   suggested: number[]
 }
+
+export interface Money {
+  amount: number
+  currency: string
+}

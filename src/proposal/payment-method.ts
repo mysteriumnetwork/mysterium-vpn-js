@@ -4,6 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { Money } from '../payment'
 
 export interface PaymentMethod {
   type: PaymentMethodType
@@ -17,11 +18,6 @@ export interface PaymentMethod {
 export enum PaymentMethodType {
   BytesWithTime = 'BYTES_TRANSFERRED_WITH_TIME',
   Unsupported = 'UNSUPPORTED',
-}
-
-export interface Money {
-  amount: number
-  currency: string
 }
 
 export enum Currency {
