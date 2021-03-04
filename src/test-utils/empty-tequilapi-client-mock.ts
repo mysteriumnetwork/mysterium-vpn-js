@@ -22,7 +22,7 @@ import { IdentityPayout } from '../identity/payout'
 import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
-import { ProposalMetrics } from '../proposal/metrics'
+import { ProposalQuality } from '../proposal/quality'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceStartRequest } from '../provider/service-request'
 import {
@@ -82,7 +82,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public proposalsQuality(): Promise<ProposalMetrics[]> {
+  public proposalsQuality(): Promise<ProposalQuality[]> {
     throw Error('Not implemented')
   }
 
