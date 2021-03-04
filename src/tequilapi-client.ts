@@ -38,7 +38,7 @@ import {
 } from './identity/beneficiary'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
-import { ProposalMetrics } from './proposal/metrics'
+import { ProposalQuality } from './proposal/quality'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
 import {
@@ -109,7 +109,7 @@ export interface TequilapiClient {
   authChangePassword(request: ChangePasswordRequest): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
-  proposalsQuality(): Promise<ProposalMetrics[]>
+  proposalsQuality(): Promise<ProposalQuality[]>
 
   reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
@@ -313,7 +313,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseProposalList(response).proposals || []
   }
 
-  public async proposalsQuality(): Promise<ProposalMetrics[]> {
+  public async proposalsQuality(): Promise<ProposalQuality[]> {
     const response = await this.http.get('proposals/quality')
     if (!response) {
       throw new Error('Proposals response body is missing')

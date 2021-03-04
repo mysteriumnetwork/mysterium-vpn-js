@@ -38,7 +38,7 @@ export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identit
 export { NatStatus, NatStatusResponse } from './nat/status'
 
 export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
-export { ProposalMetrics, QualityMetrics, QualityMetricConnects } from './proposal/metrics'
+export { ProposalQuality, Quality } from './proposal/quality'
 export { ServiceDefinition } from './proposal/service-definition'
 export { ServiceLocation } from './proposal/service-location'
 export {

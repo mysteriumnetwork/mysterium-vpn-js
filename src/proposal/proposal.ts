@@ -6,7 +6,7 @@
  */
 
 import { validate, validateMultiple } from '../fmt/validation'
-import { QualityMetrics } from './metrics'
+import { Quality } from './quality'
 import { ServiceDefinition } from './service-definition'
 import { PaymentMethod } from './payment-method'
 import { AccessPolicyRef } from '../access-policy/access-policy'
@@ -16,7 +16,7 @@ export interface Proposal {
   providerId: string
   serviceType: string
   serviceDefinition: ServiceDefinition
-  metrics?: QualityMetrics
+  metrics?: Quality
   accessPolicies?: AccessPolicyRef[]
   paymentMethod: PaymentMethod
 }
