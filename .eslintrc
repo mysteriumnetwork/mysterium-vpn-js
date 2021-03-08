@@ -16,7 +16,7 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "plugins": [
     "prettier",
@@ -27,7 +27,7 @@
     "@typescript-eslint/explicit-function-return-type": ["error", {"allowExpressions": true}],
     "header/header": [2, "block", [
       "*",
-      {"pattern": " * Copyright \\(c\\) \\d{4} BlockDev AG", "template": " * Copyright (c) 2020 BlockDev AG"},
+      {"pattern": " * Copyright \\(c\\) \\d{4} BlockDev AG", "template": " * Copyright (c) 2021 BlockDev AG"},
       " *",
       " * This source code is licensed under the MIT license found in the",
       " * LICENSE file in the root directory of this source tree.",

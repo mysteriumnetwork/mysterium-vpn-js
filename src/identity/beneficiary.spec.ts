@@ -10,7 +10,6 @@ import { parseIdentityBeneficiaryResponse } from './beneficiary'
 describe('TequilapiClient DTO', () => {
   describe('.parseIdentityBeneficiaryResponse', () => {
     it('sets properties', async () => {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       const response = parseIdentityBeneficiaryResponse({
         beneficiary: '0xF000FACE',
       })
