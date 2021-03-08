@@ -12,7 +12,7 @@ export enum QualityLevel {
   LOW = 0,
   MEDIUM = 1,
   HIGH = 2,
-  UNKNOWN,
+  UNKNOWN = 0.5,
 }
 
 export class QualityCalculator {
