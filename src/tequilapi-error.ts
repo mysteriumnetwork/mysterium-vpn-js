@@ -45,7 +45,7 @@ export class TequilapiError extends Error {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(this, actualProto)
     } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.__proto__ = actualProto
     }

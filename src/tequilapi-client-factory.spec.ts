@@ -20,7 +20,6 @@ describe('TequilapiClientFactory', () => {
 
   describe('axiosInstance', () => {
     it('converts request params to snake_case', async () => {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       mock.onGet('/anything', { params: { snake_case: 1 } }).reply(202)
 
       const res = await axios.get('/anything', {
@@ -31,7 +30,6 @@ describe('TequilapiClientFactory', () => {
       expect(res.status).toEqual(202)
     })
     it('converts request body to snake_case', async () => {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       mock.onPost('/anything', { snake_body: 1 }).reply(202)
 
       const res = await axios.post('/anything', {
@@ -40,9 +38,7 @@ describe('TequilapiClientFactory', () => {
       expect(res.status).toEqual(202)
     })
     it('converts response body to camelCase', async () => {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       mock.onGet('/anything').reply(200, {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         snake_response: 3,
       })
 

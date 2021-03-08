@@ -10,7 +10,6 @@ import { parseIdentityPayout } from './payout'
 describe('TequilapiClient DTO', () => {
   describe('.parseIdentityPayout', () => {
     it('sets properties', async () => {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       const identity = parseIdentityPayout({
         ethAddress: '0xF000FACE',
         referralCode: 'ABC1234',
