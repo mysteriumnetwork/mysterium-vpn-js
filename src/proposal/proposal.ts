@@ -16,7 +16,7 @@ export interface Proposal {
   providerId: string
   serviceType: string
   serviceDefinition: ServiceDefinition
-  metrics?: Quality
+  quality?: Quality
   accessPolicies?: AccessPolicyRef[]
   paymentMethod: PaymentMethod
 }
@@ -39,7 +39,7 @@ export interface ProposalQuery {
   serviceType?: string
   accessPolicySource?: string
   accessPolicyId?: string
-  fetchMetrics?: boolean
+  fetchQuality?: boolean
 }
 
 interface ProposalList {

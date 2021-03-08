@@ -252,7 +252,7 @@ describe('HttpTequilapiClient', () => {
       })
     })
 
-    it('fetches metrics when option is given', async () => {
+    it('fetches quality when option is given', async () => {
       const response = {
         proposals: [
           {
@@ -268,19 +268,15 @@ describe('HttpTequilapiClient', () => {
             payment_method: {
               type: 'BYTES_TRANSFERRED_WITH_TIME',
             },
-            metrics: {
-              connect_count: {
-                success: 1,
-                fail: 1,
-                ping: 1,
-              },
+            quality: {
+              quality: 1.5,
               monitoring_failed: false,
             },
           },
         ],
       }
-      mock.onGet('proposals', { params: { fetch_metrics: true } }).reply(200, response)
-      const proposals = await api.findProposals({ fetchMetrics: true })
+      mock.onGet('proposals', { params: { fetch_quality: true } }).reply(200, response)
+      const proposals = await api.findProposals({ fetchQuality: true })
       expect(proposals).toHaveLength(1)
     })
 

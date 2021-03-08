@@ -26,7 +26,7 @@ describe('.parseProposal', () => {
     expect(proposal.serviceType).toEqual('openvpn')
     expect(proposal.serviceDefinition).toEqual({ locationOriginate: undefined })
     expect(proposal.paymentMethod).toEqual({ type: 'BYTES_TRANSFERRED_WITH_TIME' })
-    expect(proposal.metrics).toBeUndefined()
+    expect(proposal.quality).toBeUndefined()
   })
 
   it('throws error with null data', () => {

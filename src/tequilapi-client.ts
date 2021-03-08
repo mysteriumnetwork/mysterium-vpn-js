@@ -318,7 +318,7 @@ export class HttpTequilapiClient implements TequilapiClient {
     if (!response) {
       throw new Error('Proposals response body is missing')
     }
-    return response.metrics || []
+    return response.quality || []
   }
 
   public async connectionCreate(
