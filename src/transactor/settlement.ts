@@ -41,3 +41,13 @@ export interface SettlementListQuery extends PaginationQuery {
 }
 
 export type SettlementListResponse = Pageable<Settlement>
+
+export enum BeneficiaryTxState {
+  COMPLETED = 'completed',
+  PENDING = 'pending',
+}
+
+export interface BeneficiaryTxStatus {
+  state: BeneficiaryTxState
+  error: string
+}

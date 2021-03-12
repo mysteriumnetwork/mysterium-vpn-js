@@ -59,6 +59,7 @@ import {
   SettlementListQuery,
   SettlementListResponse,
   Settlement,
+  BeneficiaryTxStatus,
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
@@ -138,6 +139,7 @@ export interface TequilapiClient {
   settleIntoStakeAsync(request: SettleRequest): Promise<void>
   decreaseStake(request: DecreaseStakeRequest): Promise<void>
   settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse>
+  beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -481,6 +483,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
     return this.http.post(`identities/${request.providerId}/beneficiary`, request)
+  }
+
+  beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
+    return this.http.get(`/identities/${id}/beneficiary-status`)
   }
 
   public async settleIntoStakeSync(request: SettleRequest): Promise<void> {
