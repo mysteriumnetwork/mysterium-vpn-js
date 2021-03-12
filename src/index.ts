@@ -67,6 +67,16 @@ export {
 } from './session/session'
 
 export { Fees } from './transactor/fees'
+export {
+  SettleRequest,
+  SettleWithBeneficiaryRequest,
+  DecreaseStakeRequest,
+  Settlement,
+  SettlementListQuery,
+  SettlementListResponse,
+  BeneficiaryTxState,
+  BeneficiaryTxStatus,
+} from './transactor/settlement'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
 
