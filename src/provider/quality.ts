@@ -12,20 +12,17 @@ export enum QualityLevel {
   LOW = 0,
   MEDIUM = 1,
   HIGH = 2,
-  UNKNOWN = 0.5,
 }
 
-export class QualityCalculator {
-  public calculateLevel(quality: number | null): QualityLevel {
-    if (quality === null) {
-      return QualityLevel.UNKNOWN
-    }
-    if (quality >= QualityLevel.HIGH) {
-      return QualityLevel.HIGH
-    }
-    if (quality >= QualityLevel.MEDIUM) {
-      return QualityLevel.MEDIUM
-    }
-    return QualityLevel.LOW
+export const qualityLevel = (q: { quality?: number } | undefined): QualityLevel | undefined => {
+  if (q?.quality == null) {
+    return undefined
   }
+  if (q.quality >= QualityLevel.HIGH) {
+    return QualityLevel.HIGH
+  }
+  if (q.quality >= QualityLevel.MEDIUM) {
+    return QualityLevel.MEDIUM
+  }
+  return QualityLevel.LOW
 }

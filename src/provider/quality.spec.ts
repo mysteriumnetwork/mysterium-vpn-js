@@ -6,23 +6,16 @@
  */
 
 import { QualityLevel } from './quality'
-import { QualityCalculator } from './quality'
+import { qualityLevel } from './quality'
 
-describe('QualityCalculator', () => {
-  let qualityCalculator: QualityCalculator
-
-  beforeEach(() => {
-    qualityCalculator = new QualityCalculator()
-  })
-
-  describe('.calculateLevel', () => {
-    it('returns quality level according to value', () => {
-      expect(qualityCalculator.calculateLevel(0.1)).toEqual(QualityLevel.LOW)
-      expect(qualityCalculator.calculateLevel(1.0)).toEqual(QualityLevel.MEDIUM)
-      expect(qualityCalculator.calculateLevel(1.1)).toEqual(QualityLevel.MEDIUM)
-      expect(qualityCalculator.calculateLevel(2.0)).toEqual(QualityLevel.HIGH)
-      expect(qualityCalculator.calculateLevel(2.1)).toEqual(QualityLevel.HIGH)
-      expect(qualityCalculator.calculateLevel(null)).toEqual(QualityLevel.UNKNOWN)
-    })
+describe('qualityLevel', () => {
+  it('returns quality level according to value', () => {
+    expect(qualityLevel({ quality: 0.1 })).toEqual(QualityLevel.LOW)
+    expect(qualityLevel({ quality: 1.0 })).toEqual(QualityLevel.MEDIUM)
+    expect(qualityLevel({ quality: 1.1 })).toEqual(QualityLevel.MEDIUM)
+    expect(qualityLevel({ quality: 2.0 })).toEqual(QualityLevel.HIGH)
+    expect(qualityLevel({ quality: 2.1 })).toEqual(QualityLevel.HIGH)
+    expect(qualityLevel({ quality: undefined })).toEqual(undefined)
+    expect(qualityLevel(undefined)).toEqual(undefined)
   })
 })
