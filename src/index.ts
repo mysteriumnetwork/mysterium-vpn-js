@@ -51,7 +51,7 @@ export {
 } from './proposal/payment-method'
 
 export { ProviderService } from './provider/provider-service'
-export { QualityLevel, QualityCalculator } from './provider/quality'
+export { QualityLevel, qualityLevel } from './provider/quality'
 export { ServiceInfo } from './provider/service-info'
 export { ServiceStartRequest } from './provider/service-request'
 export { ServiceStatus } from './provider/service-status'
