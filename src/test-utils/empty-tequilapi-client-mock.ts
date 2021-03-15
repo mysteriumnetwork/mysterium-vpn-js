@@ -35,6 +35,7 @@ import {
 import { TequilapiClient } from '../tequilapi-client'
 import { Fees } from '../transactor/fees'
 import {
+  BeneficiaryTxStatus,
   DecreaseStakeRequest,
   SettlementListQuery,
   SettlementListResponse,
@@ -243,6 +244,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
     throw Error('Not implemented')
   }
 
