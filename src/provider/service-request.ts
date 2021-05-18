@@ -10,7 +10,7 @@ export interface ServiceStartRequest {
   providerId: string
   type: string
   options?: { [key: string]: any }
-  price: Price
+  price?: Price
   accessPolicies?: {
     ids: string[]
   }
