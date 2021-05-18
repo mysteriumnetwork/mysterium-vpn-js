@@ -32,23 +32,13 @@ export { HttpInterface, HttpQuery } from './http/interface'
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 
 export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
-export { IdentityPayout } from './identity/payout'
 export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identity/registration'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
 
 export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
-export { ProposalQuality, Quality } from './proposal/quality'
-export { ServiceDefinition } from './proposal/service-definition'
+export { Quality } from './proposal/quality'
 export { ServiceLocation } from './proposal/service-location'
-export {
-  PaymentMethod,
-  PaymentMethodType,
-  Currency,
-  pricePerMinute,
-  pricePerHour,
-  pricePerGiB,
-} from './proposal/payment-method'
 
 export { ProviderService } from './provider/provider-service'
 export { QualityLevel, qualityLevel } from './provider/quality'
@@ -97,3 +87,4 @@ export {
 export { ReferralTokenResponse } from './referral'
 
 export default tequilapi
+export { Currency } from './proposal/price'

@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export interface ProposalQuality extends Quality {
-  providerId: string
-  serviceType: string
-}
-
 export interface Quality {
   quality: number
-  monitoringFailed: boolean
+  latency: number
+  bandwidth: number
 }

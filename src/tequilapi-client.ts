@@ -26,7 +26,6 @@ import {
   parseIdentityList,
   parseIdentityRef,
 } from './identity/identity'
-import { IdentityPayout, parseIdentityPayout } from './identity/payout'
 import {
   IdentityRegisterRequest,
   IdentityRegistrationResponse,
@@ -38,7 +37,6 @@ import {
 } from './identity/beneficiary'
 import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
-import { ProposalQuality } from './proposal/quality'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
 import {
@@ -98,10 +96,6 @@ export interface TequilapiClient {
   identity(id: string): Promise<Identity>
   identityRegistration(id: string): Promise<IdentityRegistrationResponse>
   identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse>
-  identityPayout(id: string): Promise<IdentityPayout>
-  updateIdentityPayout(id: string, ethAddress: string): Promise<void>
-  updateEmail(id: string, email: string): Promise<void>
-  updateReferralCode(id: string, referralCode: string): Promise<void>
 
   authSetToken(token: string): void
   authAuthenticate(request: AuthRequest, useToken: true): Promise<AuthResponse>
@@ -110,7 +104,6 @@ export interface TequilapiClient {
   authChangePassword(request: ChangePasswordRequest): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
-  proposalsQuality(): Promise<ProposalQuality[]>
 
   reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
@@ -261,26 +254,6 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseIdentityBeneficiaryResponse(response)
   }
 
-  public async identityPayout(id: string): Promise<IdentityPayout> {
-    const response = await this.http.get(`identities/${id}/payout`)
-    if (!response) {
-      throw new Error('Identity payout response body is missing')
-    }
-    return parseIdentityPayout(response)
-  }
-
-  public async updateIdentityPayout(id: string, ethAddress: string): Promise<void> {
-    await this.http.put(`identities/${id}/payout`, { ethAddress })
-  }
-
-  public async updateReferralCode(id: string, referralCode: string): Promise<void> {
-    await this.http.put(`identities/${id}/referral`, { referralCode: referralCode })
-  }
-
-  public async updateEmail(id: string, email: string): Promise<void> {
-    await this.http.put(`identities/${id}/email`, { email })
-  }
-
   public authSetToken(token: string): void {
     this.http.setHeaders({
       Authorization: 'Bearer ' + token,
@@ -313,14 +286,6 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Proposals response body is missing')
     }
     return parseProposalList(response).proposals || []
-  }
-
-  public async proposalsQuality(): Promise<ProposalQuality[]> {
-    const response = await this.http.get('proposals/quality')
-    if (!response) {
-      throw new Error('Proposals response body is missing')
-    }
-    return response.quality || []
   }
 
   public async connectionCreate(

@@ -18,11 +18,9 @@ import { ConnectionInfo } from '../connection/status'
 import { Location } from '../location/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
 import { Identity, IdentityRef } from '../identity/identity'
-import { IdentityPayout } from '../identity/payout'
 import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
 import { NatStatusResponse } from '../nat/status'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
-import { ProposalQuality } from '../proposal/quality'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceStartRequest } from '../provider/service-request'
 import {
@@ -83,10 +81,6 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public proposalsQuality(): Promise<ProposalQuality[]> {
-    throw Error('Not implemented')
-  }
-
   public healthCheck(timeout?: number): Promise<NodeHealthcheck> {
     throw Error('Not implemented')
   }
@@ -115,15 +109,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public updateIdentityPayout(id: string, ethAddress: string): Promise<void> {
-    throw Error('Not implemented')
-  }
-
   public identityUnlock(id: string, passphrase: string, timeout?: number): Promise<void> {
-    throw Error('Not implemented')
-  }
-
-  public identityPayout(id: string): Promise<IdentityPayout> {
     throw Error('Not implemented')
   }
 
@@ -172,14 +158,6 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public identityCurrent(request: IdentityCurrentRequest): Promise<IdentityRef> {
-    throw Error('Not implemented')
-  }
-
-  public updateReferralCode(id: string, referralCode: string): Promise<void> {
-    throw Error('Not implemented')
-  }
-
-  public updateEmail(id: string, email: string): Promise<void> {
     throw Error('Not implemented')
   }
 

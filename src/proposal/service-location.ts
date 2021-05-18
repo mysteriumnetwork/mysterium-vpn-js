@@ -6,10 +6,10 @@
  */
 
 export interface ServiceLocation {
-  country: string
-  continent: string
-  city: string
-  asn: number
-  isp: string
-  nodeType: string
+  country?: string
+  continent?: string
+  city?: string
+  asn?: number
+  isp?: string
+  ipType?: string
 }

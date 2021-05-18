@@ -12,6 +12,7 @@ import { parseIdentityRef } from './identity/identity'
 import { parseServiceInfo, parseServiceListResponse } from './provider/service-info'
 import { TequilapiClientFactory } from './tequilapi-client-factory'
 import { parseSessionStats } from './session/session'
+import { ServiceStartRequest } from './provider/service-request'
 
 describe('HttpTequilapiClient', () => {
   let api: TequilapiClient
@@ -188,31 +189,33 @@ describe('HttpTequilapiClient', () => {
       const response = {
         proposals: [
           {
-            id: 1,
+            format: 'service-proposal/v2',
+            compatibility: 1,
             provider_id: '0x0',
             service_type: 'openvpn',
-            service_definition: {
-              location_originate: {
-                asn: '',
-                country: 'NL',
-              },
+            location: {
+              asn: '',
+              country: 'NL',
             },
-            payment_method: {
-              type: 'BYTES_TRANSFERRED_WITH_TIME',
+            price: {
+              currency: 'MYST',
+              perMyst: 100,
+              perGib: 100,
             },
           },
           {
-            id: 1,
+            format: 'service-proposal/v2',
+            compatibility: 1,
             provider_id: '0x1',
             service_type: 'openvpn',
-            service_definition: {
-              location_originate: {
-                asn: '',
-                country: 'LT',
-              },
+            location: {
+              asn: '',
+              country: 'LT',
             },
-            payment_method: {
-              type: 'BYTES_TRANSFERRED_WITH_TIME',
+            price: {
+              currency: 'MYST',
+              perMyst: 100,
+              perGib: 100,
             },
           },
         ],
@@ -222,61 +225,35 @@ describe('HttpTequilapiClient', () => {
       const proposals = await api.findProposals()
       expect(proposals).toHaveLength(2)
       expect(proposals[0]).toEqual({
-        id: 1,
+        compatibility: 1,
+        format: 'service-proposal/v2',
         providerId: '0x0',
         serviceType: 'openvpn',
-        serviceDefinition: {
-          locationOriginate: {
-            asn: '',
-            country: 'NL',
-          },
+        location: {
+          asn: '',
+          country: 'NL',
         },
-        paymentMethod: {
-          type: 'BYTES_TRANSFERRED_WITH_TIME',
+        price: {
+          currency: 'MYST',
+          perMyst: 100,
+          perGib: 100,
         },
       })
       expect(proposals[1]).toEqual({
-        id: 1,
+        compatibility: 1,
+        format: 'service-proposal/v2',
         providerId: '0x1',
         serviceType: 'openvpn',
-        serviceDefinition: {
-          locationOriginate: {
-            asn: '',
-            country: 'LT',
-          },
+        location: {
+          asn: '',
+          country: 'LT',
         },
-        paymentMethod: {
-          type: 'BYTES_TRANSFERRED_WITH_TIME',
+        price: {
+          currency: 'MYST',
+          perMyst: 100,
+          perGib: 100,
         },
       })
-    })
-
-    it('fetches quality when option is given', async () => {
-      const response = {
-        proposals: [
-          {
-            id: 1,
-            providerId: '0x0',
-            service_type: 'openvpn',
-            service_definition: {
-              location_originate: {
-                asn: '',
-                country: 'NL',
-              },
-            },
-            payment_method: {
-              type: 'BYTES_TRANSFERRED_WITH_TIME',
-            },
-            quality: {
-              quality: 1.5,
-              monitoring_failed: false,
-            },
-          },
-        ],
-      }
-      mock.onGet('proposals', { params: { fetch_quality: true } }).reply(200, response)
-      const proposals = await api.findProposals({ fetchQuality: true })
-      expect(proposals).toHaveLength(1)
     })
 
     it('handles error', () => {
@@ -431,61 +408,6 @@ describe('HttpTequilapiClient', () => {
         'message',
         'Request failed with status code 500 (path="identities/0x1/beneficiary")'
       )
-    })
-  })
-
-  describe('identityPayout()', () => {
-    it('returns identity payout info', async () => {
-      const response = {
-        ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca',
-        referralCode: 'ABC1234',
-        email: '',
-      }
-      mock.onGet('identities/test-id/payout').reply(200, response)
-      const info = await api.identityPayout('test-id')
-      expect(info).toEqual({
-        ethAddress: '0xaef57945ebd1c2e4dfc8e18b8ec6ab593ae0dbca',
-        referralCode: 'ABC1234',
-        email: '',
-      })
-    })
-
-    it('returns error when api does not return body', async () => {
-      mock.onGet('identities/test-id/payout').reply(200)
-      expect(api.identityPayout('test-id')).rejects.toHaveProperty(
-        'message',
-        'Identity payout response body is missing'
-      )
-    })
-
-    it('returns error when eth address is missing', async () => {
-      mock.onGet('identities/test-id/payout').reply(200, { referralCode: 'test' })
-      expect(api.identityPayout('test-id')).rejects.toHaveProperty(
-        'message',
-        'IdentityPayout: ethAddress is not provided'
-      )
-    })
-
-    it('returns error when referral code is missing', async () => {
-      mock.onGet('identities/test-id/payout').reply(200, { ethAddress: '0x0' })
-      expect(api.identityPayout('test-id')).rejects.toHaveProperty(
-        'message',
-        'IdentityPayout: referralCode is not provided'
-      )
-    })
-  })
-
-  describe('updateIdentityPayout()', () => {
-    it('succeeds', async () => {
-      mock.onPut('identities/test-id/payout', { eth_address: 'my eth address' }).reply(200)
-      await api.updateIdentityPayout('test-id', 'my eth address')
-    })
-  })
-
-  describe('updateReferralCode()', () => {
-    it('succeeds', async () => {
-      mock.onPut('identities/test-id/referral', { referral_code: 'ABC1234' }).reply(200)
-      await api.updateReferralCode('test-id', 'ABC1234')
     })
   })
 
@@ -650,16 +572,17 @@ describe('HttpTequilapiClient', () => {
     options: {},
     status: 'Starting',
     proposal: {
-      id: 1,
+      compatibility: 0,
+      format: 'service-proposal/v2',
       providerId: '0x1',
       serviceType: 'openvpn',
-      serviceDefinition: {
-        locationOriginate: {
-          country: 'NL',
-        },
+      location: {
+        country: 'NL',
       },
-      paymentMethod: {
-        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      price: {
+        currency: 'MYST',
+        perMyst: 100,
+        perGib: 100,
       },
     },
   }
@@ -670,16 +593,17 @@ describe('HttpTequilapiClient', () => {
     options: {},
     status: 'Starting',
     proposal: {
-      id: 1,
+      compatibility: 0,
+      format: 'service-proposal/v2',
       provider_id: '0x1',
       service_type: 'openvpn',
-      service_definition: {
-        location_originate: {
-          country: 'NL',
-        },
+      location: {
+        country: 'NL',
       },
-      payment_method: {
-        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      price: {
+        currency: 'MYST',
+        perMyst: 100,
+        perGib: 100,
       },
     },
   }
@@ -728,12 +652,22 @@ describe('HttpTequilapiClient', () => {
           access_policies: {
             ids: ['mysterium-verified'],
           },
+          price: {
+            currency: 'MYST',
+            per_hour: 1000,
+            per_gib: 2000,
+          },
         })
         .reply(200, serviceResponse)
 
-      const request = {
+      const request: ServiceStartRequest = {
         providerId: '0x2000FACE',
         type: 'openvpn',
+        price: {
+          currency: 'MYST',
+          perHour: 1000,
+          perGib: 2000,
+        },
         accessPolicies: { ids: ['mysterium-verified'] },
       }
       const response = await api.serviceStart(request)
@@ -743,7 +677,11 @@ describe('HttpTequilapiClient', () => {
     it('handles error', () => {
       mock.onPost('services').reply(500)
 
-      const request = { providerId: '0x2000FACE', type: 'openvpn' }
+      const request = {
+        providerId: '0x2000FACE',
+        type: 'openvpn',
+        price: { currency: 'MYST', perHour: 2000, perGib: 1000 },
+      }
       expect(api.serviceStart(request)).rejects.toHaveProperty(
         'message',
         'Request failed with status code 500 (path="services")'
