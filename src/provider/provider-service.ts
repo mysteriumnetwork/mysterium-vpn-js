@@ -14,6 +14,7 @@ import { logger } from '../logger'
 import { Publisher } from '../func/publisher'
 import { ServiceInfo } from './service-info'
 import { ServiceStartRequest } from './service-request'
+import { Price } from '../proposal/price'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StatusSubscriber = (newStatus: ServiceStatus) => any
@@ -75,6 +76,7 @@ export class ProviderService {
   public async start(
     providerId: string,
     serviceType: string,
+    price: Price,
     accessPolicyId?: string,
     options?: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -85,6 +87,7 @@ export class ProviderService {
       options,
       providerId,
       type: serviceType,
+      price,
     }
 
     if (accessPolicyId) {

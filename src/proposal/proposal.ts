@@ -7,28 +7,30 @@
 
 import { validate, validateMultiple } from '../fmt/validation'
 import { Quality } from './quality'
-import { ServiceDefinition } from './service-definition'
-import { PaymentMethod } from './payment-method'
 import { AccessPolicyRef } from '../access-policy/access-policy'
+import { ServiceLocation } from './service-location'
+import { Price } from './price'
 
 export interface Proposal {
-  id: number
+  format: string
+  compatibility: number
   providerId: string
   serviceType: string
-  serviceDefinition: ServiceDefinition
+  location: ServiceLocation
+  price: Price
   quality?: Quality
   accessPolicies?: AccessPolicyRef[]
-  paymentMethod: PaymentMethod
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseProposal(data: any): Proposal {
   validateMultiple('Proposal', data, [
-    { name: 'id', type: 'number' },
+    { name: 'format', type: 'string' },
+    { name: 'compatibility', type: 'number' },
     { name: 'providerId', type: 'string' },
     { name: 'serviceType', type: 'string' },
-    { name: 'serviceDefinition', type: 'object' },
-    { name: 'paymentMethod', type: 'object' },
+    { name: 'location', type: 'object' },
+    { name: 'price', type: 'object' },
   ])
 
   return data
@@ -37,9 +39,15 @@ export function parseProposal(data: any): Proposal {
 export interface ProposalQuery {
   providerId?: string
   serviceType?: string
+  accessPolicy?: string
   accessPolicySource?: string
-  accessPolicyId?: string
-  fetchQuality?: boolean
+  country?: string
+  ipType?: string
+  priceHourMax?: number
+  priceGibMax?: number
+  compatibilityMin?: number
+  compatibilityMax?: number
+  qualityMin?: number
 }
 
 interface ProposalList {

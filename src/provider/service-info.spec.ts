@@ -11,12 +11,17 @@ import { ServiceStatus } from './service-status'
 describe('TequilapiClient DTO', () => {
   describe('.parseServiceInfo', () => {
     const proposalObject = {
-      id: 1,
+      format: 'service-proposal/v2',
+      compatibility: 0,
       providerId: '0x1',
       serviceType: 'openvpn',
-      serviceDefinition: {},
-      paymentMethod: {
-        type: 'BYTES_TRANSFERRED_WITH_TIME',
+      location: {
+        country: 'US',
+      },
+      price: {
+        currency: 'MYST',
+        perHour: 1,
+        perGib: 1,
       },
     }
     const serviceObject = parseServiceInfo({

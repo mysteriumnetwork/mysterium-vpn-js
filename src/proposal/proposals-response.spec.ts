@@ -9,12 +9,17 @@ import { parseProposalList } from './proposal'
 
 describe('.parseProposalList', () => {
   const proposalObject = {
-    id: 100,
-    providerId: 'id',
+    format: 'service-proposal/v2',
+    compatibility: 0,
+    providerId: '0x1',
     serviceType: 'type',
-    serviceDefinition: {},
-    paymentMethod: {
-      type: 'BYTES_TRANSFERRED_WITH_TIME',
+    location: {
+      country: 'US',
+    },
+    price: {
+      currency: 'MYST',
+      perHour: 1,
+      perGib: 0,
     },
   }
 
@@ -24,7 +29,7 @@ describe('.parseProposalList', () => {
     })
 
     expect(response.proposals).toHaveLength(1)
-    expect(response.proposals[0].id).toEqual(100)
+    expect(response.proposals[0].providerId).toEqual('0x1')
   })
 
   it('throws error when invoked with an empty object', async () => {
@@ -33,7 +38,7 @@ describe('.parseProposalList', () => {
 
   it('throws an error if proposal in array does not validate', async () => {
     expect(() => parseProposalList({ proposals: [{}] })).toThrowError(
-      'Proposal: id is not provided'
+      'Proposal: format is not provided'
     )
   })
 })

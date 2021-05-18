@@ -6,15 +6,21 @@
  */
 
 import { parseServiceInfo, parseServiceListResponse } from './service-info'
+import { Proposal } from '../proposal/proposal'
 
 describe('.parseServiceListResponse', () => {
-  const proposalObject = {
-    id: 1,
+  const proposalObject: Proposal = {
     providerId: '0x1',
     serviceType: 'openvpn',
-    serviceDefinition: {},
-    paymentMethod: {
-      type: 'BYTES_TRANSFERRED_WITH_TIME',
+    format: 'service-proposal/v2',
+    compatibility: 0,
+    price: {
+      currency: 'MYST',
+      perHour: 0,
+      perGib: 0,
+    },
+    location: {
+      country: 'US',
     },
   }
   const serviceObject = {

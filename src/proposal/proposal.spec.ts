@@ -5,42 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { parseProposal } from './proposal'
+import { parseProposal, Proposal } from './proposal'
 
 describe('.parseProposal', () => {
-  const proposalObject = {
-    id: 1,
+  const proposalObject: Proposal = {
+    format: 'service-proposal/v2',
+    compatibility: 1,
     providerId: '0x1',
     serviceType: 'openvpn',
-    serviceDefinition: {},
-    paymentMethod: {
-      type: 'BYTES_TRANSFERRED_WITH_TIME',
+    location: {
+      country: 'US',
+      ipType: 'residential',
+      city: 'New Jersey',
+      isp: 'Verizon',
+    },
+    price: {
+      currency: 'MYST',
+      perHour: 1000,
+      perGib: 5000,
+    },
+    quality: {
+      quality: 2,
+      latency: 50,
+      bandwidth: 10,
     },
   }
 
   it('sets properties with full structure', () => {
     const proposal = parseProposal(proposalObject)
 
-    expect(proposal.id).toEqual(1)
     expect(proposal.providerId).toEqual('0x1')
     expect(proposal.serviceType).toEqual('openvpn')
-    expect(proposal.serviceDefinition).toEqual({ locationOriginate: undefined })
-    expect(proposal.paymentMethod).toEqual({ type: 'BYTES_TRANSFERRED_WITH_TIME' })
-    expect(proposal.quality).toBeUndefined()
+    expect(proposal.location.country).toEqual('US')
+    expect(proposal.price.perGib).toEqual(5000)
+    expect(proposal.quality?.latency).toEqual(50)
   })
 
   it('throws error with null data', () => {
     expect(() => parseProposal(null)).toThrowError()
-  })
-
-  it('throws error with missing id', () => {
-    const object = { ...proposalObject, id: undefined }
-    expect(() => parseProposal(object)).toThrowError('Proposal: id is not provided')
-  })
-
-  it('throws error with wrong id type', () => {
-    const object = { ...proposalObject, id: 'string id' }
-    expect(() => parseProposal(object)).toThrowError('Proposal: id should be "number"')
   })
 
   it('throws error with missing providerId', () => {
@@ -49,17 +51,12 @@ describe('.parseProposal', () => {
   })
 
   it('throws error with wrong providerId type', () => {
-    const object = { ...proposalObject, providerId: 2 }
-    expect(() => parseProposal(object)).toThrowError()
+    const object = { ...proposalObject, providerId: 1 }
+    expect(() => parseProposal(object)).toThrowError('Proposal: providerId should be "string"')
   })
 
   it('throws error with no serviceType', () => {
     const object = { ...proposalObject, serviceType: undefined }
-    expect(() => parseProposal(object)).toThrowError()
-  })
-
-  it('throws error with invalid serviceDefinition', () => {
-    const object = { ...proposalObject, serviceDefinition: '2' }
     expect(() => parseProposal(object)).toThrowError()
   })
 })
