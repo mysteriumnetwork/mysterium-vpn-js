@@ -38,13 +38,14 @@ export function parseProposal(data: any): Proposal {
 
 export interface ProposalQuery {
   providerId?: string
+  from?: string
   serviceType?: string
+  locationCountry?: string
   accessPolicy?: string
   accessPolicySource?: string
-  country?: string
   ipType?: string
-  priceHourMax?: number
   priceGibMax?: number
+  priceHourMax?: number
   compatibilityMin?: number
   compatibilityMax?: number
   qualityMin?: number
