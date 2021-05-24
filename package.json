@@ -1,6 +1,6 @@
 {
   "name": "mysterium-vpn-js",
-  "version": "12.0.1",
+  "version": "13.0.0",
   "description": "Javascript SDK for Mysterium node",
   "keywords": [
     "mysterium",
@@ -20,7 +20,7 @@
   "license": "MIT",
   "private": false,
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -35,8 +35,7 @@
     "ci": "yarn tsc-check && yarn lint && yarn test && yarn build"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.10",
-    "@types/lolex": "^3.1.1",
+    "@types/jest": "^26.0.23",
     "@types/node": "^12.12.6",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
@@ -45,16 +44,15 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-header": "^3.1.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "jest": "^26.4.2",
-    "lolex": "^5.1.1",
+    "jest": "^26.6.3",
     "prettier": "^2.2.1",
-    "ts-jest": "^26.3.0",
-    "typescript": "^4.2.3"
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "camelcase-keys": "^6.2.2",
-    "filesize": "^6.1.0",
-    "snakecase-keys": "^3.2.1"
+    "filesize": "^6.3.0",
+    "snakecase-keys": "^4.0.2"
   }
 }

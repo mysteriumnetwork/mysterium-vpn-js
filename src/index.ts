@@ -22,11 +22,6 @@ export { DurationFormatter } from './fmt/duration-formatter'
 export { TimeFormatter } from './fmt/time-formatter'
 export { DECIMAL_PART, displayMoney, DisplayMoneyOptions } from './fmt/money-formater'
 
-export { FunctionLooper } from './func/function-looper'
-export { ThresholdExecutor } from './func/threshold-executor'
-export { sleep } from './func/sleep'
-export { Publisher } from './func/publisher'
-
 export { AxiosAdapter } from './http/axios-adapter'
 export { HttpInterface, HttpQuery } from './http/interface'
 export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
@@ -40,7 +35,6 @@ export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './pro
 export { Quality } from './proposal/quality'
 export { ServiceLocation } from './proposal/service-location'
 
-export { ProviderService } from './provider/provider-service'
 export { QualityLevel, qualityLevel } from './provider/quality'
 export { ServiceInfo } from './provider/service-info'
 export { ServiceStartRequest } from './provider/service-request'
