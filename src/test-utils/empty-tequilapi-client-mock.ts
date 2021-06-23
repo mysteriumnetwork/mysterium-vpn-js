@@ -51,6 +51,7 @@ import {
 } from '../payment'
 import { Terms, TermsRequest } from '../daemon/terms'
 import { ReferralTokenResponse } from '../referral'
+import { FilterPresetsResponse } from '../proposal/filter-preset'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -288,6 +289,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public async exchangeRate(quoteCurrency?: string): Promise<Money> {
+    throw Error('Not implemented')
+  }
+
+  public async proposalFilterPresets(): Promise<FilterPresetsResponse> {
     throw Error('Not implemented')
   }
 }

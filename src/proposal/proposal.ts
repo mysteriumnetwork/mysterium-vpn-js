@@ -37,6 +37,7 @@ export function parseProposal(data: any): Proposal {
 }
 
 export interface ProposalQuery {
+  presetId?: number
   providerId?: string
   from?: string
   serviceType?: string

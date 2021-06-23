@@ -68,6 +68,7 @@ import {
   PaymentOrderResponse,
 } from './payment'
 import { ReferralTokenResponse } from './referral'
+import { FilterPresetsResponse } from './proposal/filter-preset'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -104,6 +105,7 @@ export interface TequilapiClient {
   authChangePassword(request: ChangePasswordRequest): Promise<void>
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
+  proposalFilterPresets(): Promise<FilterPresetsResponse>
 
   reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
@@ -286,6 +288,10 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Proposals response body is missing')
     }
     return parseProposalList(response).proposals || []
+  }
+
+  public async proposalFilterPresets(): Promise<FilterPresetsResponse> {
+    return this.http.get('proposals/filter-presets')
   }
 
   public async connectionCreate(
