@@ -6,5 +6,5 @@
  */
 export interface CurrentPricesResponse {
   pricePerHour: bigint
-  pricePerGiB: bigint
+  pricePerGib: bigint
 }
