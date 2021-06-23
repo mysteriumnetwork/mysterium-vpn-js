@@ -13,6 +13,9 @@ export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/reque
 export { ConnectionStatus, ConnectionInfo } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
 
+export { Config } from './config/config'
+export { Issue, IssueId } from './feedback/issue'
+
 export { Location } from './location/location'
 
 export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
