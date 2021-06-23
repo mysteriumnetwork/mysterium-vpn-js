@@ -69,6 +69,7 @@ import {
 } from './payment'
 import { ReferralTokenResponse } from './referral'
 import { FilterPresetsResponse } from './proposal/filter-preset'
+import { CurrentPricesResponse } from '../prices'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -106,6 +107,7 @@ export interface TequilapiClient {
 
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
   proposalFilterPresets(): Promise<FilterPresetsResponse>
+  pricesCurrent(): Promise<CurrentPricesResponse>
 
   reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
 
@@ -292,6 +294,10 @@ export class HttpTequilapiClient implements TequilapiClient {
 
   public async proposalFilterPresets(): Promise<FilterPresetsResponse> {
     return this.http.get('proposals/filter-presets')
+  }
+
+  public async pricesCurrent(): Promise<CurrentPricesResponse> {
+    return this.http.get('prices/current')
   }
 
   public async connectionCreate(

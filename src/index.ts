@@ -38,6 +38,8 @@ export { Quality } from './proposal/quality'
 export { ServiceLocation } from './proposal/service-location'
 export { Price, Currency } from './proposal/price'
 
+export { CurrentPricesResponse } from './prices'
+
 export { QualityLevel, qualityLevel } from './provider/quality'
 export { ServiceInfo } from './provider/service-info'
 export { ServiceStartRequest } from './provider/service-request'

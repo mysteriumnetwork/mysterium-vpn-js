@@ -52,6 +52,7 @@ import {
 import { Terms, TermsRequest } from '../daemon/terms'
 import { ReferralTokenResponse } from '../referral'
 import { FilterPresetsResponse } from '../proposal/filter-preset'
+import { CurrentPricesResponse } from '../prices'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -79,6 +80,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public findProposals(options?: ProposalQuery): Promise<Proposal[]> {
+    throw Error('Not implemented')
+  }
+
+  public pricesCurrent(): Promise<CurrentPricesResponse> {
     throw Error('Not implemented')
   }
 
