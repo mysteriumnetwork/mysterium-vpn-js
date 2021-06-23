@@ -36,6 +36,7 @@ export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './pro
 export { FilterPreset, FilterPresetsResponse } from './proposal/filter-preset'
 export { Quality } from './proposal/quality'
 export { ServiceLocation } from './proposal/service-location'
+export { Price, Currency } from './proposal/price'
 
 export { QualityLevel, qualityLevel } from './provider/quality'
 export { ServiceInfo } from './provider/service-info'
@@ -83,4 +84,3 @@ export {
 export { ReferralTokenResponse } from './referral'
 
 export default tequilapi
-export { Currency } from './proposal/price'
