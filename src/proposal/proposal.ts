@@ -50,6 +50,7 @@ export interface ProposalQuery {
   compatibilityMin?: number
   compatibilityMax?: number
   qualityMin?: number
+  includeMonitoringFailed?: boolean
 }
 
 interface ProposalList {
