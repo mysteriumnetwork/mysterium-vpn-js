@@ -31,11 +31,11 @@ export class BytesFormatter {
     if (typeof (bytes as any) !== 'number') {
       throw new Error('provide valid input for conversion')
     }
-    const calculated = (filesize(bytes, {
+    const calculated = filesize(bytes, {
       standard: 'jedec',
       output: 'object',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as any) as FilesizeResult
+    }) as any as FilesizeResult
     return {
       amount: calculated.value.toFixed(2),
       units: calculated.symbol.replace('i', ''),
