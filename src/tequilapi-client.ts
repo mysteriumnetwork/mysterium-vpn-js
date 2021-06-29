@@ -68,8 +68,9 @@ import {
   PaymentOrderResponse,
 } from './payment'
 import { ReferralTokenResponse } from './referral'
+import { CurrentPricesResponse } from './prices'
+import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
-import { CurrentPricesResponse } from '../prices'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -98,6 +99,9 @@ export interface TequilapiClient {
   identity(id: string): Promise<Identity>
   identityRegistration(id: string): Promise<IdentityRegistrationResponse>
   identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse>
+
+  payoutAddressSave(id: string, address: string): Promise<Payout>
+  payoutAddressGet(id: string): Promise<Payout>
 
   authSetToken(token: string): void
   authAuthenticate(request: AuthRequest, useToken: true): Promise<AuthResponse>
@@ -256,6 +260,24 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Identity registration response body is missing')
     }
     return parseIdentityBeneficiaryResponse(response)
+  }
+
+  public async payoutAddressSave(id: string, address: string): Promise<Payout> {
+    const response = await this.http.put(`identities/${id}/payout-address`, { address })
+    if (!response) {
+      throw new Error('Payout address response body is missing')
+    }
+
+    return parsePayoutAddressResponse(response)
+  }
+
+  public async payoutAddressGet(id: string): Promise<Payout> {
+    const response = await this.http.get(`identities/${id}/payout-address`)
+    if (!response) {
+      throw new Error('Payout address response body is missing')
+    }
+
+    return parsePayoutAddressResponse(response)
   }
 
   public authSetToken(token: string): void {

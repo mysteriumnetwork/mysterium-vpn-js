@@ -53,6 +53,7 @@ import { Terms, TermsRequest } from '../daemon/terms'
 import { ReferralTokenResponse } from '../referral'
 import { FilterPresetsResponse } from '../proposal/filter-preset'
 import { CurrentPricesResponse } from '../prices'
+import { Payout } from '../identity/payout'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -164,6 +165,14 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public identityCurrent(request: IdentityCurrentRequest): Promise<IdentityRef> {
+    throw Error('Not implemented')
+  }
+
+  public payoutAddressSave(id: string, address: string): Promise<Payout> {
+    throw Error('Not implemented')
+  }
+
+  public payoutAddressGet(id: string): Promise<Payout> {
     throw Error('Not implemented')
   }
 
