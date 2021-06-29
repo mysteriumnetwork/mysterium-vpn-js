@@ -6,6 +6,8 @@
  */
 import { tequilapi } from './tequilapi-client-factory'
 
+export { Payout } from './identity/payout'
+
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { IP } from './location/ip'
