@@ -6,12 +6,17 @@
  */
 import { tequilapi } from './tequilapi-client-factory'
 
+export { Payout } from './identity/payout'
+
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { IP } from './location/ip'
 export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/request'
 export { ConnectionStatus, ConnectionInfo } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
+
+export { Config } from './config/config'
+export { Issue, IssueId } from './feedback/issue'
 
 export { Location } from './location/location'
 
@@ -30,13 +35,14 @@ export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/id
 export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identity/registration'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
-export { Issue } from './feedback/issue'
 
 export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
 export { FilterPreset, FilterPresetsResponse } from './proposal/filter-preset'
 export { Quality } from './proposal/quality'
 export { ServiceLocation } from './proposal/service-location'
 export { Price, Currency } from './proposal/price'
+
+export { CurrentPricesResponse } from './prices'
 
 export { QualityLevel, qualityLevel } from './provider/quality'
 export { ServiceInfo } from './provider/service-info'
