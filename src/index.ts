@@ -35,7 +35,6 @@ export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/id
 export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identity/registration'
 
 export { NatStatus, NatStatusResponse } from './nat/status'
-export { Issue } from './feedback/issue'
 
 export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
 export { FilterPreset, FilterPresetsResponse } from './proposal/filter-preset'
