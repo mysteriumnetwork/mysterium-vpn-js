@@ -34,6 +34,9 @@
     "tsc-check": "yarn tsc --noEmit",
     "ci": "yarn tsc-check && yarn lint && yarn test && yarn build"
   },
+  "peerDependencies": {
+    "@mysteriumnetwork/node": ">=0.53.0 < 1"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^12.12.6",

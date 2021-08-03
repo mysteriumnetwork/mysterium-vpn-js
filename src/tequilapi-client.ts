@@ -71,6 +71,7 @@ import { ReferralTokenResponse } from './referral'
 import { CurrentPricesResponse } from './prices'
 import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
+import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -153,6 +154,7 @@ export interface TequilapiClient {
   getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse>
   getPaymentOrderCurrencies(): Promise<string[]>
   exchangeRate(quoteCurrency?: string): Promise<Money>
+  estimateEntertainment(query: EntertainmentEstimateQuery): Promise<EntertainmentEstimateResponse>
 
   getReferralToken(identity: string): Promise<ReferralTokenResponse>
 }
@@ -554,5 +556,11 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async exchangeRate(quoteCurrency = 'usd'): Promise<Money> {
     const baseCurrency = 'myst'
     return this.http.get(`/exchange/${baseCurrency}/${quoteCurrency}`)
+  }
+
+  public async estimateEntertainment(
+    query: EntertainmentEstimateQuery
+  ): Promise<EntertainmentEstimateResponse> {
+    return this.http.get(`/entertainment`, { ...query })
   }
 }

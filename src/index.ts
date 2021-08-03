@@ -87,6 +87,7 @@ export {
   PaymentOrderRequest,
   PaymentOrderOptionsResponse,
 } from './payment'
+export { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 export { ReferralTokenResponse } from './referral'
 
 export default tequilapi
