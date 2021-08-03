@@ -52,13 +52,9 @@ import {
 import { Terms, TermsRequest } from '../daemon/terms'
 import { ReferralTokenResponse } from '../referral'
 import { FilterPresetsResponse } from '../proposal/filter-preset'
-<<<<<<< Updated upstream
 import { CurrentPricesResponse } from '../prices'
 import { Payout } from '../identity/payout'
-||||||| constructed merge base
-=======
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from '../payment/entertainment'
->>>>>>> Stashed changes
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
