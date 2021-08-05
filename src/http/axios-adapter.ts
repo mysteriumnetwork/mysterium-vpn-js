@@ -15,6 +15,10 @@ async function decorateResponse(promise: Promise<any>, path: string): Promise<an
   try {
     response = await promise
   } catch (err) {
+    const responseMsg = err.response?.data?.message
+    if (responseMsg) {
+      throw new TequilapiError(Error(responseMsg), path)
+    }
     throw new TequilapiError(err, path)
   }
   return response.data
