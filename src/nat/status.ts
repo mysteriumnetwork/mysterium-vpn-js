@@ -13,9 +13,24 @@ export enum NatStatus {
   SUCCESSFUL = 'successful',
 }
 
+export enum NatStatusV2 {
+  PASSED = 'passed',
+  FAILED = 'failed',
+  PENDING = 'pending',
+}
+
 export interface NatStatusResponse {
   status: NatStatus
   error?: string
+}
+
+export interface NatStatusV2Response {
+  status: NatStatusV2
+  error?: string
+}
+
+export interface Nat {
+  status: NatStatusV2Response
 }
 
 export function parseNatStatusResponse(data: any): NatStatusResponse {

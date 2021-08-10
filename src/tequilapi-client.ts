@@ -72,6 +72,7 @@ import { CurrentPricesResponse } from './prices'
 import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
+import { NatTypeResponse, parseNatTypeResponse } from './nat/type'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -81,6 +82,7 @@ export const pathConfigDefault = 'config/default'
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusResponse>
+  natType(): Promise<NatTypeResponse>
   stop(): Promise<void>
   location(timeout?: number): Promise<Location>
 
@@ -190,6 +192,11 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async natStatus(): Promise<NatStatusResponse> {
     const response = await this.http.get('nat/status')
     return parseNatStatusResponse(response)
+  }
+
+  public async natType(): Promise<NatTypeResponse> {
+    const response = await this.http.get('nat/type')
+    return parseNatTypeResponse(response)
   }
 
   public async stop(): Promise<void> {
