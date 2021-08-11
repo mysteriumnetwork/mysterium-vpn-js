@@ -34,7 +34,8 @@ export { TIMEOUT_DEFAULT, TIMEOUT_DISABLED } from './http/timeouts'
 export { IdentityRef, Identity, IdentityRegistrationStatus } from './identity/identity'
 export { IdentityRegistrationResponse, IdentityRegisterRequest } from './identity/registration'
 
-export { NatStatus, NatStatusResponse } from './nat/status'
+export { NatStatus, NatStatusResponse, NatStatusV2Response, NatStatusV2, Nat } from './nat/status'
+export { NatTypeResponse } from './nat/type'
 
 export { Proposal, ProposalQuery, parseProposal, parseProposalList } from './proposal/proposal'
 export { FilterPreset, FilterPresetsResponse } from './proposal/filter-preset'

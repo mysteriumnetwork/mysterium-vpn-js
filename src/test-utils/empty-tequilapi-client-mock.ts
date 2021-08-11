@@ -19,7 +19,8 @@ import { Location } from '../location/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
 import { Identity, IdentityRef } from '../identity/identity'
 import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
-import { NatStatusResponse } from '../nat/status'
+import { NatStatusResponse, NatStatusV2Response } from '../nat/status'
+import { NatTypeResponse } from '../nat/type'
 import { Proposal, ProposalQuery } from '../proposal/proposal'
 import { ServiceInfo } from '../provider/service-info'
 import { ServiceStartRequest } from '../provider/service-request'
@@ -125,7 +126,15 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
+  public natType(): Promise<NatTypeResponse> {
+    throw new Error('Not implemented')
+  }
+
   public natStatus(): Promise<NatStatusResponse> {
+    throw new Error('Not implemented')
+  }
+
+  public natStatusV2(): Promise<NatStatusV2Response> {
     throw new Error('Not implemented')
   }
 
