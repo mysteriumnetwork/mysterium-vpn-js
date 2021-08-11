@@ -6,7 +6,7 @@
  */
 import { Connection } from '../connection/status'
 import { Identity } from '../identity/identity'
-import { Nat, NatStatusResponse } from '../nat/status';
+import { Nat, NatStatusResponse } from '../nat/status'
 import { ServiceInfo } from '../provider/service-info'
 import camelcaseKeys from 'camelcase-keys'
 import { Session, SessionStats } from '../session/session'
