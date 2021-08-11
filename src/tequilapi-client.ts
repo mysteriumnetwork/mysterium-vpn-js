@@ -35,7 +35,12 @@ import {
   IdentityBeneficiaryResponse,
   parseIdentityBeneficiaryResponse,
 } from './identity/beneficiary'
-import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
+import {
+  NatStatusResponse,
+  NatStatusV2Response,
+  parseNatStatusResponse,
+  parseNatStatusV2Response,
+} from './nat/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
@@ -82,6 +87,7 @@ export const pathConfigDefault = 'config/default'
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusResponse>
+  natStatusV2(): Promise<NatStatusV2Response>
   natType(): Promise<NatTypeResponse>
   stop(): Promise<void>
   location(timeout?: number): Promise<Location>
@@ -192,6 +198,11 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async natStatus(): Promise<NatStatusResponse> {
     const response = await this.http.get('nat/status')
     return parseNatStatusResponse(response)
+  }
+
+  public async natStatusV2(): Promise<NatStatusV2Response> {
+    const response = await this.http.get('/v2/nat/status')
+    return parseNatStatusV2Response(response)
   }
 
   public async natType(): Promise<NatTypeResponse> {

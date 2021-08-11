@@ -40,3 +40,11 @@ export function parseNatStatusResponse(data: any): NatStatusResponse {
   }
   return data
 }
+
+export function parseNatStatusV2Response(data: any): NatStatusV2Response {
+  validate('NatStatusResponse', data, { name: 'status', type: 'string' })
+  if (data.error) {
+    validate('NatStatusResponse', data, { name: 'error', type: 'string' })
+  }
+  return data
+}
