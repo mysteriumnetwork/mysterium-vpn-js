@@ -165,6 +165,8 @@ export interface TequilapiClient {
   estimateEntertainment(query: EntertainmentEstimateQuery): Promise<EntertainmentEstimateResponse>
 
   getReferralToken(identity: string): Promise<ReferralTokenResponse>
+
+  validateEthRPCL2(rpcUrls: string[], timeout?: number): Promise<void>
 }
 
 export class HttpTequilapiClient implements TequilapiClient {
@@ -574,6 +576,13 @@ export class HttpTequilapiClient implements TequilapiClient {
   public async exchangeRate(quoteCurrency = 'usd'): Promise<Money> {
     const baseCurrency = 'myst'
     return this.http.get(`/exchange/${baseCurrency}/${quoteCurrency}`)
+  }
+
+  public async validateEthRPCL2(rpcUrls: string[], timeout = 10_000): Promise<void> {
+    if (rpcUrls.length == 0) {
+      return Promise.resolve()
+    }
+    return this.http.post('/validation/validate-rpc-chain2-urls', rpcUrls, timeout * rpcUrls.length)
   }
 
   public async estimateEntertainment(
