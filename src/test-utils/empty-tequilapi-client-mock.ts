@@ -316,6 +316,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
+  public async validateEthRPCL2(rpcUrls: string[], timeout = 10_000): Promise<void> {
+    throw Error('Not implemented')
+  }
+
   public async estimateEntertainment(
     query: EntertainmentEstimateQuery
   ): Promise<EntertainmentEstimateResponse> {
