@@ -51,7 +51,7 @@ import {
   PaymentOrderResponse,
 } from '../payment'
 import { Terms, TermsRequest } from '../daemon/terms'
-import { ReferralTokenResponse } from '../referral'
+import { ReferralTokenResponse, ReferralTokenRewardsResponse } from '../referral'
 import { FilterPresetsResponse } from '../proposal/filter-preset'
 import { CurrentPricesResponse } from '../prices'
 import { Payout } from '../identity/payout'
@@ -327,6 +327,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public async proposalFilterPresets(): Promise<FilterPresetsResponse> {
+    throw Error('Not implemented')
+  }
+
+  public async referralTokenRewards(token: string): Promise<ReferralTokenRewardsResponse> {
     throw Error('Not implemented')
   }
 }

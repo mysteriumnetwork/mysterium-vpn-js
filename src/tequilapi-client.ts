@@ -72,7 +72,7 @@ import {
   PaymentOrderRequest,
   PaymentOrderResponse,
 } from './payment'
-import { ReferralTokenResponse } from './referral'
+import { ReferralTokenResponse, ReferralTokenRewardsResponse } from './referral'
 import { CurrentPricesResponse } from './prices'
 import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
@@ -165,7 +165,7 @@ export interface TequilapiClient {
   estimateEntertainment(query: EntertainmentEstimateQuery): Promise<EntertainmentEstimateResponse>
 
   getReferralToken(identity: string): Promise<ReferralTokenResponse>
-
+  referralTokenRewards(token: string): Promise<ReferralTokenRewardsResponse>
   validateEthRPCL2(rpcUrls: string[], timeout?: number): Promise<void>
 }
 
@@ -589,5 +589,9 @@ export class HttpTequilapiClient implements TequilapiClient {
     query: EntertainmentEstimateQuery
   ): Promise<EntertainmentEstimateResponse> {
     return this.http.get(`/entertainment`, { ...query })
+  }
+
+  public async referralTokenRewards(token: string): Promise<ReferralTokenRewardsResponse> {
+    return this.http.get(`/transactor/token/${token}/reward`)
   }
 }

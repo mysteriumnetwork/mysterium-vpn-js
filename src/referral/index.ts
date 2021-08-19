@@ -8,3 +8,7 @@
 export interface ReferralTokenResponse {
   token: string
 }
+
+export interface ReferralTokenRewardsResponse {
+  amount: bigint
+}
