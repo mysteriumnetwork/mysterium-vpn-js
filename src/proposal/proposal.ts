@@ -49,6 +49,7 @@ export interface ProposalQuery {
   priceHourMax?: number
   compatibilityMin?: number
   compatibilityMax?: number
+  natCompatibility?: string
   qualityMin?: number
   includeMonitoringFailed?: boolean
 }
