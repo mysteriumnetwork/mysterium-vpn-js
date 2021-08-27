@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "camelcase-keys": "^6.2.2",
+    "camelcase-keys": "^7.0.0",
     "snakecase-keys": "^4.0.2"
   }
 }
