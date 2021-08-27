@@ -14,7 +14,8 @@ async function decorateResponse(promise: Promise<any>, path: string): Promise<an
   let response
   try {
     response = await promise
-  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
     const responseMsg = err.response?.data?.message
     if (responseMsg) {
       throw new TequilapiError(Error(responseMsg), path)
