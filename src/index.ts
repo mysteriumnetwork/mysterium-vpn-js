@@ -22,9 +22,6 @@ export { Location } from './location/location'
 
 export { NodeHealthcheck, NodeBuildInfo } from './daemon/healthcheck'
 
-export { BytesFormatter } from './fmt/bytes-formatter'
-export { DurationFormatter } from './fmt/duration-formatter'
-export { TimeFormatter } from './fmt/time-formatter'
 export { DECIMAL_PART, displayMoney, DisplayMoneyOptions } from './fmt/money-formater'
 
 export { AxiosAdapter } from './http/axios-adapter'

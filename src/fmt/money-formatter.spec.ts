@@ -9,7 +9,7 @@ import { displayMoney } from './money-formater'
 import { Currency } from '..'
 
 describe('displayMoney', () => {
-  it('must space amount ant currency', () => {
+  it('must space amount and currency', () => {
     expect(
       displayMoney(
         {
