@@ -47,6 +47,10 @@ export interface Identity {
   stake: number
 }
 
+export interface IdentityBalanceResponse {
+  balance: number
+}
+
 export function parseIdentity(data: any): Identity {
   validateMultiple('Identity', data, [
     { name: 'id', type: 'string' },

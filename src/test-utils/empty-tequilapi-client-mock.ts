@@ -17,7 +17,7 @@ import { ConnectionStatistics } from '../connection/statistics'
 import { ConnectionInfo } from '../connection/status'
 import { Location } from '../location/location'
 import { NodeHealthcheck } from '../daemon/healthcheck'
-import { Identity, IdentityRef } from '../identity/identity'
+import { IdentityBalanceResponse, Identity, IdentityRef } from '../identity/identity'
 import { IdentityRegisterRequest, IdentityRegistrationResponse } from '../identity/registration'
 import { NatStatusResponse, NatStatusV2Response } from '../nat/status'
 import { NatTypeResponse } from '../nat/type'
@@ -115,6 +115,10 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse> {
+    throw Error('Not implemented')
+  }
+
+  public identityBalanceRefresh(id: string): Promise<IdentityBalanceResponse> {
     throw Error('Not implemented')
   }
 

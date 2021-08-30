@@ -20,6 +20,7 @@ import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
 import { parsePageable } from './common/pageable'
 import {
+  IdentityBalanceResponse,
   Identity,
   IdentityRef,
   parseIdentity,
@@ -108,6 +109,7 @@ export interface TequilapiClient {
   identity(id: string): Promise<Identity>
   identityRegistration(id: string): Promise<IdentityRegistrationResponse>
   identityBeneficiary(id: string): Promise<IdentityBeneficiaryResponse>
+  identityBalanceRefresh(id: string): Promise<IdentityBalanceResponse>
 
   payoutAddressSave(id: string, address: string): Promise<Payout>
   payoutAddressGet(id: string): Promise<Payout>
@@ -282,6 +284,14 @@ export class HttpTequilapiClient implements TequilapiClient {
       throw new Error('Identity registration response body is missing')
     }
     return parseIdentityBeneficiaryResponse(response)
+  }
+
+  public async identityBalanceRefresh(id: string): Promise<IdentityBalanceResponse> {
+    const response = await this.http.put(`identities/${id}/balance/refresh`, {})
+    if (!response) {
+      throw new Error('Identity balance refresh response body is missing')
+    }
+    return response
   }
 
   public async payoutAddressSave(id: string, address: string): Promise<Payout> {
