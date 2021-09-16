@@ -75,4 +75,19 @@ describe('TequilapiClient AxiosAdapter', () => {
       new Error('Request failed with status code 404 (path="test-url")')
     )
   })
+
+  it('saves headers', () => {
+    const key = 'HeaderExample'
+    const value = 'HeaderValue'
+    adapter.setHeaders({ [key]: value })
+
+    expect(adapter._axios.defaults.headers[key]).toEqual(value)
+  })
+
+  it('saves auth token', () => {
+    const token = 'token'
+    adapter.setAuthHeader(token)
+
+    expect(adapter._axios.defaults.headers['Authorization']).toEqual('Bearer ' + token)
+  })
 })

@@ -313,9 +313,7 @@ export class HttpTequilapiClient implements TequilapiClient {
   }
 
   public authSetToken(token: string): void {
-    this.http.setHeaders({
-      Authorization: 'Bearer ' + token,
-    })
+    this.http.setAuthHeader(token)
   }
 
   public async authAuthenticate(request: AuthRequest, useToken = true): Promise<AuthResponse> {

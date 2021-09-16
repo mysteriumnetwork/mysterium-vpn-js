@@ -35,7 +35,11 @@ export class AxiosAdapter implements HttpInterface {
   }
 
   public setHeaders(headers: any): void {
-    this._axios.defaults.headers &= headers
+    this._axios.defaults.headers = headers
+  }
+
+  public setAuthHeader(token: string): void {
+    this._axios.defaults.headers['Authorization'] = 'Bearer ' + token
   }
 
   public get(path: string, query?: HttpQuery, timeout?: number): Promise<any> {
