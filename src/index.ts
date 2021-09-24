@@ -58,6 +58,8 @@ export {
 } from './session/session'
 
 export { Fees } from './transactor/fees'
+export { WithdrawRequest } from './transactor/withdraw'
+export { ChainSummary } from './transactor/chains'
 export {
   SettleRequest,
   SettleWithBeneficiaryRequest,

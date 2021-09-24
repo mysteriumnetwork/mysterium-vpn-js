@@ -55,6 +55,7 @@ import {
   SessionStatsAggregatedResponse,
   SessionStatsDailyResponse,
 } from './session/session'
+import { ChainSummary } from './transactor/chains'
 import { Fees } from './transactor/fees'
 import {
   SettleRequest,
@@ -79,6 +80,7 @@ import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 import { NatTypeResponse, parseNatTypeResponse } from './nat/type'
+import { WithdrawRequest } from './transactor/withdraw'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -143,7 +145,7 @@ export interface TequilapiClient {
   sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
-  transactorFees(): Promise<Fees>
+  transactorFees(chainId?: number): Promise<Fees>
   settleSync(request: SettleRequest): Promise<void>
   settleAsync(request: SettleRequest): Promise<void>
   settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
@@ -152,6 +154,8 @@ export interface TequilapiClient {
   decreaseStake(request: DecreaseStakeRequest): Promise<void>
   settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse>
   beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus>
+  withdraw(request: WithdrawRequest): Promise<void>
+  chainSummary(): Promise<ChainSummary>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -498,8 +502,8 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`feedback/issue`, issue, timeout)
   }
 
-  public async transactorFees(): Promise<Fees> {
-    return this.http.get(`transactor/fees`)
+  public async transactorFees(chainId?: number): Promise<Fees> {
+    return this.http.get(`transactor/fees`, { chainId })
   }
 
   public async settleSync(request: SettleRequest): Promise<void> {
@@ -514,8 +518,16 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`identities/${request.providerId}/beneficiary`, request)
   }
 
-  beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
+  public async beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
     return this.http.get(`/identities/${id}/beneficiary-status`)
+  }
+
+  public async chainSummary(): Promise<ChainSummary> {
+    return this.http.get(`transactor/chain-summary`)
+  }
+
+  public async withdraw(request: WithdrawRequest): Promise<void> {
+    return this.http.post('transactor/settle/withdraw', request)
   }
 
   public async settleIntoStakeSync(request: SettleRequest): Promise<void> {

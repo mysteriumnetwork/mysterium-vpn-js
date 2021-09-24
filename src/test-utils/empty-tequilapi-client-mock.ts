@@ -32,6 +32,7 @@ import {
   SessionStatsDailyResponse,
 } from '../session/session'
 import { TequilapiClient } from '../tequilapi-client'
+import { ChainSummary } from '../transactor/chains'
 import { Fees } from '../transactor/fees'
 import {
   BeneficiaryTxStatus,
@@ -56,6 +57,7 @@ import { FilterPresetsResponse } from '../proposal/filter-preset'
 import { CurrentPricesResponse } from '../prices'
 import { Payout } from '../identity/payout'
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from '../payment/entertainment'
+import { WithdrawRequest } from '../transactor/withdraw'
 
 export class EmptyTequilapiClientMock implements TequilapiClient {
   public connectionCancel(): Promise<void> {
@@ -238,7 +240,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  public transactorFees(): Promise<Fees> {
+  public transactorFees(chainId?: number): Promise<Fees> {
     throw Error('Not implemented')
   }
 
@@ -254,7 +256,7 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
     throw Error('Not implemented')
   }
 
-  beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
+  public beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
     throw Error('Not implemented')
   }
 
@@ -263,6 +265,14 @@ export class EmptyTequilapiClientMock implements TequilapiClient {
   }
 
   public settleIntoStakeAsync(request: SettleRequest): Promise<void> {
+    throw Error('Not implemented')
+  }
+
+  public chainSummary(): Promise<ChainSummary> {
+    throw Error('Not implemented')
+  }
+
+  public withdraw(request: WithdrawRequest): Promise<void> {
     throw Error('Not implemented')
   }
 
