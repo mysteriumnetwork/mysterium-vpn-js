@@ -36,12 +36,8 @@ import {
   IdentityBeneficiaryResponse,
   parseIdentityBeneficiaryResponse,
 } from './identity/beneficiary'
-import {
-  NatStatusResponse,
-  NatStatusV2Response,
-  parseNatStatusResponse,
-  parseNatStatusV2Response,
-} from './nat/status'
+import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
+import { NodeMonitoringStatusResponse, parseNodeMonitoringStatus } from './node/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
 import { ServiceStartRequest } from './provider/service-request'
@@ -55,6 +51,7 @@ import {
   SessionStatsAggregatedResponse,
   SessionStatsDailyResponse,
 } from './session/session'
+import { ChainSummary } from './transactor/chains'
 import { Fees } from './transactor/fees'
 import {
   SettleRequest,
@@ -79,6 +76,7 @@ import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 import { NatTypeResponse, parseNatTypeResponse } from './nat/type'
+import { WithdrawRequest } from './transactor/withdraw'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -88,7 +86,7 @@ export const pathConfigDefault = 'config/default'
 export interface TequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusResponse>
-  natStatusV2(): Promise<NatStatusV2Response>
+  nodeMonitoringStatus(): Promise<NodeMonitoringStatusResponse>
   natType(): Promise<NatTypeResponse>
   stop(): Promise<void>
   location(timeout?: number): Promise<Location>
@@ -143,7 +141,7 @@ export interface TequilapiClient {
   sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
-  transactorFees(): Promise<Fees>
+  transactorFees(chainId?: number): Promise<Fees>
   settleSync(request: SettleRequest): Promise<void>
   settleAsync(request: SettleRequest): Promise<void>
   settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
@@ -152,6 +150,8 @@ export interface TequilapiClient {
   decreaseStake(request: DecreaseStakeRequest): Promise<void>
   settlementHistory(query?: SettlementListQuery): Promise<SettlementListResponse>
   beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus>
+  withdraw(request: WithdrawRequest): Promise<void>
+  chainSummary(): Promise<ChainSummary>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -204,9 +204,9 @@ export class HttpTequilapiClient implements TequilapiClient {
     return parseNatStatusResponse(response)
   }
 
-  public async natStatusV2(): Promise<NatStatusV2Response> {
-    const response = await this.http.get('/v2/nat/status')
-    return parseNatStatusV2Response(response)
+  public async nodeMonitoringStatus(): Promise<NodeMonitoringStatusResponse> {
+    const response = await this.http.get('node/monitoring-status')
+    return parseNodeMonitoringStatus(response)
   }
 
   public async natType(): Promise<NatTypeResponse> {
@@ -498,8 +498,8 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`feedback/issue`, issue, timeout)
   }
 
-  public async transactorFees(): Promise<Fees> {
-    return this.http.get(`transactor/fees`)
+  public async transactorFees(chainId?: number): Promise<Fees> {
+    return this.http.get(`transactor/fees`, { chainId })
   }
 
   public async settleSync(request: SettleRequest): Promise<void> {
@@ -514,8 +514,16 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.post(`identities/${request.providerId}/beneficiary`, request)
   }
 
-  beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
+  public async beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus> {
     return this.http.get(`/identities/${id}/beneficiary-status`)
+  }
+
+  public async chainSummary(): Promise<ChainSummary> {
+    return this.http.get(`transactor/chain-summary`)
+  }
+
+  public async withdraw(request: WithdrawRequest): Promise<void> {
+    return this.http.post('transactor/settle/withdraw', request)
   }
 
   public async settleIntoStakeSync(request: SettleRequest): Promise<void> {
