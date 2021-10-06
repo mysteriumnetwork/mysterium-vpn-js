@@ -64,12 +64,7 @@ import {
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
-import {
-  Money,
-  PaymentOrderOptionsResponse,
-  PaymentOrderRequest,
-  PaymentOrderResponse,
-} from './payment'
+import { Money, PaymentAPI } from './payment'
 import { ReferralTokenResponse, ReferralTokenRewardsResponse } from './referral'
 import { CurrentPricesResponse } from './prices'
 import { parsePayoutAddressResponse, Payout } from './identity/payout'
@@ -83,7 +78,7 @@ export const pathConfig = 'config'
 export const pathConfigUser = 'config/user'
 export const pathConfigDefault = 'config/default'
 
-export interface TequilapiClient {
+export interface BaseTequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>
   natStatus(): Promise<NatStatusResponse>
   nodeMonitoringStatus(): Promise<NodeMonitoringStatusResponse>
@@ -158,11 +153,6 @@ export interface TequilapiClient {
   getMMNApiKey(): Promise<MMNApiKeyResponse>
   clearMMNApiKey(): Promise<void>
 
-  createPaymentOrder(identity: string, request: PaymentOrderRequest): Promise<PaymentOrderResponse>
-  getPaymentOrders(identity: string): Promise<PaymentOrderResponse[]>
-  getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse>
-  getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse>
-  getPaymentOrderCurrencies(): Promise<string[]>
   exchangeRate(quoteCurrency?: string): Promise<Money>
   estimateEntertainment(query: EntertainmentEstimateQuery): Promise<EntertainmentEstimateResponse>
 
@@ -171,11 +161,13 @@ export interface TequilapiClient {
   validateEthRPCL2(rpcUrls: string[], timeout?: number): Promise<void>
 }
 
-export class HttpTequilapiClient implements TequilapiClient {
+class BaseHttpTequilapiClient implements BaseTequilapiClient {
   public http: HttpInterface
+  public readonly payment: PaymentAPI
 
   public constructor(http: HttpInterface) {
     this.http = http
+    this.payment = new PaymentAPI(http)
   }
 
   public async healthCheck(timeout?: number): Promise<NodeHealthcheck> {
@@ -562,29 +554,6 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.delete(`mmn/api-key`)
   }
 
-  public async createPaymentOrder(
-    identity: string,
-    request: PaymentOrderRequest
-  ): Promise<PaymentOrderResponse> {
-    return this.http.post(`/identities/${identity}/payment-order`, request)
-  }
-
-  public async getPaymentOrders(identity: string): Promise<PaymentOrderResponse[]> {
-    return this.http.get(`/identities/${identity}/payment-order`)
-  }
-
-  public async getPaymentOrder(identity: string, orderId: number): Promise<PaymentOrderResponse> {
-    return this.http.get(`/identities/${identity}/payment-order/${orderId}`)
-  }
-
-  public async getPaymentOrderOptions(): Promise<PaymentOrderOptionsResponse> {
-    return this.http.get(`/payment-order-options`)
-  }
-
-  public async getPaymentOrderCurrencies(): Promise<string[]> {
-    return this.http.get(`/payment-order-currencies`)
-  }
-
   public async getReferralToken(identity: string): Promise<ReferralTokenResponse> {
     return this.http.get(`/identities/${identity}/referral`)
   }
@@ -611,3 +580,5 @@ export class HttpTequilapiClient implements TequilapiClient {
     return this.http.get(`/transactor/token/${token}/reward`)
   }
 }
+
+export class TequilapiClient extends BaseHttpTequilapiClient {}
