@@ -8,9 +8,9 @@ import { Connection } from '../connection/status'
 import { Identity } from '../identity/identity'
 import { NatStatusResponse } from '../nat/status'
 import { ServiceInfo } from '../provider/service-info'
-import camelcaseKeys from 'camelcase-keys'
 import { Session, SessionStats } from '../session/session'
 import { PaymentChannel } from '../transactor/channel'
+import { camelcaseKeys } from '../util/camelcaseKeys'
 
 export const TEQUILAPI_SSE_URL = 'http://127.0.0.1:4050/events/state'
 
@@ -37,8 +37,8 @@ export interface SSEResponse {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const parseSSEResponse = (data: any): SSEResponse => {
-  const { type, payload } = camelcaseKeys(typeof data === 'string' ? JSON.parse(data) : data, {
-    deep: true,
-  })
+  const { type, payload } = camelcaseKeys(
+    typeof data === 'string' ? JSON.parse(data) : data
+  ) as SSEResponse
   return { type, payload }
 }

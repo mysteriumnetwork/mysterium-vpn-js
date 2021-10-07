@@ -30,20 +30,21 @@ describe('TequilapiClientFactory', () => {
       expect(res.status).toEqual(202)
     })
     it('converts request body to snake_case', async () => {
-      mock.onPost('/anything', { snake_body: 1 }).reply(202)
+      // use i for locale test
+      mock.onPost('/anything', { snake_iody: 1 }).reply(202)
 
       const res = await axios.post('/anything', {
-        snakeBody: 1,
+        snakeIody: 1,
       })
       expect(res.status).toEqual(202)
     })
     it('converts response body to camelCase', async () => {
       mock.onGet('/anything').reply(200, {
-        snake_response: 3,
+        snake_iesponse: 3,
       })
 
       const res = await axios.get('/anything')
-      expect(res.data.snakeResponse).toEqual(3)
+      expect(res.data.snakeIesponse).toEqual(3)
     })
   })
 })

@@ -30,9 +30,11 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts src",
     "test": "jest",
+    "test-localized": "LANG=tr_TR.UTF-8 jest",
+    "test-all": "yarn test && yarn test-localized",
     "build": "yarn tsc -p tsconfig.build.json",
     "tsc-check": "yarn tsc --noEmit",
-    "ci": "yarn tsc-check && yarn lint && yarn test && yarn build"
+    "ci": "yarn tsc-check && yarn lint && yarn test-all && yarn build"
   },
   "peerDependencies": {
     "@mysteriumnetwork/node": ">=0.61.0 < 1"
@@ -53,8 +55,10 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
+    "@alloc/quick-lru": "^5.2.0",
     "axios": "^0.21.1",
-    "camelcase-keys": "^7.0.0",
+    "camelcase": "^6.2.0",
+    "map-obj": "^4.3.0",
     "snakecase-keys": "^4.0.2"
   }
 }

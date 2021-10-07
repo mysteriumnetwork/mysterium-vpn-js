@@ -17,7 +17,7 @@ import {
   TEQUILAPI_URL,
   TequilapiClient,
 } from './tequilapi-client'
-import camelcaseKeys from 'camelcase-keys'
+import { camelcaseKeys } from './util/camelcaseKeys'
 
 export class TequilapiClientFactory {
   public _baseUrl: string
@@ -63,7 +63,7 @@ export class TequilapiClientFactory {
         return config
       }
       if (config.data) {
-        config.data = camelcaseKeys(config.data, convertOptions)
+        config.data = camelcaseKeys(config.data)
       }
       return config
     })
