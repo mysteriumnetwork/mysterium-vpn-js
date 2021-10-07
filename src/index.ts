@@ -76,7 +76,7 @@ export {
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
 
 export { logger, Logger } from './logger'
-export { TEQUILAPI_URL, TequilapiClient, HttpTequilapiClient } from './tequilapi-client'
+export { TEQUILAPI_URL, TequilapiClient } from './tequilapi-client'
 export { TequilapiClientFactory } from './tequilapi-client-factory'
 export { TequilapiError, AxiosError } from './tequilapi-error'
 
@@ -84,10 +84,11 @@ export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 export { Pageable } from './common/pageable'
 
 export {
+  PaymentAPI,
   Money,
-  PaymentOrderResponse,
-  PaymentOrderRequest,
-  PaymentOrderOptionsResponse,
+  CreatePaymentOrderRequest,
+  PaymentOrder,
+  PaymentGateway,
 } from './payment'
 export { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 export { ReferralTokenResponse } from './referral'

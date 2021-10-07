@@ -10,7 +10,6 @@ import { HttpInterface } from './http/interface'
 import axios, { AxiosInstance } from 'axios'
 import { AxiosAdapter } from './http/axios-adapter'
 import {
-  HttpTequilapiClient,
   pathConfig,
   pathConfigDefault,
   pathConfigUser,
@@ -32,7 +31,7 @@ export class TequilapiClientFactory {
     if (!adapter) {
       adapter = this.buildAdapter()
     }
-    return new HttpTequilapiClient(adapter)
+    return new TequilapiClient(adapter)
   }
 
   public axiosInstance(): AxiosInstance {

@@ -7,7 +7,7 @@
 
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './http/axios-adapter'
-import { HttpTequilapiClient, TequilapiClient } from './tequilapi-client'
+import { TequilapiClient } from './tequilapi-client'
 import { parseIdentityRef } from './identity/identity'
 import { parseServiceInfo, parseServiceListResponse } from './provider/service-info'
 import { TequilapiClientFactory } from './tequilapi-client-factory'
@@ -21,7 +21,7 @@ describe('HttpTequilapiClient', () => {
   beforeEach(() => {
     const clientFactory = new TequilapiClientFactory()
     const axios = clientFactory.axiosInstance()
-    api = new HttpTequilapiClient(new AxiosAdapter(axios))
+    api = new TequilapiClient(new AxiosAdapter(axios))
     mock = new MockAdapter(axios)
   })
 
@@ -903,6 +903,30 @@ describe('HttpTequilapiClient', () => {
         },
       })
       expect(res.data['dashes-and_underscores']).toEqual(true)
+    })
+  })
+  describe('paymentGateways()', () => {
+    it('send payment gateways', async () => {
+      mock.onGet('v2/payment-order-gateways').reply(200, [
+        {
+          currencies: ['BTC', 'BCH', 'DAI', 'ETH', 'LTC', 'USDT', 'MYST', 'DOGE'],
+          name: 'coingate',
+          order_options: {
+            minimum: 10.7,
+            suggested: [20, 40, 90, 120, 150, 240],
+          },
+        },
+        {
+          currencies: ['EUR', 'USD', 'GBP'],
+          name: 'cardinity',
+          order_options: {
+            minimum: 2.15,
+            suggested: [10, 20, 45, 60, 75, 120],
+          },
+        },
+      ])
+      const res = await api.payment.gateways()
+      expect(res).toHaveLength(2)
     })
   })
 })
