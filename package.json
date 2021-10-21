@@ -1,6 +1,6 @@
 {
   "name": "mysterium-vpn-js",
-  "version": "17.0.1",
+  "version": "17.1.0",
   "description": "Javascript SDK for Mysterium node",
   "keywords": [
     "mysterium",
@@ -37,7 +37,7 @@
     "ci": "yarn tsc-check && yarn lint && yarn test-all && yarn build"
   },
   "peerDependencies": {
-    "@mysteriumnetwork/node": ">=0.61.0 < 1"
+    "@mysteriumnetwork/node": ">=0.67.0 < 1"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
