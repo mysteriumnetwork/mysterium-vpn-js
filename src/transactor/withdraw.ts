@@ -10,4 +10,5 @@ export interface WithdrawRequest {
   beneficiary: string
   fromChainId?: number
   toChainId?: number
+  amount?: string
 }
