@@ -31,6 +31,7 @@ export interface Settlement {
   amount: number
   fees: number
   settledAt: string
+  isWithdrawal: boolean
 }
 
 export interface SettlementListQuery extends PaginationQuery {
