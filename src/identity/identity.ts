@@ -45,6 +45,7 @@ export interface Identity {
   earnings: number
   earningsTotal: number
   stake: number
+  hermesId: string
 }
 
 export interface IdentityBalanceResponse {
