@@ -23,6 +23,7 @@ export interface PaymentGateway {
 export interface CreatePaymentOrderRequest {
   mystAmount: string
   payCurrency: string
+  country: string
   gatewayCallerData: {
     country?: string
     lightningNetwork?: boolean
@@ -37,6 +38,14 @@ export interface PaymentOrder {
   receiveMyst: string
   payAmount: string
   payCurrency: string
+  country: string
+
+  currency: string
+  itemsSubTotal: string
+  taxRate: string
+  taxSubTotal: string
+  orderTotal: string
+
   publicGatewayData?: {
     secureForm?: string
     createdAt?: Date
