@@ -60,6 +60,7 @@ export {
 } from './session/session'
 
 export { Fees } from './transactor/fees'
+export { EligibilityResponse } from './transactor/registration'
 export { WithdrawRequest } from './transactor/withdraw'
 export { ChainSummary } from './transactor/chains'
 export {

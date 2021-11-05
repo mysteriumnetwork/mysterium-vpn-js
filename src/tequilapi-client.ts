@@ -53,6 +53,7 @@ import {
 } from './session/session'
 import { ChainSummary } from './transactor/chains'
 import { Fees } from './transactor/fees'
+import { EligibilityResponse } from './transactor/registration'
 import {
   SettleRequest,
   SettleWithBeneficiaryRequest,
@@ -147,6 +148,7 @@ export interface BaseTequilapiClient {
   beneficiaryTxStatus(id: string): Promise<BeneficiaryTxStatus>
   withdraw(request: WithdrawRequest): Promise<void>
   chainSummary(): Promise<ChainSummary>
+  freeRegistrationEligibility(id: string): Promise<EligibilityResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -511,11 +513,15 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
   }
 
   public async chainSummary(): Promise<ChainSummary> {
-    return this.http.get(`transactor/chain-summary`)
+    return this.http.get(`/transactor/chain-summary`)
+  }
+
+  public async freeRegistrationEligibility(id: string): Promise<EligibilityResponse> {
+    return this.http.get(`/identities/${id}/eligibility`)
   }
 
   public async withdraw(request: WithdrawRequest): Promise<void> {
-    return this.http.post('transactor/settle/withdraw', request)
+    return this.http.post('/transactor/settle/withdraw', request)
   }
 
   public async settleIntoStakeSync(request: SettleRequest): Promise<void> {
