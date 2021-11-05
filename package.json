@@ -1,6 +1,6 @@
 {
   "name": "mysterium-vpn-js",
-  "version": "18.1.0",
+  "version": "18.1.1",
   "description": "Javascript SDK for Mysterium node",
   "keywords": [
     "mysterium",

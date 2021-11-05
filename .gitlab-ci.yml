@@ -3,7 +3,7 @@ stages:
   - publish
 
 image:
-  name: node:lts-alpine
+  name: node:14.18.1-alpine3.14
 before_script:
   - yarn
 
