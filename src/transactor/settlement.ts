@@ -32,6 +32,7 @@ export interface Settlement {
   fees: number
   settledAt: string
   isWithdrawal: boolean
+  blockExplorerUrl: string
 }
 
 export interface SettlementListQuery extends PaginationQuery {
