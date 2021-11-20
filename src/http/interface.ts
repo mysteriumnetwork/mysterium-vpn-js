@@ -15,6 +15,7 @@ export interface HttpInterface {
   setHeaders(headers: any): void
   setAuthHeader(token: string): void
   get(path: string, query?: HttpQuery, timeout?: number): Promise<any>
+  getFile(path: string, query?: HttpQuery, timeout?: number): Promise<any>
   post(path: string, data?: any, timeout?: number): Promise<any>
   delete(path: string, timeout?: number): Promise<any>
   put(path: string, data: any, timeout?: number): Promise<any>

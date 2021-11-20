@@ -13,6 +13,7 @@ import {
   pathConfig,
   pathConfigDefault,
   pathConfigUser,
+  pathInvoice,
   TEQUILAPI_URL,
   TequilapiClient,
 } from './tequilapi-client'
@@ -34,6 +35,15 @@ export class TequilapiClientFactory {
     return new TequilapiClient(adapter)
   }
 
+  private static isRawPath(path: string): boolean {
+    const rawPaths = [pathConfig, pathConfigDefault, pathConfigUser, pathInvoice]
+    for (const rawPath of rawPaths) {
+      if (path.includes(rawPath)) {
+        return true
+      }
+    }
+    return false
+  }
   public axiosInstance(): AxiosInstance {
     const ax = axios.create({
       baseURL: this._baseUrl,
@@ -44,9 +54,9 @@ export class TequilapiClientFactory {
     const convertOptions = {
       deep: true,
     }
-    const rawPaths = [pathConfig, pathConfigDefault, pathConfigUser]
+
     ax.interceptors.request.use((config) => {
-      if (config.url && rawPaths.includes(config.url)) {
+      if (config.url && TequilapiClientFactory.isRawPath(config.url)) {
         return config
       }
       if (config.params) {
@@ -58,7 +68,7 @@ export class TequilapiClientFactory {
       return config
     })
     ax.interceptors.response.use((config) => {
-      if (config.config.url && rawPaths.includes(config.config.url)) {
+      if (config.config.url && TequilapiClientFactory.isRawPath(config.config.url)) {
         return config
       }
       if (config.data) {

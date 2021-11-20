@@ -49,6 +49,12 @@ export class AxiosAdapter implements HttpInterface {
     return decorateResponse(this._axios.get(path, options), path)
   }
 
+  public getFile(path: string, query?: HttpQuery, timeout?: number): Promise<any> {
+    const options = this._decorateOptions(timeout)
+    options.responseType = 'arraybuffer'
+    return decorateResponse(this._axios.get(path, options), path)
+  }
+
   public post(path: string, data: any, timeout?: number): Promise<any> {
     return decorateResponse(this._axios.post(path, data, this._decorateOptions(timeout)), path)
   }
