@@ -78,6 +78,7 @@ export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
 export const pathConfigUser = 'config/user'
 export const pathConfigDefault = 'config/default'
+export const pathInvoice = '/invoice'
 
 export interface BaseTequilapiClient {
   healthCheck(timeout?: number): Promise<NodeHealthcheck>

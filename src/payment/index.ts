@@ -81,4 +81,8 @@ export class PaymentAPI {
   public async order(id: string, orderId: string): Promise<PaymentOrder> {
     return await this.http.get(`/v2/identities/${id}/payment-order/${orderId}`)
   }
+
+  public async invoice(id: string, orderId: string): Promise<any> {
+    return await this.http.getFile(`/v2/identities/${id}/payment-order/${orderId}/invoice`)
+  }
 }
