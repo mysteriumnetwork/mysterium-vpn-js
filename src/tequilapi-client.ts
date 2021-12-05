@@ -150,6 +150,7 @@ export interface BaseTequilapiClient {
   withdraw(request: WithdrawRequest): Promise<void>
   chainSummary(): Promise<ChainSummary>
   freeRegistrationEligibility(id: string): Promise<EligibilityResponse>
+  freeProviderRegistrationEligibility(): Promise<EligibilityResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -519,6 +520,10 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
 
   public async freeRegistrationEligibility(id: string): Promise<EligibilityResponse> {
     return this.http.get(`/identities/${id}/eligibility`)
+  }
+
+  public async freeProviderRegistrationEligibility(): Promise<EligibilityResponse> {
+    return this.http.get(`/identities/provider/eligibility`)
   }
 
   public async withdraw(request: WithdrawRequest): Promise<void> {
