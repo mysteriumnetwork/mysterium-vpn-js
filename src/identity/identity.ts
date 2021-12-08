@@ -31,6 +31,7 @@ export function parseIdentityList(responseData: any): IdentityList {
 }
 
 export enum IdentityRegistrationStatus {
+  Unknown = 'Unknown',
   Unregistered = 'Unregistered',
   InProgress = 'InProgress',
   Registered = 'Registered',
