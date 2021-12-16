@@ -62,6 +62,7 @@ import {
   SettlementListResponse,
   Settlement,
   BeneficiaryTxStatus,
+  validateSettlementResponse,
 } from './transactor/settlement'
 import { IdentityCurrentRequest } from './identity/selection'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
@@ -547,7 +548,7 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     if (!response) {
       throw new Error('Settlement history response body is missing')
     }
-    return parsePageable<Settlement>(response)
+    return validateSettlementResponse<SettlementListResponse>(response)
   }
 
   public async getMMNNodeReport(): Promise<MMNReportResponse> {

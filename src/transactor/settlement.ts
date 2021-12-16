@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Pageable, PaginationQuery } from '../common/pageable'
+import { Pageable, PaginationQuery, parsePageable } from '../common/pageable'
+import { validate } from '../fmt/validation'
 
 export interface SettleRequest {
   hermesId: string
@@ -42,7 +43,11 @@ export interface SettlementListQuery extends PaginationQuery {
   hermesId?: string
 }
 
-export type SettlementListResponse = Pageable<Settlement>
+export interface SettlementStats {
+  withdrawalTotal?: string
+}
+
+export type SettlementListResponse = Pageable<Settlement> & SettlementStats
 
 export enum BeneficiaryTxState {
   COMPLETED = 'completed',
@@ -52,4 +57,9 @@ export enum BeneficiaryTxState {
 export interface BeneficiaryTxStatus {
   state: BeneficiaryTxState
   error: string
+}
+
+export const validateSettlementResponse = <T>(response: any): any => {
+  validate('SettlementListResponse', response, { name: 'withdrawalTotal', type: 'string' })
+  return parsePageable<T>(response)
 }
