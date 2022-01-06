@@ -36,11 +36,17 @@ export interface Settlement {
   blockExplorerUrl: string
 }
 
+export enum SettlementType {
+  Settlement = 'settlement',
+  Withdrawal = 'withdrawal',
+}
+
 export interface SettlementListQuery extends PaginationQuery {
   dateFrom?: string
   dateTo?: string
   providerId?: string
   hermesId?: string
+  types?: SettlementType[]
 }
 
 export interface SettlementStats {

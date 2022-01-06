@@ -72,6 +72,7 @@ export {
   SettlementListResponse,
   BeneficiaryTxState,
   BeneficiaryTxStatus,
+  SettlementType,
 } from './transactor/settlement'
 
 export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppState } from './sse/sse'
