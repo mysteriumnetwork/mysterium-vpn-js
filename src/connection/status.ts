@@ -14,6 +14,7 @@ export enum ConnectionStatus {
   NOT_CONNECTED = 'NotConnected',
   DISCONNECTING = 'Disconnecting',
   CONNECTING = 'Connecting',
+  ON_HOLD = 'OnHold',
 }
 
 export interface ConnectionInfo {
