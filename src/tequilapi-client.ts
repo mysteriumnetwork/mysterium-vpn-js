@@ -6,7 +6,7 @@
  */
 
 import { MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
-import { Issue, IssueId } from './feedback/issue'
+import { IntercomIssue, Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionRequest } from './connection/request'
@@ -18,7 +18,6 @@ import { NodeHealthcheck, parseHealthcheckResponse } from './daemon/healthcheck'
 import { Terms, TermsRequest } from './daemon/terms'
 import { HttpInterface } from './http/interface'
 import { TIMEOUT_DISABLED } from './http/timeouts'
-import { parsePageable } from './common/pageable'
 import {
   IdentityBalanceResponse,
   Identity,
@@ -60,7 +59,6 @@ import {
   DecreaseStakeRequest,
   SettlementListQuery,
   SettlementListResponse,
-  Settlement,
   BeneficiaryTxStatus,
   validateSettlementResponse,
 } from './transactor/settlement'
@@ -120,7 +118,8 @@ export interface BaseTequilapiClient {
   proposalFilterPresets(): Promise<FilterPresetsResponse>
   pricesCurrent(): Promise<CurrentPricesResponse>
 
-  reportIssue(issue: Issue, timeout?: number): Promise<IssueId>
+  reportIssueGithub(issue: Issue, timeout?: number): Promise<IssueId>
+  reportIssueIntercom(issue: IntercomIssue, timeout?: number): Promise<void>
 
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo>
   connectionStatus(): Promise<ConnectionInfo>
@@ -491,8 +490,12 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     return this.http.post(pathConfigUser, config)
   }
 
-  public async reportIssue(issue: Issue, timeout?: number): Promise<IssueId> {
+  public async reportIssueGithub(issue: Issue, timeout?: number): Promise<IssueId> {
     return this.http.post(`feedback/issue`, issue, timeout)
+  }
+
+  public async reportIssueIntercom(issue: IntercomIssue, timeout?: number): Promise<void> {
+    return this.http.post(`feedback/issue/intercom`, issue, timeout)
   }
 
   public async transactorFees(chainId?: number): Promise<Fees> {

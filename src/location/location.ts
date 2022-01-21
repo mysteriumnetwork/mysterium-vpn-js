@@ -12,7 +12,7 @@ export interface Location {
   continent: string
   country: string
   city: string
-  userType: string
+  ipType: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

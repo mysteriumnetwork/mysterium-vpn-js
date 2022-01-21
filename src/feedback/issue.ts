@@ -13,3 +13,10 @@ export interface Issue {
 export interface IssueId {
   issueId: string
 }
+
+export interface IntercomIssue {
+  email?: string
+  description: string
+  userId?: string
+  userType?: string
+}
