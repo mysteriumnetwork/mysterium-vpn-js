@@ -84,6 +84,7 @@ export { TequilapiError, AxiosError } from './tequilapi-error'
 
 export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 export { Pageable } from './common/pageable'
+export { Tokens } from './common/tokens'
 
 export {
   PaymentAPI,

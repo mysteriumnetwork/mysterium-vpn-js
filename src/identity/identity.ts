@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Tokens } from '../common/tokens'
 import { validate, validateMultiple } from '../fmt/validation'
 
 export interface IdentityRef {
@@ -42,7 +43,11 @@ export interface Identity {
   id: string
   registrationStatus: IdentityRegistrationStatus
   channelAddress: string
+  /**
+   * @deprecated use balanceTokens
+   */
   balance: number
+  balanceTokens: Tokens
   earnings: number
   earningsTotal: number
   stake: number
@@ -59,6 +64,7 @@ export function parseIdentity(data: any): Identity {
     { name: 'registrationStatus', type: 'string' },
     { name: 'channelAddress', type: 'string' },
     { name: 'balance', type: 'number' },
+    { name: 'balanceTokens', type: 'object' },
     { name: 'earnings', type: 'number' },
     { name: 'earningsTotal', type: 'number' },
     { name: 'stake', type: 'number' },
