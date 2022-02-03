@@ -29,6 +29,11 @@ describe('TequilapiClient DTO', () => {
         registrationStatus: 'Promoting',
         channelAddress: '0xCe93E5A58B20bF3204f8400918C9dd8D28471C8F',
         balance: 3888150908128711894,
+        balanceTokens: {
+          wei: '3888150908128711894',
+          ether: '3.888150908128711894',
+          human: '3.888150',
+        },
         earnings: 0,
         earningsTotal: 2557762453645780,
         stake: 12000000000000000000,
