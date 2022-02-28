@@ -24,6 +24,7 @@ export interface CreatePaymentOrderRequest {
   mystAmount: string
   payCurrency: string
   country: string
+  projectId?: string
   gatewayCallerData: {
     country?: string
     lightningNetwork?: boolean
