@@ -22,7 +22,17 @@ describe('.parseProposal', () => {
     price: {
       currency: 'MYST',
       perHour: 1000,
+      perHourTokens: {
+        wei: '1',
+        ether: '1',
+        human: '1',
+      },
       perGib: 5000,
+      perGibTokens: {
+        wei: '1',
+        ether: '1',
+        human: '1',
+      },
     },
     quality: {
       quality: 2,

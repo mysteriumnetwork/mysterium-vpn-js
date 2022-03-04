@@ -21,6 +21,9 @@ const displayedCurrency = (currency: string, showCurrency?: boolean): string => 
   return showCurrency ? ` ${currency}` : ''
 }
 
+/**
+ * @deprecated For every token value, use *Tokens field and display it using Tokens.Human.
+ */
 export const displayMoney = (
   m: Money,
   {

@@ -548,6 +548,11 @@ describe('HttpTequilapiClient', () => {
         throughputReceived: 1024, // 1 Mbps
         duration: 13325,
         tokensSpent: 100,
+        spentTokens: {
+          wei: '100',
+          ether: '0.0000000000000001',
+          human: '0',
+        },
       }
       mock.onGet('connection/statistics').reply(200, response)
 
@@ -581,8 +586,18 @@ describe('HttpTequilapiClient', () => {
       },
       price: {
         currency: 'MYST',
-        perMyst: 100,
+        perHour: 100,
+        perHourTokens: {
+          wei: '100',
+          ether: '0.0000000000000001',
+          human: '0',
+        },
         perGib: 100,
+        perGibTokens: {
+          wei: '100',
+          ether: '0.0000000000000001',
+          human: '0',
+        },
       },
     },
   }
@@ -602,8 +617,18 @@ describe('HttpTequilapiClient', () => {
       },
       price: {
         currency: 'MYST',
-        perMyst: 100,
+        perHour: 100,
+        perHourTokens: {
+          wei: '100',
+          ether: '0.0000000000000001',
+          human: '0',
+        },
         perGib: 100,
+        perGibTokens: {
+          wei: '100',
+          ether: '0.0000000000000001',
+          human: '0',
+        },
       },
     },
   }
@@ -652,22 +677,12 @@ describe('HttpTequilapiClient', () => {
           access_policies: {
             ids: ['mysterium-verified'],
           },
-          price: {
-            currency: 'MYST',
-            per_hour: 1000,
-            per_gib: 2000,
-          },
         })
         .reply(200, serviceResponse)
 
       const request: ServiceStartRequest = {
         providerId: '0x2000FACE',
         type: 'openvpn',
-        price: {
-          currency: 'MYST',
-          perHour: 1000,
-          perGib: 2000,
-        },
         accessPolicies: { ids: ['mysterium-verified'] },
       }
       const response = await api.serviceStart(request)
@@ -680,7 +695,6 @@ describe('HttpTequilapiClient', () => {
       const request = {
         providerId: '0x2000FACE',
         type: 'openvpn',
-        price: { currency: 'MYST', perHour: 2000, perGib: 1000 },
       }
       expect(api.serviceStart(request)).rejects.toHaveProperty(
         'message',

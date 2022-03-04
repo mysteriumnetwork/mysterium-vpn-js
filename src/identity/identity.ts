@@ -56,6 +56,7 @@ export interface Identity {
 
 export interface IdentityBalanceResponse {
   balance: number
+  balanceTokens: Tokens
 }
 
 export function parseIdentity(data: any): Identity {
