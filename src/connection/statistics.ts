@@ -6,6 +6,7 @@
  */
 
 import { validateMultiple } from '../fmt/validation'
+import { Tokens } from '../common/tokens'
 
 export interface ConnectionStatistics {
   bytesReceived: number
@@ -14,6 +15,7 @@ export interface ConnectionStatistics {
   throughputReceived: number
   duration: number
   tokensSpent: number
+  spentTokens: Tokens
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,6 +27,7 @@ export function parseConnectionStatistics(data: any): ConnectionStatistics {
     { name: 'throughputReceived', type: 'number' },
     { name: 'duration', type: 'number' },
     { name: 'tokensSpent', type: 'number' },
+    { name: 'spentTokens', type: 'object' },
   ])
   return data
 }

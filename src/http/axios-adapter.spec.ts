@@ -81,13 +81,13 @@ describe('TequilapiClient AxiosAdapter', () => {
     const value = 'HeaderValue'
     adapter.setHeaders({ [key]: value })
 
-    expect(adapter._axios.defaults.headers[key]).toEqual(value)
+    expect(adapter._axios.defaults.headers.common[key]).toEqual(value)
   })
 
   it('saves auth token', () => {
     const token = 'token'
     adapter.setAuthHeader(token)
 
-    expect(adapter._axios.defaults.headers['Authorization']).toEqual('Bearer ' + token)
+    expect(adapter._axios.defaults.headers.common['Authorization']).toEqual('Bearer ' + token)
   })
 })

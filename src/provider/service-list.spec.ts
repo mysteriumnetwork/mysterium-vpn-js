@@ -17,7 +17,17 @@ describe('.parseServiceListResponse', () => {
     price: {
       currency: 'MYST',
       perHour: 0,
+      perHourTokens: {
+        wei: '1',
+        ether: '1',
+        human: '1',
+      },
       perGib: 0,
+      perGibTokens: {
+        wei: '1',
+        ether: '1',
+        human: '1',
+      },
     },
     location: {
       country: 'US',
