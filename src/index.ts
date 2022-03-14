@@ -11,7 +11,12 @@ export { Payout } from './identity/payout'
 export { AccessPolicyRef, AccessPolicy, AccessRule } from './access-policy/access-policy'
 
 export { IP } from './location/ip'
-export { ConnectionRequest, DNSOption, ConnectOptions } from './connection/request'
+export {
+  ConnectionRequest,
+  DNSOption,
+  ConnectOptions,
+  ConnectionCancelRequest,
+} from './connection/request'
 export { ConnectionStatus, ConnectionInfo } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
 

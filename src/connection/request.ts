@@ -16,6 +16,11 @@ export interface ConnectionRequest {
 export interface ConnectOptions {
   disableKillSwitch?: boolean
   dns?: DNSOption
+  proxyPort?: number
 }
 
 export type DNSOption = 'auto' | 'provider' | 'system' | string
+
+export interface ConnectionCancelRequest {
+  proxyPort?: number
+}

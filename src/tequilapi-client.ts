@@ -9,7 +9,7 @@ import { MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 import { IntercomIssue, Issue, IssueId } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
-import { ConnectionRequest } from './connection/request'
+import { ConnectionCancelRequest, ConnectionRequest } from './connection/request'
 import { ConnectionInfo, parseConnectionInfo } from './connection/status'
 import { IP, parseIP } from './location/ip'
 import { ConnectionStatistics, parseConnectionStatistics } from './connection/statistics'
@@ -123,7 +123,7 @@ export interface BaseTequilapiClient {
 
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo>
   connectionStatus(): Promise<ConnectionInfo>
-  connectionCancel(): Promise<void>
+  connectionCancel(request?: ConnectionCancelRequest): Promise<void>
   connectionIp(timeout?: number): Promise<IP>
   connectionStatistics(): Promise<ConnectionStatistics>
   connectionLocation(): Promise<Location>
@@ -367,8 +367,10 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     return parseConnectionInfo(response)
   }
 
-  public async connectionCancel(): Promise<void> {
-    await this.http.delete('connection')
+  public async connectionCancel(request?: ConnectionCancelRequest): Promise<void> {
+    await this.http.delete(
+      `connection${request?.proxyPort !== undefined ? `?id=${request.proxyPort}` : ''}`
+    )
   }
 
   public async connectionIp(timeout?: number): Promise<IP> {
