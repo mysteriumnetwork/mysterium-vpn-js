@@ -37,7 +37,7 @@
     "ci": "yarn tsc-check && yarn lint && yarn test-all && yarn build"
   },
   "peerDependencies": {
-    "@mysteriumnetwork/node": ">= 1.4.2 < 2"
+    "@mysteriumnetwork/node": ">= 1.4.12 < 2"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
