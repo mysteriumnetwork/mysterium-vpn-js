@@ -11,8 +11,11 @@ export interface Fees {
   registrationTokens: Tokens
   settlement: number
   settlementTokens: Tokens
+  /**
+   * @deprecated use hermesPercent
+   */
   hermes: number
-  hermesTokens: Tokens
+  hermesPercent: string
   decreaseStake: number
   decreaseStakeTokens: Tokens
 }

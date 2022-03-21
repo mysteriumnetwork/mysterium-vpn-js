@@ -48,8 +48,16 @@ export interface Identity {
    */
   balance: number
   balanceTokens: Tokens
+  /**
+   * @deprecated use earningTokens
+   */
   earnings: number
+  earningsTokens: Tokens
+  /**
+   * @deprecated use earningsTotalTokens
+   */
   earningsTotal: number
+  earningsTotalTokens: Tokens
   stake: number
   hermesId: string
 }
