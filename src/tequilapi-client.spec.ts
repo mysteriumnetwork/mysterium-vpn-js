@@ -13,6 +13,7 @@ import { parseServiceInfo, parseServiceListResponse } from './provider/service-i
 import { TequilapiClientFactory } from './tequilapi-client-factory'
 import { parseSessionStats } from './session/session'
 import { ServiceStartRequest } from './provider/service-request'
+import { APIErrorResponse, CONTENT_TYPE_ERR_V1 } from './common/api-error'
 
 describe('HttpTequilapiClient', () => {
   let api: TequilapiClient
@@ -71,12 +72,42 @@ describe('HttpTequilapiClient', () => {
       )
     })
 
-    it('handles error', () => {
-      mock.onGet('/healthcheck').reply(500)
+    it('handles legacy error', () => {
+      mock.onGet('/healthcheck').reply(500, { error: 'dududu' })
+
+      expect(api.healthCheck()).rejects.toHaveProperty('message', '{"error":"dududu"}')
+    })
+
+    it('handles API error', async () => {
+      mock.onGet('/healthcheck').reply(
+        500,
+        {
+          error: {
+            code: '1',
+            message: '1 failed',
+          },
+          status: 500,
+          path: '/',
+        } as APIErrorResponse,
+        { 'content-type': CONTENT_TYPE_ERR_V1 }
+      )
+
+      expect(api.healthCheck()).rejects.toHaveProperty('message', '1 failed')
+    })
+
+    it('handles API error as legacy when no content-type specified', async () => {
+      mock.onGet('/healthcheck').reply(500, {
+        error: {
+          code: '1',
+          message: '1 failed',
+        },
+        status: 500,
+        path: '/',
+      } as APIErrorResponse)
 
       expect(api.healthCheck()).rejects.toHaveProperty(
         'message',
-        'Request failed with status code 500 (path="healthcheck")'
+        '{"error":{"code":"1","message":"1 failed"},"status":500,"path":"/"}'
       )
     })
   })
@@ -103,16 +134,6 @@ describe('HttpTequilapiClient', () => {
       const status = await api.natStatus()
       expect(status.status).toEqual('failure')
       expect(status.error).toEqual('mock error')
-    })
-
-    it('returns error when status is missing', async () => {
-      const response = {}
-      mock.onGet('nat/status').reply(200, response)
-
-      expect(api.natStatus()).rejects.toHaveProperty(
-        'message',
-        'NatStatusResponse: status is not provided'
-      )
     })
 
     it('returns error when error has wrong type', async () => {

@@ -6,24 +6,8 @@
  */
 
 import { AxiosInstance } from 'axios'
-import { TequilapiError } from '../tequilapi-error'
 import { TIMEOUT_DEFAULT } from './timeouts'
 import { HttpInterface, HttpQuery } from './interface'
-
-async function decorateResponse(promise: Promise<any>, path: string): Promise<any> {
-  let response
-  try {
-    response = await promise
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    const responseMsg = err.response?.data?.message
-    if (responseMsg) {
-      throw new TequilapiError(Error(responseMsg), path)
-    }
-    throw new TequilapiError(err, path)
-  }
-  return response.data
-}
 
 export class AxiosAdapter implements HttpInterface {
   public _axios: AxiosInstance
@@ -46,25 +30,25 @@ export class AxiosAdapter implements HttpInterface {
     const options = this._decorateOptions(timeout)
     options.params = query
 
-    return decorateResponse(this._axios.get(path, options), path)
+    return this._axios.get(path, options).then((res) => res.data)
   }
 
   public getFile(path: string, query?: HttpQuery, timeout?: number): Promise<any> {
     const options = this._decorateOptions(timeout)
     options.responseType = 'arraybuffer'
-    return decorateResponse(this._axios.get(path, options), path)
+    return this._axios.get(path, options).then((res) => res.data)
   }
 
   public post(path: string, data: any, timeout?: number): Promise<any> {
-    return decorateResponse(this._axios.post(path, data, this._decorateOptions(timeout)), path)
+    return this._axios.post(path, data, this._decorateOptions(timeout)).then((res) => res.data)
   }
 
   public delete(path: string, timeout?: number): Promise<any> {
-    return decorateResponse(this._axios.delete(path, this._decorateOptions(timeout)), path)
+    return this._axios.delete(path, this._decorateOptions(timeout)).then((res) => res.data)
   }
 
   public put(path: string, data: any, timeout?: number): Promise<any> {
-    return decorateResponse(this._axios.put(path, data, this._decorateOptions(timeout)), path)
+    return this._axios.put(path, data, this._decorateOptions(timeout)).then((res) => res.data)
   }
 
   public _decorateOptions(timeout?: number): any {

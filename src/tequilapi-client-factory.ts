@@ -18,6 +18,7 @@ import {
   TequilapiClient,
 } from './tequilapi-client'
 import { camelcaseKeys } from './util/camelcaseKeys'
+import { axiosErrorHandler } from './http/axios-api-error'
 
 export class TequilapiClientFactory {
   public _baseUrl: string
@@ -67,15 +68,15 @@ export class TequilapiClientFactory {
       }
       return config
     })
-    ax.interceptors.response.use((config) => {
-      if (config.config.url && TequilapiClientFactory.isRawPath(config.config.url)) {
-        return config
+    ax.interceptors.response.use((response) => {
+      if (response.config.url && TequilapiClientFactory.isRawPath(response.config.url)) {
+        return response
       }
-      if (config.data) {
-        config.data = camelcaseKeys(config.data)
+      if (response.data) {
+        response.data = camelcaseKeys(response.data)
       }
-      return config
-    })
+      return response
+    }, axiosErrorHandler)
     return ax
   }
 

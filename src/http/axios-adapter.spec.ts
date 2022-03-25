@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosAdapter } from './axios-adapter'
-import { TequilapiError } from '../tequilapi-error'
+import { APIError } from '../common/api-error'
+import { TequilapiClientFactory } from '../tequilapi-client-factory'
 
 describe('TequilapiClient AxiosAdapter', () => {
   let adapter: AxiosAdapter
   let mock: MockAdapter
   beforeEach(() => {
-    const axioInstance = axios.create()
+    const axioInstance = new TequilapiClientFactory().axiosInstance()
     adapter = new AxiosAdapter(axioInstance, 1)
     mock = new MockAdapter(axioInstance)
   })
@@ -56,7 +56,7 @@ describe('TequilapiClient AxiosAdapter', () => {
   it('returns network error', () => {
     mock.onGet('test-url').networkError()
 
-    expect(adapter.get('test-url')).rejects.toBeInstanceOf(TequilapiError)
+    expect(adapter.get('test-url')).rejects.toBeInstanceOf(APIError)
   })
 
   it('returns timeout error', () => {
@@ -71,9 +71,7 @@ describe('TequilapiClient AxiosAdapter', () => {
   it('returns 404 response error', () => {
     mock.onGet('test-url').reply(404, { message: 'What is wrong' })
 
-    expect(adapter.get('test-url')).rejects.toEqual(
-      new Error('Request failed with status code 404 (path="test-url")')
-    )
+    expect(adapter.get('test-url')).rejects.toHaveProperty('message', '{"message":"What is wrong"}')
   })
 
   it('saves headers', () => {
