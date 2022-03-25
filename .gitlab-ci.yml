@@ -3,7 +3,7 @@ stages:
   - publish
 
 image:
-  name: node:14.18.1-alpine3.14
+  name: node:16-alpine
 before_script:
   - apk add jq git
   # apply version from tag name

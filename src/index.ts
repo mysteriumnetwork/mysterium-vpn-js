@@ -85,11 +85,17 @@ export { TEQUILAPI_SSE_URL, SSEResponse, SSEEventType, parseSSEResponse, AppStat
 export { logger, Logger } from './logger'
 export { TEQUILAPI_URL, TequilapiClient } from './tequilapi-client'
 export { TequilapiClientFactory } from './tequilapi-client-factory'
-export { TequilapiError, AxiosError } from './tequilapi-error'
 
 export { MMNReport, MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
 export { Pageable } from './common/pageable'
 export { Tokens } from './common/tokens'
+export {
+  APIError,
+  APIErrorResponse,
+  Err,
+  FieldError,
+  CONTENT_TYPE_ERR_V1,
+} from './common/api-error'
 
 export {
   PaymentAPI,

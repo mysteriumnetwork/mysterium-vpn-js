@@ -28,7 +28,7 @@ describe('TequilapiClient DTO', () => {
         id: '0x111',
         registrationStatus: 'Promoting',
         channelAddress: '0xCe93E5A58B20bF3204f8400918C9dd8D28471C8F',
-        balance: 3888150908128711894,
+        balance: 3888150908128,
         balanceTokens: {
           wei: '3888150908128711894',
           ether: '3.888150908128711894',
@@ -42,7 +42,7 @@ describe('TequilapiClient DTO', () => {
       expect(identity.id).toEqual('0x111')
       expect(identity.registrationStatus).toEqual('Promoting')
       expect(identity.channelAddress).toEqual('0xCe93E5A58B20bF3204f8400918C9dd8D28471C8F')
-      expect(identity.balance).toEqual(3888150908128711894)
+      expect(identity.balance).toEqual(3888150908128)
       expect(identity.earnings).toEqual(0)
       expect(identity.earningsTotal).toEqual(2557762453645780)
       expect(identity.stake).toEqual(12000000000000000000)
