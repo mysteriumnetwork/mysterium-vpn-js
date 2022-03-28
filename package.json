@@ -20,7 +20,7 @@
   "license": "MIT",
   "private": false,
   "engines": {
-    "node": ">=16"
+    "node": ">=14"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -37,7 +37,7 @@
     "ci": "yarn tsc-check && yarn lint && yarn test-all && yarn build"
   },
   "peerDependencies": {
-    "@mysteriumnetwork/node": ">= 1.4.12 < 2"
+    "@mysteriumnetwork/node": ">= 1.6.0 < 2"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
