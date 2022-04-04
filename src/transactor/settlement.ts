@@ -9,7 +9,7 @@ import { Pageable, PaginationQuery, parsePageable } from '../common/pageable'
 import { validate } from '../fmt/validation'
 
 export interface SettleRequest {
-  hermesId: string
+  hermesIds: string[]
   providerId: string
 }
 
