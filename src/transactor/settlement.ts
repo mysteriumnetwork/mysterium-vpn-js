@@ -13,7 +13,9 @@ export interface SettleRequest {
   providerId: string
 }
 
-export interface SettleWithBeneficiaryRequest extends SettleRequest {
+export interface SettleWithBeneficiaryRequest {
+  hermesId: string
+  providerId: string
   beneficiary: string
 }
 
