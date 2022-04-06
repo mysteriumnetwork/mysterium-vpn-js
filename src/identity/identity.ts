@@ -60,6 +60,12 @@ export interface Identity {
   earningsTotalTokens: Tokens
   stake: number
   hermesId: string
+  earningsPerHermes: {
+    [key: string]: {
+      earningsTokens: Tokens
+      earningsTotalTokens: Tokens
+    }
+  }
 }
 
 export interface IdentityBalanceResponse {
