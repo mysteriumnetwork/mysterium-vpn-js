@@ -106,5 +106,6 @@ export {
 } from './payment'
 export { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 export { ReferralTokenResponse } from './referral'
+export { IdentityBeneficiaryResponse } from './identity/beneficiary'
 
 export default tequilapi
