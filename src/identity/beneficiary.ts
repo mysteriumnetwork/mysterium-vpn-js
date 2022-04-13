@@ -9,6 +9,7 @@ import { validate } from '../fmt/validation'
 
 export interface IdentityBeneficiaryResponse {
   beneficiary: string
+  isChannelAddress: boolean
 }
 
 export function parseIdentityBeneficiaryResponse(data: any): IdentityBeneficiaryResponse {
