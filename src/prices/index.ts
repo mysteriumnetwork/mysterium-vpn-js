@@ -4,7 +4,18 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { Tokens } from '../common/tokens'
+
 export interface CurrentPricesResponse {
+  /**
+   * @deprecated
+   */
   pricePerHour: bigint
+  /**
+   * @deprecated
+   */
   pricePerGib: bigint
+
+  pricePerHourTokens: Tokens
+  pricePerGibTokens: Tokens
 }
