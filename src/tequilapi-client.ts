@@ -52,7 +52,7 @@ import {
 } from './session/session'
 import { ChainSummary } from './transactor/chains'
 import { Fees } from './transactor/fees'
-import { EligibilityResponse } from './transactor/registration'
+import { EligibilityResponse, RegistrationPaymentResponse } from './transactor/registration'
 import {
   SettleRequest,
   SettleWithBeneficiaryRequest,
@@ -151,6 +151,7 @@ export interface BaseTequilapiClient {
   chainSummary(): Promise<ChainSummary>
   freeRegistrationEligibility(id: string): Promise<EligibilityResponse>
   freeProviderRegistrationEligibility(): Promise<EligibilityResponse>
+  registrationPayment(id: string): Promise<RegistrationPaymentResponse>
 
   getMMNNodeReport(): Promise<MMNReportResponse>
   setMMNApiKey(apiKey: string): Promise<void>
@@ -530,6 +531,10 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
 
   public async freeProviderRegistrationEligibility(): Promise<EligibilityResponse> {
     return this.http.get(`/identities/provider/eligibility`)
+  }
+
+  public async registrationPayment(id: string): Promise<RegistrationPaymentResponse> {
+    return this.http.get(`/v2/identities/${id}/registration-payment`)
   }
 
   public async withdraw(request: WithdrawRequest): Promise<void> {

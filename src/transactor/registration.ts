@@ -7,3 +7,7 @@
 export interface EligibilityResponse {
   eligible: boolean
 }
+
+export interface RegistrationPaymentResponse {
+  paid: boolean
+}
