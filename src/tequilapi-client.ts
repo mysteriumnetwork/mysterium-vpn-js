@@ -51,7 +51,7 @@ import {
   SessionStatsDailyResponse,
 } from './session/session'
 import { ChainSummary } from './transactor/chains'
-import { Fees } from './transactor/fees'
+import { Fees, FeesResponse } from './transactor/fees'
 import { EligibilityResponse, RegistrationPaymentResponse } from './transactor/registration'
 import {
   SettleRequest,
@@ -503,6 +503,10 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
 
   public async transactorFees(chainId?: number): Promise<Fees> {
     return this.http.get(`transactor/fees`, { chainId })
+  }
+
+  public async transactorFeesV2(chainId?: number): Promise<FeesResponse> {
+    return this.http.get(`v2/transactor/fees`, { chainId })
   }
 
   public async settleSync(request: SettleRequest): Promise<void> {

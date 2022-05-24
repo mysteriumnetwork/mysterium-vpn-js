@@ -64,7 +64,7 @@ export {
   SessionStatsDailyResponse,
 } from './session/session'
 
-export { Fees } from './transactor/fees'
+export { Fees, FeesResponse, FeesV2 } from './transactor/fees'
 export { EligibilityResponse, RegistrationPaymentResponse } from './transactor/registration'
 export { WithdrawRequest } from './transactor/withdraw'
 export { ChainSummary } from './transactor/chains'
