@@ -6,6 +6,9 @@
  */
 import { Tokens } from '../common/tokens'
 
+/**
+ * @deprecated user v2 endpoint
+ */
 export interface Fees {
   registration: number
   registrationTokens: Tokens
@@ -18,4 +21,18 @@ export interface Fees {
   hermesPercent: string
   decreaseStake: number
   decreaseStakeTokens: Tokens
+}
+
+export interface FeesV2 {
+  registration: Tokens
+  settlement: Tokens
+  decreaseStake: Tokens
+  validUntil: string
+}
+
+export interface FeesResponse {
+  current: FeesV2
+  last: FeesV2
+  serverTime: string
+  hermesPercent: string
 }
