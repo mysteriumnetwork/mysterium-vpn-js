@@ -21,7 +21,8 @@ export interface PaymentGateway {
 }
 
 export interface CreatePaymentOrderRequest {
-  mystAmount: string
+  mystAmount?: string
+  amountUsd?: string
   payCurrency: string
   country: string
   projectId?: string
