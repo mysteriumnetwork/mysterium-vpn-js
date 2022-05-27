@@ -58,6 +58,10 @@ export interface PaymentOrder {
   }
 }
 
+export interface RegistrationPaymentResponse {
+  paid: boolean
+}
+
 export class PaymentAPI {
   private http: HttpInterface
   constructor(http: HttpInterface) {
@@ -86,5 +90,9 @@ export class PaymentAPI {
 
   public async invoice(id: string, orderId: string): Promise<any> {
     return await this.http.getFile(`/v2/identities/${id}/payment-order/${orderId}/invoice`)
+  }
+
+  public async registrationPayment(id: string): Promise<RegistrationPaymentResponse> {
+    return this.http.get(`/v2/identities/${id}/registration-payment`)
   }
 }
