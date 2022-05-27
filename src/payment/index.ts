@@ -21,7 +21,8 @@ export interface PaymentGateway {
 }
 
 export interface CreatePaymentOrderRequest {
-  mystAmount: string
+  mystAmount?: string
+  amountUsd?: string
   payCurrency: string
   country: string
   projectId?: string
@@ -57,14 +58,18 @@ export interface PaymentOrder {
   }
 }
 
+export interface RegistrationPaymentResponse {
+  paid: boolean
+}
+
 export class PaymentAPI {
   private http: HttpInterface
   constructor(http: HttpInterface) {
     this.http = http
   }
 
-  public async gateways(): Promise<PaymentGateway[]> {
-    return await this.http.get('/v2/payment-order-gateways')
+  public async gateways(optionsCurrency = 'MYST'): Promise<PaymentGateway[]> {
+    return await this.http.get('/v2/payment-order-gateways', { optionsCurrency })
   }
 
   public async createOrder(
@@ -85,5 +90,9 @@ export class PaymentAPI {
 
   public async invoice(id: string, orderId: string): Promise<any> {
     return await this.http.getFile(`/v2/identities/${id}/payment-order/${orderId}/invoice`)
+  }
+
+  public async registrationPayment(id: string): Promise<RegistrationPaymentResponse> {
+    return this.http.get(`/v2/identities/${id}/registration-payment`)
   }
 }

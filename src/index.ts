@@ -65,7 +65,7 @@ export {
 } from './session/session'
 
 export { Fees, FeesResponse, FeesV2 } from './transactor/fees'
-export { EligibilityResponse, RegistrationPaymentResponse } from './transactor/registration'
+export { EligibilityResponse } from './transactor/registration'
 export { WithdrawRequest } from './transactor/withdraw'
 export { ChainSummary } from './transactor/chains'
 export {
@@ -103,6 +103,7 @@ export {
   CreatePaymentOrderRequest,
   PaymentOrder,
   PaymentGateway,
+  RegistrationPaymentResponse,
 } from './payment'
 export { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 export { ReferralTokenResponse } from './referral'
