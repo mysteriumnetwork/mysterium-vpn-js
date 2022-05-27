@@ -64,8 +64,8 @@ export class PaymentAPI {
     this.http = http
   }
 
-  public async gateways(): Promise<PaymentGateway[]> {
-    return await this.http.get('/v2/payment-order-gateways')
+  public async gateways(optionsCurrency = 'MYST'): Promise<PaymentGateway[]> {
+    return await this.http.get('/v2/payment-order-gateways', { optionsCurrency })
   }
 
   public async createOrder(

@@ -941,27 +941,45 @@ describe('HttpTequilapiClient', () => {
     })
   })
   describe('paymentGateways()', () => {
-    it('send payment gateways', async () => {
-      mock.onGet('v2/payment-order-gateways').reply(200, [
-        {
-          currencies: ['BTC', 'BCH', 'DAI', 'ETH', 'LTC', 'USDT', 'MYST', 'DOGE'],
-          name: 'coingate',
-          order_options: {
-            minimum: 10.7,
-            suggested: [20, 40, 90, 120, 150, 240],
+    const setupMock = () => {
+      mock
+        .onGet('v2/payment-order-gateways', { params: { options_currency: 'USD' } })
+        .reply(200, [
+          {
+            currencies: ['BTC', 'BCH', 'DAI', 'ETH', 'LTC', 'USDT', 'MYST', 'DOGE'],
+            name: 'coingate',
+            order_options: {
+              minimum: 1.99,
+              suggested: [1.99, 2.99, 3.99],
+            },
           },
-        },
-        {
-          currencies: ['EUR', 'USD', 'GBP'],
-          name: 'cardinity',
-          order_options: {
-            minimum: 2.15,
-            suggested: [10, 20, 45, 60, 75, 120],
+        ])
+        .onGet('v2/payment-order-gateways')
+        .reply(200, [
+          {
+            currencies: ['BTC', 'BCH', 'DAI', 'ETH', 'LTC', 'USDT', 'MYST', 'DOGE'],
+            name: 'coingate',
+            order_options: {
+              minimum: 10.7,
+              suggested: [20, 40, 90, 120, 150, 240],
+            },
           },
-        },
-      ])
+        ])
+    }
+
+    it('sends payment gateways', async () => {
+      setupMock()
       const res = await api.payment.gateways()
-      expect(res).toHaveLength(2)
+      expect(res).toHaveLength(1)
+      expect(res[0].orderOptions.minimum).toEqual(10.7)
+      expect(res[0].orderOptions.suggested).toEqual([20, 40, 90, 120, 150, 240])
+    })
+    it('sends payment gateways with options in requested currency', async () => {
+      setupMock()
+      const res = await api.payment.gateways('USD')
+      expect(res).toHaveLength(1)
+      expect(res[0].orderOptions.minimum).toEqual(1.99)
+      expect(res[0].orderOptions.suggested).toEqual([1.99, 2.99, 3.99])
     })
   })
 })
