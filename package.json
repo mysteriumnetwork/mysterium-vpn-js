@@ -37,22 +37,22 @@
     "ci": "yarn tsc-check && yarn lint && yarn test-all && yarn build"
   },
   "peerDependencies": {
-    "@mysteriumnetwork/node": ">= 1.7.0 < 2"
+    "@mysteriumnetwork/node": ">= 1.10.0 < 2"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "@types/node": "^16.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.16.0",
-    "@typescript-eslint/parser": "^5.16.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "axios-mock-adapter": "^1.20.0",
-    "eslint": "^8.11.0",
+    "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-header": "^3.1.1",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "jest": "^27.5.1",
-    "prettier": "^2.6.1",
+    "prettier": "^2.7.1",
     "ts-jest": "^27.1.4",
-    "typescript": "^4.6.3"
+    "typescript": "^4.7.4"
   },
   "dependencies": {
     "@alloc/quick-lru": "^5.2.0",

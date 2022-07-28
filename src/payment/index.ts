@@ -25,6 +25,7 @@ export interface CreatePaymentOrderRequest {
   amountUsd?: string
   payCurrency: string
   country: string
+  state?: string
   projectId?: string
   gatewayCallerData: {
     country?: string
@@ -41,6 +42,7 @@ export interface PaymentOrder {
   payAmount: string
   payCurrency: string
   country: string
+  state?: string
 
   currency: string
   itemsSubTotal: string
