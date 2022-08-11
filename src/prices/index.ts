@@ -19,3 +19,9 @@ export interface CurrentPricesResponse {
   pricePerHourTokens: Tokens
   pricePerGibTokens: Tokens
 }
+
+export interface CurrentPricesV2Response {
+  serviceType: string
+  pricePerHourTokens: Tokens
+  pricePerGibTokens: Tokens
+}

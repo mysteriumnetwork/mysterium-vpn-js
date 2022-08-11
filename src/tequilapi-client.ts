@@ -66,7 +66,7 @@ import { IdentityCurrentRequest } from './identity/selection'
 import { AuthRequest, AuthResponse, ChangePasswordRequest } from './auth/auth'
 import { Money, PaymentAPI } from './payment'
 import { ReferralTokenResponse, ReferralTokenRewardsResponse } from './referral'
-import { CurrentPricesResponse } from './prices'
+import { CurrentPricesResponse, CurrentPricesV2Response } from './prices'
 import { parsePayoutAddressResponse, Payout } from './identity/payout'
 import { FilterPresetsResponse } from './proposal/filter-preset'
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
@@ -117,6 +117,7 @@ export interface BaseTequilapiClient {
   findProposals(options?: ProposalQuery): Promise<Proposal[]>
   proposalFilterPresets(): Promise<FilterPresetsResponse>
   pricesCurrent(): Promise<CurrentPricesResponse>
+  pricesCurrentV2(): Promise<CurrentPricesV2Response[]>
 
   reportIssueGithub(issue: Issue, timeout?: number): Promise<IssueId>
   reportIssueIntercom(issue: IntercomIssue, timeout?: number): Promise<void>
@@ -346,6 +347,10 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
 
   public async pricesCurrent(): Promise<CurrentPricesResponse> {
     return this.http.get('prices/current')
+  }
+
+  public async pricesCurrentV2(): Promise<CurrentPricesV2Response[]> {
+    return this.http.get('v2/prices/current')
   }
 
   public async connectionCreate(

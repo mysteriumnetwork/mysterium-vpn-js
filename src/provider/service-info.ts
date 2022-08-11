@@ -17,8 +17,8 @@ export interface ServiceOptions {
 }
 
 export interface ServiceInfo {
-  id: string
-  providerId: string
+  id?: string
+  providerId?: string
   type: string
   options?: ServiceOptions
   status: ServiceStatus
