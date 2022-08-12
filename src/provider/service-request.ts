@@ -13,3 +13,7 @@ export interface ServiceStartRequest {
     ids: string[]
   }
 }
+
+export interface ServiceListRequest {
+  includeAll?: boolean
+}

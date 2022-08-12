@@ -46,24 +46,9 @@ describe('TequilapiClient DTO', () => {
       expect(() => parseServiceInfo(null)).toThrowError()
     })
 
-    it('throws error with missing id', () => {
-      const object = { ...serviceObject, id: undefined }
-      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: id is not provided')
-    })
-
     it('throws error with missing status', () => {
       const object = { ...serviceObject, status: undefined }
       expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: status is not provided')
-    })
-
-    it('throws error with missing provider', () => {
-      const object = { ...serviceObject, proposal: undefined }
-      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: proposal is not provided')
-    })
-
-    it('throws error with missing options', () => {
-      const object = { ...serviceObject, options: undefined }
-      expect(() => parseServiceInfo(object)).toThrowError('ServiceInfo: options is not provided')
     })
   })
 })

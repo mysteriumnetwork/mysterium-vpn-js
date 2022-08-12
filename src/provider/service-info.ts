@@ -32,18 +32,17 @@ export interface ServiceInfo {
 export function parseServiceInfo(data: any): ServiceInfo {
   // TODO: validate that status has value from ServiceStatus enum
   validateMultiple('ServiceInfo', data, [
-    { name: 'id', type: 'string' },
-    { name: 'providerId', type: 'string' },
+    { name: 'id', type: 'string', optional: true },
+    { name: 'providerId', type: 'string', optional: true },
     { name: 'type', type: 'string' },
-    { name: 'options', type: 'object' },
+    { name: 'options', type: 'object', optional: true },
     { name: 'status', type: 'string' },
-    { name: 'proposal', type: 'object' },
+    { name: 'proposal', type: 'object', optional: true },
   ])
 
-  return {
-    ...data,
-    proposal: parseProposal(data.proposal),
-  }
+  data.proposal && parseProposal(data.proposal)
+
+  return data
 }
 
 export function parseServiceListResponse(responseData: any): ServiceInfo[] {
