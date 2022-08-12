@@ -7,7 +7,7 @@
 import { Tokens } from '../common/tokens'
 
 /**
- * @deprecated user v2 endpoint
+ * @deprecated use v2 endpoint
  */
 export interface Fees {
   registration: number

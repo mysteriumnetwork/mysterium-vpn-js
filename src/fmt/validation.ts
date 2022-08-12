@@ -8,6 +8,7 @@
 interface Property {
   name: string
   type: 'number' | 'string' | 'object' | 'array' | 'boolean'
+  optional?: boolean
 }
 
 function getTypeString(value: any): string {
@@ -19,6 +20,11 @@ function getTypeString(value: any): string {
 
 function validate(typeName: string, obj: any, property: Property): void {
   const value = obj[property.name]
+  if (typeof value === 'undefined' && property.optional) {
+    // valid
+    return
+  }
+
   if (typeof value === 'undefined') {
     throw new TypeError(`${typeName}: ${property.name} is not provided`)
   }

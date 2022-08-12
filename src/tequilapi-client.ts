@@ -39,7 +39,7 @@ import { NatStatusResponse, parseNatStatusResponse } from './nat/status'
 import { NodeMonitoringStatusResponse, parseNodeMonitoringStatus } from './node/status'
 import { parseProposalList, Proposal, ProposalQuery } from './proposal/proposal'
 import { parseServiceInfo, parseServiceListResponse, ServiceInfo } from './provider/service-info'
-import { ServiceStartRequest } from './provider/service-request'
+import { ServiceListRequest, ServiceStartRequest } from './provider/service-request'
 import {
   parseSessionListResponse,
   parseSessionStatsAggregatedResponse,
@@ -129,7 +129,7 @@ export interface BaseTequilapiClient {
   connectionStatistics(): Promise<ConnectionStatistics>
   connectionLocation(): Promise<Location>
 
-  serviceList(): Promise<ServiceInfo[]>
+  serviceList(request?: ServiceListRequest): Promise<ServiceInfo[]>
   serviceGet(serviceId: string): Promise<ServiceInfo>
   serviceStart(request: ServiceStartRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
@@ -398,8 +398,8 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     return parseConnectionStatistics(response)
   }
 
-  public async serviceList(): Promise<ServiceInfo[]> {
-    const response = await this.http.get('services')
+  public async serviceList(request?: ServiceListRequest): Promise<ServiceInfo[]> {
+    const response = await this.http.get('services', { includeAll: request?.includeAll })
     if (!response) {
       throw new Error('Service list response body is missing')
     }

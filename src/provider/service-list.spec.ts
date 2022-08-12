@@ -54,12 +54,6 @@ describe('.parseServiceListResponse', () => {
     expect(services).toEqual([])
   })
 
-  it('throws an error if services in array does not validate', async () => {
-    expect(() => {
-      parseServiceListResponse([{}])
-    }).toThrowError('ServiceInfo: id is not provided')
-  })
-
   it('throws an error if service list in not an array', async () => {
     expect(() => {
       parseServiceListResponse({})
