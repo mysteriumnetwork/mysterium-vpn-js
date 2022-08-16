@@ -8,16 +8,25 @@
 import { validate, validateMultiple } from '../fmt/validation'
 import { Pageable, PaginationQuery, parsePageable } from '../common/pageable'
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export enum SessionStatus {
   NEW = 'New',
   COMPLETED = 'Completed',
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export enum SessionDirection {
   CONSUMED = 'Consumed',
   PROVIDED = 'Provided',
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export interface Session {
   id: string
   direction: SessionDirection
@@ -54,6 +63,9 @@ export function parseSession(data: any): Session {
   return data
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export interface SessionStats {
   count: number
   countConsumers: number
@@ -75,6 +87,9 @@ export function parseSessionStats(data: any): SessionStats {
   return data
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export interface SessionQuery {
   dateFrom?: string
   dateTo?: string
@@ -86,8 +101,14 @@ export interface SessionQuery {
   status?: SessionStatus
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export interface SessionListQuery extends PaginationQuery, SessionQuery {}
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export type SessionListResponse = Pageable<Session>
 
 export function parseSessionListResponse(responseData: any): SessionListResponse {
@@ -96,6 +117,9 @@ export function parseSessionListResponse(responseData: any): SessionListResponse
   return response
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export interface SessionStatsAggregatedResponse {
   stats: SessionStats
 }
@@ -108,6 +132,9 @@ export function parseSessionStatsAggregatedResponse(data: any): SessionStatsAggr
   }
 }
 
+/**
+ * @deprecated use ProviderAPI
+ */
 export interface SessionStatsDailyResponse {
   items: {
     [date: string]: SessionStats

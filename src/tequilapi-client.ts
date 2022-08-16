@@ -72,6 +72,7 @@ import { FilterPresetsResponse } from './proposal/filter-preset'
 import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 import { NatTypeResponse, parseNatTypeResponse } from './nat/type'
 import { WithdrawRequest } from './transactor/withdraw'
+import { ProviderAPI } from './provider'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -134,8 +135,17 @@ export interface BaseTequilapiClient {
   serviceStart(request: ServiceStartRequest, timeout?: number): Promise<ServiceInfo>
   serviceStop(serviceId: string): Promise<void>
 
+  /**
+   * @deprecated use ProviderAPI
+   */
   sessions(query?: SessionListQuery): Promise<SessionListResponse>
+  /**
+   * @deprecated use ProviderAPI
+   */
   sessionStatsAggregated(query?: SessionQuery): Promise<SessionStatsAggregatedResponse>
+  /**
+   * @deprecated use ProviderAPI
+   */
   sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse>
   accessPolicies(): Promise<AccessPolicy[]>
 
@@ -169,10 +179,12 @@ export interface BaseTequilapiClient {
 class BaseHttpTequilapiClient implements BaseTequilapiClient {
   public http: HttpInterface
   public readonly payment: PaymentAPI
+  public readonly provider: ProviderAPI
 
   public constructor(http: HttpInterface) {
     this.http = http
     this.payment = new PaymentAPI(http)
+    this.provider = new ProviderAPI(http)
   }
 
   public async healthCheck(timeout?: number): Promise<NodeHealthcheck> {
@@ -439,6 +451,9 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     return parseSessionListResponse(response)
   }
 
+  /**
+   * @deprecated use ProviderAPI
+   */
   public async sessionStatsAggregated(
     query?: SessionQuery
   ): Promise<SessionStatsAggregatedResponse> {
@@ -449,6 +464,9 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     return parseSessionStatsAggregatedResponse(response)
   }
 
+  /**
+   * @deprecated use ProviderAPI
+   */
   public async sessionStatsDaily(query?: SessionQuery): Promise<SessionStatsDailyResponse> {
     const response = await this.http.get('sessions/stats-daily', query)
     if (!response) {

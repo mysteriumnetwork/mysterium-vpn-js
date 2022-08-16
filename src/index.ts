@@ -109,4 +109,13 @@ export { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './pay
 export { ReferralTokenResponse } from './referral'
 export { IdentityBeneficiaryResponse } from './identity/beneficiary'
 
+export {
+  ProviderAPI,
+  QueryRange,
+  SessionsRequest,
+  SessionsV2Response,
+  SessionV2,
+  SessionV2CountResponse,
+} from './provider'
+
 export default tequilapi
