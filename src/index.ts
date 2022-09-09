@@ -111,11 +111,13 @@ export { IdentityBeneficiaryResponse } from './identity/beneficiary'
 
 export {
   ProviderAPI,
-  QueryRange,
-  SessionsRequest,
+  MetricsRange,
+  MetricsQuery,
   SessionsV2Response,
   SessionV2,
   SessionV2CountResponse,
+  SeriesResponse,
+  SeriesEntry,
 } from './provider'
 
 export default tequilapi
