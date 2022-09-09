@@ -111,8 +111,8 @@ export { IdentityBeneficiaryResponse } from './identity/beneficiary'
 
 export {
   ProviderAPI,
-  QueryRange,
-  RangeQuery,
+  MetricsRange,
+  MetricsQuery,
   SessionsV2Response,
   SessionV2,
   SessionV2CountResponse,

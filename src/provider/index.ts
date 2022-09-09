@@ -14,43 +14,45 @@ export class ProviderAPI {
     this.http = http
   }
 
-  public async sessions(query: RangeQuery = { range: '1d' }): Promise<SessionsV2Response> {
+  public async sessions(query: MetricsQuery = { range: '1d' }): Promise<SessionsV2Response> {
     return await this.http.get('/node/provider/sessions', query)
   }
 
-  public async sessionCount(query: RangeQuery = { range: '1d' }): Promise<SessionV2CountResponse> {
+  public async sessionCount(
+    query: MetricsQuery = { range: '1d' }
+  ): Promise<SessionV2CountResponse> {
     return await this.http.get('/node/provider/sessions-count', query)
   }
 
   public async transferredDataCount(
-    query: RangeQuery = { range: '1d' }
+    query: MetricsQuery = { range: '1d' }
   ): Promise<SessionV2CountResponse> {
     return await this.http.get('/node/provider/transferred-data', query)
   }
 
   public async uniqueConsumerCount(
-    query: RangeQuery = { range: '1d' }
+    query: MetricsQuery = { range: '1d' }
   ): Promise<SessionV2CountResponse> {
     return await this.http.get('/node/provider/consumers-count', query)
   }
 
-  public async seriesSessions(query: RangeQuery = { range: '1d' }): Promise<SeriesResponse> {
+  public async seriesSessions(query: MetricsQuery = { range: '1d' }): Promise<SeriesResponse> {
     return await this.http.get('/node/provider/series/sessions', query)
   }
 
-  public async seriesEarnings(query: RangeQuery = { range: '1d' }): Promise<SeriesResponse> {
+  public async seriesEarnings(query: MetricsQuery = { range: '1d' }): Promise<SeriesResponse> {
     return await this.http.get('/node/provider/series/earnings', query)
   }
 
-  public async seriesData(query: RangeQuery = { range: '1d' }): Promise<SeriesResponse> {
+  public async seriesData(query: MetricsQuery = { range: '1d' }): Promise<SeriesResponse> {
     return await this.http.get('/node/provider/series/data', query)
   }
 }
 
-export type QueryRange = '1d' | '7d' | '30d' | string
+export type MetricsRange = '1d' | '7d' | '30d' | string
 
-export interface RangeQuery {
-  range?: QueryRange
+export interface MetricsQuery {
+  range?: MetricsRange
 }
 
 export interface SessionsV2Response {
