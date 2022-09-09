@@ -22,6 +22,18 @@ export class ProviderAPI {
     return await this.http.get('/node/provider/sessions-count', query)
   }
 
+  public async transferredDataCount(
+    query: RangeQuery = { range: '1d' }
+  ): Promise<SessionV2CountResponse> {
+    return await this.http.get('/node/provider/transferred-data', query)
+  }
+
+  public async uniqueConsumerCount(
+    query: RangeQuery = { range: '1d' }
+  ): Promise<SessionV2CountResponse> {
+    return await this.http.get('/node/provider/consumers-count', query)
+  }
+
   public async seriesSessions(query: RangeQuery = { range: '1d' }): Promise<SeriesResponse> {
     return await this.http.get('/node/provider/series/sessions', query)
   }
