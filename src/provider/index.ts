@@ -47,6 +47,22 @@ export class ProviderAPI {
   public async seriesData(query: MetricsQuery = { range: '1d' }): Promise<SeriesResponse> {
     return await this.http.get('/node/provider/series/data', query)
   }
+
+  public async quality(): Promise<QualityResponse> {
+    return await this.http.get('/node/provider/quality')
+  }
+  public async activity(): Promise<ActivityResponse> {
+    return await this.http.get('/node/provider/activity-stats')
+  }
+}
+
+export interface ActivityResponse {
+  onlinePercent: number
+  activePercent: number
+}
+
+export interface QualityResponse {
+  quality: number
 }
 
 export type MetricsRange = '1d' | '7d' | '30d' | string
