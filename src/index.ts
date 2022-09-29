@@ -118,6 +118,8 @@ export {
   SessionV2CountResponse,
   SeriesResponse,
   SeriesEntry,
+  QualityResponse,
+  ActivityResponse,
 } from './provider'
 
 export default tequilapi
