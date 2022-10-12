@@ -120,6 +120,7 @@ export {
   SeriesEntry,
   QualityResponse,
   ActivityResponse,
+  EarningsPerServiceResponse,
 } from './provider'
 
 export default tequilapi
