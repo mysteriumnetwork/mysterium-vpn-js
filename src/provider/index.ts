@@ -51,9 +51,21 @@ export class ProviderAPI {
   public async quality(): Promise<QualityResponse> {
     return await this.http.get('/node/provider/quality')
   }
+
   public async activity(): Promise<ActivityResponse> {
     return await this.http.get('/node/provider/activity-stats')
   }
+
+  public async earningsPerService(): Promise<EarningsPerServiceResponse> {
+    return await this.http.get('/node/provider/service-earnings')
+  }
+}
+
+export interface EarningsPerServiceResponse {
+  public: Tokens
+  dataTransfer: Tokens
+  scraping: Tokens
+  total: Tokens
 }
 
 export interface ActivityResponse {
