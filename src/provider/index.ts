@@ -62,10 +62,13 @@ export class ProviderAPI {
 }
 
 export interface EarningsPerServiceResponse {
-  public: Tokens
-  dataTransfer: Tokens
-  scraping: Tokens
-  total: Tokens
+  publicTokens: Tokens
+  dataTransferTokens: Tokens
+  scrapingTokens: Tokens
+  totalTokens: Tokens
+  totalPublicTokens: Tokens
+  totalDataTransferTokens: Tokens
+  totalScrapingTokens: Tokens
 }
 
 export interface ActivityResponse {
