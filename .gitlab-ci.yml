@@ -12,7 +12,7 @@ before_script:
 
 build:
   stage: build
-  tags: [docker]
+  tags: [high_performance]
   script: yarn ci
   artifacts:
     paths:
@@ -22,7 +22,7 @@ publish-npm:
   stage: publish
   only:
     - tags
-  tags: [docker]
+  tags: [high_performance]
   script:
     - npm config set '//registry.npmjs.org/:_authToken' "${NPM_PUBLISH_TOKEN}"
     - npm publish --access public
