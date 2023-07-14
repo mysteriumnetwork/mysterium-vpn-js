@@ -1,0 +1,28 @@
+---
+name: Publish to NPM
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Extract version from tag
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Set version
+        run: jq '.version=(if ${{ steps.vars.outputs.tag }} == null then "0.0.0-snapshot" else ${{ steps.vars.outputs.tag }} end)' package.json > package.json.mod && mv package.json.mod package.json
+      - name: Install dependencies and build
+        run: npm ci
+      - name: Publish package on NPM
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
