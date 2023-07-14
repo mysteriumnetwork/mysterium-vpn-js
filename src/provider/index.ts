@@ -64,10 +64,10 @@ export class ProviderAPI {
 export interface EarningsPerServiceResponse {
   publicTokens: Tokens
   dataTransferTokens: Tokens
-  dvpnTokens: Tokens;
+  dvpnTokens: Tokens
   scrapingTokens: Tokens
   totalTokens: Tokens
-  totalDvpnTokens: Tokens;
+  totalDvpnTokens: Tokens
   totalPublicTokens: Tokens
   totalDataTransferTokens: Tokens
   totalScrapingTokens: Tokens
