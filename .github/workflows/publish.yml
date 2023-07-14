@@ -25,7 +25,6 @@ jobs:
         run: |
           yarn
           yarn ci
-         yarn ci
       - name: Publish package on NPM
         run: npm publish --access public
         env:
