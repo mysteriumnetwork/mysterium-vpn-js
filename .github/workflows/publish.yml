@@ -22,7 +22,9 @@ jobs:
         run: jq '.version="${{ steps.vars.outputs.tag }}"' package.json > package.json.mod && mv package.json.mod package.json
         if: ${{ steps.vars.outputs.tag && steps.vars.outputs.tag != '' }}
       - name: Install dependencies and build
-        run: npm ci
+        run: |
+          yarn
+          yarn ci
       - name: Publish package on NPM
         run: npm publish --access public
         env:
