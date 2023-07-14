@@ -19,7 +19,7 @@ jobs:
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
       - name: Set version
-        run: jq '.version=${{ steps.vars.outputs.tag }}' package.json > package.json.mod && mv package.json.mod package.json
+        run: jq '.version="${{ steps.vars.outputs.tag }}"' package.json > package.json.mod && mv package.json.mod package.json
         if: ${{ steps.vars.outputs.tag && steps.vars.outputs.tag != '' }}
       - name: Install dependencies and build
         run: npm ci
