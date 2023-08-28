@@ -73,6 +73,7 @@ import { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './pay
 import { NatTypeResponse, parseNatTypeResponse } from './nat/type'
 import { WithdrawRequest } from './transactor/withdraw'
 import { ProviderAPI } from './provider'
+import { IdentityExportRequest } from './identity/export'
 
 export const TEQUILAPI_URL = 'http://127.0.0.1:4050'
 export const pathConfig = 'config'
@@ -152,7 +153,7 @@ export interface BaseTequilapiClient {
   transactorFees(chainId?: number): Promise<Fees>
   settleSync(request: SettleRequest): Promise<void>
   settleAsync(request: SettleRequest): Promise<void>
-  exportIdentity(request: any): Promise<any>
+  exportIdentity(request: IdentityExportRequest): Promise<any>
   settleWithBeneficiary(request: SettleWithBeneficiaryRequest): Promise<void>
   settleIntoStakeSync(request: SettleRequest): Promise<void>
   settleIntoStakeAsync(request: SettleRequest): Promise<void>
