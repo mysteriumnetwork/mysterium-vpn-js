@@ -21,7 +21,7 @@ export { ConnectionStatus, ConnectionInfo } from './connection/status'
 export { ConnectionStatistics } from './connection/statistics'
 
 export { Config } from './config/config'
-export { Issue, IssueId, IntercomIssue } from './feedback/issue'
+export { Issue, IssueId, IntercomIssue, SupportIssueResponse } from './feedback/issue'
 
 export { Location } from './location/location'
 

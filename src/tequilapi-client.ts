@@ -6,7 +6,7 @@
  */
 
 import { MMNApiKeyResponse, MMNReportResponse } from './mmn/mmn'
-import { IntercomIssue, Issue, IssueId } from './feedback/issue'
+import { IntercomIssue, Issue, IssueId, SupportIssueRequest, SupportIssueResponse } from './feedback/issue'
 import { Config } from './config/config'
 import { AccessPolicy, parseAccessPolicyList } from './access-policy/access-policy'
 import { ConnectionCancelRequest, ConnectionRequest } from './connection/request'
@@ -122,6 +122,7 @@ export interface BaseTequilapiClient {
 
   reportIssueGithub(issue: Issue, timeout?: number): Promise<IssueId>
   reportIssueIntercom(issue: IntercomIssue, timeout?: number): Promise<void>
+  reportIssueSupport(issue: SupportIssueRequest, timeout?: number): Promise<SupportIssueResponse>
 
   connectionCreate(request: ConnectionRequest, timeout?: number): Promise<ConnectionInfo>
   connectionStatus(): Promise<ConnectionInfo>
@@ -519,8 +520,15 @@ class BaseHttpTequilapiClient implements BaseTequilapiClient {
     return this.http.post(`feedback/issue`, issue, timeout)
   }
 
+/**
+ * @deprecated use reportIssueSupport
+ */
   public async reportIssueIntercom(issue: IntercomIssue, timeout?: number): Promise<void> {
     return this.http.post(`feedback/issue/intercom`, issue, timeout)
+  }
+
+  public async reportIssueSupport(issue: SupportIssueRequest, timeout?: number): Promise<SupportIssueResponse> {
+    return this.http.post(`feedback/bug-report`, issue, timeout)
   }
 
   public async transactorFees(chainId?: number): Promise<Fees> {

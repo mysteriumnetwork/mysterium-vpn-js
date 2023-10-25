@@ -20,3 +20,17 @@ export interface IntercomIssue {
   userId?: string
   userType?: string
 }
+
+export interface SupportIssueRequest {
+  email: string
+  description: string
+}
+
+export interface SupportIssueResponse {
+  email: string
+  identity: string
+  ip: string
+  ipType: string
+  message: string
+  nodeCountry: string
+}
