@@ -8,8 +8,9 @@
 import { validate } from '../fmt/validation'
 
 export enum NodeMonitoringStatus {
-  PASSED = 'passed',
+  SUCCESS = 'success',
   FAILED = 'failed',
+  UNKNOWN = 'unknown',
   PENDING = 'pending',
 }
 
