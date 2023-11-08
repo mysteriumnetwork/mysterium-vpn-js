@@ -104,6 +104,8 @@ export {
   PaymentOrder,
   PaymentGateway,
   RegistrationPaymentResponse,
+  BeneficiaryAsyncResponse,
+  BeneficiaryAsyncChangeRequest,
 } from './payment'
 export { EntertainmentEstimateQuery, EntertainmentEstimateResponse } from './payment/entertainment'
 export { ReferralTokenResponse } from './referral'

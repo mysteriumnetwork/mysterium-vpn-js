@@ -64,6 +64,15 @@ export interface RegistrationPaymentResponse {
   paid: boolean
 }
 
+export interface BeneficiaryAsyncResponse {
+  readonly address: string
+}
+
+export interface BeneficiaryAsyncChangeRequest {
+  readonly identity: string
+  readonly address: string
+}
+
 export class PaymentAPI {
   private http: HttpInterface
   constructor(http: HttpInterface) {
@@ -96,5 +105,16 @@ export class PaymentAPI {
 
   public async registrationPayment(id: string): Promise<RegistrationPaymentResponse> {
     return this.http.get(`/v2/identities/${id}/registration-payment`)
+  }
+
+  public async changeBeneficiaryAsync({
+    identity,
+    address,
+  }: BeneficiaryAsyncChangeRequest): Promise<BeneficiaryAsyncResponse> {
+    return this.http.post(`/identities/${identity}/beneficiary-async`, { address })
+  }
+
+  public async getBeneficiaryAsync(identity: string): Promise<BeneficiaryAsyncResponse> {
+    return this.http.get(`/identities/${identity}/beneficiary-async`)
   }
 }
